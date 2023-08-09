@@ -6,23 +6,23 @@ const filter =
 const NavBarArray = [
   {
     name: "홈",
-    path: "/",
+    path: "/home",
     iconPath: filter,
     iconFillPath: filter,
   },
   {
     name: "지도",
-    path: "/",
+    path: "/map",
     iconPath: filter,
   },
   {
     name: "커뮤니티",
-    path: "/",
+    path: "/board",
     iconPath: filter,
   },
   {
     name: "위시리스트",
-    path: "/",
+    path: "/wishlist",
     iconPath: filter,
   },
   {
@@ -33,7 +33,7 @@ const NavBarArray = [
 ];
 const Navbar = () => {
   return (
-    <nav className="fixed bottom-0 right-0 w-full border">
+    <nav className="fixed bottom-0 right-0 w-full border bg-white">
       <ul className="flex-row flex w-full justify-center px-4 pt-2">
         {NavBarArray.map((item) => (
           <Link

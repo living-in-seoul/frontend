@@ -1,6 +1,6 @@
 "use client";
-import React, { useCallback, useRef } from "react";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import React, { useRef } from "react";
+import { GoogleMap, LoadScript, MarkerF } from "@react-google-maps/api";
 
 const containerStyle = {
   width: "400px",
@@ -12,20 +12,25 @@ const center = {
   lng: 126.977,
 };
 
+const mapOptions = {
+  disableDefaultUI: true,
+  language: "ko",
+};
+
 const Map = () => {
   const first = useRef<HTMLDivElement | null>(null);
+  const [map, setMap] = React.useState(null);
 
-  const onLoad = React.useCallback((map: google.maps.Map) => {
+  const onLoad = React.useCallback(function callback(map: any) {
     const bounds = new window.google.maps.LatLngBounds(center);
     map.fitBounds(bounds);
+
+    setMap(map);
   }, []);
 
-  //   const onUnmount = useCallback((map: google.maps.Map) => {}, []);
-
-  const mapOptions = {
-    disableDefaultUI: true,
-    language: "ko",
-  };
+  const onUnmount = React.useCallback(function callback(map: any) {
+    setMap(null);
+  }, []);
 
   return (
     <LoadScript
@@ -36,8 +41,9 @@ const Map = () => {
         center={center}
         zoom={8}
         onLoad={onLoad}
+        onUnmount={onUnmount}
         options={mapOptions}>
-        {<Marker position={{ lat: 37.566, lng: 126.977 }} />}
+        {<MarkerF position={{ lat: 37.566, lng: 126.977 }} />}
         <></>
       </GoogleMap>
     </LoadScript>
