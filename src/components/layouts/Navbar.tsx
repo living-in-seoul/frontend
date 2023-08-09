@@ -18,8 +18,8 @@ const NavBarArray = [
   },
   {
     name: '커뮤니티',
-    path: '/community',
-    iconPath: comunity,
+    path: '/',
+    iconPath: filter,
   },
   {
     name: '위시리스트',
@@ -35,7 +35,7 @@ const NavBarArray = [
 
 const Navbar = () => {
   return (
-    <nav className="fixed bottom-0 right-0 w-full border">
+    <nav className="fixed bottom-0 right-0 w-full border bg-white">
       <ul className="flex-row flex w-full justify-center px-4 pt-2">
         {NavBarArray.map((item) => (
           <Link

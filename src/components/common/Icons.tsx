@@ -1,14 +1,55 @@
-interface Props {
+// interface Props {
+//   path: string;
+//   size: 'small' | 'medium' | 'large' | 'xlarge';
+//   color?: string;
+// }
+
+// const getIconSizeStyles = (size: string) => {
+//   // return { divSize: `w-[${size}px] h-[${size}px]`, svgSize: size };
+
+//   switch (size) {
+//     case 'small':
+//       return { divSize: 'w-[16px] h-[16px]', svgSize: 16 };
+//     case 'medium':
+//       return { divSize: 'w-[32px] h-[32px]', svgSize: 32 };
+//     case 'large':
+//       return { divSize: 'w-[64px] h-[64px]', svgSize: 64 };
+//     case 'xlarge':
+//       return { divSize: 'w-[128px] h-[128px]', svgSize: 128 };
+//     default:
+//       return { divSize: 'w-[16px] h-[16px]', svgSize: 16 };
+//   }
+// };
+
+// const Icons = ({ path, size, color = 'black' }: Props) => {
+//   return (
+//     <div className={getIconSizeStyles(size).divSize}>
+//       <svg
+//         width={getIconSizeStyles(size).svgSize}
+//         height={getIconSizeStyles(size).svgSize}
+//         viewBox={`0 0 ${getIconSizeStyles(size).svgSize / 2} ${
+//           getIconSizeStyles(size).svgSize
+//         }`}
+//         aria-hidden="true"
+//         preserveAspectRatio="xMidYMid meet"
+//       >
+//         <path d={path} color={color} className="w-full h-full" />
+//       </svg>
+//     </div>
+//   );
+// };
+
+// export default Icons;
+
+interface IconProps extends PathStyleProps {
   path: string;
-  size: 'small' | 'medium' | 'large' | 'xlarge' | 'xsmall';
+  size: 'small' | 'medium' | 'large';
   isgoogle?: boolean;
   color?: string;
 }
 
 const getIconSizeStyles = (size: string) => {
   switch (size) {
-    case 'xsmall':
-      return { divSize: 'w-[14px] h-[14px]', svgSize: 14 };
     case 'small':
       return { divSize: 'w-[16px] h-[16px]', svgSize: 16 };
     case 'medium':
@@ -18,18 +59,18 @@ const getIconSizeStyles = (size: string) => {
     case 'xlarge':
       return { divSize: 'w-[128px] h-[128px]', svgSize: 128 };
     default:
-      return { divSize: 'w-[14px] h-[14px]', svgSize: 16 };
+      return { divSize: 'w-[16px] h-[16px]', svgSize: 16 };
   }
 };
 
-const Icons = ({ path, size, isgoogle, color = 'black' }: Props) => {
+const Icons = ({ path, size = 'small', isgoogle, color = 'black' }: Props) => {
   return (
-    <div className={getIconSizeStyles(size).divSize}>
-      {!isgoogle ? (
+    <>
+      <div>
         <svg
           width={getIconSizeStyles(size).svgSize}
           height={32}
-          viewBox={`0 0 ${getIconSizeStyles(size).svgSize} ${
+          viewBox={`0 0 ${getIconSizeStyles(size).svgSize / 2} ${
             getIconSizeStyles(size).svgSize
           }`}
           aria-hidden="true"
@@ -37,7 +78,7 @@ const Icons = ({ path, size, isgoogle, color = 'black' }: Props) => {
         >
           <path d={path} color={color} className="w-full h-full" />
         </svg>
-      ) : (
+        ) : (
         <svg
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"
@@ -64,8 +105,8 @@ const Icons = ({ path, size, isgoogle, color = 'black' }: Props) => {
             <path fill="none" d="M0 0h48v48H0z"></path>
           </g>
         </svg>
-      )}
-    </div>
+      </div>
+    </>
   );
 };
 

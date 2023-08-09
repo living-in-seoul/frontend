@@ -1,10 +1,10 @@
 interface Props {
   image?: string | null;
-  size: "xlarge" | "large" | "medium" | "small";
+  size: 'xlarge' | 'large' | 'medium' | 'small';
 }
 
 const getContainerStyle = (size: string): string => {
-  const baseStyle = "rounded-full flex items-center justify-center ";
+  const baseStyle = 'rounded-full flex items-center justify-center ';
 
   const { container } = getImageSizeStyle(size);
   return `${baseStyle} ${container}`;
@@ -16,32 +16,32 @@ interface ImageSizeStyle {
 }
 const getImageSizeStyle = (size: string): ImageSizeStyle => {
   switch (size) {
-    case "small":
+    case 'small':
       return {
-        container: "w-9 h-9",
-        image: "w-[34px] h-[34px] p-[0.1rem]",
+        container: 'w-9 h-9',
+        image: 'w-[34px] h-[34px] p-[0.1rem]',
       };
-    case "medium":
+    case 'medium':
       return {
-        container: "w-11 h-11",
-        image: "w-[42px] h-[42px] p-[0.1rem]",
+        container: 'w-11 h-11',
+        image: 'w-[42px] h-[42px] p-[0.1rem]',
       };
-    case "large":
+    case 'large':
       return {
-        container: "w-[68px] h-[68px]",
-        image: "w-16 h-16 p-[0.2rem]",
+        container: 'w-[68px] h-[68px]',
+        image: 'w-16 h-16 p-[0.2rem]',
       };
-    case "xlarge":
+    case 'xlarge':
       return {
-        container: "w-[142px] h-[142px]",
-        image: "w-[138px] h-[138px] p-[0.3rem]",
+        container: 'w-[142px] h-[142px]',
+        image: 'w-[138px] h-[138px] p-[0.3rem]',
       };
     default:
       throw new Error(`Unsupported size: ${size}`);
   }
 };
 
-const Avatar: React.FC<Props> = ({ image, size = "large" }) => {
+const Avatar: React.FC<Props> = ({ image, size = 'large' }) => {
   return (
     <div className={getContainerStyle(size)}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
