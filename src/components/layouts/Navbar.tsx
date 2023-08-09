@@ -13,7 +13,7 @@ const NavBarArray = [
   },
   {
     name: '지도',
-    path: '/',
+    path: '/map',
     iconPath: filter,
   },
   {
@@ -23,7 +23,7 @@ const NavBarArray = [
   },
   {
     name: '위시리스트',
-    path: '/',
+    path: '/wishlist',
     iconPath: filter,
   },
   {
