@@ -1,7 +1,4 @@
-import Link from "next/link";
-
 const MapPage = () => {
-  return <div>map page</div>;
+  return <div>MapPage</div>;
 };
-
 export default MapPage;
