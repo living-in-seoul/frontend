@@ -11,7 +11,9 @@ import useSWR from 'swr';
 import useMapInstance from '@/hooks/useMapInstance';
 import useNearbySearch from '@/hooks/useNearbySearch';
 import { useRouter } from 'next/navigation';
+
 const googleMapsLibraries: Libraries = ['places'];
+
 const containerStyle = {
   width: '100%',
   height: '100%',
@@ -62,11 +64,14 @@ const Map = () => {
     radius: 800,
     types,
   });
+  useEffect(() => {
+    console.log(places);
+  }, [places]);
   const ZOOM = 17;
+
   useEffect(() => {
     if (map && locationDetail) {
       map.panTo(locationDetail.result.geometry.location);
-      //nearby places 때문에 바꿔줘야함....
       setCenter(locationDetail.result.geometry.location);
     }
   }, [locationDetail, map]);
@@ -75,10 +80,13 @@ const Map = () => {
     setPlaceId(placeId);
   }, []);
 
-  const onMarkerLoad = (marker: google.maps.Marker) => {
-    marker.addListener('click', () => {});
-    marker.addListener('mouseover', () => {});
+  const onMarkerClick = (
+    e: google.maps.MapMouseEvent,
+    placeId: string | undefined,
+  ) => {
+    router.push(`/place/${placeId}/2`);
   };
+
   return (
     <section className="w-full h-full bg-slate-400 absolute pb-24">
       <PlacesAutoComplete onSelectPlace={onSelectPlace} />
@@ -87,25 +95,21 @@ const Map = () => {
         // onClick={(e) => e.stop()}
         center={center}
         zoom={ZOOM}
+        onLoad={onLoad}
+        onUnmount={onUnmount}
         options={mapOptions}
       >
-        <MarkerF
-          onClickableChanged={() => {
-            console.log('asdf');
-          }}
-          clickable
-          position={{
-            lat: 37.5665,
-            lng: 126.978,
-          }}
-          onLoad={onMarkerLoad}
-          cursor="pointer"
-          onClick={() => {
-            console.log('hi mia');
-          }}
-        />
-        {/* );
-          })} */}
+        {places.map((place) => {
+          if (place.geometry?.location)
+            return (
+              <MarkerF
+                key={place.place_id}
+                clickable
+                position={place.geometry.location}
+                onClick={(e) => onMarkerClick(e, place.place_id)}
+              />
+            );
+        })}
       </GoogleMap>
       {/* <MapBottomSheet places={places} /> */}
     </section>

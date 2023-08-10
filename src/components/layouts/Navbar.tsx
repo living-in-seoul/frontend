@@ -50,14 +50,13 @@ const NavBarArray = [
   },
   {
     name: '마이페이지',
-    path: '/',
+    path: '/place/ChIJdT3Zb-2ifDURejyrGy8OIII',
     iconPath: comunity,
   },
 ];
 
 const Navbar = () => {
   const pathname = usePathname();
-  console.log(pathname);
   return (
     <nav className="fixed bottom-0 right-0 w-full border bg-white">
       <div className="flex-row h-[76px] flex w-full justify-center px-4 pt-2">
