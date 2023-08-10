@@ -6,10 +6,16 @@ interface Req extends NextApiRequest {
     scope: string;
   };
 }
-async function Callback(req: Req, res: NextApiResponse) {
+const Callback = async (
+  req: Req,
+  res: NextApiResponse,
+): Promise<ResponseOauthLogin> => {
   const { searchParams } = req;
-
-  return <div></div>;
-}
+  const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER}`, {
+    method: 'POST',
+    body: JSON.stringify({ code: searchParams.code }),
+  }).then((response) => response.json());
+  return response.data;
+};
 
 export default Callback;
