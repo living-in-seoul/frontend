@@ -23,7 +23,7 @@ const CommunityBoardList = ({
       <div className="pl-4">
         <CategoryList
           selectedCategory={selectCategory}
-          setSelectedCategory={setSelectCategory}
+          setSelectedCategory={(category) => setSelectCategory(category)}
           categories={[...Category]}
         />
       </div>

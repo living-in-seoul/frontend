@@ -4,13 +4,14 @@ import mrchoi from '@/../public/mrchoi.png';
 const MultiPleCard = (data: CityData) => {
   return (
     <article className="w-[48%] hover:shadow-xl transition-all duration-500 hover:scale-105">
-      <div className="rounded-md overflow-hidden shadow-md">
+      <div className="relative w-full h-36 rounded-md overflow-hidden shadow-md">
         <Image
-          className="object-cover"
+          className="absolute top-0 h-auto object-cover"
           src={mrchoi}
           alt={data.AREA_CONGEST_LVL}
-          width={144}
-          height={128}
+          fill
+          sizes="210px"
+          priority
         />
       </div>
       <div className="flex flex-col px-2 pt-2">
