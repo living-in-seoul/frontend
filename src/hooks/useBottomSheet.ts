@@ -2,7 +2,6 @@
 import { MIN_Y } from '@/components/map/bottomsheet/constants';
 import { useEffect, useRef } from 'react';
 
-//document 호출 되는지 확인하기
 export const useBottomSheet = (maxY: number) => {
   const sheet = useRef<HTMLDivElement>(null); //바텀 시트 영역
   const content = useRef<HTMLDivElement>(null); // 컨텐츠 영역
@@ -18,6 +17,8 @@ export const useBottomSheet = (maxY: number) => {
     },
     contentBeingTouched: false,
   });
+
+  const breakpoints = {};
 
   //바텀시트 동작 제어 effect
   useEffect(() => {

@@ -3,7 +3,7 @@ import useDebounce from '@/hooks/useDebounce';
 import { useState } from 'react';
 import useSWR from 'swr';
 import SearchInput from '../common/SearchInput';
-
+import { FormEvent } from 'react';
 interface PlacesAutoCompleteProps {
   onSelectPlace: (placeId: string) => void;
 }
@@ -19,12 +19,20 @@ const PlacesAutoComplete = ({ onSelectPlace }: PlacesAutoCompleteProps) => {
     setInputLocation(e.target.value);
   };
 
+  const onSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (data) {
+      onSelectPlace(data?.predictions[0].place_id);
+    }
+  };
+
   return (
     <section className=" absolute top-0 left-0 z-50 flex flex-col justify-center items-center w-full pt-4 text-xs">
       <SearchInput
         placeholder="서초구 서초동"
         value={inputLocation}
         onChange={onChangeHandler}
+        onSubmit={onSubmit}
       />
       {isLoading && <div>loading!</div>}
 
