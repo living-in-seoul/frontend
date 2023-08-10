@@ -4,31 +4,30 @@ interface Props {
     width: number;
     height: number;
   };
-  size: 'small' | 'medium' | 'large' | 'xlarge';
+  size?: 'small' | 'medium' | 'large' | 'xlarge';
   color?: string;
   fill?: string;
 }
 
-const getIconSizeStyles = (size: string) => {
-  // return { divSize: `w-[${size}px] h-[${size}px]`, svgSize: size };
+// const getIconSizeStyles = (size: string) => {
+//   // return { divSize: `w-[${size}px] h-[${size}px]`, svgSize: size };
 
-  switch (size) {
-    case 'small':
-      return { divSize: 'w-[16px] h-[16px]', svgSize: 16 };
-    case 'medium':
-      return { divSize: 'w-[32px] h-[32px]', svgSize: 32 };
-    case 'large':
-      return { divSize: 'w-[64px] h-[64px]', svgSize: 64 };
-    case 'xlarge':
-      return { divSize: 'w-[128px] h-[128px]', svgSize: 128 };
-    default:
-      return { divSize: 'w-[16px] h-[16px]', svgSize: 16 };
-  }
-};
+//   switch (size) {
+//     case 'small':
+//       return { divSize: 'w-[16px] h-[16px]', svgSize: 16 };
+//     case 'medium':
+//       return { divSize: 'w-[32px] h-[32px]', svgSize: 32 };
+//     case 'large':
+//       return { divSize: 'w-[64px] h-[64px]', svgSize: 64 };
+//     case 'xlarge':
+//       return { divSize: 'w-[128px] h-[128px]', svgSize: 128 };
+//     default:
+//       return { divSize: 'w-[16px] h-[16px]', svgSize: 16 };
+//   }
+// };
 
-const Icons = ({ path, size, fill, color = 'black' }: Props) => {
+const Icons = ({ path, fill, color = 'black' }: Props) => {
   return (
-    // <div className={getIconSizeStyles(size).divSize}>
     <svg
       width={path.width}
       height={path.height}
@@ -38,7 +37,6 @@ const Icons = ({ path, size, fill, color = 'black' }: Props) => {
     >
       <path d={path.path} color={color} className="w-full h-full" fill={fill} />
     </svg>
-    // </div>
   );
 };
 

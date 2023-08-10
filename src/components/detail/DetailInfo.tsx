@@ -6,7 +6,7 @@ const demo =
 const DetailInfo = ({ text }: { text: string }) => {
   return (
     <div className="flex items-center ">
-      <Icons size={32} path={demo} />
+      {/* <Icons size={32} path={demo} /> */}
       <span>{text}</span>
     </div>
   );

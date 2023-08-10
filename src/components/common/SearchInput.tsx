@@ -16,14 +16,14 @@ const SearchInput = ({ placeholder, value, onChange }: SearchInputProps) => {
   return (
     <section className="w-full flex justify-center ">
       <form className="w-4/5 rounded-[1.875rem] bg-white h-[38px] flex items-center justify-between shadow-xl border border-neutral-200 px-4">
-        <Icons path={filter} size="small" />
+        {/* <Icons path={filter} size="small" /> */}
         <input
           className="outline-none text-sm w-full pl-3"
           placeholder={placeholder}
           value={value}
           onChange={onChange}
         ></input>
-        <Icons path={search} size="small" />
+        {/* <Icons path={search} size="small" /> */}
       </form>
       <ul></ul>
     </section>

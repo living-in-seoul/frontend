@@ -377,6 +377,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/google.maps@npm:^3.53.6":
+  version: 3.53.6
+  resolution: "@types/google.maps@npm:3.53.6"
+  checksum: 2deb3f9019e29c56fd4d0613385427280aa58176e57eeef3a2dbad92bcf5aaa5d78f70ba16d1d8611c959e2b89ad813e166636552f9432dacb8e16b55bd4d836
+  languageName: node
+  linkType: hard
+
 "@types/json5@npm:^0.0.29":
   version: 0.0.29
   resolution: "@types/json5@npm:0.0.29"
@@ -3762,6 +3769,7 @@ __metadata:
   dependencies:
     "@react-google-maps/api": ^2.19.2
     "@react-oauth/google": ^0.11.1
+    "@types/google.maps": ^3.53.6
     "@types/node": 20.4.8
     "@types/react": 18.2.18
     "@types/react-dom": 18.2.7
