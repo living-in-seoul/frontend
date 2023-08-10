@@ -8,7 +8,7 @@ export default function NoNavbarLayout({
   return (
     <>
       <main>{children}</main>
-      {sidebar}
+      {/* {sidebar} */}
     </>
   );
 }

@@ -28,7 +28,7 @@ const useNearbySearch = ({ map, center, radius, types }: NearbySearchProps) => {
         }
       });
     }
-  }, [map, center, radius, types]);
+  }, [map, center, radius]);
 
   return { places };
 };

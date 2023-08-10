@@ -30,7 +30,10 @@ const mapOptions = {
     },
   ],
 };
-
+interface Coordinates {
+  lat: number;
+  lng: number;
+}
 const Map = () => {
   const router = useRouter();
   const { map, onLoad, onUnmount } = useMapInstance();
@@ -83,7 +86,6 @@ const Map = () => {
           onLoad={onLoad}
           onUnmount={onUnmount}
           options={mapOptions}
-          onClick={onMarkerClick}
         >
           {places.map((place) => {
             if (place.geometry?.location)
@@ -91,7 +93,7 @@ const Map = () => {
                 <MarkerF
                   key={place.place_id}
                   position={place.geometry.location}
-                  // onClick={onMarkerClick}
+                  clickable={true}
                 />
               );
           })}

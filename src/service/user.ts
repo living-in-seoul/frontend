@@ -22,7 +22,7 @@ const signinDataHandler = async (formData: FormData) => {
     email: formData.get('email'),
     password: formData.get('password'),
   };
-
+  console.log(reqData);
   await fetch(`${process.env.SERVER}/auth/login`, {
     method: 'POST',
     body: JSON.stringify(reqData),
