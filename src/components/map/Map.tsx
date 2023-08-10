@@ -11,6 +11,8 @@ import useSWR from 'swr';
 import MapBottomSheet from './MapBottomSheet';
 import useMapInstance from '@/hooks/useMapInstance';
 import useNearbySearch from '@/hooks/useNearbySearch';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const googleMapsLibraries: LoadScriptProps['libraries'] = ['places'];
 const containerStyle = {
@@ -30,6 +32,7 @@ const mapOptions = {
 };
 
 const Map = () => {
+  const router = useRouter();
   const { map, onLoad, onUnmount } = useMapInstance();
   const [placeId, setPlaceId] = useState<string | null>(null);
   const [center, setCenter] = useState<LatLng>({
@@ -58,11 +61,19 @@ const Map = () => {
       //nearby places 때문에 바꿔줘야함....
       setCenter(locationDetail.result.geometry.location);
     }
-  }, [locationDetail]);
+  }, [locationDetail, map]);
 
   const onSelectPlace = useCallback((placeId: string) => {
     setPlaceId(placeId);
   }, []);
+
+  const onMarkerClick = () =>
+    // e: google.maps.MapMouseEvent,
+    // place_id: string | undefined,
+    {
+      // router.push(`/place/${place_id}`);
+      console.log('ssssssssss');
+    };
 
   //로딩 처리 필요
   return (
@@ -80,6 +91,7 @@ const Map = () => {
           onLoad={onLoad}
           onUnmount={onUnmount}
           options={mapOptions}
+          onClick={onMarkerClick}
         >
           {places.map((place) => {
             if (place.geometry?.location)
@@ -87,6 +99,7 @@ const Map = () => {
                 <MarkerF
                   key={place.place_id}
                   position={place.geometry.location}
+                  // onClick={onMarkerClick}
                 />
               );
           })}
