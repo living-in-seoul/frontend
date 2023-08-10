@@ -11,10 +11,13 @@ interface RequestOauthLogin {
 
 /** 회원가입 요청 데이터 */
 interface RequestRegister {
-  title: string;
-  locationTag: string;
-  purposeTag: string;
-  content: string;
+  email: string;
+  nickname: string;
+  password: string;
+  gu: string;
+  dogn: string;
+  from: string;
+  movedDate: string;
 }
 
 /** 게시물 수정 요청 데이터 */

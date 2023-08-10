@@ -12,5 +12,4 @@ const MapPage = () => {
     </section>
   );
 };
-
 export default MapPage;
