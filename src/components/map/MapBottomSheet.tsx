@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 import BottomSheetHeader from './bottomsheet/BottomSheetHeader';
 import { useBottomSheet } from '@/hooks/useBottomSheet';
 import { MIN_Y } from './bottomsheet/constants';
-import BottomSheetContent from './bottomsheet/BottomSheetContent';
+import BottomSheetItem from './bottomsheet/BottomSheetItem';
 
 interface MapBottomSheet {
-  places: Place[];
+  places: google.maps.places.PlaceResult[];
 }
 
 const MapBottomSheet = ({ places }: MapBottomSheet) => {
@@ -30,7 +30,11 @@ const MapBottomSheet = ({ places }: MapBottomSheet) => {
     >
       <BottomSheetHeader />
       <div className="h-full" ref={content}>
-        <BottomSheetContent places={places} />
+        <div className="flex flex-col overflow-auto h-full smooth-scroll bg-slate-100 z-10">
+          {places.map((place) => {
+            return <BottomSheetItem key={place.place_id} {...place} />;
+          })}
+        </div>
       </div>
     </div>
   );
