@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic';
+import Map from '../../../components/map/Map';
 const DynamicMap = dynamic(() => import('../../../components/map/Map'), {
   ssr: false,
 });
