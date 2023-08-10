@@ -1,4 +1,5 @@
 import HomePopulation from '@/components/home/HomePopulation';
+import Map from '@/components/map/Map';
 
 import Polygon1 from '@/components/ui/Polygon1';
 import Vector from '@/components/ui/Vector';

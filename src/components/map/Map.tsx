@@ -14,7 +14,7 @@ import useNearbySearch from '@/hooks/useNearbySearch';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-const googleMapsLibraries: LoadScriptProps['libraries'] = ['places'];
+const googleMapsLibraries: Libraries = ['places'];
 const containerStyle = {
   width: '100%',
   height: '100%',
@@ -29,6 +29,16 @@ const mapOptions = {
       stylers: [{ visibility: 'off' }],
     },
   ],
+};
+const MapLoad = () => {
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY || '',
+    libraries: googleMapsLibraries,
+  });
+  if (!isLoaded) {
+    return <div>Loading...</div>;
+  }
+  return <Map />;
 };
 
 const Map = () => {
@@ -67,47 +77,40 @@ const Map = () => {
     setPlaceId(placeId);
   }, []);
 
-  const onMarkerClick = () =>
-    // e: google.maps.MapMouseEvent,
-    // place_id: string | undefined,
-    {
-      // router.push(`/place/${place_id}`);
-      console.log('ssssssssss');
-    };
+  const onMarkerClick = (
+    e: google.maps.MapMouseEvent,
+    place_id: string | undefined,
+  ) => {
+    router.push(`/place/${place_id}`);
+  };
 
   //로딩 처리 필요
   return (
     <section className="w-full h-full bg-slate-400 absolute pb-24">
       <PlacesAutoComplete onSelectPlace={onSelectPlace} />
-      <LoadScriptNext
-        googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY || ''}
-        preventGoogleFontsLoading={true}
-        libraries={googleMapsLibraries}
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={ZOOM}
+        onLoad={onLoad}
+        onUnmount={onUnmount}
+        options={mapOptions}
       >
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={center}
-          zoom={ZOOM}
-          onLoad={onLoad}
-          onUnmount={onUnmount}
-          options={mapOptions}
-          onClick={onMarkerClick}
-        >
-          {places.map((place) => {
-            if (place.geometry?.location)
-              return (
-                <MarkerF
-                  key={place.place_id}
-                  position={place.geometry.location}
-                  // onClick={onMarkerClick}
-                />
-              );
-          })}
-        </GoogleMap>
-      </LoadScriptNext>
+        {places.map((place) => {
+          if (place.geometry?.location)
+            return (
+              <MarkerF
+                key={place.place_id}
+                position={place.geometry.location}
+                onClick={onMarkerClick}
+              />
+            );
+        })}
+      </GoogleMap>
+
       <MapBottomSheet places={places} />
     </section>
   );
 };
 
-export default Map;
+export default MapLoad;

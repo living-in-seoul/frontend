@@ -1,4 +1,3 @@
-import { GoogleMap } from '@react-google-maps/api';
 import { useCallback, useState } from 'react';
 
 const useMapInstance = () => {
