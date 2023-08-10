@@ -4,8 +4,8 @@ interface Props {
 
 const getButtonSizeStyles = (color: string) => {
   switch (color) {
-    case "":
-      return { bgColor: "", color: "" };
+    case '':
+      return { bgColor: '', color: '' };
   }
 };
 
