@@ -7,7 +7,7 @@ export default function NavbarLayout({
 }) {
   return (
     <section>
-      <div className="h-full w-full">{children}</div>
+      <main className="mb-20">{children}</main>
       <Navbar />
     </section>
   );

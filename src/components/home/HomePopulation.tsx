@@ -3,7 +3,6 @@ import useSWR from 'swr';
 import HomeLocationCard from './HomeLocationCard';
 import HomePopCarousel from './HomePopCarousel';
 import { useCallback, useState } from 'react';
-import Button from '../common/Category';
 import CategoryList from '../common/CategoryList';
 
 const categories = ['여성이 많은', '남성이 많은', '매우 붐빔', '여유 로운'];
