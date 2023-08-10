@@ -1,4 +1,5 @@
 import ReviewItem from '@/components/common/ReviewItem';
+import StarRate from '@/components/common/StarRate';
 import DetailInfo from '@/components/detail/DetailInfo';
 import Image from 'next/image';
 import React from 'react';
@@ -27,13 +28,8 @@ const MapDetail = () => {
             <div className="w-full h-40 flex items-center  flex-col text-black text-xl font-semibold  gap-1 mt-6">
               <span>장소 이름</span>
               <div className="flex flex-row justify-center w-full gap-3">
-                <div className="flex items-center ">
-                  <div className="w-3.5 h-3.5 bg-black" />
-                  <div className="w-3.5 h-3.5 bg-black " />
-                  <div className="w-3.5 h-3.5 bg-black " />
-                  <div className="w-3.5 h-3.5 bg-black " />
-                  <div className="w-3.5 h-3.5 bg-black " />
-                </div>
+                <StarRate />
+
                 <div className=" text-black text-sm font-normal leading-loose">
                   <span className="border-r-2 pr-2 border-stone-300">5.0</span>
                 </div>

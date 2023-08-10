@@ -1,5 +1,3 @@
-// import { NextRequest, NextResponse } from 'next/server';
-
 import { getHomeDatas } from '@/service/home';
 import { NextResponse } from 'next/server';
 
