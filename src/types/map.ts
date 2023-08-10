@@ -67,7 +67,7 @@ interface PlaceByPlaceIdResponse {
 interface PlaceResult {
   address_components: AddressComponent[];
   adr_address: string;
-  business_status: string;
+  business_status?: string;
   delivery: boolean;
   dine_in: boolean;
   formatted_address: string;
