@@ -1,4 +1,4 @@
-import Navbar from "@/components/layouts/Navbar";
+import Navbar from '@/components/layouts/Navbar';
 
 export default function NavbarLayout({
   children,
@@ -6,10 +6,9 @@ export default function NavbarLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
-      <h1>NavbarLayout</h1>
-      {children}
+    <section>
+      <div className="h-full w-full">{children}</div>
       <Navbar />
-    </>
+    </section>
   );
 }
