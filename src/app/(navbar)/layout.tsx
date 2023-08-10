@@ -6,9 +6,9 @@ export default function NavbarLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
-      {children}
+    <section>
+      <div className="h-full w-full">{children}</div>
       <Navbar />
-    </>
+    </section>
   );
 }

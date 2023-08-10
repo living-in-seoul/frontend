@@ -1,52 +1,110 @@
-"use client";
-import React, { useRef } from "react";
-import { GoogleMap, LoadScript, MarkerF } from "@react-google-maps/api";
+'use client';
+import { GoogleMap, LoadScriptNext, MarkerF } from '@react-google-maps/api';
+import { useCallback, useEffect, useState } from 'react';
+import PlacesAutoComplete from './PlacesAutoComplete';
+import useSWR from 'swr';
+import MapBottomSheet from './MapBottomSheet';
 
 const containerStyle = {
-  width: "400px",
-  height: "400px",
-};
-
-const center = {
-  lat: 37.566,
-  lng: 126.977,
+  width: '100%',
+  height: '100%',
 };
 
 const mapOptions = {
   disableDefaultUI: true,
-  language: "ko",
+  styles: [
+    {
+      featureType: 'poi',
+      elementType: 'labels',
+      stylers: [{ visibility: 'off' }],
+    },
+  ],
 };
 
 const Map = () => {
-  const first = useRef<HTMLDivElement | null>(null);
-  const [map, setMap] = React.useState(null);
+  const [map, setMap] = useState(null);
+  const [placeId, setPlaceId] = useState<string | null>(null);
+  const [center, setCenter] = useState<LatLng>({
+    lat: 37.5665,
+    lng: 126.978,
+  });
+  const { data: locationDetail, isLoading } = useSWR<PlaceByPlaceIdResponse>(
+    placeId ? `api/map/places/${placeId}` : null,
+    null,
+    {
+      focusThrottleInterval: 5000,
+    },
+  );
+  const [places, setPlaces] = useState<Place[]>([]);
+  const ZOOM = 17;
 
-  const onLoad = React.useCallback(function callback(map: any) {
-    const bounds = new window.google.maps.LatLngBounds(center);
-    map.fitBounds(bounds);
+  useEffect(() => {
+    if (locationDetail?.result) {
+      setCenter(locationDetail.result.geometry.location);
+    }
+  }, [locationDetail, placeId]);
 
-    setMap(map);
-  }, []);
+  useEffect(() => {
+    if (map) {
+      const service = new window.google.maps.places.PlacesService(map);
+      const request: RequestPlaces = {
+        location: center,
+        radius: 800,
+        types: ['restaurant', 'laundry', 'police'],
+      };
+      service.nearbySearch(request, (results, status) => {
+        if (
+          status === window.google.maps.places.PlacesServiceStatus.OK &&
+          results
+        ) {
+          setPlaces(results);
+        }
+      });
+    }
+  }, [map, center]);
+  console.log(places);
 
-  const onUnmount = React.useCallback(function callback(map: any) {
+  const onLoad = useCallback(
+    function callback(map: any) {
+      console.log('맵 새로 가져옴!');
+      map.setZoom(ZOOM);
+      setMap(map);
+    },
+    [center],
+  );
+
+  const onUnmount = useCallback(function callback(map: any) {
     setMap(null);
   }, []);
 
+  const onSelectPlace = useCallback((placeId: string) => {
+    setPlaceId(placeId);
+  }, []);
+
+  //로딩 처리 필요
   return (
-    <LoadScript
-      googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY || ""}
-      preventGoogleFontsLoading={true}>
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
-        zoom={8}
-        onLoad={onLoad}
-        onUnmount={onUnmount}
-        options={mapOptions}>
-        {<MarkerF position={{ lat: 37.566, lng: 126.977 }} />}
-        <></>
-      </GoogleMap>
-    </LoadScript>
+    <section className="w-full h-full bg-slate-400 absolute pb-24">
+      <PlacesAutoComplete onSelectPlace={onSelectPlace} />
+      <LoadScriptNext
+        googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY || ''}
+        preventGoogleFontsLoading={true}
+        libraries={['places']}
+      >
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={center}
+          zoom={ZOOM}
+          onLoad={onLoad}
+          onUnmount={onUnmount}
+          options={mapOptions}
+        >
+          {places.map((place) => (
+            <MarkerF key={place.place_id} position={place.geometry.location} />
+          ))}
+        </GoogleMap>
+      </LoadScriptNext>
+      <MapBottomSheet places={places} />
+    </section>
   );
 };
 
