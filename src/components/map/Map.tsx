@@ -1,10 +1,18 @@
 'use client';
-import { GoogleMap, LoadScriptNext, MarkerF } from '@react-google-maps/api';
+import {
+  GoogleMap,
+  LoadScriptNext,
+  LoadScriptProps,
+  MarkerF,
+} from '@react-google-maps/api';
 import { useCallback, useEffect, useState } from 'react';
 import PlacesAutoComplete from './PlacesAutoComplete';
 import useSWR from 'swr';
 import MapBottomSheet from './MapBottomSheet';
+import useMapInstance from '@/hooks/useMapInstance';
+import useNearbySearch from '@/hooks/useNearbySearch';
 
+const googleMapsLibraries: LoadScriptProps['libraries'] = ['places'];
 const containerStyle = {
   width: '100%',
   height: '100%',
@@ -22,58 +30,35 @@ const mapOptions = {
 };
 
 const Map = () => {
-  const [map, setMap] = useState(null);
+  const { map, onLoad, onUnmount } = useMapInstance();
   const [placeId, setPlaceId] = useState<string | null>(null);
   const [center, setCenter] = useState<LatLng>({
     lat: 37.5665,
     lng: 126.978,
   });
-  const { data: locationDetail, isLoading } = useSWR<PlaceByPlaceIdResponse>(
+  const { data: locationDetail } = useSWR<PlaceByPlaceIdResponse>(
     placeId ? `api/map/places/${placeId}` : null,
     null,
     {
       focusThrottleInterval: 5000,
     },
   );
-  const [places, setPlaces] = useState<google.maps.places.PlaceResult[]>([]);
+  const { places } = useNearbySearch({
+    map,
+    center,
+    radius: 800,
+    types: ['restaurants'],
+  });
+  //constants 파일?
   const ZOOM = 17;
 
   useEffect(() => {
-    if (locationDetail?.result) {
+    if (map && locationDetail) {
+      map.panTo(locationDetail.result.geometry.location);
+      //nearby places 때문에 바꿔줘야함....
       setCenter(locationDetail.result.geometry.location);
     }
-  }, [locationDetail, placeId]);
-
-  // custom hook
-  useEffect(() => {
-    if (map) {
-      const service = new window.google.maps.places.PlacesService(map);
-      const request: RequestPlaces = {
-        location: center,
-        radius: 800,
-        types: ['restaurant', 'laundry', 'police'],
-      };
-      service.nearbySearch(request, (results, status) => {
-        if (
-          status === window.google.maps.places.PlacesServiceStatus.OK &&
-          results
-        ) {
-          setPlaces(results);
-        }
-      });
-    }
-  }, [map, center]);
-
-  const onLoad = useCallback(function callback(map: any) {
-    console.log('맵 새로 가져옴!');
-    map.setZoom(ZOOM);
-    setMap(map);
-  }, []);
-
-  //map, setMap이랑 커스텀 훅
-  const onUnmount = useCallback(function callback(map: any) {
-    setMap(null);
-  }, []);
+  }, [locationDetail]);
 
   const onSelectPlace = useCallback((placeId: string) => {
     setPlaceId(placeId);
@@ -86,7 +71,7 @@ const Map = () => {
       <LoadScriptNext
         googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY || ''}
         preventGoogleFontsLoading={true}
-        libraries={['places']}
+        libraries={googleMapsLibraries}
       >
         <GoogleMap
           mapContainerStyle={containerStyle}
