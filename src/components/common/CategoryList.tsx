@@ -13,10 +13,10 @@ const CategoryList = ({
   setSelectedCategory,
 }: CategoryListProps) => {
   return (
-    <div className="flex px-4 whitespace-nowrap scrollbar-hide overflow-x-auto">
+    <div className="flex whitespace-nowrap scrollbar-hide overflow-x-auto">
       {categories.map((category) => (
         <Button
-          className="mx-1 nowrap"
+          className="mr-[10px] nowrap"
           key={category}
           title={`#${category}`}
           select={category === selectedCategory}

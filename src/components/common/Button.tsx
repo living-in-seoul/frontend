@@ -1,5 +1,5 @@
 interface Props {
-  size: "small" | "medium";
+  size: 'small' | 'medium';
   bgColor?: string;
   color?: string;
   title: string;
@@ -7,9 +7,9 @@ interface Props {
 
 const getButtonSizeStyles = (size: string) => {
   switch (size) {
-    case "small":
-      return "w-[103px] h-[41px]";
-    case "medium":
+    case 'small':
+      return 'w-[103px] h-[41px]';
+    case 'medium':
       return `w-[245px] h-[41px]`;
   }
 };
@@ -20,7 +20,8 @@ const Button = ({ size, title }: Props) => {
       <button
         className={`rounded-[0.625rem] text-base border border-neutral-800 ${getButtonSizeStyles(
           size,
-        )}`}>
+        )}`}
+      >
         {title}
       </button>
     </div>

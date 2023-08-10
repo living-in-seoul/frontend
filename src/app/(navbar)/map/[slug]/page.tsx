@@ -1,16 +1,9 @@
 import ReviewItem from '@/components/common/ReviewItem';
 import StarRate from '@/components/common/StarRate';
 import DetailInfo from '@/components/detail/DetailInfo';
+import { post } from '@/utils/dummydata';
 import Image from 'next/image';
 import React from 'react';
-
-const post = {
-  nickname: '닉네임',
-  hometown: '동네명',
-  title: '혼밥하시는 분들에게 굉장히 좋은 식당 후기',
-  desc: '서울에서 올라온지 얼마 안돼 친구가 없어서 밥을 먹을 수 가 없어요 ',
-  img: '/dog.jpg',
-};
 
 const MapDetail = () => {
   return (

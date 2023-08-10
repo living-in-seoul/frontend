@@ -16,7 +16,7 @@ const ReviewItem = ({
   title,
 }: ReviewItemPorps) => {
   return (
-    <section className="w-full flex flex-row pb-2 ">
+    <section className="w-full flex flex-row pb-4 px-4 ">
       <div className="w-full flex flex-col py-4 pr-4 overflow-hidden ">
         <div className="flex flex-row gap-2">
           <span className="text-black text-[12px] font-semibold ">

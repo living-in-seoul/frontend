@@ -6,9 +6,9 @@ export default function NavbarLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
-      {children}
+    <section>
+      <main className="mb-20">{children}</main>
       <Navbar />
-    </>
+    </section>
   );
 }
