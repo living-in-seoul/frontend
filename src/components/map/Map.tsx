@@ -35,7 +35,8 @@ const Map = () => {
       focusThrottleInterval: 5000,
     },
   );
-  const [places, setPlaces] = useState<Place[]>([]);
+
+  const [places, setPlaces] = useState<google.maps.places.PlaceResult[]>([]);
   const ZOOM = 17;
 
   useEffect(() => {
@@ -64,14 +65,11 @@ const Map = () => {
   }, [map, center]);
   console.log(places);
 
-  const onLoad = useCallback(
-    function callback(map: any) {
-      console.log('맵 새로 가져옴!');
-      map.setZoom(ZOOM);
-      setMap(map);
-    },
-    [center],
-  );
+  const onLoad = useCallback(function callback(map: any) {
+    console.log('맵 새로 가져옴!');
+    map.setZoom(ZOOM);
+    setMap(map);
+  }, []);
 
   const onUnmount = useCallback(function callback(map: any) {
     setMap(null);
