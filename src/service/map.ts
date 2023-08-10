@@ -14,5 +14,5 @@ export const getPlacesAutoComplete = async (text: string) => {
 export const getPlaceByPlaceId = async (placeId: string) => {
   return fetch(
     `${process.env.NEXT_PUBLIC_GOOGLE_PLACES_DETAILS_URL}&language=ko&place_id=${placeId}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY}`,
-  ).then((res) => res.json());
+  ).then<PlaceByPlaceIdResponse>((res) => res.json());
 };

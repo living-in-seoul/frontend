@@ -1,9 +1,9 @@
 'use client';
 import useSWR from 'swr';
 import HomeLocationCard from './HomeLocationCard';
-import HomePopCarousel from './HomePopCarousel';
 import { useCallback, useState } from 'react';
 import CategoryList from '../common/CategoryList';
+import PopCarousel from '../common/PopCarousel';
 
 const categories = ['여성이 많은', '남성이 많은', '매우 붐빔', '여유 로운'];
 
@@ -62,11 +62,11 @@ const HomePopulation = () => {
         setSelectedCategory={setSelectedCategory}
       />
       {data && (
-        <HomePopCarousel>
+        <PopCarousel>
           {chunk(filterByCategory(data), 4).map((group, index) => (
             <HomeLocationCard key={index} data={group} />
           ))}
-        </HomePopCarousel>
+        </PopCarousel>
       )}
     </div>
   );

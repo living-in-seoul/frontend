@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import PlacesAutoComplete from './PlacesAutoComplete';
 import useSWR from 'swr';
 import MapBottomSheet from './MapBottomSheet';
+import Link from 'next/link';
 
 const containerStyle = {
   width: '100%',
@@ -79,6 +80,9 @@ const Map = () => {
     setPlaceId(placeId);
   }, []);
 
+  const openHello = () => {
+    alert('Hello');
+  };
   //로딩 처리 필요
   return (
     <section className="w-full h-full bg-slate-400 absolute pb-24">
@@ -102,7 +106,10 @@ const Map = () => {
                 <MarkerF
                   key={place.place_id}
                   position={place.geometry.location}
-                />
+                  onClick={(e) => {
+                    openHello();
+                  }}
+                ></MarkerF>
               );
           })}
         </GoogleMap>
