@@ -4,7 +4,7 @@ import Button from './Category';
 interface CategoryListProps {
   categories: string[];
   selectedCategory: string | null;
-  setSelectedCategory: Dispatch<SetStateAction<string | null>>;
+  setSelectedCategory: (category: string) => void;
 }
 
 const CategoryList = ({
@@ -12,6 +12,9 @@ const CategoryList = ({
   selectedCategory,
   setSelectedCategory,
 }: CategoryListProps) => {
+  const onSelectHandler = (category: string) => {
+    setSelectedCategory(category);
+  };
   return (
     <div className="flex whitespace-nowrap scrollbar-hide overflow-x-auto">
       {categories.map((category) => (
@@ -20,7 +23,7 @@ const CategoryList = ({
           key={category}
           title={`#${category}`}
           select={category === selectedCategory}
-          onClick={() => setSelectedCategory(category)}
+          onClick={() => onSelectHandler(category)}
         />
       ))}
     </div>

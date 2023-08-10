@@ -25,6 +25,7 @@ const wishlist = {
   width: 28,
   height: 28,
 };
+
 const NavBarArray = [
   {
     name: '홈',
