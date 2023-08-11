@@ -2,11 +2,10 @@
   "compilerOptions": {
     "typeRoots": ["./src/types", "./node_modules/@types"],
     "types": ["node"],
-    "target": "es5",
+    "target": "ES6",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
@@ -15,8 +14,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-
-    "incremental": true,
+    "strict": true,
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true,
+    // "noFallthroughCasesInSwitch": true,
     "plugins": [
       {
         "name": "next"
@@ -24,14 +25,16 @@
     ],
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "incremental": true
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/**/*"
+    "src/**/*",
+    "pages/api/signincheck"
   ],
   "exclude": ["node_modules"]
 }
