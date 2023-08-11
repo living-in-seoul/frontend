@@ -2,9 +2,18 @@ import ReviewItem from '@/components/common/ReviewItem';
 import DetailInfo from '@/components/detail/DetailInfo';
 import { post } from '@/utils/dummydata';
 import Image from 'next/image';
-import React from 'react';
 
-const MapDetail = () => {
+interface MapDetailProps {
+  params: {
+    slug: string[];
+  };
+}
+
+const MapDetail = ({ params }: MapDetailProps) => {
+  const { slug } = params;
+  const [a, b] = slug;
+
+  console.log(a, b);
   return (
     <>
       <Image

@@ -4,13 +4,13 @@ const useMapInstance = () => {
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const ZOOM = 17;
 
-  const onLoad = useCallback(function callback(map: any) {
-    console.log('맵 새로 가져옴!');
+  const onLoad = useCallback(function callback(map: google.maps.Map) {
     map.setZoom(ZOOM);
     setMap(map);
   }, []);
 
-  const onUnmount = useCallback(function callback(map: any) {
+  const onUnmount = useCallback(function callback(map: google.maps.Map) {
+    map;
     setMap(null);
   }, []);
 

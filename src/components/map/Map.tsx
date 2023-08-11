@@ -1,23 +1,22 @@
 'use client';
 import {
   GoogleMap,
-  LoadScriptNext,
-  LoadScriptProps,
+  Libraries,
   MarkerF,
+  useLoadScript,
 } from '@react-google-maps/api';
 import { useCallback, useEffect, useState } from 'react';
 import PlacesAutoComplete from './PlacesAutoComplete';
 import useSWR from 'swr';
-import MapBottomSheet from './MapBottomSheet';
 import useMapInstance from '@/hooks/useMapInstance';
 import useNearbySearch from '@/hooks/useNearbySearch';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 const googleMapsLibraries: Libraries = ['places'];
+
 const containerStyle = {
   width: '100%',
-  height: '100%',
+  height: '100vh',
 };
 
 const mapOptions = {
@@ -30,6 +29,7 @@ const mapOptions = {
     },
   ],
 };
+
 const MapLoad = () => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY || '',
@@ -45,10 +45,12 @@ const Map = () => {
   const router = useRouter();
   const { map, onLoad, onUnmount } = useMapInstance();
   const [placeId, setPlaceId] = useState<string | null>(null);
+  const [types, setTypes] = useState<string[]>(['restaurants']);
   const [center, setCenter] = useState<LatLng>({
     lat: 37.5665,
     lng: 126.978,
   });
+
   const { data: locationDetail } = useSWR<PlaceByPlaceIdResponse>(
     placeId ? `api/map/places/${placeId}` : null,
     null,
@@ -60,15 +62,16 @@ const Map = () => {
     map,
     center,
     radius: 800,
-    types: ['restaurants'],
+    types,
   });
-  //constants 파일?
+  useEffect(() => {
+    console.log(places);
+  }, [places]);
   const ZOOM = 17;
 
   useEffect(() => {
     if (map && locationDetail) {
       map.panTo(locationDetail.result.geometry.location);
-      //nearby places 때문에 바꿔줘야함....
       setCenter(locationDetail.result.geometry.location);
     }
   }, [locationDetail, map]);
@@ -79,17 +82,17 @@ const Map = () => {
 
   const onMarkerClick = (
     e: google.maps.MapMouseEvent,
-    place_id: string | undefined,
+    placeId: string | undefined,
   ) => {
-    router.push(`/place/${place_id}`);
+    router.push(`/place/${placeId}/2`);
   };
 
-  //로딩 처리 필요
   return (
     <section className="w-full h-full bg-slate-400 absolute pb-24">
       <PlacesAutoComplete onSelectPlace={onSelectPlace} />
       <GoogleMap
         mapContainerStyle={containerStyle}
+        // onClick={(e) => e.stop()}
         center={center}
         zoom={ZOOM}
         onLoad={onLoad}
@@ -101,14 +104,14 @@ const Map = () => {
             return (
               <MarkerF
                 key={place.place_id}
+                clickable
                 position={place.geometry.location}
-                onClick={onMarkerClick}
+                onClick={(e) => onMarkerClick(e, place.place_id)}
               />
             );
         })}
       </GoogleMap>
-
-      <MapBottomSheet places={places} />
+      {/* <MapBottomSheet places={places} /> */}
     </section>
   );
 };
