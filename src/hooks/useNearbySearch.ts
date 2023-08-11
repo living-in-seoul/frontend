@@ -1,4 +1,3 @@
-import { GoogleMap } from '@react-google-maps/api';
 import { useEffect, useState } from 'react';
 
 interface NearbySearchProps {
@@ -28,7 +27,7 @@ const useNearbySearch = ({ map, center, radius, types }: NearbySearchProps) => {
         }
       });
     }
-  }, [map, center, radius]);
+  }, [center, map, radius, types]);
 
   return { places };
 };

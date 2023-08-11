@@ -1,4 +1,5 @@
 import HomePopulation from '@/components/home/HomePopulation';
+import Map from '@/components/map/Map';
 
 import Polygon1 from '@/components/ui/Polygon1';
 import Vector from '@/components/ui/Vector';
@@ -8,9 +9,8 @@ const HomePage = () => {
     <section
       className={`relative flex-col flex w-full justify-center h-full bg-white`}
     >
-      <div className="relative flex h-full w-full justify-center px-4 pb-9 pt-[65px] text-left text-black">
-        <div className="flex h-full w-full flex-col justify-between">
-          {/* 사진위에 셀렉바 */}
+      <div className="relative flex h-full w-full justify-center px-4 pb-9 bg-neutral-400 text-left text-black">
+        <div className="flex h-full w-full flex-col">
           <div className="flex w-full items-center font-bold">
             <p className="h-[27px] w-[76px] text-sm leading-[27px]">
               서초구 서초동

@@ -12,7 +12,7 @@ const HomePopulation = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
     categories[0],
   );
-
+  console.log(data?.filter((e) => e.AREA_CONGEST_LVL !== '여유'));
   const filterByCategory = useCallback(
     (data: CityData[]): CityData[] => {
       switch (selectedCategory) {
@@ -29,7 +29,7 @@ const HomePopulation = () => {
               parseFloat(item.FEMALE_PPLTN_RATE),
           );
         case '매우 붐빔':
-          return data.filter((item) => item.AREA_CONGEST_LVL === '매우 붐빔');
+          return data.filter((item) => item.AREA_CONGEST_LVL === '붐빔');
         case '여유 로운':
           return data.filter((item) => item.AREA_CONGEST_LVL === '여유');
 

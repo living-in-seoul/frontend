@@ -12,11 +12,11 @@ const PopCarousel = (props: PopCarouselProp) => {
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: 2, // Carousel에서 한 번에 2개의 아이템을 보여주도록 설정
+      items: 1, // Carousel에서 한 번에 2개의 아이템을 보여주도록 설정
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
-      items: 2,
+      items: 1,
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
