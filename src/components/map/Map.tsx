@@ -11,6 +11,7 @@ import useSWR from 'swr';
 import useMapInstance from '@/hooks/useMapInstance';
 import useNearbySearch from '@/hooks/useNearbySearch';
 import { useRouter } from 'next/navigation';
+import MapBottomSheet from './MapBottomSheet';
 
 const googleMapsLibraries: Libraries = ['places'];
 
@@ -111,7 +112,6 @@ const Map = () => {
             );
         })}
       </GoogleMap>
-      {/* <MapBottomSheet places={places} /> */}
     </section>
   );
 };

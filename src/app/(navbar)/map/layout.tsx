@@ -1,13 +1,19 @@
+import MapBottomSheet from '@/components/map/MapBottomSheet';
+
 export default function NoNavbarLayout({
   children,
-  sidebar,
+  modal,
 }: {
   children: React.ReactNode;
-  sidebar: React.ReactNode;
+  modal: React.ReactNode;
 }) {
+  console.log(modal);
   return (
     <>
-      <main className="w-full h-full">{children}</main>
+      <main className="w-full h-full">
+        {children}
+        <MapBottomSheet>{modal}</MapBottomSheet>
+      </main>
     </>
   );
 }
