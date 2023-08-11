@@ -33,7 +33,7 @@ const ReviewItem = ({
       </div>
       <Image
         className="w-20 h-20 bg-white rounded-2xl shadow-md shadow-slate-700"
-        alt="good bog"
+        alt="good dog"
         src={img}
         width={30000}
         height={30000}

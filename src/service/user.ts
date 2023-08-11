@@ -1,5 +1,7 @@
 'use server';
 
+import { Console } from 'console';
+
 const registerDataHandler = async (formData: FormData) => {
   const reqData = {
     email: formData.get('email'),
@@ -11,18 +13,21 @@ const registerDataHandler = async (formData: FormData) => {
     movedDate: formData.get('moveDate'),
   };
 
-  await fetch(`${process.env.NEXT_PUBLIC_SERVER}/auth/signup`, {
+  return await fetch(`${process.env.NEXT_PUBLIC_SERVER}/auth/signup`, {
     method: 'POST',
     body: JSON.stringify(reqData),
-  });
+  })
+    .then((response) => response.json())
+    .then((result) => console.log(result));
 };
 
 const postSingin = async (formData: FormData) => {
-  console.log(formData);
   await fetch(`${process.env.NEXT_PUBLIC_SERVER}/auth/login`, {
     method: 'POST',
     body: JSON.stringify(formData),
-  });
+  })
+    .then((response) => response.json())
+    .then((result) => console.log(result));
 };
 
 export { registerDataHandler, postSingin };
