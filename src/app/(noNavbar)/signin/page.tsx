@@ -1,4 +1,4 @@
-import DefaultRegister from '@/components/auth/DefaultRegister';
+import DefaultLogin from '@/components/auth/DefaultLogin';
 import SocialAuth from '@/components/auth/SocialAuth';
 
 const socialUrls = {
@@ -9,7 +9,7 @@ const socialUrls = {
 const SignIpPage = () => {
   return (
     <section className="flex justify-center items-center">
-      <DefaultRegister />
+      <DefaultLogin />
       <SocialAuth text="구글" url={socialUrls.googleUrl} />
       <SocialAuth text="카카오" url={socialUrls.kakakoUrl} />
       <SocialAuth text="네이버" url={socialUrls.naverUrl} />

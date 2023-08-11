@@ -11,22 +11,18 @@ const registerDataHandler = async (formData: FormData) => {
     movedDate: formData.get('moveDate'),
   };
 
-  await fetch(`${process.env.SERVER}/auth/signup`, {
+  await fetch(`${process.env.NEXT_PUBLIC_SERVER}/auth/signup`, {
     method: 'POST',
     body: JSON.stringify(reqData),
   });
 };
 
-const signinDataHandler = async (formData: FormData) => {
-  const reqData = {
-    email: formData.get('email'),
-    password: formData.get('password'),
-  };
-  console.log(reqData);
-  await fetch(`${process.env.SERVER}/auth/login`, {
+const postSingin = async (formData: FormData) => {
+  console.log(formData);
+  await fetch(`${process.env.NEXT_PUBLIC_SERVER}/auth/login`, {
     method: 'POST',
-    body: JSON.stringify(reqData),
+    body: JSON.stringify(formData),
   });
 };
 
-export { registerDataHandler, signinDataHandler };
+export { registerDataHandler, postSingin };
