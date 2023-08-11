@@ -2,11 +2,11 @@ import { ReactNode } from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
-interface HomePopCarouselProp {
+interface PopCarouselProp {
   children: ReactNode;
 }
 
-const HomePopCarousel = (props: HomePopCarouselProp) => {
+const PopCarousel = (props: PopCarouselProp) => {
   const { children } = props;
 
   const responsive = {
@@ -31,4 +31,4 @@ const HomePopCarousel = (props: HomePopCarouselProp) => {
     </Carousel>
   );
 };
-export default HomePopCarousel;
+export default PopCarousel;

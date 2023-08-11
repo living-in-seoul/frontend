@@ -68,7 +68,6 @@ const Navbar = () => {
           >
             <Icons
               path={item.iconPath}
-              size="medium"
               fill={pathname === item.path ? '#000' : '#636363'}
             />
             <div className="text-center text-black text-xs font-normal leading-3">
