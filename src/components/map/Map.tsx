@@ -16,7 +16,7 @@ const googleMapsLibraries: Libraries = ['places'];
 
 const containerStyle = {
   width: '100%',
-  height: '100%',
+  height: '100vh',
 };
 
 const mapOptions = {

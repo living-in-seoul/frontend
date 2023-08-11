@@ -50,7 +50,7 @@ const NavBarArray = [
   },
   {
     name: '마이페이지',
-    path: '/place/ChIJdT3Zb-2ifDURejyrGy8OIII',
+    path: '/place/ChIJdT3Zb-2ifDURejyrGy8OIII/1',
     iconPath: comunity,
   },
 ];

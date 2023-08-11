@@ -12,6 +12,7 @@ interface MapDetailProps {
 const MapDetail = ({ params }: MapDetailProps) => {
   const { slug } = params;
   const [a, b] = slug;
+
   console.log(a, b);
   return (
     <>
