@@ -1,19 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    serverActions: true
+    serverActions: true,
   },
   images: {
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'maps.googleapis.com',
-        port: "",
-        pathname: '/maps/api/place/photo'
-        
-      }
-    ]
+        port: '',
+        pathname: '/maps/api/place/photo',
+      },
+    ],
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

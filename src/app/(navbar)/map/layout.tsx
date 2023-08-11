@@ -7,7 +7,6 @@ export default function NoNavbarLayout({
   children: React.ReactNode;
   modal: React.ReactNode;
 }) {
-  console.log(modal);
   return (
     <>
       <main className="w-full h-full">

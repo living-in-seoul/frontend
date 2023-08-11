@@ -65,9 +65,6 @@ const Map = () => {
     radius: 800,
     types,
   });
-  useEffect(() => {
-    console.log(places);
-  }, [places]);
   const ZOOM = 17;
 
   useEffect(() => {

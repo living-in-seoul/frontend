@@ -8,6 +8,5 @@ interface Req extends NextApiRequest {
 }
 export async function GET(req: Req, res: NextApiResponse) {
   const { searchParams } = req;
-  console.log(searchParams);
   return res.redirect('/home');
 }
