@@ -1,7 +1,9 @@
+'use client';
 import ReviewItem from '@/components/common/ReviewItem';
 import DetailInfo from '@/components/detail/DetailInfo';
 import { post } from '@/utils/dummydata';
 import Image from 'next/image';
+import { useEffect } from 'react';
 
 interface MapDetailProps {
   params: {
@@ -11,11 +13,11 @@ interface MapDetailProps {
 
 const MapDetail = ({ params }: MapDetailProps) => {
   const { slug } = params;
-  const [a, b] = slug;
 
-  console.log(a, b);
+  console.log(slug);
+
   return (
-    <>
+    <article>
       <Image
         className="w-full h-52 bg-zinc-300 flex items-center justify-center "
         alt="good dog"
@@ -89,7 +91,7 @@ const MapDetail = ({ params }: MapDetailProps) => {
           <ReviewItem {...post} />
         </div>
       </div>
-    </>
+    </article>
   );
 };
 
