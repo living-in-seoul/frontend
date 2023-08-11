@@ -8,6 +8,7 @@ import { getPlaceByPlaceId } from '@/service/map';
 
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
+import { choi } from '../../../../../public';
 interface MapDetailProps {
   params: {
     slug: string[];
@@ -23,12 +24,13 @@ const MapDetail = async ({ params }: MapDetailProps) => {
   if (checkRedirect === '2') {
     redirect('/map');
   }
+  console.log(mainPicture);
   return (
     <>
       <Image
         className=" h-52 bg-zinc-300 flex items-center justify-center w-full object-cover aspect-square "
         alt="good dog"
-        src={mainPicture}
+        src={choi}
         width={30000000000}
         height={30000000000}
       />
