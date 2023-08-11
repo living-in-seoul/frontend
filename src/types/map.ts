@@ -63,14 +63,14 @@ interface PlaceByPlaceIdResponse {
   status: string;
 }
 
-//옵셔널은 없는지 확인하기
+/** 맵 장소 세부 결과(result) response by place id*/
 interface PlaceResult {
   address_components: AddressComponent[];
   adr_address: string;
   business_status?: string;
   delivery: boolean;
   dine_in: boolean;
-  formatted_address: string;
+  formatted_address?: string;
   formatted_phone_number: string;
   geometry: Geometry;
   icon: string;
