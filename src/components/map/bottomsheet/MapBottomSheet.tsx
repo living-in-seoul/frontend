@@ -1,13 +1,15 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import BottomSheetHeader from './bottomsheet/BottomSheetHeader';
+import BottomSheetHeader from './BottomSheetHeader';
+import { usePathname } from 'next/navigation';
 
 interface MapBottomSheetProps {
   children: React.ReactNode;
 }
 
 const MapBottomSheet = ({ children }: MapBottomSheetProps) => {
+  const router = usePathname();
   const [open, setOpen] = useState<boolean>(false);
   const [sheetHeight, setSheetHeight] = useState<number>(200);
 
@@ -18,7 +20,6 @@ const MapBottomSheet = ({ children }: MapBottomSheetProps) => {
       setSheetHeight(200);
     }
   }, [open, sheetHeight]);
-
   const onToggleSheet = () => {
     setOpen(!open);
   };

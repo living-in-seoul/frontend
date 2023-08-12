@@ -20,11 +20,12 @@ const MapDetail = async ({ params }: MapDetailProps) => {
   const data = await getPlaceByPlaceId(placeId).then(
     (response) => response.result,
   );
+
   const mainPicture = `${process.env.NEXT_PUBLIC_GOOGLE_PHOTO_URL}?maxwidth=200&maxheigth=400&photo_reference=${data.photos[0].photo_reference}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY}`;
   if (checkRedirect === '2') {
     redirect('/map');
   }
-  console.log(mainPicture);
+
   return (
     <>
       <Image

@@ -19,7 +19,7 @@ const MapDetail = async ({ params }: MapDetailProps) => {
   const data = await getPlaceByPlaceId(placeId).then(
     (response) => response.result,
   );
-  const mainPicture = `${process.env.NEXT_PUBLIC_GOOGLE_PHOTO_URL}?maxwidth=200&maxheigth=400&photo_reference=${data.photos[0].photo_reference}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY}`;
+  const mainPicture = `${process.env.NEXT_PUBLIC_GOOGLE_PHOTO_URL}?maxwidth=400&maxheigth=800&photo_reference=${data.photos[0].photo_reference}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY}`;
 
   return (
     <>
@@ -30,7 +30,7 @@ const MapDetail = async ({ params }: MapDetailProps) => {
         width={30000000000}
         height={30000000000}
       />
-      <div className="px-4 flex flex-col ">
+      <div className="px-4 flex flex-col">
         <DetailPlaceInfo data={data} />
         <DetailReviewerPictuers photos={data.photos} />
         <CommunityBoardList title="커뮤니티에 등록한 리뷰" image={true} />
