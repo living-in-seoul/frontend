@@ -1,17 +1,18 @@
 'use client';
+
 import {
   GoogleMap,
   Libraries,
   MarkerF,
   useLoadScript,
 } from '@react-google-maps/api';
-import { useCallback, useEffect, useState } from 'react';
-import PlacesAutoComplete from './PlacesAutoComplete';
+import { placeIdState, placesState } from '@/recoil/states';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import useMapInstance from '@/hooks/useMapInstance';
 import useNearbySearch from '@/hooks/useNearbySearch';
 import { useRouter } from 'next/navigation';
-import MapBottomSheet from './MapBottomSheet';
 
 const googleMapsLibraries: Libraries = ['places'];
 
@@ -44,13 +45,14 @@ const MapLoad = () => {
 
 const Map = () => {
   const router = useRouter();
+  const [placeId, setPlaceIdState] = useRecoilState(placeIdState);
   const { map, onLoad, onUnmount } = useMapInstance();
-  const [placeId, setPlaceId] = useState<string | null>(null);
   const [types, setTypes] = useState<string[]>(['restaurants']);
   const [center, setCenter] = useState<LatLng>({
     lat: 37.5665,
     lng: 126.978,
   });
+  const setPlacesState = useSetRecoilState(placesState);
 
   const { data: locationDetail } = useSWR<PlaceByPlaceIdResponse>(
     placeId ? `api/map/places/${placeId}` : null,
@@ -74,9 +76,9 @@ const Map = () => {
     }
   }, [locationDetail, map]);
 
-  const onSelectPlace = useCallback((placeId: string) => {
-    setPlaceId(placeId);
-  }, []);
+  useEffect(() => {
+    setPlacesState(places);
+  }, [places, setPlacesState]);
 
   const onMarkerClick = (
     e: google.maps.MapMouseEvent,
@@ -87,7 +89,6 @@ const Map = () => {
 
   return (
     <section className="w-full h-full bg-slate-400 absolute pb-24">
-      <PlacesAutoComplete onSelectPlace={onSelectPlace} />
       <GoogleMap
         mapContainerStyle={containerStyle}
         // onClick={(e) => e.stop()}
