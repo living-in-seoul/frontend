@@ -40,32 +40,38 @@ const DefaultLogin = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmitHandler)}
-      className="flex flex-col h-52 w-52 border border-neutral-700 p-5 gap-3"
+      className="flex flex-col gap-3"
     >
-      <input
-        id="email"
-        type="text"
-        className="w-full"
-        placeholder="email"
-        {...emailProps}
-        aria-invalid={
-          isSubmitted ? (errors.email ? 'true' : 'false') : undefined
-        }
-      />
-      {errors.email && <small>{errors.email.message}</small>}
-      <input
-        id="password"
-        type="password"
-        className="w-full"
-        placeholder="password"
-        {...passwordProps}
-        aria-invalid={
-          isSubmitted ? (errors.password ? 'true' : 'false') : undefined
-        }
-      />
-      {errors.password && <small>{errors.password.message}</small>}
-      <button type="submit" disabled={isSubmitting}>
-        submit
+      <div>
+        <label>아이디(이메일)</label>
+        <input
+          id="email"
+          type="text"
+          className="w-full h-14 text-sm border border-zinc-400 rounded-xl"
+          placeholder="ex) seuol123@vival.com"
+          {...emailProps}
+          aria-invalid={isSubmitted ? (errors.email ? true : false) : undefined}
+        />
+        {errors.email && <small>{errors.email.message}</small>}
+        <label>비밀번호</label>
+        <input
+          id="password"
+          type="password"
+          className="w-full h-14 text-sm border border-zinc-400 rounded-xl"
+          placeholder="password"
+          {...passwordProps}
+          aria-invalid={
+            isSubmitted ? (errors.password ? true : false) : undefined
+          }
+        />
+        {errors.password && <small>{errors.password.message}</small>}
+      </div>
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className="w-full h-14 bg-teal-400 rounded-3xl text-white py-4"
+      >
+        로그인 하기
       </button>
     </form>
   );

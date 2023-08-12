@@ -20,8 +20,10 @@ const MapDetail = async ({ params }: MapDetailProps) => {
   const data = await getPlaceByPlaceId(placeId).then(
     (response) => response.result,
   );
-
-  const mainPicture = `${process.env.NEXT_PUBLIC_GOOGLE_PHOTO_URL}?maxwidth=200&maxheigth=400&photo_reference=${data.photos[0].photo_reference}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY}`;
+  console.log(data);
+  const mainPicture = data.photos
+    ? `${process.env.NEXT_PUBLIC_GOOGLE_PHOTO_URL}?maxwidth=200&maxheigth=400&photo_reference=${data.photos[0].photo_reference}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY}`
+    : choi;
   if (checkRedirect === '2') {
     redirect('/map');
   }
@@ -31,9 +33,9 @@ const MapDetail = async ({ params }: MapDetailProps) => {
       <Image
         className=" h-52 bg-zinc-300 flex items-center justify-center w-full object-cover aspect-square "
         alt="good dog"
-        src={choi}
-        width={30000000000}
-        height={30000000000}
+        src={mainPicture}
+        width={3000}
+        height={3000}
       />
       <div className="px-4 flex flex-col ">
         <DetailPlaceInfo data={data} />

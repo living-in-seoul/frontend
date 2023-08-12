@@ -5,9 +5,10 @@ interface Props {
     height: number;
   };
   fill?: string;
+  onClick?: () => void;
 }
 
-const Icons = ({ path, fill }: Props) => {
+const Icons = ({ path, fill, onClick }: Props) => {
   return (
     <svg
       width={path.width}
@@ -15,6 +16,7 @@ const Icons = ({ path, fill }: Props) => {
       viewBox={`0 0 ${path.width} ${path.height}`}
       aria-hidden="true"
       preserveAspectRatio="xMidYMid meet"
+      onClick={onClick}
     >
       <path d={path.path} className="w-full h-full" fill={fill} />
     </svg>
