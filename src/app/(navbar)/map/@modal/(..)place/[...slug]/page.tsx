@@ -1,13 +1,9 @@
-import MultiPleCard from '@/components/common/MultiPleCard';
-import PopCarousel from '@/components/common/PopCarousel';
 import CommunityBoardList from '@/components/community/CommunityBoardList';
-import DetailMultipleCard from '@/components/detail/DetailMultipleCard';
 import DetailPlaceInfo from '@/components/detail/DetailPlaceInfo';
 import DetailReviewerPictuers from '@/components/detail/DetailReviewerPictuers';
 import { getPlaceByPlaceId } from '@/service/map';
 
 import Image from 'next/image';
-import { redirect } from 'next/navigation';
 interface MapDetailProps {
   params: {
     slug: string[];

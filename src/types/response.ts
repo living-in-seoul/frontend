@@ -155,8 +155,29 @@ interface CityData {
   /** 예보 인구 데이터 */
   FCST_PPLTN: Forecast[];
 }
-
+interface ResponseCityImageData extends CityData {
+  CITY_IMAGE: {
+    status: string;
+    value: ResponseImageSearchResult;
+  };
+}
 /**서울시 API */
 interface ResponseCityData {
   'SeoulRtd.citydata_ppltn': CityData[];
+}
+/** 네이버 이미지 */
+interface ResponseImageSearchResult {
+  lastBuildDate: string;
+  total: number;
+  start: number;
+  display: number;
+  items: ResponseImageItem[];
+}
+
+interface ResponseImageItem {
+  title: string;
+  link: string;
+  thumbnail: string;
+  sizeheight: string;
+  sizewidth: string;
 }

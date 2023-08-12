@@ -1,17 +1,16 @@
+/* eslint-disable @next/next/no-img-element */
 import Image from 'next/image';
 import mrchoi from '@/../public/mrchoi.png';
 
-const MultiPleCard = (data: CityData) => {
+const MultiPleCard = (data: ResponseCityImageData) => {
   return (
     <article className="w-[48%] hover:shadow-xl transition-all duration-500 hover:scale-105">
       <div className="relative w-full h-36 rounded-md overflow-hidden shadow-md">
         <Image
           className="absolute top-0 h-auto object-cover"
           src={mrchoi}
-          alt={data.AREA_CONGEST_LVL}
-          fill
+          alt={'mrchoi'}
           sizes="210px"
-          priority
         />
       </div>
       <div className="flex flex-col px-2 pt-2">

@@ -102,7 +102,23 @@ interface PlaceResult {
   website: string;
   wheelchair_accessible_entrance: boolean;
 }
-
+type GooglePlacePickedResult = Pick<
+  PlaceResult,
+  | 'business_status'
+  | 'formatted_address'
+  | 'geometry'
+  | 'icon'
+  | 'icon_background_color'
+  | 'icon_mask_base_uri'
+  | 'name'
+  | 'photos'
+  | 'place_id'
+  | 'plus_code'
+  | 'rating'
+  | 'reference'
+  | 'types'
+  | 'user_ratings_total'
+>;
 interface AddressComponent {
   long_name: string;
   short_name: string;
@@ -200,4 +216,10 @@ interface Place {
   scope: string;
   types: string[];
   vicinity: string;
+}
+
+interface GooglePlacesResponse {
+  html_attributions: any[];
+  results: PlaceResult[];
+  status: string;
 }

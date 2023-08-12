@@ -59,7 +59,7 @@ const Navbar = () => {
   const pathname = usePathname();
   return (
     <nav className="fixed bottom-0 right-0 w-full border bg-white">
-      <div className="flex-row h-[76px] flex w-full justify-center px-4 pt-2">
+      <div className="flex-row h-[60px] flex w-full justify-center px-4 pt-2">
         {NavBarArray.map((item) => (
           <Link
             key={item.name}

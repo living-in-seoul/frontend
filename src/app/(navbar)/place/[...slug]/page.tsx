@@ -24,7 +24,6 @@ const MapDetail = async ({ params }: MapDetailProps) => {
   if (checkRedirect === '2') {
     redirect('/map');
   }
-  console.log(mainPicture);
   return (
     <>
       <Image
