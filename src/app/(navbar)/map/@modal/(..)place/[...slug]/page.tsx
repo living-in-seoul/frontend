@@ -5,6 +5,7 @@ import DetailMultipleCard from '@/components/detail/DetailMultipleCard';
 import DetailPlaceInfo from '@/components/detail/DetailPlaceInfo';
 import DetailReviewerPictuers from '@/components/detail/DetailReviewerPictuers';
 import { getPlaceByPlaceId } from '@/service/map';
+import { getImageSrc } from '@/utils/utilFunc';
 
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
