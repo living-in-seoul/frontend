@@ -7,7 +7,7 @@ const MultiPleCard = (data: CityData) => {
   return (
     <article className="w-[48%] hover:shadow-xl transition-all duration-500 hover:scale-105">
       <div className="relative w-full h-36 rounded-md overflow-hidden shadow-md">
-        <Link href={`/place/ChIJdT3Zb-2ifDURejyrGy8OIII/2`} prefetch={false}>
+        <Link href={`/map/place/ChIJdT3Zb-2ifDURejyrGy8OIII`} prefetch={false}>
           <Image
             className="absolute top-0 h-auto object-cover"
             src={mrchoi}
