@@ -1,49 +1,45 @@
-// import {
-//   ChangeHandler,
-//   FieldError,
-//   FieldErrors,
-//   RefCallBack,
-// } from 'react-hook-form';
+/** errorState : error.email , errorMessage: error.email.message */
+interface AuthInputProps {
+  id: string;
+  isText?: boolean;
+  placeholder: string;
+  label: string;
+  mainProps: any;
+  isSubmitted: any;
+  isErrors: any;
+  errorsMessage: any | undefined;
+}
 
-// /** errorState : error.email , errorMessage: error.email.message */
-// interface AuthInputProps {
-//   typeProps: {
-//     onChange: ChangeHandler;
-//     onBlur: ChangeHandler;
-//     ref: RefCallBack;
-//     name: 'email';
-//   };
-//   isSubmitted: boolean;
-//   errorsState: FieldError;
-//   errorMessage: FieldError;
-//   label: string;
-//   formNmae: string;
-// }
+const AuthInput = ({
+  id,
+  isText = true,
+  placeholder,
+  label,
+  mainProps,
+  isSubmitted,
+  isErrors,
+  errorsMessage,
+}: AuthInputProps) => {
+  return (
+    <div className="flex flex-col gap-3">
+      <label className="text-neutral-500 ">{label}</label>
+      <div className="pb-8 h-24">
+        <input
+          className="w-full h-14 text-sm border border-zinc-400 rounded-xl px-4"
+          id={id}
+          type={isText ? 'text' : 'password'}
+          placeholder={placeholder}
+          {...mainProps}
+          aria-invalid={isSubmitted ? (isErrors ? true : false) : undefined}
+        />
+        {
+          <small className="h-10 text-teal-400 text-xs pl-4">
+            {isErrors && errorsMessage}
+          </small>
+        }
+      </div>
+    </div>
+  );
+};
 
-// const AuthInput = ({
-//   typeProps,
-//   isSubmitted,
-//   errorsState,
-//   errorMessage,
-//   label,
-//   formNmae,
-// }: AuthInputProps) => {
-//   return (
-//     <div>
-//       <label>{label}</label>
-//       <input
-//         id={formNmae}
-//         type="text"
-//         className="w-full h-14 text-sm border border-zinc-400 rounded-xl"
-//         placeholder="ex) seuol123@vival.com"
-//         {...typeProps}
-//         aria-invalid={
-//           isSubmitted ? (errorsState ? 'true' : 'false') : undefined
-//         }
-//       />
-//       {errorsState && <small>{errorMessage}</small>}
-//     </div>
-//   );
-// };
-
-// export default AuthInput;
+export default AuthInput;

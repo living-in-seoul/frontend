@@ -1,4 +1,10 @@
-const SignupWelcome = ({ isEssential }: { isEssential: boolean }) => {
+'use client';
+
+import { signupEssentialState } from '@/recoil/states';
+import { useRecoilState } from 'recoil';
+
+const SignupWelcome = () => {
+  const [isEssential] = useRecoilState(signupEssentialState);
   return (
     <div>
       <div className="flex flxe-row justify-between items-center">
