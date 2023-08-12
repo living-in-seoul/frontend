@@ -4,20 +4,26 @@ import { useCallback, useState } from 'react';
 import useSWR from 'swr';
 import SearchInput from '../../common/SearchInput';
 import { FormEvent } from 'react';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { placeIdState } from '@/recoil/states';
+import { useRouter } from 'next/navigation';
 
 const PlacesAutoComplete = () => {
+  const router = useRouter();
   const [openUl, setOpenUl] = useState<boolean>(false);
   const [inputLocation, setInputLocation] = useState<string>('');
   const debounceKeyword = useDebounce(inputLocation);
   const { data, isLoading } = useSWR<PlacesResponse>(
     debounceKeyword ? `api/map/${debounceKeyword}` : null,
   );
-  const [placeId, setPlaceIdState] = useRecoilState(placeIdState);
+  const setPlaceIdState = useSetRecoilState(placeIdState);
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputLocation(e.target.value);
+  };
+
+  const onFocusHandler = () => {
+    setOpenUl(true);
   };
 
   const onClickHandler = useCallback(
@@ -25,8 +31,9 @@ const PlacesAutoComplete = () => {
       setPlaceIdState(placeId);
       setOpenUl(false);
       setInputLocation('');
+      router.push(`/place/${placeId}/2`);
     },
-    [setPlaceIdState],
+    [router, setPlaceIdState],
   );
 
   const onSubmit = useCallback(
@@ -48,7 +55,7 @@ const PlacesAutoComplete = () => {
         value={inputLocation}
         onChange={onChangeHandler}
         onSubmit={onSubmit}
-        onFocus={() => setOpenUl(true)}
+        onFocus={onFocusHandler}
       />
       {openUl && (
         <ul className="bg-white w-full rounded-xl">
