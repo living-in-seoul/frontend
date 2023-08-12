@@ -14,7 +14,6 @@ export default function NavbarLayout({
   recommend: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const segment = useSelectedLayoutSegment();
   return (
     <>
       <main className="w-full h-full">

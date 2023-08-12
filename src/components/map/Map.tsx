@@ -84,6 +84,7 @@ const Map = () => {
     e: google.maps.MapMouseEvent,
     placeId: string | undefined,
   ) => {
+    placeId && setPlaceIdState(placeId);
     router.push(`/place/${placeId}/2`);
   };
 
@@ -91,7 +92,6 @@ const Map = () => {
     <section className="w-full h-full bg-slate-400 absolute pb-24">
       <GoogleMap
         mapContainerStyle={containerStyle}
-        // onClick={(e) => e.stop()}
         center={center}
         zoom={ZOOM}
         onLoad={onLoad}
@@ -99,15 +99,21 @@ const Map = () => {
         options={mapOptions}
       >
         {places.map((place) => {
-          if (place.geometry?.location)
+          if (place.geometry?.location && place.icon) {
+            const customIcon: google.maps.Icon = {
+              url: place.icon,
+              scaledSize: new google.maps.Size(20, 20),
+            };
             return (
               <MarkerF
                 key={place.place_id}
+                icon={customIcon}
                 clickable
                 position={place.geometry.location}
                 onClick={(e) => onMarkerClick(e, place.place_id)}
               />
             );
+          }
         })}
       </GoogleMap>
     </section>
