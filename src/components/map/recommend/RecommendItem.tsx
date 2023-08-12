@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-const BottomSheetItem = (place: google.maps.places.PlaceResult) => {
+const RecommendItem = (place: google.maps.places.PlaceResult) => {
   const { name, place_id } = place;
   return (
     <div>
@@ -9,4 +9,4 @@ const BottomSheetItem = (place: google.maps.places.PlaceResult) => {
   );
 };
 
-export default BottomSheetItem;
+export default RecommendItem;

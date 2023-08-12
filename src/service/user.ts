@@ -1,7 +1,5 @@
 'use server';
 
-import { Console } from 'console';
-
 const registerDataHandler = async (formData: FormData) => {
   const reqData = {
     email: formData.get('email'),

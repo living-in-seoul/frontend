@@ -16,7 +16,6 @@ const HomePopulation = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
     categories[0],
   );
-  console.log(data);
   const filterByCategory = useCallback(
     (data: ResponseCityImageData[]): ResponseCityImageData[] => {
       switch (selectedCategory) {
