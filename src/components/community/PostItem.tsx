@@ -39,13 +39,13 @@ const PostItem = ({ board, user, selectCategory }: PostItemProps) => {
         </div>
 
         <div className="grow px-4">
-          <Button title={`#${selectCategory}`} disable size="small" />
+          <Button title={`#${selectCategory}`} disable />
           <h3 className="text-xs font-[600] my-1">{nickname}</h3>
           <p className="text-xs">{content}</p>
           <div className="flex justify-between w-1/2 py-1">
-            <Icons size="small" path={comment} />
-            <Icons size="small" path={heart} />
-            <Icons size="small" path={share} />
+            <Icons path={comment} />
+            <Icons path={heart} />
+            <Icons path={share} />
           </div>
         </div>
       </div>

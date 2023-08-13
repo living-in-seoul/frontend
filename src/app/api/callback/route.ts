@@ -6,8 +6,6 @@ interface Req extends NextApiRequest {
     scope: string;
   };
 }
-export async function GET(req: Req, res: NextApiResponse) {
-  const { searchParams } = req;
-  console.log(searchParams);
+export async function GET(_: NextApiRequest, res: NextApiResponse) {
   return res.redirect('/home');
 }

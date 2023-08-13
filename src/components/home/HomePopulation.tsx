@@ -12,7 +12,6 @@ const HomePopulation = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
     categories[0],
   );
-  console.log(data?.filter((e) => e.AREA_CONGEST_LVL !== '여유'));
   const filterByCategory = useCallback(
     (data: CityData[]): CityData[] => {
       switch (selectedCategory) {

@@ -1,12 +1,14 @@
 'use client';
+
 import {
   GoogleMap,
   Libraries,
   MarkerF,
   useLoadScript,
 } from '@react-google-maps/api';
-import { useCallback, useEffect, useState } from 'react';
-import PlacesAutoComplete from './PlacesAutoComplete';
+import { placeIdState, placesState } from '@/recoil/states';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import useMapInstance from '@/hooks/useMapInstance';
 import useNearbySearch from '@/hooks/useNearbySearch';
@@ -43,13 +45,14 @@ const MapLoad = () => {
 
 const Map = () => {
   const router = useRouter();
+  const [placeId, setPlaceIdState] = useRecoilState(placeIdState);
   const { map, onLoad, onUnmount } = useMapInstance();
-  const [placeId, setPlaceId] = useState<string | null>(null);
   const [types, setTypes] = useState<string[]>(['restaurants']);
   const [center, setCenter] = useState<LatLng>({
     lat: 37.5665,
     lng: 126.978,
   });
+  const setPlacesState = useSetRecoilState(placesState);
 
   const { data: locationDetail } = useSWR<PlaceByPlaceIdResponse>(
     placeId ? `api/map/places/${placeId}` : null,
@@ -64,9 +67,6 @@ const Map = () => {
     radius: 800,
     types,
   });
-  useEffect(() => {
-    console.log(places);
-  }, [places]);
   const ZOOM = 17;
 
   useEffect(() => {
@@ -76,23 +76,22 @@ const Map = () => {
     }
   }, [locationDetail, map]);
 
-  const onSelectPlace = useCallback((placeId: string) => {
-    setPlaceId(placeId);
-  }, []);
+  useEffect(() => {
+    setPlacesState(places);
+  }, [places, setPlacesState]);
 
   const onMarkerClick = (
     e: google.maps.MapMouseEvent,
     placeId: string | undefined,
   ) => {
+    placeId && setPlaceIdState(placeId);
     router.push(`/place/${placeId}/2`);
   };
 
   return (
     <section className="w-full h-full bg-slate-400 absolute pb-24">
-      <PlacesAutoComplete onSelectPlace={onSelectPlace} />
       <GoogleMap
         mapContainerStyle={containerStyle}
-        // onClick={(e) => e.stop()}
         center={center}
         zoom={ZOOM}
         onLoad={onLoad}
@@ -100,18 +99,23 @@ const Map = () => {
         options={mapOptions}
       >
         {places.map((place) => {
-          if (place.geometry?.location)
+          if (place.geometry?.location && place.icon) {
+            const customIcon: google.maps.Icon = {
+              url: place.icon,
+              scaledSize: new google.maps.Size(20, 20),
+            };
             return (
               <MarkerF
                 key={place.place_id}
+                icon={customIcon}
                 clickable
                 position={place.geometry.location}
                 onClick={(e) => onMarkerClick(e, place.place_id)}
               />
             );
+          }
         })}
       </GoogleMap>
-      {/* <MapBottomSheet places={places} /> */}
     </section>
   );
 };
