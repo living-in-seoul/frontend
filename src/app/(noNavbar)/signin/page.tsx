@@ -1,17 +1,18 @@
-import SigninButtons from '@/components/auth/signin/SigninButtons';
-import SigninWelcome from '@/components/auth/signin/SigninWelcome';
+import DefaultLogin from '@/components/auth/DefaultLogin';
+import SocialAuth from '@/components/auth/SocialAuth';
 
+const socialUrls = {
+  googleUrl: `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URL}&response_type=code&state=google&scope=https%3A//www.googleapis.com/auth/drive.metadata.readonly`,
+  kakakoUrl: `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URL}&response_type=code`,
+  naverUrl: `https://nid.naver.com/oauth2.0/authorize?client_id=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URL}&response_type=code&state=naver`,
+};
 const SignIpPage = () => {
   return (
-    <section className="flex flex-col ">
-      <SigninWelcome />
-      <div className="w-full h-10 relative flex items-center justify-center">
-        <span className="bg-white z-10 px-3 text-zinc-400">
-          SNS로 간편하게 로그인하세요
-        </span>
-        <div className="absolute top-0 w-full h-5 border-b border-b-zinc-400 " />
-      </div>
-      <SigninButtons />
+    <section className="flex justify-center items-center">
+      <DefaultLogin />
+      <SocialAuth text="구글" url={socialUrls.googleUrl} />
+      <SocialAuth text="카카오" url={socialUrls.kakakoUrl} />
+      <SocialAuth text="네이버" url={socialUrls.naverUrl} />
     </section>
   );
 };

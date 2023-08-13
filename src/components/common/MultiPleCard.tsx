@@ -1,22 +1,18 @@
-'use client';
 import Image from 'next/image';
 import mrchoi from '@/../public/mrchoi.png';
-import Link from 'next/link';
 
 const MultiPleCard = (data: CityData) => {
   return (
     <article className="w-[48%] hover:shadow-xl transition-all duration-500 hover:scale-105">
       <div className="relative w-full h-36 rounded-md overflow-hidden shadow-md">
-        <Link href={`/map/place/ChIJdT3Zb-2ifDURejyrGy8OIII`} prefetch={false}>
-          <Image
-            className="absolute top-0 h-auto object-cover"
-            src={mrchoi}
-            alt={data.AREA_CONGEST_LVL}
-            fill
-            sizes="210px"
-            priority
-          />
-        </Link>
+        <Image
+          className="absolute top-0 h-auto object-cover"
+          src={mrchoi}
+          alt={data.AREA_CONGEST_LVL}
+          fill
+          sizes="210px"
+          priority
+        />
       </div>
       <div className="flex flex-col px-2 pt-2">
         <h3 className="text-sm font-semibold leading-loose">{data.AREA_NM}</h3>

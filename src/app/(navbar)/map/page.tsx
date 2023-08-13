@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic';
-import PlacesAutoComplete from '@/components/map/search/PlacesAutoComplete';
+import Map from '../../../components/map/Map';
 const DynamicMap = dynamic(() => import('../../../components/map/Map'), {
   ssr: true,
 });
@@ -7,7 +7,6 @@ const DynamicMap = dynamic(() => import('../../../components/map/Map'), {
 const MapPage = () => {
   return (
     <section className=" w-full h-full">
-      <PlacesAutoComplete />
       <DynamicMap />
     </section>
   );

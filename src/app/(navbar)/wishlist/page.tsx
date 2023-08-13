@@ -1,10 +1,4 @@
-import FilterModal from '@/components/map/filter/FilterModal';
-
 const WishListPage = () => {
-  return (
-    <section>
-      <FilterModal />
-    </section>
-  );
+  return <div>WishListPage</div>;
 };
 export default WishListPage;

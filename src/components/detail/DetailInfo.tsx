@@ -1,44 +1,33 @@
-import { call, home, marker } from '@/utils/Icon';
 import Icons from '../common/Icons';
-const detailInfoIcons = {
-  markerIcon: { path: marker, width: 14, height: 18 },
-  callIcon: { path: call, width: 24, height: 28 },
-  homeIcon: { path: home, width: 18, height: 18 },
+const path = {
+  path: 'M2.9125 11L3.725 7.4875L1 5.125L4.6 4.8125L6 1.5L7.4 4.8125L11 5.125L8.275 7.4875L9.0875 11L6 9.1375L2.9125 11Z',
+  width: 12,
+  height: 12,
 };
 
-interface DetainlInfoProps {
-  business_status: string | undefined;
-  formatted_address: string | undefined;
-  formatted_phone_number: string | undefined;
-}
-
-const DetailInfo = ({
-  formatted_address,
-  formatted_phone_number,
-  business_status,
-}: DetainlInfoProps) => {
+const DetailInfo = ({ text }: { text: string }) => {
   return (
-    <div className="flex flex-col  py-5 gap-2 ">
-      <div className="flex items-center gap-2 ">
-        <Icons path={detailInfoIcons.markerIcon} fill="#B8B8B8" />
-        <span>{formatted_address}</span>
-      </div>
-      <div className="flex items-center gap-2 ">
-        <Icons path={detailInfoIcons.callIcon} fill="#B8B8B8" />
-        <span>{formatted_phone_number}</span>
-      </div>
-      <div className="flex items-center gap-2 ">
-        <Icons path={detailInfoIcons.homeIcon} fill="#B8B8B8" />
-        <span>
-          {business_status === 'OPERATIONAL' ? '운영중입니다' : '영업 안해요~'}
-        </span>
+    <div className="border-b-4 border-zinc-300">
+      <div className="flex flex-col  py-5 gap-2 ">
+        <div className="flex items-center ">
+          <Icons path={path} />
+          <span>{text}</span>
+        </div>
+        <div className="flex items-center ">
+          <Icons path={path} />
+          <span>{text}</span>
+        </div>
+        <div className="flex items-center ">
+          <Icons path={path} />
+          <span>{text}</span>
+        </div>
       </div>
     </div>
   );
 };
 
 export default DetailInfo;
-// marker+
+
 {
   /* <div className="border-b-4 border-zinc-300">
           <div className="flex flex-col  py-5 gap-2 ">

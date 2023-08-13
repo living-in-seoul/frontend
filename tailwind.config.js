@@ -18,9 +18,6 @@ module.exports = {
           '-webkit-overflow-scrolling': 'touch',
         },
       },
-      colors: {
-        customYellows: '#FEE500' 
-      }
     },
   },
   plugins: [require('tailwind-scrollbar-hide')],

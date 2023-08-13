@@ -150,7 +150,7 @@ interface Review {
 }
 
 interface SecondaryOpeningHours {
-  open_now?: boolean;
+  open_now: boolean;
   periods: Period[];
   type: string;
   weekday_text: string[];

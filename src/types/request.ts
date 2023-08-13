@@ -14,10 +14,10 @@ interface RequestRegister {
   email: string;
   nickname: string;
   password: string;
-  gu?: string;
-  dong?: string;
-  hometown?: string;
-  movedDate?: string;
+  gu: string;
+  dogn: string;
+  from: string;
+  movedDate: string;
 }
 
 /** 게시물 수정 요청 데이터 */
