@@ -15,14 +15,14 @@ export const placesState = atom<google.maps.places.PlaceResult[]>({
   default: [],
 });
 
-export const signupFistState = atom<RequestRegister>({
+export const signupState = atom<RequestRegister>({
   key: 'signupFistState',
   default: {
     email: '',
     nickname: '',
     password: '',
     gu: '',
-    dogn: '',
+    dong: '',
     hometown: '',
     movedDate: '',
   },
