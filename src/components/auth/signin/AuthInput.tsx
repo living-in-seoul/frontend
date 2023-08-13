@@ -25,7 +25,8 @@ const AuthInput = ({
       <label className="text-neutral-500 ">{label}</label>
       <div className="pb-8 h-24">
         <input
-          className="w-full h-14 text-sm border border-zinc-400 rounded-xl px-4"
+          className="w-full h-14 text-sm border border-zinc-400 rounded-xl px-4 outline-teal-400"
+          autoComplete={isText ? 'username' : 'new-password'}
           id={id}
           type={isText ? 'text' : 'password'}
           placeholder={placeholder}

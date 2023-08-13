@@ -1,20 +1,25 @@
 'use client';
 
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import AuthInput from '../signin/AuthInput';
 import Button from '@/components/common/Button';
-import { useRecoilState } from 'recoil';
-import { signupEssentialState, signupFistState } from '@/recoil/states';
+import { useSetRecoilState } from 'recoil';
+import { signupEssentialState, signupState } from '@/recoil/states';
 import { useRouter } from 'next/navigation';
-
+interface FormProps {
+  email: string;
+  password: string;
+  checkPassword: string;
+  nickname: string;
+}
 const SignupFirst = () => {
   const {
     register,
     handleSubmit,
-    resetField,
+    reset,
     getValues,
     formState: { isSubmitting, isSubmitted, errors },
-  } = useForm({
+  } = useForm<FormProps>({
     mode: 'onSubmit',
     defaultValues: {
       email: '',
@@ -24,8 +29,9 @@ const SignupFirst = () => {
     },
   });
   const router = useRouter();
-  const [signupData, setSignupData] = useRecoilState(signupFistState);
-  const [Esseontial, setEssential] = useRecoilState(signupEssentialState);
+  const setSignupData = useSetRecoilState(signupState);
+  const setEssential = useSetRecoilState(signupEssentialState);
+  // 얘네들 따로 뺴보자
   const { ...emailProps } = register('email', {
     required: '이메일은 필수 입력입니다',
     pattern: {
@@ -63,15 +69,12 @@ const SignupFirst = () => {
       message: '닉네임은 10자 이내 숫자와 공백을 허용하지 않습니다',
     },
   });
-
-  const onSubmitHandler = (data: any) => {
-    setSignupData(data);
-    resetField('email');
-    resetField('password');
-    resetField('checkPassword');
-    resetField('nickname');
+  const onSubmitHandler: SubmitHandler<FormProps> = (data) => {
+    setSignupData((prev) => ({ ...prev, ...data }));
+    reset();
     setEssential((prev) => !prev);
-    router.replace('/signup/second');
+    console.log(signupState);
+    router.push('/signup/second');
   };
   return (
     <section>
@@ -82,7 +85,6 @@ const SignupFirst = () => {
         <div className="">
           <AuthInput
             id="email"
-            isText={true}
             placeholder="ex) seuol123@vival.com"
             label="아이디(이메일)"
             mainProps={emailProps}
@@ -92,7 +94,7 @@ const SignupFirst = () => {
           />
           <AuthInput
             id="password"
-            isText={true}
+            isText={false}
             placeholder="영문, 숫자 조합 10자리 이상"
             label="비밀번호"
             mainProps={passwordProps}
@@ -102,7 +104,7 @@ const SignupFirst = () => {
           />
           <AuthInput
             id="checkPassword"
-            isText={true}
+            isText={false}
             placeholder="ex)비밀번호를 재입력해주세요"
             label="비밀번호 확인"
             mainProps={checkPasswordProps}
@@ -112,7 +114,6 @@ const SignupFirst = () => {
           />
           <AuthInput
             id="nickname"
-            isText={true}
             placeholder="닉네임을 입력해주세요"
             label="닉네임"
             mainProps={nicknameProps}
@@ -126,7 +127,7 @@ const SignupFirst = () => {
           size="large"
           title="다음"
           bgColor="bg-zinc-300"
-          border="noem"
+          border="none"
           color="text-white"
           hoverColor="bg-teal-400"
         />

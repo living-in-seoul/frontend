@@ -15,7 +15,7 @@ interface RequestRegister {
   nickname: string;
   password: string;
   gu?: string;
-  dogn?: string;
+  dong?: string;
   hometown?: string;
   movedDate?: string;
 }

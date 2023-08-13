@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import AuthInput from './AuthInput';
 import Button from '@/components/common/Button';
+import { useRouter } from 'next/navigation';
 const DefaultLogin = () => {
   const {
     register,
@@ -17,6 +18,7 @@ const DefaultLogin = () => {
       password: '',
     },
   });
+  const router = useRouter();
   const { ...passwordProps } = register('password', {
     required: '이메일은 필수 입력입니다',
     pattern: {
@@ -72,12 +74,12 @@ const DefaultLogin = () => {
         >
           비밀번호 찾기
         </Link>
-        <Link
+        <div
           className="border-b text-[10px] text-zinc-400"
-          href={'/signup/first'}
+          onClick={() => router.replace('/signup/first')}
         >
           이메일로 회원가입
-        </Link>
+        </div>
       </div>
       <Button
         size="large"
