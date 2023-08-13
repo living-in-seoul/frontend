@@ -24,14 +24,14 @@ const Button = ({
   title,
   color,
   bgColor,
-  hoverColor,
+  hoverColor = 'bg-teal-400',
   type,
   border = 'border border-neutral-800',
 }: Props) => {
   return (
     <div>
       <button
-        className={` rounded-xl  font-semibold text-base ${color} ${bgColor} ${border}  ${getButtonSizeStyles(
+        className={`active:${hoverColor} hover:${hoverColor} rounded-xl font-semibold text-base ${color} ${bgColor} ${border}  ${getButtonSizeStyles(
           size,
         )}`}
         type={type}
