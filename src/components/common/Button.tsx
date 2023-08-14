@@ -6,6 +6,7 @@ interface Props {
   title: string;
   border?: string;
   type?: 'button' | 'submit' | 'reset' | undefined;
+  onClick?: () => void;
 }
 
 const getButtonSizeStyles = (size: string) => {

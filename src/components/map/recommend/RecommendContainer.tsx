@@ -1,22 +1,18 @@
-'use client';
 import RecommendItem from '@/components/map/recommend/RecommendItem';
-import { placeIdState, placesState } from '@/recoil/states';
+import { placeIdState, placesState } from '@/recoil/mapStates';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-const RecommendPage = () => {
-  const router = useRouter();
-  const [places, setPlacesState] = useRecoilState(placesState);
-  const [placeId, setPlaceIdState] = useRecoilState(placeIdState);
+const RecommendContainer = () => {
+  const placesValue = useRecoilValue(placesState);
+  const setPlaceIdState = useSetRecoilState(placeIdState);
 
   const onClickHandler = (placeId: string | undefined) => {
     placeId && setPlaceIdState(placeId);
   };
-
   return (
-    <section>
-      {places.map((place) => {
+    <div>
+      {placesValue.map((place) => {
         return (
           <Link
             key={place.place_id}
@@ -27,7 +23,8 @@ const RecommendPage = () => {
           </Link>
         );
       })}
-    </section>
+    </div>
   );
 };
-export default RecommendPage;
+
+export default RecommendContainer;
