@@ -1,6 +1,6 @@
 'use client';
 
-import { signupEssentialState } from '@/recoil/states';
+import { signupEssentialState } from '@/recoil/mapStates';
 import { useRecoilState } from 'recoil';
 
 const SignupWelcome = () => {
