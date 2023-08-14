@@ -25,10 +25,10 @@ export const signupState = atom<RequestRegister>({
     email: '',
     nickname: '',
     password: '',
-    gu: '',
-    dong: '',
+    gender: '',
+    birthDate: '',
     hometown: '',
-    movedDate: '',
+    movedDate: '2017-12-12',
   },
 });
 
