@@ -1,5 +1,6 @@
 'use client';
-import { MIN_Y } from '@/components/map/recommend/constants';
+
+import { MIN_Y } from '@/components/map/constants';
 import { useEffect, useRef } from 'react';
 
 export const useBottomSheet = (maxY: number) => {

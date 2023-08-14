@@ -1,8 +1,8 @@
 'use client';
-
 import {
   GoogleMap,
   Libraries,
+  LoadScriptNext,
   MarkerF,
   useLoadScript,
 } from '@react-google-maps/api';
@@ -13,34 +13,17 @@ import useSWR from 'swr';
 import useMapInstance from '@/hooks/useMapInstance';
 import useNearbySearch from '@/hooks/useNearbySearch';
 import { useRouter } from 'next/navigation';
+import {
+  MapStyleVersionOne,
+  MapStyleVersionThree,
+  MapStyleVersionTwo,
+} from '@/utils/styles';
 
-const googleMapsLibraries: Libraries = ['places'];
+const libraries: Libraries = ['places'];
 
 const containerStyle = {
   width: '100%',
   height: '100vh',
-};
-
-const mapOptions = {
-  disableDefaultUI: true,
-  styles: [
-    {
-      featureType: 'poi',
-      elementType: 'labels',
-      stylers: [{ visibility: 'off' }],
-    },
-  ],
-};
-
-const MapLoad = () => {
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY || '',
-    libraries: googleMapsLibraries,
-  });
-  if (!isLoaded) {
-    return <div>Loading...</div>;
-  }
-  return <Map />;
 };
 
 const Map = () => {
@@ -54,13 +37,25 @@ const Map = () => {
   });
   const setPlacesState = useSetRecoilState(placesState);
 
-  const { data: locationDetail } = useSWR<PlaceByPlaceIdResponse>(
-    placeId ? `api/map/places/${placeId}` : null,
-    null,
-    {
-      focusThrottleInterval: 5000,
-    },
-  );
+  // const { data: locationDetail } = useSWR<PlaceByPlaceIdResponse>(
+  //   placeId ? `api/map/places/${placeId}` : null,
+  //   null,
+  //   {
+  //     focusThrottleInterval: 5000,
+  //   },
+  // );
+
+  const mapOptions: google.maps.MapOptions = {
+    fullscreenControl: true,
+    gestureHandling: 'greedy',
+    disableDoubleClickZoom: true,
+    // restriction: {
+    //   latLngBounds: seoulBound,
+    //   strictBounds: true,
+    // },
+    disableDefaultUI: true,
+    styles: MapStyleVersionThree,
+  };
   const { places } = useNearbySearch({
     map,
     center,
@@ -69,16 +64,16 @@ const Map = () => {
   });
   const ZOOM = 17;
 
-  useEffect(() => {
-    if (map && locationDetail) {
-      map.panTo(locationDetail.result.geometry.location);
-      setCenter(locationDetail.result.geometry.location);
-    }
-  }, [locationDetail, map]);
+  // useEffect(() => {
+  //   if (map && locationDetail) {
+  //     map.panTo(locationDetail.result.geometry.location);
+  //     setCenter(locationDetail.result.geometry.location);
+  //   }
+  // }, [locationDetail, map]);
 
-  useEffect(() => {
-    setPlacesState(places);
-  }, [places, setPlacesState]);
+  // useEffect(() => {
+  //   setPlacesState(places);
+  // }, [places, setPlacesState]);
 
   const onMarkerClick = (
     e: google.maps.MapMouseEvent,
@@ -88,30 +83,36 @@ const Map = () => {
   };
 
   return (
-    <section className="w-full h-full bg-slate-400 absolute pb-24">
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        // onClick={(e) => e.stop()}
-        center={center}
-        zoom={ZOOM}
-        onLoad={onLoad}
-        onUnmount={onUnmount}
-        options={mapOptions}
+    <section className="w-full h-full bg-slate-400">
+      <LoadScriptNext
+        googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY || ''}
+        loadingElement={<div>Loading...</div>}
+        libraries={libraries}
       >
-        {places.map((place) => {
-          if (place.geometry?.location)
-            return (
-              <MarkerF
-                key={place.place_id}
-                clickable
-                position={place.geometry.location}
-                onClick={(e) => onMarkerClick(e, place.place_id)}
-              />
-            );
-        })}
-      </GoogleMap>
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          // onClick={(e) => e.stop()}
+          center={center}
+          zoom={ZOOM}
+          onLoad={onLoad}
+          onUnmount={onUnmount}
+          options={mapOptions}
+        >
+          {/* {places.map((place) => {
+            if (place.geometry?.location)
+              return (
+                <MarkerF
+                  key={place.place_id}
+                  clickable
+                  position={place.geometry.location}
+                  onClick={(e) => onMarkerClick(e, place.place_id)}
+                />
+              );
+          })} */}
+        </GoogleMap>
+      </LoadScriptNext>
     </section>
   );
 };
 
-export default MapLoad;
+export default Map;

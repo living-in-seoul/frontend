@@ -41,7 +41,7 @@ const PlacesAutoComplete = () => {
   );
 
   return (
-    <section className=" absolute top-0 left-0 z-50 flex flex-col justify-center items-center w-full pt-4 text-xs">
+    <section className="absolute top-0 left-0 z-50 flex flex-col justify-center items-center w-full pt-4 text-xs">
       {isLoading && <div>loading!</div>}
       <SearchInput
         placeholder="서초구 서초동"

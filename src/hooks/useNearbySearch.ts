@@ -13,10 +13,10 @@ const useNearbySearch = ({ map, center, radius, types }: NearbySearchProps) => {
   useEffect(() => {
     if (map) {
       const service = new window.google.maps.places.PlacesService(map);
-      const request: RequestPlaces = {
+      const request: google.maps.places.PlaceSearchRequest = {
         location: center,
         radius: radius,
-        types: types,
+        type: types[0],
       };
       service.nearbySearch(request, (results, status) => {
         if (

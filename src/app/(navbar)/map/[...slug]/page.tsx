@@ -1,6 +1,10 @@
 'use client';
+import PlacesAutoComplete from '@/components/map/search/PlacesAutoComplete';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
-
+const DynamicMap = dynamic(() => import('../../../../components/map/Map'), {
+  ssr: true,
+});
 interface MapDetailProps {
   params: {
     slug: string[];
@@ -16,7 +20,12 @@ const MapRedirectPage = ({ params }: MapDetailProps) => {
   router.push(`/place/${placeId}/2`);
 
   // redirect(`/place/${placeId}`);
-  return <div>MapRedirectPage</div>;
+  return (
+    <section className=" w-full h-full">
+      <PlacesAutoComplete />
+      <DynamicMap />
+    </section>
+  );
 };
 
 export default MapRedirectPage;

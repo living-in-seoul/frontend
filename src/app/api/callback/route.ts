@@ -1,12 +1,6 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-interface Req extends NextApiRequest {
-  searchParams: {
-    state: string;
-    code: string;
-    scope: string;
-  };
-}
-export async function GET(req: Req, res: NextApiResponse) {
-  const { searchParams } = req;
-  return res.redirect('/home');
+import { NextResponse } from 'next/server';
+
+export async function GET() {
+  // const { searchParams } = req;
+  return NextResponse.json('hi');
 }

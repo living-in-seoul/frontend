@@ -16,3 +16,9 @@ export async function retryFetch(
   }
   throw new Error('너무 많은 요청');
 }
+
+/** 이미지 가져오기 */
+export const getImageSrc = (code: string) => {
+  const ImageSrc = `${process.env.NEXT_PUBLIC_GOOGLE_PHOTO_URL}?maxwidth=400&maxheigth=800&photo_reference=${code}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY}`;
+  return ImageSrc;
+};

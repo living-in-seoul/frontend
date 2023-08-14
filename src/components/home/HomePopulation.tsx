@@ -20,17 +20,9 @@ const HomePopulation = () => {
     (data: ResponseCityImageData[]): ResponseCityImageData[] => {
       switch (selectedCategory) {
         case '남성이 많은':
-          return data.filter(
-            (item) =>
-              parseFloat(item.MALE_PPLTN_RATE) >
-              parseFloat(item.FEMALE_PPLTN_RATE),
-          );
+          return data.filter((item) => parseFloat(item.MALE_PPLTN_RATE) > 58);
         case '여성이 많은':
-          return data.filter(
-            (item) =>
-              parseFloat(item.MALE_PPLTN_RATE) <
-              parseFloat(item.FEMALE_PPLTN_RATE),
-          );
+          return data.filter((item) => parseFloat(item.FEMALE_PPLTN_RATE) > 58);
         case '매우 붐빔':
           return data.filter((item) => item.AREA_CONGEST_LVL === '붐빔');
         case '여유 로운':
