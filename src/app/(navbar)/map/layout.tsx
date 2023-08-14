@@ -1,7 +1,4 @@
-'use client';
-import MapBottomSheet from '@/components/map/bottomsheet/MapBottomSheet';
 import { usePathname, useSelectedLayoutSegment } from 'next/navigation';
-import { RecoilRoot } from 'recoil';
 
 export default function NavbarLayout({
   children,
@@ -12,16 +9,14 @@ export default function NavbarLayout({
   modal: React.ReactNode;
   recommend: React.ReactNode;
 }) {
-  const pathname = usePathname();
+  // const pathname = usePathname();
   return (
     <>
       <main className="w-full h-full">
-        <RecoilRoot>
-          {children}
-          {/* <MapBottomSheet>
+        {children}
+        {/* <MapBottomSheet>
             {pathname === '/map' ? recommend : modal}
           </MapBottomSheet> */}
-        </RecoilRoot>
       </main>
     </>
   );

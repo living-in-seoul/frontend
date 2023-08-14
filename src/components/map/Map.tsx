@@ -1,6 +1,7 @@
 'use client';
 import {
   GoogleMap,
+  HeatmapLayerF,
   Libraries,
   LoadScriptNext,
   MarkerF,
@@ -19,7 +20,7 @@ import {
   MapStyleVersionTwo,
 } from '@/utils/styles';
 
-const libraries: Libraries = ['places'];
+const libraries: Libraries = ['places', 'visualization'];
 
 const containerStyle = {
   width: '100%',
@@ -98,23 +99,25 @@ const Map = () => {
           onUnmount={onUnmount}
           options={mapOptions}
         >
-          {/* {places.map((place) => {
-            if (place.geometry?.location && place.icon) {
-            const customIcon: google.maps.Icon = {
-              url: place.icon,
-              scaledSize: new google.maps.Size(20, 20),
-            };
-              return (
-                <MarkerF
-                  key={place.place_id}
-                  icon={customIcon}
-                clickable
-                  position={place.geometry.location}
-                  onClick={(e) => onMarkerClick(e, place.place_id)}
-                />
-              );
-            }
-        })} */}
+          {typeof google !== 'undefined' && (
+            <HeatmapLayerF
+              data={[
+                new google.maps.LatLng(37.5665, 126.978),
+                new google.maps.LatLng(37.57, 126.981),
+              ]}
+              options={{
+                maxIntensity: 5,
+                gradient: ['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)'],
+                dissipating: false,
+                opacity: 0.8,
+              }}
+            />
+          )}
+
+          <MarkerF
+            position={center}
+            onClick={(e) => alert(`You clicked me!${e.latLng}`)}
+          />
         </GoogleMap>
       </LoadScriptNext>
     </section>

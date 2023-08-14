@@ -9,7 +9,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 const ZOOM = 10;
-const STATE_GEOSEOUL = 'http://192.168.35.61:3000/api/map/seoul';
+const STATE_GEOSEOUL = `${process.env.NEXT_PUBLIC_OUR_URL}/api/map/seoul`;
 
 const useMapInstance = () => {
   const [map, setMap] = useState<google.maps.Map | null>(null);
