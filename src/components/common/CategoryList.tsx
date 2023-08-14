@@ -4,17 +4,25 @@ interface CategoryListProps {
   categories: string[];
   selectedCategory: string | null;
   setSelectedCategory: (category: string) => void;
+  dropdown?: boolean;
   noScroll?: boolean;
+  onClickToOpenFilter?: () => void;
 }
 
 const CategoryList = ({
   categories,
   selectedCategory,
   setSelectedCategory,
+  onClickToOpenFilter,
   noScroll,
+  dropdown,
 }: CategoryListProps) => {
   const onSelectHandler = (category: string) => {
     setSelectedCategory(category);
+  };
+  const onClickHandler = (category: string) => {
+    onSelectHandler(category);
+    onClickToOpenFilter && onClickToOpenFilter();
   };
   return (
     <div className={`${displayOption(noScroll)}`}>
@@ -22,9 +30,9 @@ const CategoryList = ({
         <Button
           className="mr-[10px] nowrap"
           key={category}
-          title={`# ${category}`}
+          title={dropdown ? `🔽 ${category}` : `# ${category}`}
           select={category === selectedCategory}
-          onClick={() => onSelectHandler(category)}
+          onClick={() => onClickHandler(category)}
         />
       ))}
     </div>

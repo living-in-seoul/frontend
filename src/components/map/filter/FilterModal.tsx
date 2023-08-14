@@ -1,42 +1,61 @@
 'use client';
 
-import CategoryList from '@/components/common/CategoryList';
-import { useState } from 'react';
 import FilterModalRadius from '../../common/RangeSlider';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import {
+  filterOptionState,
+  openFilterState,
+  rangeState,
+} from '@/recoil/mapStates';
+import Button from '@/components/common/Button';
+import LocationFilter from './LocationFilter';
+import RangeSlider from '../../common/RangeSlider';
 
 const FilterModal = () => {
-  const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
-  const [range, setRange] = useState<number>(500);
+  const [filterOption, setFilterOptionState] =
+    useRecoilState(filterOptionState);
+  const openFilterValue = useRecoilValue(openFilterState);
+  const [range, setRangeState] = useRecoilState(rangeState);
+  const setOpenFilterState = useSetRecoilState(openFilterState);
+
+  const onCloseFilterModal = () => {
+    setOpenFilterState(false);
+    setFilterOptionState('');
+  };
+
+  const onResetFilterModal = () => {
+    setOpenFilterState(false);
+    setFilterOptionState('');
+  };
+
+  const switchOptions = () => {
+    switch (filterOption) {
+      case '장소':
+        return <LocationFilter />;
+      case '장소유형':
+        break;
+      case '거리':
+        return <RangeSlider range={range} setRange={setRangeState} />;
+
+      default:
+        break;
+    }
+  };
 
   return (
-    <section className="h-full w-full flex flex-col justify-center items-center py-4 bg-neutral-200 gap-5">
-      <h1 className="text-gray-600"></h1>
-
-      <CategoryList
-        categories={Filters.map((filter) => filter.name)}
-        selectedCategory={selectedFilter}
-        setSelectedCategory={(filter) => setSelectedFilter(filter)}
-        noScroll
-      />
-      <FilterModalRadius range={range} setRange={setRange} />
-    </section>
+    <div className="fixed top-28  left-0 w-full flex flex-col justify-center items-center  bg-white px-4">
+      {openFilterValue && <>{switchOptions()}</>}
+      {/* <Button size="small" title="필터 적용" onClick={onCloseFilterModal} /> */}
+      <div className="flex justify-center gap-5">
+        <button className="text-xs" onClick={onResetFilterModal}>
+          초기화
+        </button>
+        <button className="text-xs" onClick={onCloseFilterModal}>
+          필터 적용
+        </button>
+      </div>
+    </div>
   );
 };
 
 export default FilterModal;
-
-const Filters = [
-  { name: '음식점', category: 'restaurants' },
-  { name: '카페', category: 'cafe' },
-  { name: '편의점', category: 'convenience_store' },
-  { name: '마트', category: 'supermarket' },
-  { name: '은행', category: 'bank' },
-  { name: '병원', category: 'hospital' },
-  { name: '약국', category: 'pharmacy' },
-  { name: '헬스장', category: 'gym' },
-  { name: '세탁시설', category: 'laundry' },
-  { name: '공원', category: 'park' },
-  { name: '도서관', category: 'library' },
-];
-
-//문화시설, 공공기관, pc방

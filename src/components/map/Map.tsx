@@ -7,8 +7,13 @@ import {
   MarkerF,
   useLoadScript,
 } from '@react-google-maps/api';
-import { placeIdState, placesState } from '@/recoil/states';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import {
+  filterState,
+  placeIdState,
+  placesState,
+  rangeState,
+} from '@/recoil/mapStates';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import useMapInstance from '@/hooks/useMapInstance';
@@ -30,21 +35,15 @@ const containerStyle = {
 const Map = () => {
   const router = useRouter();
   const [placeId, setPlaceIdState] = useRecoilState(placeIdState);
+  const filterValue = useRecoilValue(filterState);
+  const rangeValue = useRecoilValue(rangeState);
+  const [zoom, setZoom] = useState<number>(18);
   const { map, onLoad, onUnmount } = useMapInstance();
-  const [types, setTypes] = useState<string[]>(['restaurants']);
   const [center, setCenter] = useState<LatLng>({
     lat: 37.5665,
     lng: 126.978,
   });
   const setPlacesState = useSetRecoilState(placesState);
-
-  // const { data: locationDetail } = useSWR<PlaceByPlaceIdResponse>(
-  //   placeId ? `api/map/places/${placeId}` : null,
-  //   null,
-  //   {
-  //     focusThrottleInterval: 5000,
-  //   },
-  // );
 
   const mapOptions: google.maps.MapOptions = {
     fullscreenControl: true,
@@ -57,13 +56,19 @@ const Map = () => {
     disableDefaultUI: true,
     styles: MapStyleVersionThree,
   };
+  const { data: locationDetail } = useSWR<PlaceByPlaceIdResponse>(
+    placeId ? `api/map/places/${placeId}` : null,
+    null,
+    {
+      focusThrottleInterval: 5000,
+    },
+  );
   const { places } = useNearbySearch({
     map,
     center,
-    radius: 800,
-    types,
+    radius: rangeValue,
+    type: filterValue,
   });
-  const ZOOM = 17;
 
   // useEffect(() => {
   //   if (map && locationDetail) {
@@ -76,8 +81,23 @@ const Map = () => {
   //   setPlacesState(places);
   // }, [places, setPlacesState]);
 
+  useEffect(() => {
+    if (rangeValue > 200) {
+      setZoom(18);
+    }
+    if (rangeValue > 400) {
+      setZoom(17);
+    }
+    if (rangeValue > 500) {
+      setZoom(16);
+    }
+    if (rangeValue > 700) {
+      setZoom(15);
+    }
+  }, [rangeValue, filterValue]);
+
   const onMarkerClick = (
-    e: google.maps.MapMouseEvent,
+    _: google.maps.MapMouseEvent,
     placeId: string | undefined,
   ) => {
     placeId && setPlaceIdState(placeId);
@@ -94,7 +114,7 @@ const Map = () => {
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}
-          zoom={ZOOM}
+          zoom={zoom}
           onLoad={onLoad}
           onUnmount={onUnmount}
           options={mapOptions}

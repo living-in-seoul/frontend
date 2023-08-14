@@ -2,22 +2,20 @@
 
 import { useEffect, useState } from 'react';
 import BottomSheetHeader from './BottomSheetHeader';
-import { usePathname } from 'next/navigation';
 
 interface MapBottomSheetProps {
   children: React.ReactNode;
 }
 
 const MapBottomSheet = ({ children }: MapBottomSheetProps) => {
-  const router = usePathname();
   const [open, setOpen] = useState<boolean>(false);
-  const [sheetHeight, setSheetHeight] = useState<number>(200);
+  const [sheetHeight, setSheetHeight] = useState<number>(130);
 
   useEffect(() => {
     if (open) {
       setSheetHeight(window.innerHeight - 200);
     } else {
-      setSheetHeight(200);
+      setSheetHeight(130);
     }
   }, [open, sheetHeight]);
 
@@ -29,11 +27,14 @@ const MapBottomSheet = ({ children }: MapBottomSheetProps) => {
     <section
       style={{
         transform: `translateY(-${sheetHeight})`,
-        transition: 'all 0.5s ease-in-out',
+        transition: 'all 0.2s ease',
         height: `${sheetHeight}px`,
       }}
       onClick={onToggleSheet}
-      className={`flex flex-col justify-center items-center fixed bottom-0 left-0 rounded-t-3xl bg-slate-50 z-1 w-full border-t-2 p-5 shadow-2xl ease-out z-30`}
+      // onTouchEnd={(e) => console.log(e)}
+      draggable="true"
+      onTouchMove={(e) => console.log(e)}
+      className={`flex flex-col justify-center items-center fixed bottom-0 left-0 rounded-t-3xl bg-white z-1 w-full border-t-2 px-4 pt-5 shadow-2xl border-neutral-200 `}
     >
       <BottomSheetHeader />
       <div
