@@ -1,5 +1,5 @@
 'use client';
-import { registerDataHandler } from '@/service/user';
+// import { registerDataHandler } from '@/service/user';
 import { useForm } from 'react-hook-form';
 
 const SignUpPage = () => {
