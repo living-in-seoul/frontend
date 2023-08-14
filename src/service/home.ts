@@ -114,27 +114,68 @@ const DATA_AREA = [
   '청와대',
 ];
 
-export const getHomeDatas = async () => {
-  const promises = DATA_AREA.map((region) => {
-    return fetch(
+/** 도시 이미지 가져오기 검색어로 */
+const fetchCityImage = async (
+  region: string,
+): Promise<ResponseImageGoogle | null> => {
+  try {
+    const refinedRegion = region.replace(' 관광특구', '');
+
+    const res = await fetch(
+      `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${refinedRegion}&radius=300&key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY}&language=ko`,
+      { method: 'GET' },
+    );
+    return await res.json();
+  } catch (error) {
+    console.error(`Failed to fetch image for region: ${region}`, error);
+    return null;
+  }
+};
+
+/** 도시 데이터 가져오기 검색어로 */
+const fetchCityData = async (
+  region: string,
+): Promise<ResponseCityData | null> => {
+  try {
+    const res = await fetch(
       `http://openapi.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_SEOUL_KEY}/json/citydata_ppltn/1/5/${region}`,
-      {
-        next: { revalidate: 3000 },
-      },
-    ).then<ResponseCityData>((res) => res.json());
+      { next: { revalidate: 3000 } },
+    );
+    return await res.json();
+  } catch (error) {
+    console.error(`Failed to fetch data for region: ${region}`, error);
+    return null;
+  }
+};
+
+/** 도시데이터 && 도시 이미지 함치는 함수 */
+export const getHomeDatas = async () => {
+  const imageDataPromises = DATA_AREA.map((region) => fetchCityImage(region));
+  const cityDataPromises = DATA_AREA.map((region) => fetchCityData(region));
+
+  const imageResults = await Promise.allSettled(imageDataPromises);
+  const cityDataResults = await Promise.allSettled(cityDataPromises);
+
+  function isFulfilled<T>(
+    result: PromiseSettledResult<T>,
+  ): result is PromiseFulfilledResult<T> {
+    return result.status === 'fulfilled';
+  }
+
+  return DATA_AREA.map((region, index) => {
+    const cityDataResult = cityDataResults[index];
+    const cityData = isFulfilled(cityDataResult) ? cityDataResult.value : null;
+
+    const imageResult = imageResults[index];
+    const imageInfo = isFulfilled(imageResult) ? imageResult.value : null;
+    const ImageInformation = imageInfo?.results[0] ?? null;
+    return {
+      ...cityData?.['SeoulRtd.citydata_ppltn']?.[0],
+      image: ImageInformation?.photos
+        ? ImageInformation?.photos[0].photo_reference
+        : null,
+      place_id: ImageInformation?.place_id,
+      name: ImageInformation?.name,
+    };
   });
-
-  const results = await Promise.allSettled(promises);
-
-  const successfulResults = results
-    .filter(
-      (result): result is PromiseFulfilledResult<ResponseCityData> =>
-        result.status === 'fulfilled',
-    )
-    .flatMap((item) => {
-      const data = item.value['SeoulRtd.citydata_ppltn'];
-      return data && data.length > 0 ? data[0] : [];
-    });
-
-  return successfulResults;
 };

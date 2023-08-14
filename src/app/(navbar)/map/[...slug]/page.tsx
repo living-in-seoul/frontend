@@ -1,11 +1,10 @@
 'use client';
-import { useRouter } from 'next/navigation';
-import dynamic from 'next/dynamic';
 import PlacesAutoComplete from '@/components/map/search/PlacesAutoComplete';
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
 const DynamicMap = dynamic(() => import('../../../../components/map/Map'), {
   ssr: true,
 });
-
 interface MapDetailProps {
   params: {
     slug: string[];

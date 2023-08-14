@@ -11,6 +11,11 @@ const nextConfig = {
         port: '',
         pathname: '/maps/api/place/photo',
       },
+      {
+        protocol: 'http',
+        hostname: 'imgnews.naver.net',
+        port: '',
+      },
     ],
   },
 };

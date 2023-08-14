@@ -160,3 +160,9 @@ interface CityData {
 interface ResponseCityData {
   'SeoulRtd.citydata_ppltn': CityData[];
 }
+
+interface ResponseCityImageData extends CityData {
+  image: string;
+  place_id: string;
+  name: string;
+}

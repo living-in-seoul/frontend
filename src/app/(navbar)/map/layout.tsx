@@ -1,5 +1,4 @@
 'use client';
-
 import MapBottomSheet from '@/components/map/bottomsheet/MapBottomSheet';
 import { usePathname, useSelectedLayoutSegment } from 'next/navigation';
 import { RecoilRoot } from 'recoil';
@@ -19,9 +18,9 @@ export default function NavbarLayout({
       <main className="w-full h-full">
         <RecoilRoot>
           {children}
-          <MapBottomSheet>
+          {/* <MapBottomSheet>
             {pathname === '/map' ? recommend : modal}
-          </MapBottomSheet>
+          </MapBottomSheet> */}
         </RecoilRoot>
       </main>
     </>

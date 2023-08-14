@@ -8,25 +8,21 @@ import PopCarousel from '../common/PopCarousel';
 const categories = ['여성이 많은', '남성이 많은', '매우 붐빔', '여유 로운'];
 
 const HomePopulation = () => {
-  const { data, isLoading: loading, error } = useSWR<CityData[]>('/api/board');
+  const {
+    data,
+    isLoading: loading,
+    error,
+  } = useSWR<ResponseCityImageData[]>('/api/board');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
     categories[0],
   );
   const filterByCategory = useCallback(
-    (data: CityData[]): CityData[] => {
+    (data: ResponseCityImageData[]): ResponseCityImageData[] => {
       switch (selectedCategory) {
         case '남성이 많은':
-          return data.filter(
-            (item) =>
-              parseFloat(item.MALE_PPLTN_RATE) >
-              parseFloat(item.FEMALE_PPLTN_RATE),
-          );
+          return data.filter((item) => parseFloat(item.MALE_PPLTN_RATE) > 58);
         case '여성이 많은':
-          return data.filter(
-            (item) =>
-              parseFloat(item.MALE_PPLTN_RATE) <
-              parseFloat(item.FEMALE_PPLTN_RATE),
-          );
+          return data.filter((item) => parseFloat(item.FEMALE_PPLTN_RATE) > 58);
         case '매우 붐빔':
           return data.filter((item) => item.AREA_CONGEST_LVL === '붐빔');
         case '여유 로운':
@@ -39,7 +35,7 @@ const HomePopulation = () => {
     [selectedCategory],
   );
 
-  const chunk = (array: CityData[], size: number) => {
+  const chunk = (array: ResponseCityImageData[], size: number) => {
     return array.reduce((result, value, index) => {
       const chunkIndex = Math.floor(index / size);
 
@@ -50,7 +46,7 @@ const HomePopulation = () => {
       result[chunkIndex].push(value);
 
       return result;
-    }, [] as CityData[][]);
+    }, [] as ResponseCityImageData[][]);
   };
 
   return (

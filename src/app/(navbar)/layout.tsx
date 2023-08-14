@@ -6,10 +6,9 @@ export default function NavbarLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section>
-      <main className="mb-20">{children}</main>
-      {/* {sidebar} */}
+    <>
+      <main className="">{children}</main>
       <Navbar />
-    </section>
+    </>
   );
 }

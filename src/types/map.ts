@@ -86,7 +86,6 @@ interface PlaceResult {
   reference: string;
   reservable: boolean;
   reviews: Review[];
-  secondary_opening_hours: SecondaryOpeningHours[];
   serves_beer: boolean;
   serves_breakfast: boolean;
   serves_brunch: boolean;
@@ -103,6 +102,60 @@ interface PlaceResult {
   wheelchair_accessible_entrance: boolean;
 }
 
+interface ResponseImageGoogle {
+  results: GooglePlacePickedResult[];
+}
+type guchung =
+  | ''
+  | '강남구'
+  | '강동구'
+  | '강북구'
+  | '강서구'
+  | '관악구'
+  | '광진구'
+  | '구로구'
+  | '금천구'
+  | '노원구'
+  | '도봉구'
+  | '동대문구'
+  | '동작구'
+  | '마포구'
+  | '서대문구'
+  | '서초구'
+  | '성동구'
+  | '성북구'
+  | '송파구'
+  | '양천구'
+  | '영등포구'
+  | '용산구'
+  | '은평구'
+  | '종로구'
+  | '중구'
+  | '중랑구';
+type SeoulCoords = {
+  [key in guchung]: {
+    lat: number;
+    lng: number;
+  };
+};
+
+type GooglePlacePickedResult = Pick<
+  PlaceResult,
+  | 'business_status'
+  | 'formatted_address'
+  | 'geometry'
+  | 'icon'
+  | 'icon_background_color'
+  | 'icon_mask_base_uri'
+  | 'name'
+  | 'photos'
+  | 'place_id'
+  | 'plus_code'
+  | 'rating'
+  | 'reference'
+  | 'types'
+  | 'user_ratings_total'
+>;
 interface AddressComponent {
   long_name: string;
   short_name: string;
@@ -200,4 +253,10 @@ interface Place {
   scope: string;
   types: string[];
   vicinity: string;
+}
+
+interface GooglePlacesResponse {
+  html_attributions: any[];
+  results: PlaceResult[];
+  status: string;
 }

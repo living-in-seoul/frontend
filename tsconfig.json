@@ -15,6 +15,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "strict": true,
+
     // "noUnusedLocals": true,
     // "noUnusedParameters": true,
     // "noFallthroughCasesInSwitch": true,

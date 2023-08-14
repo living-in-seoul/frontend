@@ -20,6 +20,7 @@ const MapBottomSheet = ({ children }: MapBottomSheetProps) => {
       setSheetHeight(200);
     }
   }, [open, sheetHeight]);
+
   const onToggleSheet = () => {
     setOpen(!open);
   };
@@ -32,7 +33,7 @@ const MapBottomSheet = ({ children }: MapBottomSheetProps) => {
         height: `${sheetHeight}px`,
       }}
       onClick={onToggleSheet}
-      className={`flex flex-col justify-center items-center fixed bottom-0 left-0 rounded-t-3xl bg-slate-50 z-1 w-full border-t-2 p-5 shadow-2xl ease-out`}
+      className={`flex flex-col justify-center items-center fixed bottom-0 left-0 rounded-t-3xl bg-slate-50 z-1 w-full border-t-2 p-5 shadow-2xl ease-out z-30`}
     >
       <BottomSheetHeader />
       <div

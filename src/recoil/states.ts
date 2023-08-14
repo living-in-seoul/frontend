@@ -14,7 +14,11 @@ export const placesState = atom<google.maps.places.PlaceResult[]>({
   key: 'placesState',
   default: [],
 });
-
+/** 구 선택 */
+export const selectGuPlaceState = atom<guchung>({
+  key: 'selectGuPlaceState',
+  default: '',
+});
 export const signupState = atom<RequestRegister>({
   key: 'signupFistState',
   default: {
