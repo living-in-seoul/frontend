@@ -11,7 +11,7 @@ const RecommendItem = (place: google.maps.places.PlaceResult) => {
   const src = mrchoi;
 
   return (
-    <section className="flex justify-between items-center h-16 px-6 my-6">
+    <div className="flex justify-between items-center h-16 px-6 my-6">
       <div>
         <Link
           href={`/map/${place_id}`}
@@ -19,11 +19,11 @@ const RecommendItem = (place: google.maps.places.PlaceResult) => {
         >
           {name}
         </Link>
-        <p className="text-xs text-neutral-500">{vicinity}</p>
+        <div className="text-xs text-neutral-500">{vicinity}</div>
         <div className="flex items-center text-xs  text-neutral-500 ">
           {rating && <StarRate rating={rating} />}
           {user_ratings_total && (
-            <p className="pl-2">리뷰 {user_ratings_total}</p>
+            <div className="pl-2">리뷰 {user_ratings_total}</div>
           )}
         </div>
       </div>
@@ -32,7 +32,7 @@ const RecommendItem = (place: google.maps.places.PlaceResult) => {
         src={mrchoi}
         alt="main"
       />
-    </section>
+    </div>
   );
 };
 
