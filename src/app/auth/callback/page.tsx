@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+// import type { NextApiRequest, NextApiResponse } from 'next';
 // interface Req extends NextApiRequest {
 //   searchParams: {
 //     state: string;
@@ -19,7 +19,11 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 // };
 
 // export default Callback;
-const Page = () => {
-  return <div>Page</div>;
+
+import React from 'react';
+
+const page = () => {
+  return <div>page</div>;
 };
-export default Page;
+
+export default page;

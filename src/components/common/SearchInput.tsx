@@ -33,7 +33,7 @@ const SearchInput = ({
         className="w-4/5 rounded-[1.875rem] bg-white h-[38px] flex items-center justify-between shadow-xl border border-neutral-200 px-4"
         onSubmit={onSubmit}
       >
-        {/* <Icons path={filter} size="small" /> */}
+        <Icons path={filter} />
         <input
           className="outline-none text-sm w-full pl-3"
           placeholder={placeholder}

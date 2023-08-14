@@ -2,8 +2,12 @@ import CommunityBoardList from '@/components/community/CommunityBoardList';
 import DetailPlaceInfo from '@/components/detail/DetailPlaceInfo';
 import DetailReviewerPictuers from '@/components/detail/DetailReviewerPictuers';
 import { getPlaceByPlaceId } from '@/service/map';
+import { getImageSrc } from '@/utils/utilFunc';
 
 import Image from 'next/image';
+import { redirect } from 'next/navigation';
+import { choi } from '../../../../../../../public';
+
 interface MapDetailProps {
   params: {
     slug: string[];
@@ -15,16 +19,17 @@ const MapDetail = async ({ params }: MapDetailProps) => {
   const data = await getPlaceByPlaceId(placeId).then(
     (response) => response.result,
   );
-  const mainPicture = `${process.env.NEXT_PUBLIC_GOOGLE_PHOTO_URL}?maxwidth=400&maxheigth=800&photo_reference=${data.photos[0].photo_reference}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY}`;
-
+  const mainPicture = data.photos
+    ? `${process.env.NEXT_PUBLIC_GOOGLE_PHOTO_URL}?maxwidth=200&maxheigth=400&photo_reference=${data.photos[0].photo_reference}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY}`
+    : choi;
   return (
     <>
       <Image
         className=" h-52 bg-zinc-300 flex items-center justify-center w-full object-cover aspect-square "
         alt="good dog"
         src={mainPicture}
-        width={30000000000}
-        height={30000000000}
+        width={3000}
+        height={3000}
       />
       <div className="px-4 flex flex-col">
         <DetailPlaceInfo data={data} />
