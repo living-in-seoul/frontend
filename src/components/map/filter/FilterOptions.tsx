@@ -1,3 +1,5 @@
+'use client';
+
 import CategoryList from '@/components/common/CategoryList';
 import { filterOptionState, openFilterState } from '@/recoil/mapStates';
 import { useRecoilState } from 'recoil';
@@ -8,7 +10,6 @@ const FilterOptions = () => {
 
   const [openFilter, setOpenFilter] = useRecoilState(openFilterState);
 
-  console.log(filterOption);
   const onClickToOpenFilter = () => {
     setOpenFilter(true);
   };

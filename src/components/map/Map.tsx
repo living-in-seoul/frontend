@@ -1,10 +1,9 @@
 'use client';
 import {
   GoogleMap,
-  Libraries,
   LoadScriptNext,
   MarkerF,
-  useLoadScript,
+  HeatmapLayerF,
 } from '@react-google-maps/api';
 import {
   filterState,
@@ -23,14 +22,12 @@ import {
   MapStyleVersionThree,
   MapStyleVersionTwo,
 } from '@/utils/styles';
-
-const libraries: Libraries = ['places'];
+import { googleMapsLibraries } from '@/utils/constants';
 
 const containerStyle = {
   width: '100%',
   height: '100vh',
 };
-
 const Map = () => {
   const router = useRouter();
   const [placeId, setPlaceIdState] = useRecoilState(placeIdState);
@@ -44,16 +41,17 @@ const Map = () => {
   });
   const setPlacesState = useSetRecoilState(placesState);
 
+  // const seoulBound = new google.maps.LatLngBounds(
+  //   new google.maps.LatLng(37.426, 126.764), // 남서쪽 좌표
+  //   new google.maps.LatLng(37.701, 127.183), // 북동쪽 좌표
+  // );
+
   const mapOptions: google.maps.MapOptions = {
     fullscreenControl: true,
     gestureHandling: 'greedy',
     disableDoubleClickZoom: true,
-    // restriction: {
-    //   latLngBounds: seoulBound,
-    //   strictBounds: true,
-    // },
     disableDefaultUI: true,
-    styles: MapStyleVersionThree,
+    styles: MapStyleVersionTwo,
   };
   const { data: locationDetail } = useSWR<PlaceByPlaceIdResponse>(
     placeId ? `api/map/places/${placeId}` : null,
@@ -76,9 +74,9 @@ const Map = () => {
   //   }
   // }, [locationDetail, map]);
 
-  // useEffect(() => {
-  //   setPlacesState(places);
-  // }, [places, setPlacesState]);
+  useEffect(() => {
+    setPlacesState(places);
+  }, [places, setPlacesState]);
 
   useEffect(() => {
     if (rangeValue > 200) {
@@ -100,7 +98,7 @@ const Map = () => {
     placeId: string | undefined,
   ) => {
     placeId && setPlaceIdState(placeId);
-    router.push(`/place/${placeId}/2`);
+    router.push(`/place/${placeId}`);
   };
 
   return (
@@ -108,16 +106,52 @@ const Map = () => {
       <LoadScriptNext
         googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY || ''}
         loadingElement={<div>Loading...</div>}
-        libraries={libraries}
+        libraries={googleMapsLibraries}
       >
         <GoogleMap
+          onClick={(e) => e.stop()}
           mapContainerStyle={containerStyle}
           center={center}
           zoom={zoom}
           onLoad={onLoad}
           onUnmount={onUnmount}
-          options={mapOptions}
-        ></GoogleMap>
+          options={{
+            ...mapOptions,
+            // restriction: {
+            //   latLngBounds: seoulBound,
+            //   strictBounds: true,
+            // },
+          }}
+        >
+          {typeof google !== 'undefined' && (
+            <HeatmapLayerF
+              data={[
+                new google.maps.LatLng(37.5665, 126.978),
+                new google.maps.LatLng(37.57, 126.981),
+              ]}
+              options={{
+                maxIntensity: 3,
+                gradient: ['rgba(255, 0, 0, 0)', 'rgba(255, 0, 0, 1)'],
+                dissipating: true,
+                opacity: 0.8,
+                radius: 1,
+              }}
+            />
+          )}
+
+          {places?.map((place) => {
+            if (!place.geometry?.location) {
+              return;
+            }
+            return (
+              <MarkerF
+                key={place.place_id}
+                position={place.geometry?.location}
+                onClick={(e) => onMarkerClick(e, place.place_id)}
+              />
+            );
+          })}
+        </GoogleMap>
       </LoadScriptNext>
     </section>
   );
