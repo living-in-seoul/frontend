@@ -47,6 +47,10 @@ export const Filters = [
   { name: '세탁시설', category: 'laundry' },
   { name: '공원', category: 'park' },
   { name: '도서관', category: 'library' },
+  { name: 'atm', category: 'atm' },
+  { name: '문화시설', category: 'museum' },
+  { name: '대학가', category: 'university' },
+  { name: '영화관', category: 'movie_theater' },
 ];
 
 export const googleMapsLibraries: Libraries = ['places', 'visualization'];

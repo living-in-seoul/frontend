@@ -26,7 +26,7 @@ const MapDetail = ({ params }: MapDetailProps) => {
     ? `${process.env.NEXT_PUBLIC_GOOGLE_PHOTO_URL}?maxwidth=200&maxheigth=400&photo_reference=${photoReference}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY}`
     : choi;
 
-  redirect(`/place/${placeId}`);
+  // redirect(`/place/${placeId}`);
   return (
     <>
       <Image
