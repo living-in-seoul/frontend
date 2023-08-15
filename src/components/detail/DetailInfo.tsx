@@ -20,7 +20,11 @@ const DetailInfo = ({
   return (
     <div className="flex flex-col  py-5 gap-2 ">
       <div className="flex items-center gap-2 ">
-        <Icons path={detailInfoIcons.markerIcon} fill="#B8B8B8" />
+        <Icons
+          path={detailInfoIcons.markerIcon}
+          fill="white"
+          stroke="#B8B8B8"
+        />
         <span>{formatted_address}</span>
       </div>
       <div className="flex items-center gap-2 ">

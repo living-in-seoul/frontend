@@ -1,5 +1,5 @@
 'use client';
-import { postSingin } from '@/service/user';
+
 import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import AuthInput from './AuthInput';
@@ -15,7 +15,7 @@ const DefaultLogin = () => {
     register,
     handleSubmit,
     reset,
-    formState: { isSubmitting, isSubmitted, errors },
+    formState: { isSubmitted, errors },
   } = useForm({
     mode: 'onSubmit',
     defaultValues: {
@@ -41,14 +41,17 @@ const DefaultLogin = () => {
   });
 
   const onSubmitHandler: SubmitHandler<FormPorps> = async (data) => {
-    await fetch('/api/signin', {
+    const response = await fetch('/api/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
     });
-    console.log(data);
+    const accessToken = await response.json().then((data) => data.accessToken);
+
+    localStorage.setItem('accessToken', accessToken);
+
     reset();
   };
   return (

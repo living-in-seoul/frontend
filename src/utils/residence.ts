@@ -509,7 +509,34 @@ export const residenceData: regionData = {
 export const residenceGusData = Object.keys(residenceData);
 
 export const hometownData: regionData = {
-  강원특별자치도: [
+  do: [
+    '강원특별자치도',
+    '경기도',
+    '경상남도',
+    '경상북도',
+    '전라남도',
+    '전라북도',
+    '충청북도',
+    '충청남도',
+
+    '광주광역시',
+    '대구광역시',
+    '대전광역시',
+    '부산광역시',
+    '서울특별시',
+    '울산광역시',
+    '인천광역시',
+  ],
+  data: [
+    '세종특별자치시',
+    '제주특별시',
+    '광주광역시',
+    '대구광역시',
+    '대전광역시',
+    '부산광역시',
+    '서울특별시',
+    '울산광역시',
+    '인천광역시',
     '강릉시',
     '고성군',
     '동해시',
@@ -528,8 +555,6 @@ export const hometownData: regionData = {
     '홍천군',
     '화천군',
     '횡성군',
-  ],
-  경기도: [
     '가평군',
     '고양시',
     '과천시',
@@ -561,8 +586,6 @@ export const hometownData: regionData = {
     '포천시',
     '하남시',
     '화성시',
-  ],
-  경상남도: [
     '거제시',
     '거창군',
     '고성군',
@@ -581,8 +604,6 @@ export const hometownData: regionData = {
     '함안군',
     '함양군',
     '합천군',
-  ],
-  경상북도: [
     '경산시',
     '경주시',
     '고령군',
@@ -605,9 +626,6 @@ export const hometownData: regionData = {
     '청송군',
     '칠곡군',
     '포항시',
-  ],
-  광주광역시: ['광산구', '남구', '동구', '북구', '서구'],
-  대구광역시: [
     '군위군',
     '남구',
     '달서구',
@@ -617,9 +635,6 @@ export const hometownData: regionData = {
     '서구',
     '수성구',
     '중구',
-  ],
-  대전광역시: ['대덕구', '동구', '서구', '유성구', '중구'],
-  부산광역시: [
     '강서구',
     '금정구',
     '기장군',
@@ -636,8 +651,6 @@ export const hometownData: regionData = {
     '영도구',
     '중구',
     '해운대구',
-  ],
-  서울특별시: [
     '강남구',
     '강동구',
     '강북구',
@@ -663,9 +676,6 @@ export const hometownData: regionData = {
     '종로구',
     '중구',
     '중랑구',
-  ],
-  울산광역시: ['남구', '동구', '북구', '울주군', '중구'],
-  인천광역시: [
     '강화군',
     '계양구',
     '남동구',
@@ -676,8 +686,6 @@ export const hometownData: regionData = {
     '연수구',
     '옹진군',
     '중구',
-  ],
-  전라남도: [
     '강진군',
     '고흥군',
     '곡성군',
@@ -700,8 +708,6 @@ export const hometownData: regionData = {
     '함평군',
     '해남군',
     '화순군',
-  ],
-  전라북도: [
     '고창군',
     '군산시',
     '김제시',
@@ -716,8 +722,6 @@ export const hometownData: regionData = {
     '전주시',
     '정읍시',
     '진안군',
-  ],
-  충청북도: [
     '괴산군',
     '단양군',
     '보은군',
@@ -729,8 +733,6 @@ export const hometownData: regionData = {
     '진천군',
     '청주시',
     '충주시',
-  ],
-  충청남도: [
     '계룡시',
     '공주시',
     '금산군',
@@ -747,5 +749,8 @@ export const hometownData: regionData = {
     '태안군',
     '홍성군',
   ],
+  daegu: ['광산구', '남구', '동구', '북구', '서구'],
+  gwangju: ['대덕구', '동구', '서구', '유성구', '중구'],
+  busan: ['남구', '동구', '북구', '울주군', '중구'],
 };
 export const hometownDosData = Object.keys(hometownData);

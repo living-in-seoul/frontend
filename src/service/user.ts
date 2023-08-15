@@ -34,7 +34,6 @@ export const postSingin = async (data: RequestLogin) => {
         },
       },
     );
-    console.log(response);
     return response.data;
   } catch (error) {
     console.log(error);

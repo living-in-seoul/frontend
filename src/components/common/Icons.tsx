@@ -5,10 +5,11 @@ interface Props {
     height: number;
   };
   fill?: string;
+  stroke?: string;
   onClick?: () => void;
 }
 
-const Icons = ({ path, fill, onClick }: Props) => {
+const Icons = ({ path, fill, stroke, onClick }: Props) => {
   return (
     <svg
       width={path.width}
@@ -18,7 +19,12 @@ const Icons = ({ path, fill, onClick }: Props) => {
       preserveAspectRatio="xMidYMid meet"
       onClick={onClick}
     >
-      <path d={path.path} className="w-full h-full" fill={fill} />
+      <path
+        d={path.path}
+        className="w-full h-full"
+        fill={fill}
+        stroke={stroke}
+      />
     </svg>
   );
 };

@@ -1,15 +1,8 @@
 /**로그인시 받아오는 데이터 */
 interface ResponseLogin {
   msg: string;
-  result: {
-    email: string;
-    nickname: string;
-    AccessToken: string;
-    AccessTokenExpired: string;
-    RefreshToken: string;
-    RefreshTokenExpired: string;
-    profileImg: string;
-  };
+  AccessToken: string;
+  refreshToken: string;
 }
 
 /**소셜 로그인시 받아오는 데이터 */
