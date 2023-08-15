@@ -1,3 +1,4 @@
+'use client';
 import FilterModal from '@/components/map/filter/FilterModal';
 
 const Filter = () => {
