@@ -31,7 +31,7 @@ const PlacesAutoComplete = () => {
       setPlaceIdState(placeId);
       setOpenUl(false);
       setInputLocation('');
-      router.push(`/place/${placeId}/2`);
+      router.push(`/place/${placeId}`);
     },
     [router, setPlaceIdState],
   );

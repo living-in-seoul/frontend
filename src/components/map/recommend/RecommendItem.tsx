@@ -1,20 +1,20 @@
 import StarRate from '@/components/common/StarRate';
 import { getImageSrc } from '@/utils/utilFunc';
 import Link from 'next/link';
-import { mrchoi } from '../../../../public';
+import { choi, mrchoi } from '../../../../public';
 import Image from 'next/image';
 
 const RecommendItem = (place: google.maps.places.PlaceResult) => {
-  const { name, place_id, rating, user_ratings_total, vicinity } = place;
-  // const src = getImageSrc(data.photos[0]?.photo_reference) ?? mrchoi;
-
-  const src = mrchoi;
+  const { name, place_id, photos, rating, user_ratings_total, vicinity } =
+    place;
+  const photoReference = photos?.[0].getUrl();
+  console.log(photoReference);
 
   return (
     <div className="flex justify-between items-center h-16 px-6 my-6">
       <div>
         <Link
-          href={`/map/${place_id}`}
+          href={`/place/${place_id}`}
           className="text-sm font-bold block max-w-xs overflow-wrap-break"
         >
           {name}
@@ -28,9 +28,11 @@ const RecommendItem = (place: google.maps.places.PlaceResult) => {
         </div>
       </div>
       <Image
-        className="h-16 w-32 shadow-xl rounded-lg "
-        src={mrchoi}
+        className="h-20 w-32 shadow-xl rounded-md "
+        src={photoReference ? photoReference : choi}
         alt="main"
+        width={300}
+        height={300}
       />
     </div>
   );

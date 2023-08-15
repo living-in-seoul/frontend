@@ -12,6 +12,12 @@ const nextConfig = {
         pathname: '/maps/api/place/photo',
       },
       {
+        protocol: 'https',
+        hostname: 'maps.googleapis.com',
+        port: '',
+        pathname: '/maps/api/place/js/PhotoService.GetPhoto',
+      },
+      {
         protocol: 'http',
         hostname: 'imgnews.naver.net',
         port: '',

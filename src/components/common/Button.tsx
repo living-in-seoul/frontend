@@ -1,43 +1,69 @@
 interface Props {
-  size: 'small' | 'medium' | 'large';
+  title: string;
+  size: 'small' | 'medium' | 'large' | 'default';
   bgColor?: string;
   hoverColor?: string;
   color?: string;
-  title: string;
   border?: string;
+  select?: boolean;
+  disable?: boolean;
   type?: 'button' | 'submit' | 'reset' | undefined;
+  className?: string;
   onClick?: () => void;
 }
 
 const getButtonSizeStyles = (size: string) => {
   switch (size) {
     case 'small':
-      return 'w-[103px] h-[41px]';
+      return {
+        button: 'w-[103px] h-[41px]',
+        span: 'text-[11px] text-zinc-600',
+      };
     case 'medium':
-      return `w-[245px] h-[41px]`;
+      return { button: `w-full py-1`, span: 'text-xs' };
     case 'large':
-      return `w-full h-14`;
+      return { button: `w-[275px] h-[51px]`, span: 'text-md  leading-7' };
+    default:
+      return {
+        button: 'w-full h-full',
+        span: 'text-[11px] text-zinc-500',
+      };
   }
 };
 
 const Button = ({
-  size,
+  size = 'default',
   title,
   color,
   bgColor,
   hoverColor = 'bg-teal-400',
   type,
-  border = 'border border-neutral-800',
+  select = false,
+  className,
+  disable = false,
+  onClick,
+  border,
 }: Props) => {
   return (
     <div>
       <button
-        className={`active:${hoverColor} hover:${hoverColor} rounded-xl font-semibold text-base ${color} ${bgColor} ${border}  ${getButtonSizeStyles(
-          size,
-        )}`}
+        onClick={disable ? undefined : onClick}
+        className={`active:${hoverColor} hover:${hoverColor} transition-all rounded-lg text-base ${color} ${bgColor} ${border} ${className} ${
+          getButtonSizeStyles(size).button
+        } ${
+          select
+            ? 'bg-neutral-500'
+            : 'border-l-zinc-400 hover:bg-neutral-200/70'
+        } `}
         type={type}
       >
-        {title}
+        <span
+          className={` ${getButtonSizeStyles(size).span} ${
+            select ? 'text-white' : 'text-black'
+          }`}
+        >
+          {title}
+        </span>
       </button>
     </div>
   );

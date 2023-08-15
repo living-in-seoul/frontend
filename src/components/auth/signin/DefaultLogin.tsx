@@ -1,15 +1,20 @@
 'use client';
 import { postSingin } from '@/service/user';
 import Link from 'next/link';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import AuthInput from './AuthInput';
 import Button from '@/components/common/Button';
 import { useRouter } from 'next/navigation';
+interface FormPorps {
+  email: string;
+  password: string;
+}
+
 const DefaultLogin = () => {
   const {
     register,
     handleSubmit,
-    resetField,
+    reset,
     formState: { isSubmitting, isSubmitted, errors },
   } = useForm({
     mode: 'onSubmit',
@@ -22,8 +27,7 @@ const DefaultLogin = () => {
   const { ...passwordProps } = register('password', {
     required: '이메일은 필수 입력입니다',
     pattern: {
-      value:
-        /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+      value: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[a-zA-Z\d@$!%*?&]{10,}$/,
       message: '비밀번호의 형식에 맞지 않아요',
     },
   });
@@ -36,10 +40,16 @@ const DefaultLogin = () => {
     },
   });
 
-  const onSubmitHandler = (data: any) => {
-    postSingin(data);
-    resetField('email');
-    resetField('password');
+  const onSubmitHandler: SubmitHandler<FormPorps> = async (data) => {
+    await fetch('/api/signin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    console.log(data);
+    reset();
   };
   return (
     <form

@@ -1,11 +1,9 @@
 'use client';
 import {
   GoogleMap,
-  HeatmapLayerF,
-  Libraries,
   LoadScriptNext,
   MarkerF,
-  useLoadScript,
+  HeatmapLayerF,
 } from '@react-google-maps/api';
 import {
   filterState,
@@ -19,15 +17,17 @@ import useSWR from 'swr';
 import useMapInstance from '@/hooks/useMapInstance';
 import useNearbySearch from '@/hooks/useNearbySearch';
 import { useRouter } from 'next/navigation';
-import { MapStyleVersionThree } from '@/utils/styles';
-
-const libraries: Libraries = ['places', 'visualization'];
+import {
+  MapStyleVersionOne,
+  MapStyleVersionThree,
+  MapStyleVersionTwo,
+} from '@/utils/styles';
+import { googleMapsLibraries } from '@/utils/constants';
 
 const containerStyle = {
   width: '100%',
   height: '100vh',
 };
-
 const Map = () => {
   const router = useRouter();
   const [placeId, setPlaceIdState] = useRecoilState(placeIdState);
@@ -50,12 +50,8 @@ const Map = () => {
     fullscreenControl: true,
     gestureHandling: 'greedy',
     disableDoubleClickZoom: true,
-    // restriction: {
-    //   latLngBounds: seoulBound,
-    //   strictBounds: true,
-    // },
     disableDefaultUI: true,
-    styles: MapStyleVersionThree,
+    styles: MapStyleVersionTwo,
   };
   const { data: locationDetail } = useSWR<PlaceByPlaceIdResponse>(
     placeId ? `api/map/places/${placeId}` : null,
@@ -78,9 +74,9 @@ const Map = () => {
   //   }
   // }, [locationDetail, map]);
 
-  // useEffect(() => {
-  //   setPlacesState(places);
-  // }, [places, setPlacesState]);
+  useEffect(() => {
+    setPlacesState(places);
+  }, [places, setPlacesState]);
 
   useEffect(() => {
     if (rangeValue > 200) {
@@ -102,7 +98,7 @@ const Map = () => {
     placeId: string | undefined,
   ) => {
     placeId && setPlaceIdState(placeId);
-    router.push(`/place/${placeId}/2`);
+    router.push(`/place/${placeId}`);
   };
 
   return (
@@ -110,16 +106,22 @@ const Map = () => {
       <LoadScriptNext
         googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY || ''}
         loadingElement={<div>Loading...</div>}
-        libraries={libraries}
+        libraries={googleMapsLibraries}
       >
         <GoogleMap
+          onClick={(e) => e.stop()}
           mapContainerStyle={containerStyle}
           center={center}
           zoom={zoom}
           onLoad={onLoad}
           onUnmount={onUnmount}
-          options={mapOptions}
-          onClick={(e) => e.stop()}
+          options={{
+            ...mapOptions,
+            // restriction: {
+            //   latLngBounds: seoulBound,
+            //   strictBounds: true,
+            // },
+          }}
         >
           {typeof google !== 'undefined' && (
             <HeatmapLayerF
@@ -128,18 +130,27 @@ const Map = () => {
                 new google.maps.LatLng(37.57, 126.981),
               ]}
               options={{
-                maxIntensity: 5,
-                gradient: ['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)'],
-                dissipating: false,
+                maxIntensity: 3,
+                gradient: ['rgba(255, 0, 0, 0)', 'rgba(255, 0, 0, 1)'],
+                dissipating: true,
                 opacity: 0.8,
+                radius: 1,
               }}
             />
           )}
 
-          <MarkerF
-            position={center}
-            onClick={(e) => alert(`You clicked me!${e.latLng}`)}
-          />
+          {places?.map((place) => {
+            if (!place.geometry?.location) {
+              return;
+            }
+            return (
+              <MarkerF
+                key={place.place_id}
+                position={place.geometry?.location}
+                onClick={(e) => onMarkerClick(e, place.place_id)}
+              />
+            );
+          })}
         </GoogleMap>
       </LoadScriptNext>
     </section>

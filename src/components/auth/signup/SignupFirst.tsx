@@ -3,9 +3,11 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import AuthInput from '../signin/AuthInput';
 import Button from '@/components/common/Button';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { signupEssentialState, signupState } from '@/recoil/states';
 import { useRouter } from 'next/navigation';
+import { postSignup } from '@/service/user';
+import { useEffect } from 'react';
 interface FormProps {
   email: string;
   password: string;
@@ -18,7 +20,7 @@ const SignupFirst = () => {
     handleSubmit,
     reset,
     getValues,
-    formState: { isSubmitting, isSubmitted, errors },
+    formState: { isSubmitted, errors },
   } = useForm<FormProps>({
     mode: 'onSubmit',
     defaultValues: {
@@ -29,9 +31,8 @@ const SignupFirst = () => {
     },
   });
   const router = useRouter();
-  const setSignupData = useSetRecoilState(signupState);
-  const setEssential = useSetRecoilState(signupEssentialState);
-  // 얘네들 따로 뺴보자
+  const [essential, setEssential] = useRecoilState(signupEssentialState);
+  const [firstData, setFirstData] = useRecoilState(signupState);
   const { ...emailProps } = register('email', {
     required: '이메일은 필수 입력입니다',
     pattern: {
@@ -70,10 +71,9 @@ const SignupFirst = () => {
     },
   });
   const onSubmitHandler: SubmitHandler<FormProps> = (data) => {
-    setSignupData((prev) => ({ ...prev, ...data }));
     reset();
+    setFirstData((prev) => ({ ...prev, ...data }));
     setEssential((prev) => !prev);
-    console.log(signupState);
     router.push('/signup/second');
   };
   return (
@@ -95,7 +95,7 @@ const SignupFirst = () => {
           <AuthInput
             id="password"
             isText={false}
-            placeholder="영문, 숫자 조합 10자리 이상"
+            placeholder="영문, 숫자, 특수문자 조합 10자리 이상"
             label="비밀번호"
             mainProps={passwordProps}
             isSubmitted={isSubmitted}

@@ -31,7 +31,11 @@ const FilterModal = () => {
   const switchOptions = () => {
     switch (filterOption) {
       case '장소':
-        return <LocationFilter />;
+        return (
+          <>
+            <LocationFilter />
+          </>
+        );
       case '장소유형':
         break;
       case '거리':
@@ -43,16 +47,22 @@ const FilterModal = () => {
   };
 
   return (
-    <div className="fixed top-28  left-0 w-full flex flex-col justify-center items-center  bg-white px-4">
+    <div className="fixed top-28 left-0 w-full flex flex-col justify-center items-center  bg-white px-4">
       {openFilterValue && <>{switchOptions()}</>}
-      {/* <Button size="small" title="필터 적용" onClick={onCloseFilterModal} /> */}
-      <div className="flex justify-center gap-5">
-        <button className="text-xs" onClick={onResetFilterModal}>
-          초기화
-        </button>
-        <button className="text-xs" onClick={onCloseFilterModal}>
-          필터 적용
-        </button>
+
+      <div className="flex bg-black justify-between items-center ">
+        <Button
+          size="small"
+          title="초기화"
+          border="border border-zinc-500"
+          onClick={onResetFilterModal}
+        ></Button>
+        <Button
+          size="small"
+          title="필터 적용"
+          border="border border-zinc-500"
+          onClick={onCloseFilterModal}
+        ></Button>
       </div>
     </div>
   );

@@ -5,72 +5,60 @@ import AuthInput from '../signin/AuthInput';
 import Button from '@/components/common/Button';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { signupEssentialState, signupState } from '@/recoil/states';
-import { redirect, useRouter } from 'next/navigation';
-import {
-  hometownData,
-  hometownDosData,
-  residenceData,
-  residenceGusData,
-} from '@/utils/residence';
+import { useRouter } from 'next/navigation';
+import { hometownData, hometownDosData } from '@/utils/residence';
 import useGetDate from '@/hooks/useGetDate';
 import { useEffect, useState } from 'react';
+import RadioInput from './RadioInput';
 
 interface FormPorps {
   hometown: string;
-  movedDate: string;
-  gu: string;
-  dong: string;
+  birthDate: string;
 }
 const SignupSecond = () => {
+  const [gender, setGender] = useState('여성');
   const [signupData, setSignupData] = useRecoilState(signupState);
-  const [gu, setGu] = useState('선택해주세요');
-  const [dong, setDong] = useState('');
-  const isBack = useRecoilValue(signupEssentialState);
-  const nowDate = useGetDate();
+  const essential = useRecoilValue(signupEssentialState);
   const router = useRouter();
+  const nowDate = useGetDate();
   const {
     register,
     handleSubmit,
-    getValues,
     reset,
-    setValue,
     formState: { isSubmitted, errors },
   } = useForm<FormPorps>({
     mode: 'onSubmit',
     defaultValues: {
-      hometown: '',
-      movedDate: '',
-      gu: '',
-      dong: '',
+      hometown: '안동시',
+      birthDate: '2017-12-12',
     },
   });
 
-  isBack && router.back();
   const hometownProps = register('hometown', {
     required: '고향을 알려주세요',
-    pattern: {
-      value: /^[가-힣\s]*$/,
-      message: '띄어쓰기에 포함해서 한글로 적어주세요',
-    },
-    validate: {
-      check: (val) => {
-        const splitedVal = val.split(' ').filter(Boolean);
-        const [province, city] = splitedVal;
-        if (splitedVal.length !== 2) {
-          return '띄어쓰기를 확인해주세요';
-        }
-        if (!hometownDosData.includes(province)) {
-          return '올바른지명이 아닙니다';
-        }
-        if (!hometownData[province].includes(city)) {
-          return '올바른 도시명이 아닙니다';
-        }
-      },
-    },
+    // pattern: {
+    //   value: /^[가힣\s]*$/,
+    //   message: '한글로 적어주세요',
+    // },
+    // validate: {
+    //   check: (val) => {
+    //     const splitedVal = val.split(' ').filter(Boolean);
+    //     const [province, city] = splitedVal;
+    //     if (splitedVal.length !== 2) {
+    //       return '띄어쓰기를 확인해주세요';
+    //     }
+    //     if (!hometownDosData.includes(province)) {
+    //       return '올바른지명이 아닙니다';
+    //     }
+    //     if (!hometownData[province].includes(city)) {
+    //       return '올바른 도시명이 아닙니다';
+    //     }
+    //   },
+    // },
   });
 
-  const { ...movedDateProps } = register('movedDate', {
-    required: '언제 서울로 올라오셨나요?',
+  const { ...birthDateProps } = register('birthDate', {
+    required: '생일이 언제예요?',
     pattern: {
       value: /^(19|20)\d\d-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/,
       message: '숫자와 하이픈을 적어주세요',
@@ -78,26 +66,29 @@ const SignupSecond = () => {
     validate: {
       check: (val) => {
         if (val > nowDate) {
-          return '예정날짜를 묻는게 아니랍니다 ㅎㅎ';
+          return '미래에서 오셨나요?';
         }
       },
     },
   });
-  const onSubmitHandler: SubmitHandler<FormPorps> = (data) => {
-    const newData = { ...signupData, ...data };
-    setSignupData((prev) => ({ ...prev, ...data }));
+  const onSubmitHandler: SubmitHandler<FormPorps> = async (data) => {
+    const newData = { ...signupData, ...data, gender };
+    setSignupData((prev) => ({ ...prev, ...data, gender }));
     console.log(newData);
     reset();
+    await fetch('/api/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newData),
+    });
   };
 
-  const onChangeGuHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setValue('gu', e.target.value);
-    setGu(e.target.value);
-  };
-  const onChangeDongHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setValue('dong', e.target.value);
-    setDong(e.target.value);
-  };
+  useEffect(() => {
+    essential && router.back();
+  });
+
   return (
     <section>
       <form
@@ -106,44 +97,46 @@ const SignupSecond = () => {
       >
         <div className="">
           <AuthInput
+            id="birthDate"
+            placeholder="yyyy-mm-dd"
+            label="생년월일"
+            mainProps={birthDateProps}
+            isSubmitted={isSubmitted}
+            isErrors={errors.birthDate}
+            errorsMessage={errors.birthDate?.message}
+          />
+          <div className="pb-6 h-24">
+            <label className="text-neutral-500 ">성별</label>
+            <div className="flex flex-row gap-5 ">
+              <RadioInput
+                id="female"
+                label="여성"
+                checked={gender}
+                bgColor="bg-teal-400"
+                borderColor="border-teal-400"
+                onClick={() => setGender('여성')}
+              />
+              <RadioInput
+                id="male"
+                label="남성"
+                checked={gender}
+                bgColor="bg-teal-400"
+                borderColor="border-teal-400"
+                onClick={() => setGender('남성')}
+              />
+            </div>
+          </div>
+          <AuthInput
             id="hometown"
-            placeholder="ex) 경상북도 안동시"
-            label="아이디(이메일)"
+            placeholder="ex) 안동시, 부산광역시 ..."
+            label="출신지역"
             mainProps={hometownProps}
             isSubmitted={isSubmitted}
             isErrors={errors.hometown}
             errorsMessage={errors.hometown?.message}
           />
-          <AuthInput
-            id="movedDate"
-            placeholder="yyyy-mm-dd"
-            label="상경 날짜"
-            mainProps={movedDateProps}
-            isSubmitted={isSubmitted}
-            isErrors={errors.movedDate}
-            errorsMessage={errors.movedDate?.message}
-          />
         </div>
-        <select onChange={(e) => onChangeGuHandler(e)}>
-          <option key="default">선택해주세요</option>
-          {residenceGusData.map((gu, index) => (
-            <option key={index} value={gu}>
-              {gu}
-            </option>
-          ))}
-        </select>
-        <select onChange={(e) => onChangeDongHandler(e)} name="" id="">
-          {gu !== '선택해주세요' ? (
-            gu &&
-            residenceData[gu].map((dong, index) => (
-              <option key={index} value={dong}>
-                {dong}
-              </option>
-            ))
-          ) : (
-            <option key="default">선택해주세요</option>
-          )}
-        </select>
+
         <Button
           type="submit"
           size="large"

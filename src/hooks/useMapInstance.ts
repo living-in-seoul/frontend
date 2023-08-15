@@ -1,4 +1,5 @@
-import { selectGuPlaceState } from '@/recoil/states';
+'use client';
+import { selectGuPlaceState } from '@/recoil/mapStates';
 import { outerCoords, seoulCenterCoords } from '@/utils/constants';
 import {
   MapGuDardkStyle,
@@ -15,6 +16,7 @@ const useMapInstance = () => {
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const setPlacesGu = useSetRecoilState(selectGuPlaceState);
   const placeGu = useRecoilValue(selectGuPlaceState);
+
   /**맵 구 클릭시 */
   const setMapFeatureStyle = (
     feature: google.maps.Data.Feature,
