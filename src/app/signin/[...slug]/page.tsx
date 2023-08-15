@@ -16,7 +16,7 @@ const EmailSigninPage = ({ params }: EmailSigninPageProps) => {
   const { slug } = params;
 
   return (
-    <section>
+    <section className="h-full relative mb-4">
       <DefaultLogin />
     </section>
   );

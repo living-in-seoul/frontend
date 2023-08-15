@@ -16,7 +16,7 @@ interface FormPorps {
   birthDate: string;
 }
 const SignupSecond = () => {
-  const [gender, setGender] = useState('여성');
+  const [checkGender, setCheckGender] = useState('');
   const [signupData, setSignupData] = useRecoilState(signupState);
   const essential = useRecoilValue(signupEssentialState);
   const router = useRouter();
@@ -29,8 +29,8 @@ const SignupSecond = () => {
   } = useForm<FormPorps>({
     mode: 'onSubmit',
     defaultValues: {
-      hometown: '안동시',
-      birthDate: '2017-12-12',
+      hometown: '',
+      birthDate: '',
     },
   });
 
@@ -72,8 +72,8 @@ const SignupSecond = () => {
     },
   });
   const onSubmitHandler: SubmitHandler<FormPorps> = async (data) => {
-    const newData = { ...signupData, ...data, gender };
-    setSignupData((prev) => ({ ...prev, ...data, gender }));
+    const newData = { ...signupData, ...data, checkGender };
+    setSignupData((prev) => ({ ...prev, ...data, checkGender }));
     console.log(newData);
     reset();
     await fetch('/api/signup', {
@@ -88,12 +88,12 @@ const SignupSecond = () => {
   useEffect(() => {
     essential && router.back();
   });
-
+  const genderArray = ['여성', '남성'];
   return (
-    <section>
+    <section className="h-full">
       <form
         onSubmit={handleSubmit(onSubmitHandler)}
-        className="flex flex-col gap-5"
+        className="flex flex-col gap-5 h-full justify-between"
       >
         <div className="">
           <AuthInput
@@ -105,25 +105,20 @@ const SignupSecond = () => {
             isErrors={errors.birthDate}
             errorsMessage={errors.birthDate?.message}
           />
-          <div className="pb-6 h-24">
+          <div className="flex flex-col gap-3 ">
             <label className="text-neutral-500 ">성별</label>
-            <div className="flex flex-row gap-5 ">
-              <RadioInput
-                id="female"
-                label="여성"
-                checked={gender}
-                bgColor="bg-teal-400"
-                borderColor="border-teal-400"
-                onClick={() => setGender('여성')}
-              />
-              <RadioInput
-                id="male"
-                label="남성"
-                checked={gender}
-                bgColor="bg-teal-400"
-                borderColor="border-teal-400"
-                onClick={() => setGender('남성')}
-              />
+            <div className="flex flex-row gap-5 pb-16 h-24 items-center ">
+              {genderArray.map((gender, index) => (
+                <RadioInput
+                  key={index}
+                  id="female"
+                  label={gender}
+                  checked={checkGender}
+                  bgColor="bg-teal-400"
+                  borderColor="border-teal-400"
+                  onClick={() => setCheckGender(gender)}
+                />
+              ))}
             </div>
           </div>
           <AuthInput
@@ -136,7 +131,6 @@ const SignupSecond = () => {
             errorsMessage={errors.hometown?.message}
           />
         </div>
-
         <Button
           type="submit"
           size="large"

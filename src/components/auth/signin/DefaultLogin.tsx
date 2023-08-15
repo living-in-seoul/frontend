@@ -5,10 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import AuthInput from './AuthInput';
 import Button from '@/components/common/Button';
 import { useRouter } from 'next/navigation';
-interface FormPorps {
-  email: string;
-  password: string;
-}
+import { emailForm, passwordForm } from '@/utils/formregister';
 
 const DefaultLogin = () => {
   const {
@@ -24,23 +21,8 @@ const DefaultLogin = () => {
     },
   });
   const router = useRouter();
-  const { ...passwordProps } = register('password', {
-    required: '이메일은 필수 입력입니다',
-    pattern: {
-      value: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[a-zA-Z\d@$!%*?&]{10,}$/,
-      message: '비밀번호의 형식에 맞지 않아요',
-    },
-  });
 
-  const { ...emailProps } = register('email', {
-    required: '이메일은 필수 입력입니다',
-    pattern: {
-      value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-      message: '이메일의 형식에 맞지 않아요',
-    },
-  });
-
-  const onSubmitHandler: SubmitHandler<FormPorps> = async (data) => {
+  const onSubmitHandler: SubmitHandler<RequestLogin> = async (data) => {
     const response = await fetch('/api/signin', {
       method: 'POST',
       headers: {
@@ -54,54 +36,58 @@ const DefaultLogin = () => {
 
     reset();
   };
+
   return (
     <form
       onSubmit={handleSubmit(onSubmitHandler)}
-      className="flex flex-col gap-3"
+      className="flex flex-col flex-grow justify-between "
     >
-      <div>
+      <div className="flex flex-col justify-between">
         <AuthInput
           errorsMessage={errors.email?.message}
           id="email"
           isErrors={errors.email}
           isSubmitted={isSubmitted}
           label="아이디(이메일)"
-          mainProps={emailProps}
+          mainProps={register('email', emailForm)}
           placeholder="ex) seuol123@vival.com"
         />
         <AuthInput
-          errorsMessage={errors.email?.message}
+          errorsMessage={errors.password?.message}
           id="password"
           isErrors={errors.password}
           isSubmitted={isSubmitted}
-          label="아이디(이메일)"
-          mainProps={passwordProps}
+          label="비밀번호"
+          mainProps={register('password', passwordForm)}
           placeholder="영문, 숫자 조합 10자리 이상"
           isText={false}
         />
-      </div>
-      <div className="flex flex-row justify-center gap-6 py-6">
-        <Link
-          className="border-b text-[10px] text-zinc-400"
-          href={'/signup/first'}
-        >
-          비밀번호 찾기
-        </Link>
-        <div
-          className="border-b text-[10px] text-zinc-400"
-          onClick={() => router.replace('/signup/first')}
-        >
-          이메일로 회원가입
+        <div className="flex flex-row justify-center gap-6 ">
+          <Link
+            className="border-b text-[10px] text-zinc-400"
+            href={'/signup/first'}
+          >
+            비밀번호 찾기
+          </Link>
+          <div
+            className="border-b text-[10px] text-zinc-400"
+            onClick={() => router.replace('/signup/first')}
+          >
+            이메일로 회원가입
+          </div>
         </div>
       </div>
-      <Button
-        size="large"
-        title="로그인하기"
-        bgColor="bg-teal-400"
-        border="none"
-        color="text-white"
-        type="submit"
-      />
+      {/* h-screen설정을 하니깐 스크롤바가 나오는데 이거 어떻게 해결하냐 */}
+      <div className="absolute w-full bottom-0">
+        <Button
+          size="large"
+          title="로그인하기"
+          bgColor="bg-teal-400"
+          border="none"
+          color="text-white"
+          type="submit"
+        />
+      </div>
     </form>
   );
 };
