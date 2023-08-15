@@ -51,8 +51,13 @@ const SignupFirst = () => {
   };
 
   const onSubmitHandler: SubmitHandler<FormProps> = (data) => {
+    const newData = {
+      email: data.email,
+      password: data.password,
+      nickname: data.nickname,
+    };
     reset();
-    setFirstData((prev) => ({ ...prev, ...data }));
+    setFirstData((prev) => ({ ...prev, ...newData }));
     setEssential((prev) => !prev);
     router.push('/signup/second');
   };
