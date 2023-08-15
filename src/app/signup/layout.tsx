@@ -19,7 +19,6 @@ export default function NoNavbarLayout({
           <Icons path={back} fill="#404040" />
         </div>
         <SignupWelcome />
-
         {children}
       </RecoilRoot>
     </main>

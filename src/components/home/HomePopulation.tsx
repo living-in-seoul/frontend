@@ -4,6 +4,7 @@ import HomeLocationCard from './HomeLocationCard';
 import { useCallback, useState } from 'react';
 import CategoryList from '../common/CategoryList';
 import PopCarousel from '../common/PopCarousel';
+import axios from 'axios';
 
 const categories = ['여성이 많은', '남성이 많은', '매우 붐빔', '여유 로운'];
 
@@ -16,6 +17,7 @@ const HomePopulation = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
     categories[0],
   );
+
   const filterByCategory = useCallback(
     (data: ResponseCityImageData[]): ResponseCityImageData[] => {
       switch (selectedCategory) {
@@ -48,9 +50,16 @@ const HomePopulation = () => {
       return result;
     }, [] as ResponseCityImageData[][]);
   };
-
+  const onClick = async () => {
+    await axios.get('https://seoulvival.com:8080/hc', {
+      withCredentials: true,
+    });
+  };
   return (
     <div className="flex flex-col w-full">
+      <button className="w-10 h-10" onClick={onClick}>
+        asdasdasdasd
+      </button>
       <CategoryList
         categories={[...categories]}
         selectedCategory={selectedCategory}
