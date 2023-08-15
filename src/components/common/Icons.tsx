@@ -1,3 +1,5 @@
+import { SVGProps } from 'react';
+
 interface Props {
   path: {
     path: string;
@@ -7,9 +9,10 @@ interface Props {
   fill?: string;
   stroke?: string;
   onClick?: () => void;
+  option?: Partial<SVGProps<SVGPathElement>>;
 }
 
-const Icons = ({ path, fill, stroke, onClick }: Props) => {
+const Icons = ({ path, fill, onClick, option }: Props) => {
   return (
     <svg
       width={path.width}
@@ -19,12 +22,7 @@ const Icons = ({ path, fill, stroke, onClick }: Props) => {
       preserveAspectRatio="xMidYMid meet"
       onClick={onClick}
     >
-      <path
-        d={path.path}
-        className="w-full h-full"
-        fill={fill}
-        stroke={stroke}
-      />
+      <path d={path.path} className="w-full h-full" fill={fill} {...option} />
     </svg>
   );
 };

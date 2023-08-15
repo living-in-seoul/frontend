@@ -1,4 +1,4 @@
-import Button from './Category';
+import Button from './Button';
 
 interface ButtonSetProps {
   categories: string[];
@@ -19,15 +19,17 @@ const ButtonSet = ({
   };
 
   return (
-    <div className="gap-0 justify-center items-center marker:w-3/4 ">
+    <div className="flex w-4/5 min-w-[200px] flex-wrap h-full justify-center items-center  rounded-xl mx-auto border border-neutral-400 overflow-hidden">
       {categories.map((category) => (
-        <Button
-          className="mr-[10px] nowrap"
-          key={category}
-          title={category}
-          select={category === selectedCategory}
-          onClick={() => onClickHandler(category)}
-        />
+        <div key={category} className="w-[20%]">
+          <Button
+            className={``}
+            size="medium"
+            title={category}
+            select={category === selectedCategory}
+            onClick={() => onClickHandler(category)}
+          />
+        </div>
       ))}
     </div>
   );

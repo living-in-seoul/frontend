@@ -15,7 +15,6 @@ const LocationFilter = () => {
         selectedCategory={filter}
         setSelectedCategory={(filter) => setFilterState(filter)}
       />
-      ;
     </div>
   );
 };

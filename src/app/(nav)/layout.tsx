@@ -7,7 +7,7 @@ export default function NavbarLayout({
 }) {
   return (
     <>
-      <main className="">{children}</main>
+      <main className="mb-[60px]">{children}</main>
       <Navbar />
     </>
   );
