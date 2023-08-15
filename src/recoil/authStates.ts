@@ -1,6 +1,5 @@
 import { atom } from 'recoil';
-
-export const signupFistState = atom<RequestRegister>({
+export const signupState = atom<RequestRegister>({
   key: 'signupFistState',
   default: {
     email: '',
