@@ -7,7 +7,7 @@ import { getImageSrc } from '@/utils/utilFunc';
 const MultiPleCard = (data: ResponseCityImageData) => {
   return (
     <article className="w-[48%] hover:shadow-xl transition-all duration-500 hover:scale-105">
-      <Link href={`/place/${data.place_id}/2`} prefetch={false}>
+      <Link href={`/place/${data.place_id}`} prefetch={false}>
         <div className="relative w-full h-36 rounded-md overflow-hidden shadow-md">
           <Image
             className="absolute top-0 h-auto object-cover"
