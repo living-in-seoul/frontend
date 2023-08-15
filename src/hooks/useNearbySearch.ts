@@ -1,13 +1,14 @@
+import { Filters } from '@/utils/constants';
 import { useEffect, useState } from 'react';
 
 interface NearbySearchProps {
   map: HTMLDivElement | google.maps.Map | null;
   center: LatLng;
   radius: number;
-  types: string[];
+  type: string;
 }
 
-const useNearbySearch = ({ map, center, radius, types }: NearbySearchProps) => {
+const useNearbySearch = ({ map, center, radius, type }: NearbySearchProps) => {
   const [places, setPlaces] = useState<google.maps.places.PlaceResult[]>([]);
 
   useEffect(() => {
@@ -16,18 +17,19 @@ const useNearbySearch = ({ map, center, radius, types }: NearbySearchProps) => {
       const request: google.maps.places.PlaceSearchRequest = {
         location: center,
         radius: radius,
-        type: types[0],
+        type: Filters.find((filter) => type === filter.name)?.category,
       };
       service.nearbySearch(request, (results, status) => {
         if (
           status === window.google.maps.places.PlacesServiceStatus.OK &&
           results
         ) {
+          results.shift();
           setPlaces(results);
         }
       });
     }
-  }, [center, map, radius, types]);
+  }, [center, map, radius, type]);
 
   return { places };
 };

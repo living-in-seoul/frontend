@@ -1,36 +1,30 @@
 import Button from './Category';
 
-interface CategoryListProps {
+interface ButtonSetProps {
   categories: string[];
   selectedCategory: string | null;
   setSelectedCategory: (category: string) => void;
-  dropdown?: boolean;
-  noScroll?: boolean;
-  onClickToOpenFilter?: () => void;
 }
 
-const CategoryList = ({
+const ButtonSet = ({
   categories,
   selectedCategory,
   setSelectedCategory,
-  onClickToOpenFilter,
-  noScroll,
-  dropdown,
-}: CategoryListProps) => {
+}: ButtonSetProps) => {
   const onSelectHandler = (category: string) => {
     setSelectedCategory(category);
   };
   const onClickHandler = (category: string) => {
     onSelectHandler(category);
-    onClickToOpenFilter && onClickToOpenFilter();
   };
+
   return (
-    <div className={`${displayOption(noScroll)}`}>
+    <div className="gap-0 justify-center items-center marker:w-3/4 ">
       {categories.map((category) => (
         <Button
           className="mr-[10px] nowrap"
           key={category}
-          title={dropdown ? `🔽 ${category}` : `# ${category}`}
+          title={category}
           select={category === selectedCategory}
           onClick={() => onClickHandler(category)}
         />
@@ -38,12 +32,5 @@ const CategoryList = ({
     </div>
   );
 };
-export default CategoryList;
 
-const displayOption = (noScroll: boolean | undefined) => {
-  if (noScroll) {
-    return 'w-full flex whitespace-nowrap  flex-wrap  items-center gap-1 px-2';
-  } else {
-    return 'flex whitespace-nowrap scrollbar-hide overflow-x-auto';
-  }
-};
+export default ButtonSet;

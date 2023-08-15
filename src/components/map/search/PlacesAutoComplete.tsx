@@ -5,7 +5,7 @@ import useSWR from 'swr';
 import SearchInput from '../../common/SearchInput';
 import { FormEvent } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { placeIdState } from '@/recoil/states';
+import { openFilterState, placeIdState } from '@/recoil/mapStates';
 import { useRouter } from 'next/navigation';
 
 const PlacesAutoComplete = () => {
@@ -17,7 +17,7 @@ const PlacesAutoComplete = () => {
     debounceKeyword ? `api/map/${debounceKeyword}` : null,
   );
   const setPlaceIdState = useSetRecoilState(placeIdState);
-
+  const setOpenFilterState = useSetRecoilState(openFilterState);
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputLocation(e.target.value);
   };
@@ -31,7 +31,7 @@ const PlacesAutoComplete = () => {
       setPlaceIdState(placeId);
       setOpenUl(false);
       setInputLocation('');
-      router.push(`/place/${placeId}/2`);
+      router.push(`/place/${placeId}`);
     },
     [router, setPlaceIdState],
   );
@@ -47,8 +47,12 @@ const PlacesAutoComplete = () => {
     [data, setPlaceIdState],
   );
 
+  const onOpenFilterIcon = () => {
+    setOpenFilterState(true);
+  };
+
   return (
-    <section className="absolute top-0 left-0 z-50 flex flex-col justify-center items-center w-full pt-4 text-xs">
+    <section className="flex flex-col justify-center items-center w-full pt-4 text-xs">
       {isLoading && <div>loading!</div>}
       <SearchInput
         placeholder="서초구 서초동"
@@ -56,14 +60,15 @@ const PlacesAutoComplete = () => {
         onChange={onChangeHandler}
         onSubmit={onSubmit}
         onFocus={onFocusHandler}
+        onClick={onOpenFilterIcon}
       />
       {openUl && (
-        <ul className="bg-white w-full rounded-xl">
+        <ul className="flex flex-col justify-center items-center bg-white w-full rounded-xl h-full">
           {data?.predictions.map((location, _) => {
             const { place_id, structured_formatting } = location;
             return (
               <li
-                className="pl-3 py-1 "
+                className="pl-3 py-2 "
                 key={place_id}
                 onClick={() => onClickHandler(place_id)}
               >
@@ -71,6 +76,7 @@ const PlacesAutoComplete = () => {
               </li>
             );
           })}
+          {data?.predictions.length === 0 && <li>검색 결과가 없습니다.</li>}
         </ul>
       )}
     </section>
