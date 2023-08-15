@@ -6,6 +6,7 @@ const MapPage = () => {
   return (
     <section className=" w-full h-full relative">
       <MapHeader />
+
       <div id="portal" />
     </section>
   );

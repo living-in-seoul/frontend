@@ -1,3 +1,5 @@
+import { callIcon, heartIcon, linkIcon } from '@/utils/Icon';
+import Icons from '../common/Icons';
 import StarRate from '../common/StarRate';
 import DetailInfo from './DetailInfo';
 
@@ -17,7 +19,12 @@ const DetailPlaceInfo = ({ data }: { data: PlaceResult }) => {
                   </div>
                 </div>
                 <div className="w-full h-7 flex mt-5 ">
-                  <div className="w-full h-11  rounded-lg border border-zinc-400" />
+                  <div className="flex items-center justify-around relative w-full h-11  rounded-lg border border-zinc-400">
+                    <Icons path={callIcon} fill="#404040" />
+                    <Icons path={heartIcon} fill="white" stroke="#404040" />
+                    <Icons path={linkIcon} fill="#404040" />
+                    <div className="border-x-2 absolute w-1/3 h-4/5 border-neutral-300"></div>
+                  </div>
                 </div>
               </div>
             </div>

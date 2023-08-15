@@ -1,6 +1,6 @@
 interface Props {
   title: string;
-  size: 'small' | 'medium' | 'large' | 'default';
+  size: 'small' | 'medium' | 'large' | 'default' | 'full' | 'w-full';
   bgColor?: string;
   hoverColor?: string;
   color?: string;
@@ -10,10 +10,21 @@ interface Props {
   type?: 'button' | 'submit' | 'reset' | undefined;
   className?: string;
   onClick?: () => void;
+  isRounded?: boolean;
 }
 
 const getButtonSizeStyles = (size: string) => {
   switch (size) {
+    case 'full':
+      return {
+        button: 'w-full h-full',
+        span: 'w-full h-full',
+      };
+    case 'w-full':
+      return {
+        button: 'w-full h-[51px]',
+        span: 'w-full h-full',
+      };
     case 'small':
       return {
         button: 'w-[103px] h-[41px]',
@@ -43,29 +54,26 @@ const Button = ({
   disable = false,
   onClick,
   border,
+  isRounded = true,
 }: Props) => {
   return (
-    <div>
-      <button
-        onClick={disable ? undefined : onClick}
-        className={`active:${hoverColor} hover:${hoverColor} transition-all rounded-lg text-base ${color} ${bgColor} ${border} ${className} ${
-          getButtonSizeStyles(size).button
-        } ${
-          select
-            ? 'bg-neutral-500'
-            : 'border-l-zinc-400 hover:bg-neutral-200/70'
-        } `}
-        type={type}
+    <button
+      onClick={disable ? undefined : onClick}
+      className={`active:${hoverColor} hover:${hoverColor} transition-all ${
+        isRounded ? 'rounded-lg' : null
+      } text-base ${color} ${bgColor} ${border} ${className} ${
+        getButtonSizeStyles(size).button
+      } ${select ? hoverColor : 'border-l-zinc-400 hover:bg-neutral-200/70'} `}
+      type={type}
+    >
+      <span
+        className={` ${getButtonSizeStyles(size).span} ${
+          select ? 'text-white' : 'text-black'
+        }`}
       >
-        <span
-          className={` ${getButtonSizeStyles(size).span} ${
-            select ? 'text-white' : 'text-black'
-          }`}
-        >
-          {title}
-        </span>
-      </button>
-    </div>
+        {title}
+      </span>
+    </button>
   );
 };
 

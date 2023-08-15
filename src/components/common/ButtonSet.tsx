@@ -14,9 +14,6 @@ const ButtonSet = ({
   const onSelectHandler = (category: string) => {
     setSelectedCategory(category);
   };
-  const onClickHandler = (category: string) => {
-    onSelectHandler(category);
-  };
 
   return (
     <div className="flex w-4/5 min-w-[200px] flex-wrap h-full justify-center items-center  rounded-xl mx-auto border border-neutral-400 overflow-hidden">
@@ -27,7 +24,7 @@ const ButtonSet = ({
             size="medium"
             title={category}
             select={category === selectedCategory}
-            onClick={() => onClickHandler(category)}
+            onClick={() => onSelectHandler(category)}
           />
         </div>
       ))}

@@ -24,9 +24,9 @@ const RadioInput = ({
       >
         <input
           id={id}
-          className={`caret-transparent outline-none h-3.5 w-3.5 border  rounded-full ${
+          className={`caret-transparent outline-none h-3.5 w-3.5 rounded-full ${
             checked === label ? bgColor : null
-          } ${checked === label ? borderColor : 'border-zinc-400'}`}
+          } ${checked === label ? borderColor : null}`}
         />
       </div>
       <label className="text-center font-normal text-base text-neutral-500">
