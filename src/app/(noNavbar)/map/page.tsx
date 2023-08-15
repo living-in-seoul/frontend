@@ -4,7 +4,8 @@ import MapHeader from '@/components/map/MapHeader';
 import dynamic from 'next/dynamic';
 
 const DynamicMap = dynamic(() => import('../../../components/map/Map'), {
-  ssr: true,
+  ssr: false,
+  loading: () => <div>Loading...</div>,
 });
 
 const MapPage = () => {

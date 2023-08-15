@@ -19,11 +19,7 @@ import useSWR from 'swr';
 import useMapInstance from '@/hooks/useMapInstance';
 import useNearbySearch from '@/hooks/useNearbySearch';
 import { useRouter } from 'next/navigation';
-import {
-  MapStyleVersionOne,
-  MapStyleVersionThree,
-  MapStyleVersionTwo,
-} from '@/utils/styles';
+import { MapStyleVersionThree } from '@/utils/styles';
 
 const libraries: Libraries = ['places', 'visualization'];
 
@@ -44,6 +40,11 @@ const Map = () => {
     lng: 126.978,
   });
   const setPlacesState = useSetRecoilState(placesState);
+
+  // const seoulBound = new google.maps.LatLngBounds(
+  //   new google.maps.LatLng(37.426, 126.764), // 남서쪽 좌표
+  //   new google.maps.LatLng(37.701, 127.183), // 북동쪽 좌표
+  // );
 
   const mapOptions: google.maps.MapOptions = {
     fullscreenControl: true,
@@ -118,6 +119,7 @@ const Map = () => {
           onLoad={onLoad}
           onUnmount={onUnmount}
           options={mapOptions}
+          onClick={(e) => e.stop()}
         >
           {typeof google !== 'undefined' && (
             <HeatmapLayerF
