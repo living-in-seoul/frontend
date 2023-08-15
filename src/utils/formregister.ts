@@ -1,4 +1,5 @@
 import { RegisterOptions } from 'react-hook-form';
+import { hometownData } from './residence';
 
 export const emailForm:
   | RegisterOptions<{ email: string; password: string }, 'email'>
@@ -32,5 +33,28 @@ export const nicknameForm = {
   pattern: {
     value: /^[^\d\s]{1,10}$/,
     message: '닉네임은 10자 이내 숫자와 공백을 허용하지 않습니다',
+  },
+};
+
+export const hometownForm = {
+  required: '고향을 알려주세요',
+  pattern: {
+    value: /^[가-힣]*$/,
+    message: '띄어쓰기를 확인해주세요',
+  },
+  validate: {
+    check: (val: string) => {
+      if (!hometownData.includes(val)) {
+        return '올바른지명이 아닙니다';
+      }
+    },
+  },
+};
+
+export const birthDateForm = {
+  required: '생일을 적어주세요',
+  pattern: {
+    value: /^(19|20)\d\d-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/,
+    message: '숫자와 하이픈을 적어주세요',
   },
 };

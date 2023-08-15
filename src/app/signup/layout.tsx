@@ -3,7 +3,7 @@
 import SignupWelcome from '@/components/auth/signup/SignupWelcome';
 import Icons from '@/components/common/Icons';
 import { back } from '@/utils/Icon';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { RecoilRoot } from 'recoil';
 
 export default function NoNavbarLayout({
@@ -12,6 +12,8 @@ export default function NoNavbarLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const params = useSearchParams();
+  console.log(params);
   return (
     <main className="h-screen px-4 flex flex-col gap-10 pb-4  ">
       <RecoilRoot>

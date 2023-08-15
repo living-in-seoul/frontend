@@ -4,7 +4,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import AuthInput from '../signin/AuthInput';
 import Button from '@/components/common/Button';
 import { useSetRecoilState } from 'recoil';
-import { signupEssentialState, signupState } from '@/recoil/states';
 import { useRouter } from 'next/navigation';
 import {
   checkPasswordForm,
@@ -12,6 +11,7 @@ import {
   nicknameForm,
   passwordForm,
 } from '@/utils/formregister';
+import { signupEssentialState, signupState } from '@/recoil/authStates';
 interface FormProps {
   email: string;
   password: string;
@@ -64,6 +64,7 @@ const SignupFirst = () => {
       >
         <div className="">
           <AuthInput
+            key="email"
             id="email"
             placeholder="ex) seuol123@vival.com"
             label="아이디(이메일)"
@@ -73,6 +74,7 @@ const SignupFirst = () => {
             errorsMessage={errors.email?.message}
           />
           <AuthInput
+            key="password"
             id="password"
             isText={false}
             placeholder="영문, 숫자, 특수문자 조합 10자리 이상"
@@ -83,6 +85,7 @@ const SignupFirst = () => {
             errorsMessage={errors.password?.message}
           />
           <AuthInput
+            key="checkPassword"
             id="checkPassword"
             isText={false}
             placeholder="ex)비밀번호를 재입력해주세요"
@@ -93,6 +96,7 @@ const SignupFirst = () => {
             errorsMessage={errors.checkPassword?.message}
           />
           <AuthInput
+            key="nickname"
             id="nickname"
             placeholder="닉네임을 입력해주세요"
             label="닉네임"

@@ -4,11 +4,11 @@ export const signupState = atom<RequestRegister>({
   default: {
     email: '',
     nickname: '',
+    gender: '',
     password: '',
-    gu: '',
-    dong: '',
     hometown: '',
     movedDate: '',
+    birthDate: '',
   },
 });
 
