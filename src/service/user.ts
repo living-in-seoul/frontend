@@ -14,10 +14,8 @@ export const postSignup = async (data: RequestRegister) => {
         },
       },
     );
-    console.log('ressss', res);
     return res.data;
   } catch (error) {
-    console.log('errrrr', error);
     throw error;
   }
 };

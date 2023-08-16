@@ -149,7 +149,7 @@ const fetchCityData = async (
 };
 
 /** 도시데이터 && 도시 이미지 함치는 함수 */
-export const getHomeDatas = async () => {
+export const getHomeDatas = async (gu?: string | undefined) => {
   const imageDataPromises = DATA_AREA.map((region) => fetchCityImage(region));
   const cityDataPromises = DATA_AREA.map((region) => fetchCityData(region));
 
@@ -162,20 +162,28 @@ export const getHomeDatas = async () => {
     return result.status === 'fulfilled';
   }
 
-  return DATA_AREA.map((region, index) => {
+  const dataArray = DATA_AREA.map((region, index) => {
     const cityDataResult = cityDataResults[index];
     const cityData = isFulfilled(cityDataResult) ? cityDataResult.value : null;
 
     const imageResult = imageResults[index];
     const imageInfo = isFulfilled(imageResult) ? imageResult.value : null;
     const ImageInformation = imageInfo?.results[0] ?? null;
-    return {
+    const result = {
       ...cityData?.['SeoulRtd.citydata_ppltn']?.[0],
       image: ImageInformation?.photos
         ? ImageInformation?.photos[0].photo_reference
         : null,
       place_id: ImageInformation?.place_id,
       name: ImageInformation?.name,
+      geometry: ImageInformation?.geometry,
+      gu: ImageInformation?.formatted_address?.split(' ')[2],
     };
+    if (result.gu === gu) {
+      return result;
+    } else {
+      return null;
+    }
   });
+  return dataArray.filter((data) => data !== null);
 };
