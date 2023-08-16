@@ -56,9 +56,9 @@ const SignupFirst = () => {
       password: data.password,
       nickname: data.nickname,
     };
-    reset();
     setFirstData((prev) => ({ ...prev, ...newData }));
     setEssential((prev) => !prev);
+    reset();
     router.push('/signup/second');
   };
   return (
@@ -114,7 +114,7 @@ const SignupFirst = () => {
         <div className="absolute w-full bottom-0">
           <Button
             type="submit"
-            size="large"
+            size="w-full"
             title="다음"
             bgColor="bg-zinc-300"
             border="none"

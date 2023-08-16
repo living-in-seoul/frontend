@@ -39,7 +39,7 @@ const Table = ({
             <Button
               type="button"
               className={``}
-              size="full"
+              size="w-full"
               title={cell}
               select={cell === selectedCategory}
               onClick={() => onSelectHandler(cell)}

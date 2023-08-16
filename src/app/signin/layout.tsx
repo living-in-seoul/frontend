@@ -3,6 +3,7 @@
 import Icons from '@/components/common/Icons';
 import { close } from '@/utils/Icon';
 import { useRouter } from 'next/navigation';
+import { RecoilRoot } from 'recoil';
 
 export default function SigninLayout({
   children,
@@ -16,7 +17,7 @@ export default function SigninLayout({
       <div className="pt-5 mb-16">
         <Icons path={close} fill="#404040" onClick={() => route.back()} />
       </div>
-      {children}
+      <RecoilRoot>{children}</RecoilRoot>
     </main>
   );
 }

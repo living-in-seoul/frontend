@@ -6,14 +6,20 @@ export const POST = async (request: NextRequest) => {
   const body: RequestLogin = await request.json();
   // console.log('body: ', body);
   const data = await postSingin(body);
-  console.log('data: ', data);
   const response = NextResponse.json(data);
-  // response.cookies.set({
-  //   name: 'refreshToken',
-  //   value: data.refreshToken,
-  //   httpOnly: true,
-  // });
+  if (response.status === 200) {
+    response.cookies.set({
+      name: 'refreshToken',
+      value: data.refreshToken,
+      httpOnly: true,
+    });
+    response.cookies.set({
+      name: 'accessToken',
+      value: data.accessToken,
+      httpOnly: true,
+    });
+  }
 
-  return NextResponse.json(data);
+  return response;
   // ((response)=> response.json());
 };
