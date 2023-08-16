@@ -8,7 +8,6 @@ const RecommendItem = (place: google.maps.places.PlaceResult) => {
   const { name, place_id, photos, rating, user_ratings_total, vicinity } =
     place;
   const photoReference = photos?.[0].getUrl();
-  console.log(photoReference);
 
   return (
     <div className="flex justify-between items-center h-16 px-6 my-6">

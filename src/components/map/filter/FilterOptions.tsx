@@ -29,4 +29,4 @@ const FilterOptions = () => {
 
 export default FilterOptions;
 
-const Options = ['장소', '장소유형', '거리'];
+const Options = ['장소', '장소유형', '거리', '커뮤니티'];

@@ -6,7 +6,7 @@ import CategoryList from '../common/CategoryList';
 import PopCarousel from '../common/PopCarousel';
 import axios from 'axios';
 
-const categories = ['여성이 많은', '남성이 많은', '매우 붐빔', '여유 로운'];
+import { categories } from '@/utils/constants';
 
 const HomePopulation = () => {
   const {

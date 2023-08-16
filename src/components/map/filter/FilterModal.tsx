@@ -10,6 +10,7 @@ import {
 import Button from '@/components/common/Button';
 import LocationFilter from './LocationFilter';
 import RangeSlider from '../../common/RangeSlider';
+import LocationTypeFilter from './LocationTypeFilter';
 
 const FilterModal = () => {
   const [filterOption, setFilterOptionState] =
@@ -31,13 +32,9 @@ const FilterModal = () => {
   const switchOptions = () => {
     switch (filterOption) {
       case '장소':
-        return (
-          <>
-            <LocationFilter />
-          </>
-        );
+        return <LocationFilter />;
       case '장소유형':
-        break;
+        return <LocationTypeFilter />;
       case '거리':
         return <RangeSlider range={range} setRange={setRangeState} />;
 
@@ -50,15 +47,15 @@ const FilterModal = () => {
     <div className="fixed top-28 left-0 w-full flex flex-col justify-center items-center  bg-white px-4">
       {openFilterValue && <>{switchOptions()}</>}
 
-      <div className="flex bg-black justify-between items-center ">
+      <div className="flex justify-between items-center gap-3 my-2">
         <Button
-          size="small"
+          size="medium-large"
           title="초기화"
           border="border border-zinc-500"
           onClick={onResetFilterModal}
         ></Button>
         <Button
-          size="small"
+          size="medium-large"
           title="필터 적용"
           border="border border-zinc-500"
           onClick={onCloseFilterModal}

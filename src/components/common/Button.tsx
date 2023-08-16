@@ -1,6 +1,13 @@
 interface Props {
   title: string;
-  size: 'small' | 'medium' | 'large' | 'default' | 'full' | 'w-full';
+  size:
+    | 'small'
+    | 'medium'
+    | 'large'
+    | 'medium-large'
+    | 'full'
+    | 'w-full'
+    | 'default';
   bgColor?: string;
   hoverColor?: string;
   color?: string;
@@ -32,6 +39,8 @@ const getButtonSizeStyles = (size: string) => {
       };
     case 'medium':
       return { button: `w-full py-1`, span: 'text-xs' };
+    case 'medium-large':
+      return { button: `w-[132px] py-1`, span: 'text-xs' };
     case 'large':
       return { button: `w-[275px] h-[51px]`, span: 'text-md  leading-7' };
     default:

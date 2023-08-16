@@ -53,7 +53,18 @@ export const Filters = [
   { name: '영화관', category: 'movie_theater' },
 ];
 
-export const googleMapsLibraries: Libraries = ['places', 'visualization'];
+export const categories = [
+  '여성이 많은',
+  '남성이 많은',
+  '매우 붐빔',
+  '여유 로운',
+];
+
+export const googleMapsLibraries: Libraries = [
+  'places',
+  'visualization',
+  'marker',
+];
 
 export const containerStyle = {
   width: '100%',

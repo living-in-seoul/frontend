@@ -124,7 +124,6 @@ export const useBottomSheet = (minY: number) => {
         }
       }
 
-      //metrics 초기화 (터치 동작 새로 (터치 시작 -> 이동 -> 터치 끝) 만들어야해서)
       metrics.current = {
         touchStart: {
           sheetY: 0,

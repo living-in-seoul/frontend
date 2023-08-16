@@ -4,6 +4,8 @@ import {
   LoadScriptNext,
   MarkerF,
   HeatmapLayerF,
+  InfoBoxF,
+  Marker,
 } from '@react-google-maps/api';
 import {
   filterState,
@@ -17,17 +19,10 @@ import useSWR from 'swr';
 import useMapInstance from '@/hooks/useMapInstance';
 import useNearbySearch from '@/hooks/useNearbySearch';
 import { useRouter } from 'next/navigation';
-import {
-  MapStyleVersionOne,
-  MapStyleVersionThree,
-  MapStyleVersionTwo,
-} from '@/utils/styles';
-import { googleMapsLibraries } from '@/utils/constants';
+import { MapStyleVersionTwo } from '@/utils/styles';
+import { containerStyle, googleMapsLibraries } from '@/utils/constants';
+import MarkerInfo from './marker/MarkerInfo';
 
-const containerStyle = {
-  width: '100%',
-  height: '100vh',
-};
 const Map = () => {
   const router = useRouter();
   const [placeId, setPlaceIdState] = useRecoilState(placeIdState);
@@ -39,7 +34,15 @@ const Map = () => {
     lat: 37.5665,
     lng: 126.978,
   });
+  const { data: locationDetail } = useSWR<PlaceByPlaceIdResponse>(
+    placeId ? `api/map/places/${placeId}` : null,
+    null,
+    {
+      focusThrottleInterval: 5000,
+    },
+  );
   const setPlacesState = useSetRecoilState(placesState);
+  //구 state
 
   // const seoulBound = new google.maps.LatLngBounds(
   //   new google.maps.LatLng(37.426, 126.764), // 남서쪽 좌표
@@ -53,13 +56,13 @@ const Map = () => {
     disableDefaultUI: true,
     styles: MapStyleVersionTwo,
   };
-  const { data: locationDetail } = useSWR<PlaceByPlaceIdResponse>(
-    placeId ? `api/map/places/${placeId}` : null,
-    null,
-    {
-      focusThrottleInterval: 5000,
-    },
+
+  const { data: cityData } = useSWR<ResponseCityImageData[]>(
+    `/api/board/${'중구'}`,
   );
+
+  console.log(cityData);
+
   const { places } = useNearbySearch({
     map,
     center,
@@ -67,12 +70,12 @@ const Map = () => {
     type: filterValue,
   });
 
-  // useEffect(() => {
-  //   if (map && locationDetail) {
-  //     map.panTo(locationDetail.result.geometry.location);
-  //     setCenter(locationDetail.result.geometry.location);
-  //   }
-  // }, [locationDetail, map]);
+  useEffect(() => {
+    if (map && locationDetail) {
+      map.panTo(locationDetail.result.geometry.location);
+      setCenter(locationDetail.result.geometry.location);
+    }
+  }, [locationDetail, map]);
 
   useEffect(() => {
     setPlacesState(places);
@@ -138,7 +141,40 @@ const Map = () => {
               }}
             />
           )}
-
+          {cityData?.map((data) => {
+            if (!map || !data.geometry?.location) {
+              return;
+            }
+            return (
+              <MarkerF
+                // map={map}
+                key={data.place_id}
+                icon={{
+                  path: google.maps.SymbolPath.CIRCLE,
+                  fillColor: 'green',
+                  fillOpacity: 1,
+                  scale: 5,
+                  strokeColor: 'white',
+                  strokeWeight: 1,
+                }}
+                position={data.geometry.location}
+              >
+                {
+                  <InfoBoxF
+                    // onCloseClick={props.onToggleOpen}
+                    options={{ closeBoxURL: ``, enableEventPropagation: true }}
+                  >
+                    <div className="bg-[#2DDAB0] text-white p-2 rounded-lg shadow-lg px-2 w-full max-w-[120px] ">
+                      <div className="text-[0.7rem]">{data.name}</div>
+                      <span className="text-[0.3rem]">
+                        {data.AREA_CONGEST_LVL}
+                      </span>
+                    </div>
+                  </InfoBoxF>
+                }
+              </MarkerF>
+            );
+          })}
           {places?.map((place) => {
             if (!place.geometry?.location) {
               return;
@@ -147,14 +183,21 @@ const Map = () => {
               <MarkerF
                 key={place.place_id}
                 position={place.geometry?.location}
+                icon={{
+                  url: 'http://localhost:3000/marker/base.png',
+                }}
                 onClick={(e) => onMarkerClick(e, place.place_id)}
-              />
+              ></MarkerF>
             );
           })}
         </GoogleMap>
       </LoadScriptNext>
     </section>
   );
+};
+
+const MarkerIcons = {
+  restaurants: 'http://localhost:3000/marker/restaurants.png',
 };
 
 export default Map;

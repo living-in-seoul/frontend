@@ -158,4 +158,11 @@ interface ResponseCityImageData extends CityData {
   image: string;
   place_id: string;
   name: string;
+  geometry: {
+    location: LatLng;
+    viewport: {
+      northeast: LatLng;
+      southwest: LatLng;
+    };
+  };
 }
