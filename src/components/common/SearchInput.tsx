@@ -1,6 +1,7 @@
 'use client';
 import { FormEvent } from 'react';
 import Icons from './Icons';
+import Back from './Back';
 
 interface SearchInputProps {
   placeholder: string;
@@ -25,9 +26,10 @@ const SearchInput = ({
   onClick,
 }: SearchInputProps) => {
   return (
-    <section className="w-full flex justify-center ">
+    <section className="w-full flex justify-center items-center ">
+      <Back />
       <form
-        className="w-4/5 rounded-[1.875rem] bg-white h-[38px] flex items-center justify-between shadow-xl border border-neutral-200 px-4"
+        className="ml-4 w-4/5 rounded-[1.875rem] bg-white h-[38px] flex items-center justify-between shadow-sm border border-neutral-300 px-4"
         onSubmit={onSubmit}
       >
         <input
