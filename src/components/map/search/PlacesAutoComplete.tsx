@@ -55,7 +55,7 @@ const PlacesAutoComplete = () => {
     <section className="flex flex-col justify-center items-center w-full pt-4 text-xs">
       {isLoading && <div>loading!</div>}
       <SearchInput
-        placeholder="서초구 서초동"
+        placeholder="지역명, 도로명, 지하철역으로 검색"
         value={inputLocation}
         onChange={onChangeHandler}
         onSubmit={onSubmit}

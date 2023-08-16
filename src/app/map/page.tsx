@@ -8,6 +8,7 @@ const MapPage = () => {
       <MapHeader />
 
       <div id="portal" />
+      <div id="markerPortal" />
     </section>
   );
 };
