@@ -6,8 +6,13 @@ import AuthInput from './AuthInput';
 import Button from '@/components/common/Button';
 import { useRouter } from 'next/navigation';
 import { emailForm, passwordForm } from '@/utils/formregister';
+import { useRecoilState } from 'recoil';
+import { callbackUrlState } from '@/recoil/authStates';
 
 const DefaultLogin = () => {
+  const callbackUrl = useRecoilState(callbackUrlState);
+  console.log('asdfasdfasdfasdfsdf', callbackUrl[0]);
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -20,21 +25,17 @@ const DefaultLogin = () => {
       password: '',
     },
   });
-  const router = useRouter();
 
   const onSubmitHandler: SubmitHandler<RequestLogin> = async (data) => {
-    const response = await fetch('/api/signin', {
+    await fetch('/api/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
     });
-    const accessToken = await response.json().then((data) => data.accessToken);
-
-    localStorage.setItem('accessToken', accessToken);
-
     reset();
+    router.push(`${callbackUrl[0]}`);
   };
 
   return (
@@ -80,7 +81,7 @@ const DefaultLogin = () => {
       {/* h-screen설정을 하니깐 스크롤바가 나오는데 이거 어떻게 해결하냐 */}
       <div className="absolute w-full bottom-0">
         <Button
-          size="large"
+          size="w-full"
           title="로그인하기"
           bgColor="bg-teal-400"
           border="none"

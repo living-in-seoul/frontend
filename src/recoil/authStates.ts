@@ -16,3 +16,8 @@ export const signupEssentialState = atom<boolean>({
   key: 'isEssentialState',
   default: true,
 });
+
+export const callbackUrlState = atom<string>({
+  key: 'callbackUrlState',
+  default: '',
+});
