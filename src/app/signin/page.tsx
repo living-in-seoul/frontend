@@ -2,6 +2,7 @@
 import SigninButtons from '@/components/auth/signin/SigninButtons';
 import SigninWelcome from '@/components/auth/signin/SigninWelcome';
 import { callbackUrlState } from '@/recoil/authStates';
+import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 
 interface SigninProps {
@@ -12,8 +13,10 @@ interface SigninProps {
 
 const SignIpPage = ({ searchParams: { callbackUrl } }: SigninProps) => {
   const setCallbackUrl = useSetRecoilState(callbackUrlState);
-  setCallbackUrl(callbackUrl);
-  console.log(callbackUrl);
+  useEffect(() => {
+    setCallbackUrl(callbackUrl);
+  });
+
   return (
     <section className="flex flex-col ">
       <SigninWelcome />
