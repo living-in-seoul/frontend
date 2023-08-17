@@ -5,6 +5,11 @@ export const filterState = atom<string>({
   default: '',
 });
 
+export const locationTypeState = atom<string>({
+  key: 'locationTypeState',
+  default: '',
+});
+
 export const openFilterState = atom<boolean>({
   key: 'openFilterState',
   default: false,

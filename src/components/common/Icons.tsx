@@ -7,6 +7,7 @@ interface Props {
     height: number;
   };
   fill?: string;
+  stroke?: string;
   onClick?: () => void;
   option?: Partial<SVGProps<SVGPathElement>>;
 }

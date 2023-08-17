@@ -14,10 +14,8 @@ export const postSignup = async (data: RequestRegister) => {
         },
       },
     );
-    console.log('ressss', res);
     return res.data;
   } catch (error) {
-    console.log('errrrr', error);
     throw error;
   }
 };
@@ -34,7 +32,6 @@ export const postSingin = async (data: RequestLogin) => {
         },
       },
     );
-    console.log(response);
     return response.data;
   } catch (error) {
     console.log(error);

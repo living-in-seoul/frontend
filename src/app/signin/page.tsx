@@ -1,11 +1,23 @@
+'use client';
 import SigninButtons from '@/components/auth/signin/SigninButtons';
 import SigninWelcome from '@/components/auth/signin/SigninWelcome';
+import { callbackUrlState } from '@/recoil/authStates';
+import { useSetRecoilState } from 'recoil';
 
-const SignIpPage = () => {
+interface SigninProps {
+  searchParams: {
+    callbackUrl: string;
+  };
+}
+
+const SignIpPage = ({ searchParams: { callbackUrl } }: SigninProps) => {
+  const setCallbackUrl = useSetRecoilState(callbackUrlState);
+  setCallbackUrl(callbackUrl);
+  console.log(callbackUrl);
   return (
     <section className="flex flex-col ">
       <SigninWelcome />
-      <div className="w-full h-10 relative flex items-center justify-center">
+      <div className="mt-44 w-full h-10 relative flex items-center justify-center">
         <span className="bg-white z-10 px-3 text-zinc-400">
           SNS로 간편하게 로그인하세요
         </span>

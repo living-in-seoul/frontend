@@ -32,7 +32,9 @@ const StarRate = ({ rating }: { rating: number | undefined }) => {
         )}
       </div>
       <div className=" text-black text-sm font-normal leading-loose">
-        <span className="border-r-2 pr-2 border-stone-300">{rating}</span>
+        {rating && (
+          <span className="border-r-2 pr-2 border-stone-300">{rating}</span>
+        )}
       </div>
     </>
   );
