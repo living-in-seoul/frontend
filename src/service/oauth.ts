@@ -1,12 +1,19 @@
-import { redirect } from 'next/navigation';
-
-export async function oauthHandler(url: string) {
-  redirect(url);
-}
+import axios from 'axios';
 
 export const oauthSignin = async (data: RequestOauthLogin) => {
-  await fetch(`${process.env.NEXT_PUBLIC_SERVER}/auth/oauth/login`, {
-    method: 'POST',
-    body: JSON.stringify(data),
-  }).then((response) => response.json());
+  try {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_SERVER}/auth/oauth/login`,
+      data,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      },
+    );
+    return response.data;
+  } catch (err) {
+    throw err;
+  }
 };

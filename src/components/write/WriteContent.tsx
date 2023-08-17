@@ -94,11 +94,11 @@ const WriteContent = () => {
       if (postImg) {
         data.append('photos', postImg);
       }
-
-      await fetch('/api/write', {
+      const response = await fetch('/api/write', {
         method: 'POST',
         body: data,
       });
+      console.log(await response.json());
     },
     [formData, postImg],
   );
@@ -107,6 +107,7 @@ const WriteContent = () => {
     <form
       // action={submitForm}
       onSubmit={onSubmit}
+      encType="multipart/form-data"
       className="flex flex-col gap-2 w-4/5 p-10 bg-neutral-200 mx-auto my-5 "
     >
       <select name="category" onChange={(e) => onChangeHandler(e)}>

@@ -3,9 +3,10 @@ import CommunityBoardList from '@/components/community/CommunityBoardList';
 import DetailPlaceInfo from '@/components/detail/DetailPlaceInfo';
 import DetailReviewerPictuers from '@/components/detail/DetailReviewerPictuers';
 import Image from 'next/image';
-import { redirect } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import useSWR from 'swr';
 import { choi } from '../../../../public';
+import { useEffect } from 'react';
 interface MapDetailProps {
   params: {
     slug: string;
@@ -13,13 +14,19 @@ interface MapDetailProps {
 }
 
 const MapDetail = ({ params }: MapDetailProps) => {
+  const router = useRouter();
   const { slug: placeId } = params;
-
   const {
     data: details,
     isLoading,
     error,
   } = useSWR(`/api/map/detail/${placeId}`);
+
+  console.log(details);
+  if (isLoading) {
+    return <div>기다리세요</div>;
+  }
+  details.message === '회원전용입니다' && router.push('/signin');
 
   const photoReference = details?.photos?.[0]?.photo_reference;
   const mainPicture = photoReference
