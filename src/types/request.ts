@@ -20,6 +20,25 @@ interface RequestRegister {
   movedDate: string;
 }
 
+/** 게시물 작성 요청 데이터 */
+interface RequestBoardWrite {
+  category: string;
+  title: string;
+  locationTag: string[];
+  purposeTag: string[];
+  content: string;
+  postImg: File;
+}
+
+/** 게시물 작성 (임시!!!!!!! 절대 쓰지 말것!!!) */
+interface RequestBoardWriteTemp {
+  title: string;
+  locationTag: string[];
+  purposeTag: string[];
+  content: string;
+  postImg: File;
+}
+
 /** 게시물 수정 요청 데이터 */
 interface RequestBoardUpdate {
   title: string;
