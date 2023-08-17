@@ -8,11 +8,13 @@ interface CommunityBoardProps {
   title: string;
   Category?: string[];
   image?: boolean;
+  type?: CategoryType;
 }
 const CommunityBoardList = ({
   image = false,
   title,
   Category,
+  type,
 }: CommunityBoardProps) => {
   const initalCategory = Category ? Category[0] : null;
   const [selectCategory, setSelectCategory] = useState<string | null>(
@@ -30,7 +32,11 @@ const CommunityBoardList = ({
           />
         </div>
       )}
-      <CategoryPostList selectCategory={selectCategory} image={image} />
+      <CategoryPostList
+        selectCategory={selectCategory}
+        image={image}
+        type={type}
+      />
       <Link href={'/'} className="self-end mx-1">
         <p className="text-xs font-bold leading-7">{`더보기 >`}</p>
       </Link>

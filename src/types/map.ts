@@ -105,6 +105,32 @@ interface PlaceResult {
 interface ResponseImageGoogle {
   results: GooglePlacePickedResult[];
 }
+
+interface Dong {
+  type: string;
+  features: Feature[];
+}
+
+interface Feature {
+  type: string;
+  geometry: Geometry;
+  properties: Properties;
+}
+
+interface Geometry {
+  type: string;
+  coordinates: number[][][];
+}
+
+interface Properties {
+  EMD_CD: string;
+  EMD_NM: string;
+  SGG_OID: number;
+  COL_ADM_SE: string;
+  GID: number;
+  SGG_NM?: string; // 추가적으로 넣은 구 이름
+}
+
 type guchung =
   | ''
   | '강남구'

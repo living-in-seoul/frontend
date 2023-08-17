@@ -27,7 +27,7 @@ import { useEffect } from 'react';
 
 // export default Callback;
 
-const AuthPage = (req: NextRequest) => {
+const AuthPage = (req: any) => {
   // const fetchtest = async () => {
   //   await fetch('/api/callbacks', {method: 'POST',
   //           body: JSON.stringify({ code }),} )
