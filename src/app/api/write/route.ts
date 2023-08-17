@@ -15,7 +15,7 @@ export const POST = async (request: NextRequest) => {
   const form = await request.formData();
   const text = form.get('post')?.toString();
   const file = form.get('photos') as Blob;
-
+  // console.log(text);
   const formData = new FormData();
 
   if (!text || !file) {
@@ -28,7 +28,7 @@ export const POST = async (request: NextRequest) => {
     headers: {
       'Content-Type': 'multipart/form-data', // which is multipart/form-data with boundary included
       Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjd0BnbWFpbC5jb20iLCJleHAiOjE2OTIyNzA5NjYsImlhdCI6MTY5MjI2NzM2Nn0.YIvcnhW1pRY20agbdR7onHiEaZx59juB6i7KVHpqIM8',
+        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0cmdmNDU2QG5hdmVyLmNvbSIsImV4cCI6MTY5MjI4NDk3NCwiaWF0IjoxNjkyMjgxMzc0fQ.np6QVfFDN-8CR0lc6ANNmJHIfV023_WUQuGuzFL8G1c',
     },
   });
 

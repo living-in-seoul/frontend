@@ -23,7 +23,7 @@ import useMapInstance from '@/hooks/useMapInstance';
 import useNearbySearch from '@/hooks/useNearbySearch';
 import { useRouter } from 'next/navigation';
 import { MapStyleVersionTwo } from '@/utils/styles';
-import { containerStyle, googleMapsLibraries } from '@/utils/constants';
+import { googleMapsLibraries } from '@/utils/constants';
 import MarkerInfo from './marker/MarkerInfo';
 
 const containerStyle = {
