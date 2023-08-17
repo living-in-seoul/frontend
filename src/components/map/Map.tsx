@@ -4,12 +4,15 @@ import {
   LoadScriptNext,
   MarkerF,
   HeatmapLayerF,
+  PolygonF,
 } from '@react-google-maps/api';
 import {
   filterState,
   placeIdState,
   placesState,
   rangeState,
+  selectDongPlaceState,
+  selectGuPlaceState,
 } from '@/recoil/mapStates';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { useEffect, useState } from 'react';
@@ -28,6 +31,7 @@ const containerStyle = {
   width: '100%',
   height: '100vh',
 };
+const GUNAME = '영등포구';
 const Map = () => {
   const router = useRouter();
   const [placeId, setPlaceIdState] = useRecoilState(placeIdState);
@@ -39,8 +43,9 @@ const Map = () => {
     lat: 37.5665,
     lng: 126.978,
   });
+  const [selectedDong, setSelectedDong] = useRecoilState(selectDongPlaceState);
   const setPlacesState = useSetRecoilState(placesState);
-
+  const placeGu = useRecoilValue(selectGuPlaceState);
   // const seoulBound = new google.maps.LatLngBounds(
   //   new google.maps.LatLng(37.426, 126.764), // 남서쪽 좌표
   //   new google.maps.LatLng(37.701, 127.183), // 북동쪽 좌표
@@ -60,12 +65,14 @@ const Map = () => {
       focusThrottleInterval: 5000,
     },
   );
-  const { places } = useNearbySearch({
-    map,
-    center,
-    radius: rangeValue,
-    type: filterValue,
-  });
+  const fetcherURL = placeGu ? `api/map/seoul/dong?guName=${placeGu}` : null;
+  const { data: dongs } = useSWR<Dong>(fetcherURL);
+  // const { places } = useNearbySearch({
+  //   map,
+  //   center,
+  //   radius: rangeValue,
+  //   type: filterValue,
+  // });
 
   // useEffect(() => {
   //   if (map && locationDetail) {
@@ -74,9 +81,9 @@ const Map = () => {
   //   }
   // }, [locationDetail, map]);
 
-  useEffect(() => {
-    setPlacesState(places);
-  }, [places, setPlacesState]);
+  // useEffect(() => {
+  //   setPlacesState(places);
+  // }, [places, setPlacesState]);
 
   useEffect(() => {
     if (rangeValue > 200) {
@@ -105,7 +112,6 @@ const Map = () => {
     <section className="w-full h-full bg-slate-400">
       <LoadScriptNext
         googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY || ''}
-        loadingElement={<div>Loading...</div>}
         libraries={googleMapsLibraries}
       >
         <GoogleMap
@@ -123,7 +129,7 @@ const Map = () => {
             // },
           }}
         >
-          {typeof google !== 'undefined' && (
+          {/* {typeof google !== 'undefined' && (
             <HeatmapLayerF
               data={[
                 new google.maps.LatLng(37.5665, 126.978),
@@ -150,7 +156,43 @@ const Map = () => {
                 onClick={(e) => onMarkerClick(e, place.place_id)}
               />
             );
-          })}
+          })} */}
+          {dongs &&
+            dongs?.features.map((feature, index) => {
+              if (index === 0) return;
+              const isSelected = selectedDong === feature.properties.EMD_NM;
+              const latLngCoordinates = feature.geometry.coordinates[0]
+                .filter((coord) => !isNaN(coord[0]) && !isNaN(coord[1]))
+                .map((coord) => new google.maps.LatLng(coord[1], coord[0]));
+
+              if (latLngCoordinates.length === 0) return null;
+
+              return (
+                <PolygonF
+                  key={feature.properties.EMD_NM}
+                  path={latLngCoordinates}
+                  onDblClick={() => {
+                    setSelectedDong(feature.properties.EMD_NM);
+
+                    const bounds = new google.maps.LatLngBounds();
+                    latLngCoordinates.forEach((coord) => bounds.extend(coord));
+                    const center = bounds.getCenter();
+
+                    if (map) {
+                      map.panTo(center);
+                      map.setZoom(16);
+                    }
+                  }}
+                  options={{
+                    fillColor: isSelected ? 'blue' : '000000',
+                    fillOpacity: 0,
+                    strokeColor: isSelected ? 'blue' : 'gray',
+                    strokeWeight: 2,
+                    zIndex: isSelected ? 10 : 0,
+                  }}
+                />
+              );
+            })}
         </GoogleMap>
       </LoadScriptNext>
     </section>

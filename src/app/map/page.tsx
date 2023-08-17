@@ -1,5 +1,3 @@
-'use client';
-
 import MapHeader from '@/components/map/MapHeader';
 
 const MapPage = () => {

@@ -1,0 +1,1 @@
+type CategoryType = 'purpose' | 'location';

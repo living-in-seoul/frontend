@@ -35,3 +35,7 @@ export const selectGuPlaceState = atom<guchung>({
   key: 'selectGuPlaceState',
   default: '',
 });
+export const selectDongPlaceState = atom<string>({
+  key: 'selectDongPlaceState',
+  default: '',
+});

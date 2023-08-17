@@ -3,11 +3,11 @@ import MapBottomSheet from '@/components/map/bottomsheet/MapBottomSheet';
 import { usePathname } from 'next/navigation';
 import { RecoilRoot } from 'recoil';
 import dynamic from 'next/dynamic';
-import Map from '@/components/map/Map';
+import Loading from '../loading';
 
 const DynamicMap = dynamic(() => import('../../components/map/Map'), {
   ssr: false,
-  loading: () => <div>Loading...</div>,
+  loading: () => <Loading />,
 });
 
 export default function NavbarLayout({
@@ -25,7 +25,7 @@ export default function NavbarLayout({
     <main className="w-full h-full">
       <RecoilRoot>
         {children}
-        <Map />
+        <DynamicMap />
         <MapBottomSheet>
           {pathname === '/map' ? recommend : isolation}
         </MapBottomSheet>

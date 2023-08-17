@@ -15,7 +15,6 @@ const STATE_GEOSEOUL = `${process.env.NEXT_PUBLIC_OUR_URL}/api/map/seoul`;
 const useMapInstance = () => {
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const setPlacesGu = useSetRecoilState(selectGuPlaceState);
-  const placeGu = useRecoilValue(selectGuPlaceState);
 
   /**맵 구 클릭시 */
   const setMapFeatureStyle = (
