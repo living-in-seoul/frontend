@@ -1,5 +1,3 @@
-'use client';
-
 import MapHeader from '@/components/map/MapHeader';
 import Map from '@/components/map/Map';
 import dynamic from 'next/dynamic';

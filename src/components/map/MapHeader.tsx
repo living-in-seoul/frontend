@@ -2,7 +2,6 @@
 
 import PlacesAutoComplete from '@/components/map/search/PlacesAutoComplete';
 import FilterModal from '@/components/map/filter/FilterModal';
-import ModalPortal from '@/components/map/filter/ModalPortal';
 import { openFilterState } from '@/recoil/mapStates';
 import { useRecoilValue } from 'recoil';
 import FilterOptions from './filter/FilterOptions';

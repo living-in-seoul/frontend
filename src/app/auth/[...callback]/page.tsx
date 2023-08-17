@@ -5,8 +5,35 @@ import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 
+
 const AuthPage = () => {
   const setUserData = useSetRecoilState(signupState);
+
+//     scope: string;
+//   };
+// }
+// const Callback = async (
+//   req: Req,
+//   res: NextApiResponse,
+// ): Promise<ResponseOauthLogin> => {
+//   const { searchParams } = req;
+//   const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER}`, {
+//     method: 'POST',
+//     body: JSON.stringify({ code: searchParams.code }),
+//   }).then((response) => response.json());
+//   return response.data;
+// };
+
+// export default Callback;
+
+const AuthPage = (req: any) => {
+  // const fetchtest = async () => {
+  //   await fetch('/api/callbacks', {method: 'POST',
+  //           body: JSON.stringify({ code }),} )
+  // }
+
+  const pathName = req.nextUrl;
+  console.log(pathName);
   const params = useSearchParams();
   const code = params.get('code');
   useEffect(() => {
