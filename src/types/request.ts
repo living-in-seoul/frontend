@@ -23,10 +23,12 @@ interface RequestRegister {
 /** 게시물 작성 요청 데이터 */
 interface RequestBoardWrite {
   category: string;
-  title: string;
-  locationTag: string[];
-  purposeTag: string[];
+  hashTag: string[];
   content: string;
+  location: {
+    lat: number;
+    lng: number;
+  };
   postImg: File;
 }
 

@@ -1,7 +1,7 @@
 import { DATAList, post } from '@/utils/dummydata';
 import PostItem from './PostItem';
-import ReviewItem from '../common/ReviewItem';
 import useSWR from 'swr';
+import ReviewItem from '../item/ReviewItem';
 export interface CategoryPostListProps {
   selectCategory: string | null;
   image?: boolean;

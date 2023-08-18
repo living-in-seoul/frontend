@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import Button from '../common/Category';
+import Select from '../common/Select';
 import Icons from '../common/Icons';
 
 interface PostItemProps extends ResponsePost {
@@ -39,7 +39,7 @@ const PostItem = ({ board, user, selectCategory }: PostItemProps) => {
         </div>
 
         <div className="grow px-4">
-          <Button title={`#${selectCategory}`} disable />
+          <Select title={`#${selectCategory}`} disable />
           <h3 className="text-xs font-[600] my-1">{nickname}</h3>
           <p className="text-xs">{content}</p>
           <div className="flex justify-between w-1/2 py-1">

@@ -1,6 +1,6 @@
 'use client';
 
-import CategoryList from '@/components/common/CategoryList';
+import CategoryList from '@/components/item/CategoryList';
 import { filterOptionState, openFilterState } from '@/recoil/mapStates';
 import { useRecoilState } from 'recoil';
 

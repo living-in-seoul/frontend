@@ -1,4 +1,4 @@
-import { Filters } from '@/utils/constants';
+import { Filters } from '@/utils/constants/constants';
 import { useEffect, useState } from 'react';
 
 interface NearbySearchProps {

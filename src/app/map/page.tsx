@@ -2,7 +2,7 @@ import MapHeader from '@/components/map/MapHeader';
 import Map from '@/components/map/Map';
 import dynamic from 'next/dynamic';
 import { LoadScriptNext } from '@react-google-maps/api';
-import { googleMapsLibraries } from '@/utils/constants';
+import { googleMapsLibraries } from '@/utils/constants/constants';
 
 const DynamicMap = dynamic(() => import('../../components/map/Map'), {
   ssr: false,

@@ -1,6 +1,6 @@
 import { callIcon, heartIcon, linkIcon } from '@/utils/Icon';
 import Icons from '../common/Icons';
-import StarRate from '../common/StarRate';
+import StarRate from '../StarRate';
 import DetailInfo from './DetailInfo';
 
 const DetailPlaceInfo = ({ data }: { data: PlaceResult }) => {

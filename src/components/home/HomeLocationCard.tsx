@@ -1,4 +1,4 @@
-import MultiPleCard from '../common/MultiPleCard';
+import MultiPleCard from '../MultiPleCard';
 
 interface HomeLocationCardProps {
   data: ResponseCityImageData[];

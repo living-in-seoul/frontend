@@ -1,5 +1,5 @@
 import { RegisterOptions } from 'react-hook-form';
-import { hometownData } from './residence';
+import { hometownData } from './constants/residence';
 
 export const emailForm:
   | RegisterOptions<{ email: string; password: string }, 'email'>
