@@ -68,7 +68,8 @@ const WriteContent = () => {
             onChange={(e) => onChangeTag(e)}
             placeholder="장소 태그"
           />
-          <button onClick={(e) => onAddTag(e)}>태그 추가</button>
+          {/* any바꾸삼 */}
+          <button onClick={(e: any) => onAddTag(e)}>태그 추가</button>
         </div>
         <div className="flex gap-3 w-full mt-2 px-6">
           {formData.hashTag.map((tag, _) => (

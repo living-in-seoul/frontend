@@ -1,4 +1,4 @@
-import Button from '@/components/common/Category';
+import Select from '@/components/common/Select';
 import Link from 'next/link';
 
 interface CommunityHotTag {
@@ -19,7 +19,7 @@ const CommunityHotTag = ({ Hottag, category }: CommunityHotTag) => {
             prefetch={false}
             href={`/community/${category}/${tag}`}
           >
-            <Button title={`#${tag}`} key={tag} className="rounded-md" />
+            <Select title={`#${tag}`} key={tag} className="rounded-md" />
           </Link>
         ))}
       </ul>
