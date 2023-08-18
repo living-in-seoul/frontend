@@ -11,7 +11,6 @@ import {
 import {
   filterState,
   placeIdState,
-  placesState,
   rangeState,
   selectDongPlaceState,
   selectGuPlaceState,
@@ -47,7 +46,6 @@ const Map = () => {
       focusThrottleInterval: 5000,
     },
   );
-  const setPlacesState = useSetRecoilState(placesState);
   const placeGu = useRecoilValue(selectGuPlaceState);
   // const seoulBound = new google.maps.LatLngBounds(
   //   new google.maps.LatLng(37.426, 126.764), // 남서쪽 좌표
@@ -62,9 +60,6 @@ const Map = () => {
     styles: MapStyleVersionTwo,
   };
 
-  const { data: cityData } = useSWR<ResponseCityImageData[]>(
-    `/api/board/${'중구'}`,
-  );
   const fetcherURL = placeGu ? `api/map/seoul/dong?guName=${placeGu}` : null;
   const { data: dongs } = useSWR<Dong>(fetcherURL);
 

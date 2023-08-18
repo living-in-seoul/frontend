@@ -3,6 +3,7 @@ import Icons from '../common/Icons';
 import { getTimeAgo } from '@/utils/utilFunc';
 import { mrchoi } from '../../../public';
 import Select from '../common/Select';
+import { Comment, Like } from '@/utils/Icon';
 
 interface PostItemProps extends ResponsePost {}
 
