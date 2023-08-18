@@ -48,22 +48,25 @@ const SignupSecond = () => {
   const onSubmitHandler: SubmitHandler<FormPorps> = async (data) => {
     const newData = { ...signupData, ...data, gender };
     setSignupData((prev) => ({ ...prev, ...data, gender }));
-    console.log(newData);
     reset();
 
-    await fetch('/api/signup', {
+    const response = await fetch('/api/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(newData),
-    });
+    }).then((response) => response.json());
+    response.message === '회원가입에 성공하셨습니다.' &&
+      router.push('/signin/user');
   };
+
   useEffect(() => {
     essential && router.back();
   });
   const onSelectHandler = (movedDate: string) => {
-    setSignupData((prev) => ({ ...prev, movedDate }));
+    const testData = '1995-10-10';
+    setSignupData((prev) => ({ ...prev, movedDate: testData }));
   };
   return (
     <section className="h-full">

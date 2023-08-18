@@ -11,7 +11,6 @@ import { callbackUrlState } from '@/recoil/authStates';
 
 const DefaultLogin = () => {
   const callbackUrl = useRecoilState(callbackUrlState);
-  console.log('asdfasdfasdfasdfsdf', callbackUrl[0]);
   const router = useRouter();
   const {
     register,
