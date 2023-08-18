@@ -136,10 +136,11 @@ export const useBottomSheet = (minY: number) => {
         contentBeingTouched: false,
       };
     };
-
-    sheet.current!.addEventListener('touchstart', handleTouchStart);
-    sheet.current!.addEventListener('touchmove', handleTouchMove);
-    sheet.current!.addEventListener('touchend', handleTouchEnd);
+    if (sheet.current) {
+      sheet.current!.addEventListener('touchstart', handleTouchStart);
+      sheet.current!.addEventListener('touchmove', handleTouchMove);
+      sheet.current!.addEventListener('touchend', handleTouchEnd);
+    }
   }, [minY]);
 
   //컨텐츠 영역 터치

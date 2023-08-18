@@ -1,7 +1,12 @@
 'use client';
+
+import ModalOutside from '@/components/modal/ModalOutside';
+import ModalPortal from '@/components/modal/ModalPortal';
+import UploadImageModal from '@/components/write/UploadImageModal';
 import WriteContent from '@/components/write/WriteContent';
 import WriteHeader from '@/components/write/WriteHeader';
-import WriteTags from '@/components/write/WriteTags';
+import { ImagePortalState } from '@/recoil/BoardStates';
+import { useRecoilState } from 'recoil';
 
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -56,12 +61,20 @@ const App: React.FC = () => {
 };
 
 const WritePage = () => {
+  const [openImagePortal, setOpenImagePortal] =
+    useRecoilState(ImagePortalState);
+
   return (
-    <section>
+    <section className="relative">
       <WriteHeader />
       <WriteContent />
-      <WriteTags />
-      <App />
+      {openImagePortal && (
+        <ModalPortal nodeName="imagePortal">
+          <ModalOutside onClose={() => setOpenImagePortal(false)}>
+            <UploadImageModal onClose={() => setOpenImagePortal(false)} />
+          </ModalOutside>
+        </ModalPortal>
+      )}
     </section>
   );
 };

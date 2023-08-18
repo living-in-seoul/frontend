@@ -1,6 +1,6 @@
-import ButtonSet from '@/components/common/ButtonSet';
+import ButtonSet from '@/components/item/ButtonSet';
 import { locationTypeState } from '@/recoil/mapStates';
-import { categories } from '@/utils/constants';
+import { categories } from '@/utils/constants/constants';
 import { useRecoilState } from 'recoil';
 
 const LocationTypeFilter = () => {

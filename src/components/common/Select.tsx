@@ -10,10 +10,7 @@ interface Props {
 const getButtonSizeStyles = (size: string) => {
   switch (size) {
     case 'small':
-      return {
-        div: 'py-1 px-3',
-        span: 'text-xs text-neutral-600 font-medium leading-3',
-      };
+      return { div: 'py-[1px] px-[8px]', span: 'text-[10px] text-zinc-600' };
     case 'large':
       return { div: '', span: '' };
     case 'default':
@@ -22,7 +19,8 @@ const getButtonSizeStyles = (size: string) => {
       return { div: 'py-1/2 px-3.5', span: 'text-xs' };
   }
 };
-const Button = ({
+
+const Select = ({
   disable = false,
   className,
   title,
@@ -50,4 +48,4 @@ const Button = ({
   );
 };
 <div className="text-zinc-600 text-xs font-normal ">#맛집</div>;
-export default Button;
+export default Select;

@@ -1,6 +1,6 @@
 import { SVGProps } from 'react';
 
-interface Props {
+export interface IconProps {
   path: {
     path: string;
     width: number;
@@ -12,7 +12,7 @@ interface Props {
   option?: Partial<SVGProps<SVGPathElement>>;
 }
 
-const Icons = ({ path, fill, onClick, option }: Props) => {
+const Icons = ({ path, fill, onClick, option }: IconProps) => {
   return (
     <svg
       width={path.width}

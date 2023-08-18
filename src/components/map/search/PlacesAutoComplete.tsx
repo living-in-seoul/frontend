@@ -2,7 +2,7 @@
 import useDebounce from '@/hooks/useDebounce';
 import { useCallback, useState } from 'react';
 import useSWR from 'swr';
-import SearchInput from '../../common/SearchInput';
+import Input from '../../common/Input';
 import { FormEvent } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { openFilterState, placeIdState } from '@/recoil/mapStates';
@@ -54,7 +54,7 @@ const PlacesAutoComplete = () => {
   return (
     <section className="flex flex-col justify-center items-center w-full pt-4 text-xs">
       {isLoading && <div>loading!</div>}
-      <SearchInput
+      <Input
         placeholder="지역명, 도로명, 지하철역으로 검색"
         value={inputLocation}
         onChange={onChangeHandler}

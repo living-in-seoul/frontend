@@ -4,9 +4,9 @@ import { NextRequest, NextResponse } from 'next/server';
 /** 로그인 POST */
 export const POST = async (request: NextRequest) => {
   const body: RequestLogin = await request.json();
-  // console.log('body: ', body);
   const data = await postSingin(body);
   const response = NextResponse.json(data);
+
   if (response.status === 200) {
     response.cookies.set({
       name: 'refreshToken',
@@ -18,6 +18,9 @@ export const POST = async (request: NextRequest) => {
       value: data.accessToken,
       httpOnly: true,
     });
+  }
+  if (response.status === 401) {
+    console.log('403403403403403403');
   }
 
   return response;

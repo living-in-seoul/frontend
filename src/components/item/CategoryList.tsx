@@ -1,4 +1,4 @@
-import Button from './Category';
+import Select from '../common/Select';
 
 interface CategoryListProps {
   categories: string[];
@@ -27,7 +27,7 @@ const CategoryList = ({
   return (
     <div className={`${displayOption(noScroll)}`}>
       {categories.map((category) => (
-        <Button
+        <Select
           className="mr-[10px] nowrap"
           key={category}
           title={dropdown ? `🔽 ${category}` : `# ${category}`}

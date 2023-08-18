@@ -22,7 +22,7 @@ import useSWR from 'swr';
 import useMapInstance from '@/hooks/useMapInstance';
 import { useRouter } from 'next/navigation';
 import { MapStyleVersionTwo } from '@/utils/styles';
-import { googleMapsLibraries } from '@/utils/constants';
+import { googleMapsLibraries } from '@/utils/constants/constants';
 
 const containerStyle = {
   width: '100%',
@@ -67,19 +67,6 @@ const Map = () => {
   );
   const fetcherURL = placeGu ? `api/map/seoul/dong?guName=${placeGu}` : null;
   const { data: dongs } = useSWR<Dong>(fetcherURL);
-  // const { places } = useNearbySearch({
-  //   map,
-  //   center,
-  //   radius: rangeValue,
-  //   type: filterValue,
-  // });
-
-  // const { places } = useNearbySearch({
-  //   map,
-  //   center,
-  //   radius: rangeValue,
-  //   type: filterValue,
-  // });
 
   useEffect(() => {
     if (map && locationDetail) {
@@ -87,19 +74,6 @@ const Map = () => {
       setCenter(locationDetail.result.geometry.location);
     }
   }, [locationDetail, map]);
-
-  // useEffect(() => {
-  //   if (map && locationDetail) {
-  //     map.panTo(locationDetail.result.geometry.location);
-  //     setCenter(locationDetail.result.geometry.location);
-  //   }
-  // }, [locationDetail, map]);
-
-  // useEffect(() => {
-  //   setPlacesState(places);
-  // }, [places, setPlacesState]);
-  //   setPlacesState(places);
-  // }, [places, setPlacesState]);
 
   useEffect(() => {
     if (rangeValue > 200) {
@@ -139,40 +113,8 @@ const Map = () => {
           onUnmount={onUnmount}
           options={{
             ...mapOptions,
-            // restriction: {
-            //   latLngBounds: seoulBound,
-            //   strictBounds: true,
-            // },
           }}
         >
-          {/* {typeof google !== 'undefined' && (
-            <HeatmapLayerF
-              data={[
-                new google.maps.LatLng(37.5665, 126.978),
-                new google.maps.LatLng(37.57, 126.981),
-              ]}
-              options={{
-                maxIntensity: 3,
-                gradient: ['rgba(255, 0, 0, 0)', 'rgba(255, 0, 0, 1)'],
-                dissipating: true,
-                opacity: 0.8,
-                radius: 1,
-              }}
-            />
-          )}
-
-          {places?.map((place) => {
-            if (!place.geometry?.location) {
-              return;
-            }
-            return (
-              <MarkerF
-                key={place.place_id}
-                position={place.geometry?.location}
-                onClick={(e) => onMarkerClick(e, place.place_id)}
-              />
-            );
-          })} */}
           {dongs &&
             dongs?.features.map((feature, index) => {
               if (index === 0) return;
@@ -220,10 +162,6 @@ const Map = () => {
         onUnmount={onUnmount}
         options={{
           ...mapOptions,
-          // restriction: {
-          //   latLngBounds: seoulBound,
-          //   strictBounds: true,
-          // },
         }}
       >
         <HeatmapLayerF
@@ -239,55 +177,6 @@ const Map = () => {
             radius: 1,
           }}
         />
-        {cityData?.map((data) => {
-          if (!map || !data.geometry?.location) {
-            return;
-          }
-          return (
-            <MarkerF
-              // map={map}
-              key={data.place_id}
-              icon={{
-                path: google.maps.SymbolPath.CIRCLE,
-                fillColor: 'green',
-                fillOpacity: 1,
-                scale: 5,
-                strokeColor: 'white',
-                strokeWeight: 1,
-              }}
-              position={data.geometry.location}
-            >
-              {
-                <InfoBoxF
-                  // onCloseClick={props.onToggleOpen}
-                  options={{ closeBoxURL: ``, enableEventPropagation: true }}
-                >
-                  <div className="bg-[#2DDAB0] text-white p-2 rounded-lg shadow-lg px-2 w-full max-w-[120px] ">
-                    <div className="text-[0.7rem]">{data.name}</div>
-                    <span className="text-[0.3rem]">
-                      {data.AREA_CONGEST_LVL}
-                    </span>
-                  </div>
-                </InfoBoxF>
-              }
-            </MarkerF>
-          );
-        })}
-        {/* {places?.map((place) => {
-          if (!place.geometry?.location) {
-            return;
-          }
-          return (
-            <MarkerF
-              key={place.place_id}
-              position={place.geometry?.location}
-              icon={{
-                url: 'http://localhost:3000/marker/base.png',
-              }}
-              onClick={(e) => onMarkerClick(e, place.place_id)}
-            ></MarkerF>
-          );
-        })} */}
       </GoogleMap>
     </section>
   );

@@ -22,7 +22,6 @@ const MapDetail = ({ params }: MapDetailProps) => {
     error,
   } = useSWR(`/api/map/detail/${placeId}`);
 
-  console.log(details);
   if (isLoading) {
     return <div>기다리세요</div>;
   }
@@ -46,7 +45,7 @@ const MapDetail = ({ params }: MapDetailProps) => {
       <div className="px-4 flex flex-col ">
         <DetailPlaceInfo data={details} />
         <DetailReviewerPictuers photos={details?.photos} />
-        <CommunityBoardList title="커뮤니티에 등록한 리뷰" image={true} />
+        <CommunityBoardList title="커뮤니티에 등록한 리뷰" />
       </div>
       {/* <PopCarousel>
         <DetailMultipleCard data={data} />

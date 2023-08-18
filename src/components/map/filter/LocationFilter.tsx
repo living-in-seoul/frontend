@@ -2,8 +2,8 @@
 
 import { useRecoilState } from 'recoil';
 import { filterState } from '@/recoil/mapStates';
-import { Filters } from '@/utils/constants';
-import ButtonSet from '@/components/common/ButtonSet';
+import { Filters } from '@/utils/constants/constants';
+import ButtonSet from '@/components/item/ButtonSet';
 
 const LocationFilter = () => {
   const [filter, setFilterState] = useRecoilState(filterState);

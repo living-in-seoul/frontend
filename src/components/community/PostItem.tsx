@@ -1,9 +1,8 @@
 import Image from 'next/image';
 import Icons from '../common/Icons';
-import { mrchoi, profile } from '../../../public';
-import Button from '../common/Category';
-import { Comment, Like } from '@/utils/Icon';
 import { getTimeAgo } from '@/utils/utilFunc';
+import { mrchoi } from '../../../public';
+import Select from '../common/Select';
 
 interface PostItemProps extends ResponsePost {}
 
@@ -37,7 +36,7 @@ const PostItem = ({ post, user }: PostItemProps) => {
         {/* 유저 */}
         <div className="relative shrink-0 w-[36px] h-[36px] rounded-full overflow-hidden">
           <Image
-            src={profile}
+            src={mrchoi}
             alt={`user`}
             fill
             className="absolute top-0"
@@ -83,7 +82,7 @@ const PostItem = ({ post, user }: PostItemProps) => {
       {/* 태그 후기 좋아요 */}
       <div className="flex justify-between py-4 items-center">
         <div className="flex gap-2">
-          <Button
+          <Select
             disable
             title={category}
             className="rounded-md"

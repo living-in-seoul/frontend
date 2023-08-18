@@ -5,8 +5,9 @@ import { useBottomSheet } from '@/hooks/useBottomSheet';
 
 interface MapBottomSheetProps {
   children: React.ReactNode;
+  fixed?: boolean;
 }
-const MapBottomSheet = ({ children }: MapBottomSheetProps) => {
+const MapBottomSheet = ({ children, fixed }: MapBottomSheetProps) => {
   const [sheetHeight, setSheetHeight] = useState<number>(130);
 
   const MIN = 60;
@@ -21,10 +22,10 @@ const MapBottomSheet = ({ children }: MapBottomSheetProps) => {
       style={{
         transform: `translateY(-${sheetHeight})`,
         transition: 'transform 150ms ease-out',
-        height: `${sheetHeight}px`,
-        top: 'calc(100% - 90px)',
+        height: `${fixed ? `calc(100% - 200px)` : sheetHeight}px`,
+        top: `${fixed ? `calc(100% - 200px)` : `calc(100% - 90px)`}`,
       }}
-      ref={sheet}
+      ref={fixed ? null : sheet}
       className={`flex flex-col justify-center items-center fixed bottom-0 left-0 rounded-t-3xl bg-white z-1 w-full border-t-2 px-4 pt-5 shadow-2xl border-neutral-200 `}
     >
       <BottomSheetHeader />
