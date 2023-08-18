@@ -1,26 +1,20 @@
 'use client';
 
 import CategoryList from '@/components/item/CategoryList';
-import { filterOptionState, openFilterState } from '@/recoil/mapStates';
+import { filterOptionState } from '@/recoil/mapStates';
+import { MapBoardOptions } from '@/utils/constants/constants';
 import { useRecoilState } from 'recoil';
 
 const FilterOptions = () => {
   const [filterOption, setFilterOptionState] =
     useRecoilState(filterOptionState);
 
-  const [openFilter, setOpenFilter] = useRecoilState(openFilterState);
-
-  const onClickToOpenFilter = () => {
-    setOpenFilter(true);
-  };
-
   return (
-    <div className="w-full px-5 ">
+    <div className="flex justify-center w-full h-full ">
       <CategoryList
-        categories={Options}
+        categories={MapBoardOptions}
         selectedCategory={filterOption}
         setSelectedCategory={(filter) => setFilterOptionState(filter)}
-        onClickToOpenFilter={onClickToOpenFilter}
         dropdown
       />
     </div>
@@ -28,5 +22,3 @@ const FilterOptions = () => {
 };
 
 export default FilterOptions;
-
-const Options = ['장소', '장소유형', '거리', '커뮤니티'];

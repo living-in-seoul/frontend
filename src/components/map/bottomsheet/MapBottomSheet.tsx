@@ -8,7 +8,7 @@ interface MapBottomSheetProps {
   fixed?: boolean;
 }
 const MapBottomSheet = ({ children, fixed }: MapBottomSheetProps) => {
-  const [sheetHeight, setSheetHeight] = useState<number>(130);
+  const [sheetHeight, setSheetHeight] = useState<number>(0);
 
   const MIN = 60;
   const { sheet, content } = useBottomSheet(MIN);

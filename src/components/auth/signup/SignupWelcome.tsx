@@ -1,9 +1,9 @@
 'use client';
 import { signupEssentialState } from '@/recoil/authStates';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 const SignupWelcome = () => {
-  const [isEssential] = useRecoilState(signupEssentialState);
+  const isEssential = useRecoilValue(signupEssentialState);
   return (
     <div>
       <div className="flex flxe-row justify-between items-center">

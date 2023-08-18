@@ -47,5 +47,4 @@ const Select = ({
     </div>
   );
 };
-<div className="text-zinc-600 text-xs font-normal ">#맛집</div>;
 export default Select;

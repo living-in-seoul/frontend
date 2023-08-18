@@ -1,3 +1,5 @@
+import { MouseEventHandler } from 'react';
+
 interface Props {
   title: string;
   size:
@@ -16,7 +18,7 @@ interface Props {
   disable?: boolean;
   type?: 'button' | 'submit' | 'reset' | undefined;
   className?: string;
-  onClick?: () => void;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   isRounded?: boolean;
 }
 
