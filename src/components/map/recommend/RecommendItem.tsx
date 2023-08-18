@@ -1,4 +1,3 @@
-import { getImageSrc } from '@/utils/utilFunc';
 import Link from 'next/link';
 import { choi, mrchoi } from '../../../../public';
 import Image from 'next/image';
