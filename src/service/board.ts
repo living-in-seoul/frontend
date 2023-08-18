@@ -1,7 +1,5 @@
 // 데이터 정해지면 type 바꿔라 꼭 잊지말고
 
-import axios from 'axios';
-import { instance } from './instance';
 interface ResponseDataType {
   message: string;
   code: number;
@@ -14,7 +12,7 @@ export const writeBoard = async (form: any) => {
       method: 'POST',
       headers: {
         Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0cmdmNDU2QG5hdmVyLmNvbSIsImV4cCI6MTY5MjI4NzQ1NywiaWF0IjoxNjkyMjgzODU3fQ.DtTidAbtomcGNjElDq6JiNGesOPfe5LsrpkOok2uL1o',
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJza2R1ZDM2NjlAZ21haWwuY29tIiwiZXhwIjoxNjkyMzc1ODMwLCJpYXQiOjE2OTIzNzIyMzB9.GqKi-vmcLYXudw1wIu0VmlYMKsCID9e0_P7gKzzaltU',
       },
     });
 

@@ -15,14 +15,14 @@ export const middleware = async (req: NextRequest) => {
     return NextResponse.redirect(signInUrl);
   }
 
-  if (req.nextUrl.pathname.startsWith('/api')) {
-    const requestHeaders = new Headers(req.headers);
-    requestHeaders.set('authorization', accessToken.value);
-    const response = NextResponse.next({
-      request: { headers: requestHeaders },
-    });
-    return response;
-  }
+  // if (req.nextUrl.pathname.startsWith('/api')) {
+  //   const requestHeaders = new Headers(req.headers);
+  //   requestHeaders.set('authorization', accessToken.value);
+  //   const response = NextResponse.next({
+  //     request: { headers: requestHeaders },
+  //   });
+  //   return response;
+  // }
 
   return NextResponse.next();
 };

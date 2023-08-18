@@ -25,11 +25,8 @@ interface RequestBoardWrite {
   category: string;
   hashTag: string[];
   content: string;
-  location: {
-    lat: number;
-    lng: number;
-  };
-  postImg: File;
+  lat: number;
+  lng: number;
 }
 
 /** 게시물 작성 (임시!!!!!!! 절대 쓰지 말것!!!) */

@@ -1,6 +1,5 @@
 import { redirect } from 'next/navigation';
 import axios from 'axios';
-import { instance } from './instance';
 
 interface ResponseDataType {
   message: string;
@@ -32,7 +31,7 @@ export const postSignup = async (data: RequestRegister) => {
 /**로그인 시 */
 export const postSingin = async (data: RequestLogin) => {
   try {
-    const response = await instance.post('/auth/login', data);
+    const response = await axios.post('/auth/login', data);
     console.log('뭐야 이게 뒤통수 존나 아파', response.data);
     return response.data;
   } catch (error) {
