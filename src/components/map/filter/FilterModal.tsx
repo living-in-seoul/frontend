@@ -1,6 +1,6 @@
 'use client';
 
-import FilterModalRadius from '../../common/RangeSlider';
+import FilterModalRadius from '../../common/Slider';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   filterOptionState,
@@ -9,7 +9,7 @@ import {
 } from '@/recoil/mapStates';
 import Button from '@/components/common/Button';
 import LocationFilter from './LocationFilter';
-import RangeSlider from '../../common/RangeSlider';
+import Slider from '../../common/Slider';
 import LocationTypeFilter from './LocationTypeFilter';
 
 const FilterModal = () => {
@@ -36,7 +36,7 @@ const FilterModal = () => {
       case '장소유형':
         return <LocationTypeFilter />;
       case '거리':
-        return <RangeSlider range={range} setRange={setRangeState} />;
+        return <Slider range={range} setRange={setRangeState} />;
 
       default:
         break;

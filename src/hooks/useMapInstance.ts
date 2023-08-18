@@ -1,6 +1,6 @@
 'use client';
 import { selectGuPlaceState } from '@/recoil/mapStates';
-import { outerCoords, seoulCenterCoords } from '@/utils/constants';
+import { outerCoords, seoulCenterCoords } from '@/utils/constants/constants';
 import {
   MapGuDardkStyle,
   MapGuDefaultStyle,

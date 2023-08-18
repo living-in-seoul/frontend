@@ -1,4 +1,4 @@
-import Button from './Button';
+import Button from '../common/Button';
 
 interface TableProps {
   column: number;
@@ -24,7 +24,7 @@ const Table = ({
   const totalCellNumber = column * row;
   const emptiedCellNumber = totalCellNumber - categories.length;
   const emptoedCellArray = Array.from({ length: emptiedCellNumber }, () => '');
-  const totalArray = categories.concat(emptoedCellArray);
+  const totalArray = [...categories, ...emptoedCellArray];
   return (
     <div className="flex flex-col gap-3">
       <label className="text-neutral-500 ">{label}</label>
@@ -39,7 +39,7 @@ const Table = ({
             <Button
               type="button"
               className={``}
-              size="w-full"
+              size="full"
               title={cell}
               select={cell === selectedCategory}
               onClick={() => onSelectHandler(cell)}

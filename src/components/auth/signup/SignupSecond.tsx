@@ -9,7 +9,7 @@ import useGetDate from '@/hooks/useGetDate';
 import { useEffect, useState } from 'react';
 import RadioInput from './RadioInput';
 import { birthDateForm, hometownForm } from '@/utils/formregister';
-import Table from '@/components/common/Table';
+import Table from '@/components/Table';
 import { signupEssentialState, signupState } from '@/recoil/authStates';
 
 interface FormPorps {

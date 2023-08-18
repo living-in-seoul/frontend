@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import CategoryList from '../common/CategoryList';
+import CategoryList from '../CategoryList';
 import CategoryPostList from './CategoryPostList';
 import Link from 'next/link';
 

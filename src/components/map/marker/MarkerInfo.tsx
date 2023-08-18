@@ -1,8 +1,7 @@
 'use client';
 import { MarkerF } from '@react-google-maps/api';
-import ModalPortal from '../filter/ModalPortal';
+import ModalPortal from '../../modal/ModalPortal';
 import { useEffect, useRef } from 'react';
-import { rootCertificates } from 'tls';
 
 interface MarkerInfo {
   map: google.maps.Map;

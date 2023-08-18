@@ -1,8 +1,8 @@
-import StarRate from '@/components/common/StarRate';
 import { getImageSrc } from '@/utils/utilFunc';
 import Link from 'next/link';
 import { choi, mrchoi } from '../../../../public';
 import Image from 'next/image';
+import StarRate from '@/components/item/StarRate';
 
 const RecommendItem = (place: google.maps.places.PlaceResult) => {
   const { name, place_id, photos, rating, user_ratings_total, vicinity } =

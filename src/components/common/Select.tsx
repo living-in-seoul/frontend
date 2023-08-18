@@ -20,7 +20,7 @@ const getButtonSizeStyles = (size: string) => {
   }
 };
 
-const Button = ({
+const Select = ({
   disable = false,
   className,
   title,
@@ -48,4 +48,4 @@ const Button = ({
   );
 };
 <div className="text-zinc-600 text-xs font-normal ">#맛집</div>;
-export default Button;
+export default Select;

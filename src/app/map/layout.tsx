@@ -10,7 +10,7 @@ const DynamicMap = dynamic(() => import('../../components/map/Map'), {
   loading: () => <Loading />,
 });
 
-export default function NavbarLayout({
+export default function MapLayout({
   children,
   isolation,
   recommend,

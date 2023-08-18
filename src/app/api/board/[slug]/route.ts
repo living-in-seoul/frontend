@@ -1,4 +1,3 @@
-import { getHomeDatas } from '@/service/home';
 import { NextRequest, NextResponse } from 'next/server';
 
 interface Context {

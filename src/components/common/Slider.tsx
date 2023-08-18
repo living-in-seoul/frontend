@@ -3,7 +3,7 @@ interface RangeSliderProps {
   setRange: (value: number) => void;
 }
 
-const RangeSlider = ({ range, setRange }: RangeSliderProps) => {
+const Slider = ({ range, setRange }: RangeSliderProps) => {
   const handleRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRange(Number(e.target.value));
   };
@@ -24,4 +24,4 @@ const RangeSlider = ({ range, setRange }: RangeSliderProps) => {
   );
 };
 
-export default RangeSlider;
+export default Slider;
