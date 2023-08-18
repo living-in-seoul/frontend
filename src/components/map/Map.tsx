@@ -28,7 +28,6 @@ const containerStyle = {
   width: '100%',
   height: '100vh',
 };
-const GUNAME = '영등포구';
 const Map = () => {
   const router = useRouter();
   const [placeId, setPlaceIdState] = useRecoilState(placeIdState);

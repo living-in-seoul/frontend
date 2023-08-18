@@ -55,13 +55,16 @@ const WriteContent = () => {
     async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const data = new FormData();
-
       const post = {
         category: formData.category,
         content: formData.content,
         hashtag: '#' + formData.hashTag.join('#'),
         location: formData.location,
       };
+      data.append(
+        'post',
+        new Blob([JSON.stringify(post)], { type: 'application/json' }),
+      );
 
       data.append(
         'post',
@@ -76,6 +79,7 @@ const WriteContent = () => {
         method: 'POST',
         body: data,
       });
+      console.log(await response.json());
     },
     [formData],
   );

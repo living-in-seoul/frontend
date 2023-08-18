@@ -1,45 +1,26 @@
 'use client';
-import { useState } from 'react';
-import CategoryList from '../CategoryList';
-import CategoryPostList from './CategoryPostList';
-import Link from 'next/link';
+import Loading from '@/app/loading';
+import useSWR from 'swr';
+import PostItem from './PostItem';
 
 interface CommunityBoardProps {
-  title: string;
-  Category?: string[];
-  image?: boolean;
-  type?: CategoryType;
+  title?: string;
+  Category?: string;
 }
-const CommunityBoardList = ({
-  image = false,
-  title,
-  Category,
-  type,
-}: CommunityBoardProps) => {
-  const initalCategory = Category ? Category[0] : null;
-  const [selectCategory, setSelectCategory] = useState<string | null>(
-    initalCategory,
+const CommunityBoardList = ({ Category }: CommunityBoardProps) => {
+  const { data: lists, isLoading } = useSWR<ResponseRegister>(
+    `/api/community/${Category}`,
   );
+  console.log(lists);
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <article className="flex flex-col border-b-4">
-      <h1 className="p-4 text-lg font-bold">{title}</h1>
-      {Category && (
-        <div className="pl-4">
-          <CategoryList
-            selectedCategory={selectCategory}
-            setSelectedCategory={(category) => setSelectCategory(category)}
-            categories={[...Category]}
-          />
-        </div>
-      )}
-      <CategoryPostList
-        selectCategory={selectCategory}
-        image={image}
-        type={type}
-      />
-      <Link href={'/'} className="self-end mx-1">
-        <p className="text-xs font-bold leading-7">{`더보기 >`}</p>
-      </Link>
+      {lists?.result.map((post) => (
+        <PostItem {...post} key={post.post.postId} />
+      ))}
+      {/* <CategoryPostList /> */}
     </article>
   );
 };

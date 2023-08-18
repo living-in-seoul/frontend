@@ -22,3 +22,26 @@ export const getImageSrc = (code: string) => {
   const ImageSrc = `${process.env.NEXT_PUBLIC_GOOGLE_PHOTO_URL}?maxwidth=400&maxheigth=800&photo_reference=${code}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY}`;
   return ImageSrc;
 };
+
+/** 자바 날짜 바꾸기 */
+const convertToJSDate = (javaDate: string): Date => {
+  const dateWithoutMicroseconds = javaDate.slice(0, 23);
+  const date = new Date(dateWithoutMicroseconds);
+  date.setHours(date.getHours() - 9);
+  return date;
+};
+
+export const getTimeAgo = (javaDate: string): string => {
+  const date = convertToJSDate(javaDate);
+  const now = new Date();
+
+  const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  if (days > 0) return `${days}일 전`;
+  if (hours > 0) return `${hours}시간 전`;
+  if (minutes > 0) return `${minutes}분 전`;
+  return `${seconds}초 전`;
+};
