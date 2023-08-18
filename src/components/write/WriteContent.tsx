@@ -81,24 +81,26 @@ const WriteContent = () => {
     async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const data = new FormData();
-
       const post = {
         title: formData.title,
         content: formData.content,
         locationTag: '#' + formData.locationTag.join('#'),
         purposeTag: '#' + formData.purposeTag.join('#'),
       };
+      data.append(
+        'post',
+        new Blob([JSON.stringify(post)], { type: 'application/json' }),
+      );
 
       //category, location 추가해라
-      data.append('post', JSON.stringify(post));
       if (postImg) {
         data.append('photos', postImg);
       }
-
-      await fetch('/api/write', {
+      const response = await fetch('/api/write', {
         method: 'POST',
         body: data,
       });
+      console.log(await response.json());
     },
     [formData, postImg],
   );
@@ -107,6 +109,7 @@ const WriteContent = () => {
     <form
       // action={submitForm}
       onSubmit={onSubmit}
+      encType="multipart/form-data"
       className="flex flex-col gap-2 w-4/5 p-10 bg-neutral-200 mx-auto my-5 "
     >
       <select name="category" onChange={(e) => onChangeHandler(e)}>

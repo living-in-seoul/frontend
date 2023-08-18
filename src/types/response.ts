@@ -19,18 +19,6 @@ interface ResponseOauthLogin {
   };
 }
 
-/**전체 게시물 받아오는 데이터 */
-interface ResponseRegister {
-  msg: string;
-  pageable: Pageable;
-  result: ResponsePost[];
-}
-
-interface ResponsePost {
-  user: UserProfile;
-  board: BoardInfo;
-}
-
 /** 토큰재발급 */
 interface ResponseAccessToken {
   msg: string;
@@ -67,28 +55,43 @@ interface ResponseAutoComplete {
 interface UserProfile {
   nickname: string;
   email: string;
-  profileImg: string | any;
+  profileImg?: string;
 }
 
-/** 게시물 상세 데이터 (게시물만)*/
 interface BoardInfo {
   postId: number;
-  title: string;
-  locationTag: string;
-  purposeTag: string;
+  hashtag: string;
   content: string;
-  postImg: string;
+  postImg: { id: number; postImg: string }[];
   createdAt: string;
   modifiedAt: string;
+  lat: number;
+  lng: number;
+  category: string;
+  likeSize: number;
+  postViewCount: number;
+
+  title?: string;
+  locationTag?: string;
+  purposeTag?: string;
 }
 
-/** 페이지네이션 데이터*/
 interface Pageable {
   totalPages: number;
   totalElements: number;
   size: number;
 }
 
+interface ResponseRegister {
+  msg: string;
+  pageable: Pageable;
+  result: ResponsePost[];
+}
+
+interface ResponsePost {
+  user: UserProfile;
+  post: BoardInfo;
+}
 /**게시물 검색 자동완성 개별 데이터 */
 interface SearchResult {
   postId: number;

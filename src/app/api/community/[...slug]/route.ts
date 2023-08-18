@@ -5,13 +5,12 @@ interface Context {
   params: { slug: [string, CategoryType] };
 }
 
-/** 구글맵 자동완성 검색어 데이터 가져오기 */
 export const GET = async (_: NextRequest, context: Context) => {
   const {
-    slug: [tag, type],
+    slug: [category, type],
   } = context.params;
-  console.log(tag, type);
-  return await getCommunityList(tag, type).then((data) =>
+
+  return await getCommunityList(category).then((data) =>
     NextResponse.json(data),
   );
 };

@@ -1,8 +1,7 @@
 'use client';
-import { oauthHandler } from '@/service/oauth';
 import React from 'react';
 import SocialIcons from './SocialIcon';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 interface SocialAuthProps {
   text: string;
   url: string;
@@ -12,6 +11,11 @@ interface SocialAuthProps {
 
 const SocialAuth = ({ text, url, bgColor, color }: SocialAuthProps) => {
   const router = useRouter();
+
+  const oauthHandler = (url: string) => {
+    redirect(url);
+  };
+
   return (
     <>
       {text === '이메일' ? (

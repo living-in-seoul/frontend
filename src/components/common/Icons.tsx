@@ -18,11 +18,10 @@ const Icons = ({ path, fill, onClick, option }: Props) => {
       width={path.width}
       height={path.height}
       viewBox={`0 0 ${path.width} ${path.height}`}
-      aria-hidden="true"
-      preserveAspectRatio="xMidYMid meet"
       onClick={onClick}
+      fill={fill}
     >
-      <path d={path.path} className="w-full h-full" fill={fill} {...option} />
+      <path d={path.path} {...option} />
     </svg>
   );
 };

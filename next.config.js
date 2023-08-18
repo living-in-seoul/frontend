@@ -22,6 +22,11 @@ const nextConfig = {
         hostname: 'imgnews.naver.net',
         port: '',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+      },
     ],
   },
 };

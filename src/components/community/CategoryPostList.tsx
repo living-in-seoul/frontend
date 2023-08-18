@@ -1,38 +1,24 @@
-import { DATAList, post } from '@/utils/dummydata';
-import PostItem from './PostItem';
-import ReviewItem from '../common/ReviewItem';
-import useSWR from 'swr';
-export interface CategoryPostListProps {
-  selectCategory: string | null;
-  image?: boolean;
-  type?: CategoryType;
-}
+// import PostItem from './PostItem';
+// import ReviewItem from '../common/ReviewItem';
+// export interface CategoryPostListProps {
+//   image?: boolean;
+//   type?: CategoryType;
+// }
 
-const CategoryPostList = ({
-  selectCategory,
-  image = false,
-  type,
-}: CategoryPostListProps) => {
-  const { data: details, isLoading } = useSWR(
-    `/api/community/${selectCategory}/${type}`,
-  );
+// const CategoryPostList = async ({
+//   image = false,
+//   type,
+// }: CategoryPostListProps) => {
+//   return (
+//     <div>
+//       {DATAList.map((item) => {
+//         if (image) {
+//           return <ReviewItem {...post} key={item.post.postId} />;
+//         }
 
-  return (
-    <div>
-      {DATAList.map((item) => {
-        if (image) {
-          return <ReviewItem {...post} key={item.board.postId} />;
-        }
-
-        return (
-          <PostItem
-            {...item}
-            key={item.board.postId}
-            selectCategory={selectCategory}
-          />
-        );
-      })}
-    </div>
-  );
-};
-export default CategoryPostList;
+//         return <PostItem {...item} key={item.post.postId} />;
+//       })}
+//     </div>
+//   );
+// };
+// export default CategoryPostList;

@@ -20,17 +20,14 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import useMapInstance from '@/hooks/useMapInstance';
-import useNearbySearch from '@/hooks/useNearbySearch';
 import { useRouter } from 'next/navigation';
 import { MapStyleVersionTwo } from '@/utils/styles';
 import { googleMapsLibraries } from '@/utils/constants';
-import MarkerInfo from './marker/MarkerInfo';
 
 const containerStyle = {
   width: '100%',
   height: '100vh',
 };
-const GUNAME = '영등포구';
 const Map = () => {
   const router = useRouter();
   const [placeId, setPlaceIdState] = useRecoilState(placeIdState);
