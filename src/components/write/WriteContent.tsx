@@ -94,11 +94,10 @@ const WriteContent = () => {
       if (postImg) {
         data.append('photos', postImg);
       }
-      const response = await fetch('/api/write', {
+      await fetch('/api/write', {
         method: 'POST',
         body: data,
       });
-      console.log(await response.json());
     },
     [formData, postImg],
   );

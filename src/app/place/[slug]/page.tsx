@@ -22,7 +22,6 @@ const MapDetail = ({ params }: MapDetailProps) => {
     error,
   } = useSWR(`/api/map/detail/${placeId}`);
 
-  console.log(details);
   if (isLoading) {
     return <div>기다리세요</div>;
   }

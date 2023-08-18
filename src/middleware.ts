@@ -12,8 +12,6 @@ export const middleware = async (req: NextRequest) => {
       'callbackUrl',
       `${basePath}${pathname}${search}`,
     );
-    console.log('pathname', pathname);
-    console.log(signInUrl);
     return NextResponse.redirect(signInUrl);
   }
 
@@ -30,5 +28,11 @@ export const middleware = async (req: NextRequest) => {
 };
 
 export const config = {
-  matcher: ['/api/:path*', '/write'],
+  matcher: ['/write', '/api/write'],
 };
+
+// 만료 됬을 때 로직 짜기
+
+// porfile api 하나 만들고 로그인했을 때 profile 받아오지말고 딱 토큰만 받아오기
+
+// rewrites를 통해서 소셜로그인 리다이렉트 문제를 해결해보자

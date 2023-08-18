@@ -13,7 +13,6 @@ export default function NoNavbarLayout({
 }) {
   const router = useRouter();
   const params = useSearchParams();
-  console.log(params);
   return (
     <main className="h-screen px-4 flex flex-col gap-10 pb-4  ">
       <RecoilRoot>
