@@ -20,7 +20,8 @@ export const useHandleTags = ({
   const formData = useRecoilValue(formDataState);
 
   const onAddTag: AddTagHandler = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    //타입 바꿔라
+    (e: any) => {
       e.preventDefault();
       if (!formData.hashTag.includes(tagText)) {
         setFormData((prev: { hashTag: string[] }) => ({

@@ -60,9 +60,6 @@ const Map = () => {
     styles: MapStyleVersionTwo,
   };
 
-  const { data: cityData } = useSWR<ResponseCityImageData[]>(
-    `/api/board/${'중구'}`,
-  );
   const fetcherURL = placeGu ? `api/map/seoul/dong?guName=${placeGu}` : null;
   const { data: dongs } = useSWR<Dong>(fetcherURL);
 
