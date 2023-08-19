@@ -5,9 +5,13 @@ import { NextRequest, NextResponse } from 'next/server';
 export const POST = async (request: NextRequest) => {
   const body: RequestLogin = await request.json();
   const data = await postSingin(body);
-  const response = NextResponse.json(data);
+  if (data.status === 401) {
+    const data = { status: 401, msg: '비밀번호와 아이디가 일치하지 않습니다.' };
+    return NextResponse.json(data);
+  }
 
-  if (response.status === 200) {
+  const response = NextResponse.json(data);
+  if (data.status === 200) {
     response.cookies.set({
       name: 'refreshToken',
       value: data.refreshToken,
@@ -19,10 +23,6 @@ export const POST = async (request: NextRequest) => {
       httpOnly: true,
     });
   }
-  if (response.status === 401) {
-    console.log('403403403403403403');
-  }
-
   return response;
   // ((response)=> response.json());
 };

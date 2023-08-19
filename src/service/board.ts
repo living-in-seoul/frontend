@@ -1,7 +1,5 @@
 // 데이터 정해지면 type 바꿔라 꼭 잊지말고
 
-import axios from 'axios';
-import { instance } from './instance';
 interface ResponseDataType {
   message: string;
   code: number;

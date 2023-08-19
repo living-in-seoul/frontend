@@ -26,13 +26,14 @@ const DefaultLogin = () => {
   });
 
   const onSubmitHandler: SubmitHandler<RequestLogin> = async (data) => {
-    await fetch('/api/signin', {
+    const response = await fetch('/api/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
-    });
+    }).then((response) => response.json());
+    alert(response.msg);
     reset();
     router.push(`${callbackUrl[0]}`);
   };
