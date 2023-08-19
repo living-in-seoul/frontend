@@ -1,13 +1,5 @@
 'use client';
-import {
-  GoogleMap,
-  LoadScriptNext,
-  MarkerF,
-  HeatmapLayerF,
-  PolygonF,
-  InfoBoxF,
-  Marker,
-} from '@react-google-maps/api';
+
 import {
   filterState,
   placeIdState,
@@ -21,7 +13,6 @@ import useSWR from 'swr';
 import useMapInstance from '@/hooks/useMapInstance';
 import { useRouter } from 'next/navigation';
 import { MapStyleVersionTwo } from '@/utils/styles';
-import { googleMapsLibraries } from '@/utils/constants/constants';
 
 const containerStyle = {
   width: '100%',
