@@ -14,7 +14,6 @@ export default function MapLayout({ children }: { children: React.ReactNode }) {
     <main className="w-full h-full">
       <RecoilRoot>
         {children}
-        <DynamicMap />
         <MapBottomSheet>
           <span>hi</span>
         </MapBottomSheet>
