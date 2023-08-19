@@ -1,13 +1,5 @@
 'use client';
-import {
-  GoogleMap,
-  LoadScriptNext,
-  MarkerF,
-  HeatmapLayerF,
-  PolygonF,
-  InfoBoxF,
-  Marker,
-} from '@react-google-maps/api';
+
 import {
   filterState,
   placeIdState,
@@ -21,7 +13,6 @@ import useSWR from 'swr';
 import useMapInstance from '@/hooks/useMapInstance';
 import { useRouter } from 'next/navigation';
 import { MapStyleVersionTwo } from '@/utils/styles';
-import { googleMapsLibraries } from '@/utils/constants/constants';
 
 const containerStyle = {
   width: '100%',
@@ -93,88 +84,7 @@ const Map = () => {
     router.push(`/place/${placeId}`);
   };
 
-  return (
-    <section className="w-full h-full bg-slate-400">
-      <LoadScriptNext
-        googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY || ''}
-        libraries={googleMapsLibraries}
-      >
-        <GoogleMap
-          onClick={(e) => e.stop()}
-          mapContainerStyle={containerStyle}
-          center={center}
-          zoom={zoom}
-          onLoad={onLoad}
-          onUnmount={onUnmount}
-          options={{
-            ...mapOptions,
-          }}
-        >
-          {dongs &&
-            dongs?.features.map((feature, index) => {
-              if (index === 0) return;
-              const isSelected = selectedDong === feature.properties.EMD_NM;
-              const latLngCoordinates = feature.geometry.coordinates[0]
-                .filter((coord) => !isNaN(coord[0]) && !isNaN(coord[1]))
-                .map((coord) => new google.maps.LatLng(coord[1], coord[0]));
-
-              if (latLngCoordinates.length === 0) return null;
-
-              return (
-                <PolygonF
-                  key={feature.properties.EMD_NM}
-                  path={latLngCoordinates}
-                  onDblClick={() => {
-                    setSelectedDong(feature.properties.EMD_NM);
-
-                    const bounds = new google.maps.LatLngBounds();
-                    latLngCoordinates.forEach((coord) => bounds.extend(coord));
-                    const center = bounds.getCenter();
-
-                    if (map) {
-                      map.panTo(center);
-                      map.setZoom(16);
-                    }
-                  }}
-                  options={{
-                    fillColor: isSelected ? 'blue' : '000000',
-                    fillOpacity: 0,
-                    strokeColor: isSelected ? 'blue' : 'gray',
-                    strokeWeight: 2,
-                    zIndex: isSelected ? 10 : 0,
-                  }}
-                />
-              );
-            })}
-        </GoogleMap>
-      </LoadScriptNext>
-      <GoogleMap
-        onClick={(e) => e.stop()}
-        mapContainerStyle={containerStyle}
-        center={center}
-        zoom={zoom}
-        onLoad={onLoad}
-        onUnmount={onUnmount}
-        options={{
-          ...mapOptions,
-        }}
-      >
-        <HeatmapLayerF
-          data={[
-            new google.maps.LatLng(37.5665, 126.978),
-            new google.maps.LatLng(37.57, 126.981),
-          ]}
-          options={{
-            maxIntensity: 3,
-            gradient: ['rgba(255, 0, 0, 0)', 'rgba(255, 0, 0, 1)'],
-            dissipating: true,
-            opacity: 0.8,
-            radius: 1,
-          }}
-        />
-      </GoogleMap>
-    </section>
-  );
+  return <section></section>;
 };
 
 const MarkerIcons = {
