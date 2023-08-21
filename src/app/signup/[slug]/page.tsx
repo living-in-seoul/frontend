@@ -1,6 +1,7 @@
 import SignupFirst from '@/components/auth/signup/SignupFirst';
 import SignupHeader from '@/components/auth/signup/SignupHeader';
 import SignupSecond from '@/components/auth/signup/SignupSecond';
+import SignupWelcome from '@/components/auth/signup/SignupWelcome';
 
 interface EmailSigninPageProps {
   params: {
@@ -10,13 +11,13 @@ interface EmailSigninPageProps {
 
 const SignUpPage = ({ params }: EmailSigninPageProps) => {
   const { slug } = params;
-
-  switch (slug) {
-    case 'first':
-      return <SignupFirst />;
-    case 'second':
-      return <SignupSecond />;
-  }
+  return (
+    <>
+      <SignupHeader slug={slug} />
+      <SignupWelcome slug={slug} />
+      {slug === 'first' ? <SignupFirst /> : <SignupSecond />}
+    </>
+  );
 };
 
 export default SignUpPage;

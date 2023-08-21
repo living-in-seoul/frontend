@@ -30,7 +30,7 @@ export const middleware = async (request: NextRequest) => {
 };
 
 export const config = {
-  matcher: ['/write', '/api/write'],
+  matcher: ['/write', '/api/write', '/api/liked'],
 };
 
 // 만료 됬을 때 로직 짜기  O
@@ -38,3 +38,5 @@ export const config = {
 // porfile api 하나 만들고 로그인했을 때 profile 받아오지말고 딱 토큰만 받아오기 O
 
 // rewrites를 통해서 소셜로그인 리다이렉트 문제를 해결해보자
+
+// axios를 통해서 req를 조절을 해야할 필요가 있겠는데?

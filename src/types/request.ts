@@ -10,10 +10,13 @@ interface RequestOauthLogin {
 }
 
 /** 회원가입 요청 데이터 */
-interface RequestRegister {
+interface RequestEssentialRegister {
   email: string;
   nickname: string;
   password: string;
+}
+interface RequestNonessentialRegister {
+  email?: string;
   gender: string;
   birthDate: string;
   hometown: string;
