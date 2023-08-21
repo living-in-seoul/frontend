@@ -1,6 +1,4 @@
-import CommunityBoardList from '@/components/community/CommunityBoardList';
 import CommunityHotTag from '../CommunityHotTag';
-import { Suspense } from 'react';
 import { categoryKO } from '@/utils/utilFunc';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
@@ -34,7 +32,7 @@ const CommunityPage = async ({ params }: CategoryPageProps) => {
         <CommunityHotTag Hottag={TagCategory} category={category} />
       )}
       {/* <h1>{category && category}</h1> */}
-      <CommunityBoardComponent Category={category} />
+      <CommunityBoardComponent Category={category} tags={tags} />
       <Link
         href={'/write'}
         className="fixed bottom-20 right-0 w-12 h-12 bg-neutral-700 rounded-full"

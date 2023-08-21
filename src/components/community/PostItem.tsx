@@ -5,6 +5,7 @@ import { getTimeAgo } from '@/utils/utilFunc';
 import { profile } from '../../../public';
 import Select from '../common/Select';
 import { Comment, Like } from '@/utils/Icon';
+import CommunityLikeBtn from '@/app/(nav)/community/CommunityLikeBtn';
 
 interface PostItemProps extends ResponsePost {}
 
@@ -17,6 +18,7 @@ const PostItem = ({ post, user }: PostItemProps) => {
     createdAt,
     postViewCount,
     likeSize,
+    postId,
   } = post;
   const { nickname, profileImg } = user;
   const FullContent = content.length > 100;
@@ -124,15 +126,7 @@ const PostItem = ({ post, user }: PostItemProps) => {
           <div className="text-neutral-700 text-xs font-normal leading-3">
             0
           </div>
-          <Icons
-            path={Like}
-            option={{
-              fill: '##404040',
-            }}
-          />
-          <div className="text-neutral-700 text-xs font-normal leading-3">
-            {likeSize}
-          </div>
+          <CommunityLikeBtn likeSize={likeSize} postId={postId} />
         </div>
       </div>
     </article>
