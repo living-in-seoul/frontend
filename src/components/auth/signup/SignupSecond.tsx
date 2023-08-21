@@ -11,12 +11,13 @@ import RadioInput from './RadioInput';
 import { birthDateForm, hometownForm } from '@/utils/formregister';
 import { signupEssentialState, signupState } from '@/recoil/authStates';
 import Table from '@/components/item/Table';
+import { genderArray } from '@/utils/constants/auth';
 
 interface SignupSecondFormPorps {
   hometown: string;
   birthDate: string;
 }
-const genderArray = ['여성', '남성'];
+
 const SignupSecond = () => {
   const [gender, setGeder] = useState('');
   const [signupData, setSignupData] = useRecoilState(signupState);
@@ -57,9 +58,10 @@ const SignupSecond = () => {
       },
       body: JSON.stringify(newData),
     }).then((response) => response.json());
-    console.log('asdfasdf', response);
-    response.message === '회원가입에 성공하셨습니다.' &&
-      router.push('/signin/user');
+    alert(response.msg);
+
+    router.push('/signin/user');
+    reset();
   };
 
   useEffect(() => {

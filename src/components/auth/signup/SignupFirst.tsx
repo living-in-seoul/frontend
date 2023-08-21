@@ -89,8 +89,7 @@ const SignupFirst = () => {
       >
         <div className="">
           <AuthInput
-            key="email"
-            id="email"
+            id="signupEmail"
             placeholder="ex) seuol123@vival.com"
             label="아이디(이메일)"
             mainProps={register('email', emailForm)}
@@ -99,8 +98,7 @@ const SignupFirst = () => {
             errorsMessage={errors.email?.message}
           />
           <AuthInput
-            key="password"
-            id="password"
+            id="signupPassword"
             isText={false}
             placeholder="영문, 숫자, 특수문자 조합 10자리 이상"
             label="비밀번호"
@@ -110,7 +108,6 @@ const SignupFirst = () => {
             errorsMessage={errors.password?.message}
           />
           <AuthInput
-            key="checkPassword"
             id="checkPassword"
             isText={false}
             placeholder="ex)비밀번호를 재입력해주세요"
@@ -121,7 +118,6 @@ const SignupFirst = () => {
             errorsMessage={errors.checkPassword?.message}
           />
           <AuthInput
-            key="nickname"
             id="nickname"
             placeholder="닉네임을 입력해주세요"
             label="닉네임"
