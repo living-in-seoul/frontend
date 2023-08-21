@@ -72,7 +72,7 @@ const WriteContent = () => {
           data.append('photos', file);
         }
       }
-      await fetch('/api/write', {
+      await fetch(`/api/write`, {
         method: 'POST',
         body: data,
       });
