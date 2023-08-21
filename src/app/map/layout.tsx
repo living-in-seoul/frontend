@@ -11,13 +11,13 @@ const DynamicMap = dynamic(() => import('../../components/map/Map'), {
 
 export default function MapLayout({ children }: { children: React.ReactNode }) {
   return (
-    <main className="w-full h-full">
+    <section className="w-full max-w-md h-screen relative">
       <RecoilRoot>
         {children}
         <MapBottomSheet>
           <span>hi</span>
         </MapBottomSheet>
       </RecoilRoot>
-    </main>
+    </section>
   );
 }

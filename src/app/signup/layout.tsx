@@ -14,13 +14,11 @@ export default function NoNavbarLayout({
   const router = useRouter();
   return (
     <main className="h-screen px-4 flex flex-col gap-10 pb-4  ">
-      <RecoilRoot>
-        <div className="pt-5 " onClick={() => router.back()}>
-          <Icons path={back} fill="#404040" />
-        </div>
-        <SignupWelcome />
-        {children}
-      </RecoilRoot>
+      <div className="pt-5 " onClick={() => router.back()}>
+        <Icons path={back} fill="#404040" />
+      </div>
+      <SignupWelcome />
+      {children}
     </main>
   );
 }

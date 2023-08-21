@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import Icons from '../common/Icons';
 import { getTimeAgo } from '@/utils/utilFunc';
-import { mrchoi } from '../../../public';
+
+import { profile } from '../../../public';
 import Select from '../common/Select';
 import { Comment, Like } from '@/utils/Icon';
 
@@ -20,7 +21,23 @@ const PostItem = ({ post, user }: PostItemProps) => {
   const { nickname, profileImg } = user;
   const FullContent = content.length > 100;
   const shortContent = content.slice(0, 100);
-
+  const HastagsContent = (hashtag: string) => {
+    const HashTags = hashtag.split('#').filter((tag) => tag !== '');
+    return (
+      <ul className="flex gap-2">
+        {HashTags.map((tag, index) => (
+          <div key={tag + index} className="flex items-center">
+            <span className="text-neutral-600 text-xs font-normal leading-3">
+              {'#'}
+            </span>
+            <span className="text-black text-xs font-medium leading-3">
+              {tag}
+            </span>
+          </div>
+        ))}
+      </ul>
+    );
+  };
   const contents = (
     <>
       {FullContent ? shortContent + '...' : content}
@@ -37,7 +54,7 @@ const PostItem = ({ post, user }: PostItemProps) => {
         {/* 유저 */}
         <div className="relative shrink-0 w-[36px] h-[36px] rounded-full overflow-hidden">
           <Image
-            src={mrchoi}
+            src={profile}
             alt={`user`}
             fill
             className="absolute top-0"
@@ -71,7 +88,7 @@ const PostItem = ({ post, user }: PostItemProps) => {
         {postImg && (
           <div className="relative w-16 h-16 bg-white rounded-xl shadow overflow-hidden">
             <Image
-              src={mrchoi}
+              src={profile}
               alt={`postImg`}
               fill
               className="w-full h-full"
@@ -90,9 +107,7 @@ const PostItem = ({ post, user }: PostItemProps) => {
             size="small"
           />
           <div className="flex justify-center items-center">
-            <span className="text-neutral-600 text-xs font-normal leading-3">
-              {hashtag}
-            </span>
+            {HastagsContent(hashtag)}
           </div>
         </div>
         <div className="flex gap-2">

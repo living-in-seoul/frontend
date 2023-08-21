@@ -14,10 +14,10 @@ export default function NavLink({
 }) {
   const pathname = usePathname();
   const link = category.link ? `/community/${category.link}` : '/community';
-  console.log(pathname.replace('/community', ''));
+
   const isActive = category.link
-    ? `/${category.link}` === pathname.replace('/community', '')
-    : pathname === '/community';
+    ? `${category.link}` === pathname.split('/')[2]
+    : pathname.split('/')[2] === 'All' || pathname === '/community';
 
   return (
     <Link

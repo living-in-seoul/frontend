@@ -26,11 +26,11 @@ const MapBottomSheet = ({ children, fixed }: MapBottomSheetProps) => {
         top: `${fixed ? `calc(100% - 200px)` : `calc(100% - 90px)`}`,
       }}
       ref={fixed ? null : sheet}
-      className={`flex flex-col justify-center items-center fixed bottom-0 left-0 rounded-t-3xl bg-white z-1 w-full border-t-2 px-4 pt-5 shadow-2xl border-neutral-200 `}
+      className={`max-w-md flex flex-col justify-center items-center fixed bottom-0 left-0 rounded-t-3xl bg-white z-1 w-full border-t-2 px-4 pt-5 shadow-2xl border-neutral-200 `}
     >
       <BottomSheetHeader />
       <div
-        className="h-full w-full  overflow-auto smooth-scroll"
+        className="h-full w-full overflow-auto smooth-scroll"
         ref={content}
         onClick={(e) => e.stopPropagation()}
       >
