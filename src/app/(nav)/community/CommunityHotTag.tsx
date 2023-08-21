@@ -16,8 +16,8 @@ const CommunityHotTag = ({ Hottag, category }: CommunityHotTag) => {
         {Hottag.map((tag) => (
           <Link
             key={tag}
-            prefetch={false}
             href={`/community/${category}/${tag}`}
+            prefetch={false}
           >
             <Select
               title={`#${tag}`}
