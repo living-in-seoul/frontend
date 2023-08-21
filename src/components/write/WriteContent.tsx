@@ -1,26 +1,17 @@
 'use client';
 import { useHandleTags } from '@/hooks/useHandleTags';
-import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
+import { ChangeEvent, useState, useCallback, FormEvent } from 'react';
 import Icons from '../common/Icons';
-import { checked, downdrop } from '@/utils/Icon';
+import { downdrop } from '@/utils/Icon';
 import MapBottomSheet from '../map/bottomsheet/MapBottomSheet';
 import { BoardOptions } from '@/utils/constants/board';
 import UploadImage from './UploadImage';
 import { useRecoilState } from 'recoil';
-import { ImageState } from '@/recoil/BoardStates';
-
-type WriteFormTypes = Omit<RequestBoardWrite, 'postImg'>;
+import { formDataState } from '@/recoil/BoardStates';
+import SelectCategory from './SelectCategory';
 
 const WriteContent = () => {
-  const [formData, setFormData] = useState<WriteFormTypes>({
-    category: '',
-    hashTag: [],
-    content: '',
-    location: {
-      lat: 37.5519,
-      lng: 126.9918,
-    },
-  });
+  const [formData, setFormData] = useRecoilState(formDataState);
   const [tagText, setTagText] = useState<string>('');
   const [openSelect, setOpenSelect] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
@@ -29,8 +20,6 @@ const WriteContent = () => {
     setFormData,
     setTagText,
   });
-  const [imageState, setImageState] = useRecoilState(ImageState);
-
   const onSelectOptionHandler = (idx: number) => {
     setOpenSelect(false);
     setSelectedOption(BoardOptions[idx]);
@@ -60,18 +49,18 @@ const WriteContent = () => {
         category: formData.category,
         content: formData.content,
         hashtag: '#' + formData.hashTag.join('#'),
-        location: formData.location,
+        // location: formData.location,
       };
 
       data.append(
         'post',
         new Blob([JSON.stringify(post)], { type: 'application/json' }),
       );
-      if (imageState) {
-        for (let file of imageState) {
-          data.append('photos', file);
-        }
-      }
+      // if (imageState) {
+      //   for (let file of imageState) {
+      //     data.append('photos', file);
+      //   }
+      // }
       await fetch(`/api/write`, {
         method: 'POST',
         body: data,
@@ -82,11 +71,7 @@ const WriteContent = () => {
 
   return (
     <>
-      <form
-        onSubmit={onSubmit}
-        encType="multipart/form-data"
-        className="flex flex-col mt-2 w-full h-full justify-center items-center"
-      >
+      <form className="flex flex-col mt-2 w-full h-full justify-center items-center">
         <div
           className="flex justify-center text-xs text-center text-zinc-700 w-[90%] mb-5 border border-zinc-300 h-7 items-center gap-3 rounded-2xl"
           onClick={onOpenCategories}
@@ -97,65 +82,41 @@ const WriteContent = () => {
           <Icons path={downdrop} />
         </div>
         <textarea
-          className="w-[95%] h-full text-sm p-3 outline-none"
           name="content"
+          className="w-[95%] h-full text-sm p-3 outline-none"
           placeholder="서울바이벌 이웃들과 자유롭게 소통해보세요!"
           rows={15}
           value={formData.content}
           onChange={(e) => onChangeInputHandler(e)}
         />
         <UploadImage />
-        <div className="flex ">
+        <div className="mt-10 w-full px-6 ">
           <input
-            name="locationTag"
             value={tagText}
             onChange={(e) => onChangeTag(e)}
             placeholder="장소 태그"
           />
-          <button name="locationTagButton" onClick={onAddTag}>
-            추가
-          </button>
+          {/* any바꾸삼 */}
+          <button onClick={(e: any) => onAddTag(e)}>태그 추가</button>
         </div>
-        <div>
-          {/* 야 키 중복 제거 해라 꼭 좀*/}
+        <div className="flex gap-3 w-full mt-2 px-6">
           {formData.hashTag.map((tag, _) => (
-            <div key={tag} onClick={() => onDeleteTag(tag)}>
+            <div
+              className="bg-neutral-200 rounded-xl px-2 text-xs"
+              key={tag}
+              onClick={() => onDeleteTag(tag)}
+            >
               #{tag}
             </div>
           ))}
         </div>
-        <button type="submit">글 작성</button>
       </form>
       {openSelect && (
         <MapBottomSheet fixed>
-          <div className="flex flex-col gap-1.5 px-4 h-full">
-            <span className="w-full text-[1.1rem] font-semibold mb-2.5">
-              주제 선택
-            </span>
-            <div className="flex flex-col justify-between  h-full">
-              {BoardOptions.map((option, idx) => {
-                const selected = selectedOption === option;
-                return (
-                  <div
-                    className="flex justify-around items-center w-full h-full  "
-                    key={idx}
-                  >
-                    <span
-                      className={`text-xs w-[95%] h-full my-0.5 ${
-                        !selected && selectedOption && `text-zinc-400`
-                      }`}
-                      onClick={() => onSelectOptionHandler(idx)}
-                    >
-                      {option}
-                    </span>
-                    <span className="w-[5%] h-full text-zinc-600">
-                      {selected && <Icons path={checked} />}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+          <SelectCategory
+            selectedOption={selectedOption}
+            onSelectOptionHandler={onSelectOptionHandler}
+          />
         </MapBottomSheet>
       )}
     </>

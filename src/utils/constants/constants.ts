@@ -62,6 +62,8 @@ export const categories = [
   '여유 로운',
 ];
 
+export const MapBoardOptions = ['전체', '후기', '동향소통', '생활정보'];
+
 export const googleMapsLibraries: Libraries = [
   'places',
   'visualization',

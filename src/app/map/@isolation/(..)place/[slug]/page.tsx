@@ -23,7 +23,7 @@ const MapDetail = ({ params }: MapDetailProps) => {
   return (
     <>
       <Image
-        className=" h-52 bg-zinc-300 flex items-center justify-center w-full object-cover aspect-square "
+        className=" h-52 bg-zinc-300 flex items-center justify-center w-full object-cover aspect-square"
         alt="good dog"
         src={mainPicture ?? choi}
         width={3000}
@@ -32,7 +32,7 @@ const MapDetail = ({ params }: MapDetailProps) => {
       <div className="px-4 flex flex-col ">
         <DetailPlaceInfo data={details} />
         <DetailReviewerPictuers photos={details?.photos} />
-        <CommunityBoardList title="커뮤니티에 등록한 리뷰" image={true} />
+        <CommunityBoardList title="커뮤니티에 등록한 리뷰" />
       </div>
       {/* <PopCarousel>
         <DetailMultipleCard data={data} />

@@ -30,7 +30,7 @@ const CategoryList = ({
         <Select
           className="mr-[10px] nowrap"
           key={category}
-          title={dropdown ? `🔽 ${category}` : `# ${category}`}
+          title={dropdown ? ` ${category}` : `# ${category}`}
           select={category === selectedCategory}
           onClick={() => onClickHandler(category)}
         />

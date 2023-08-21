@@ -1,12 +1,11 @@
 'use client';
 
 import RecommendItem from '@/components/map/recommend/RecommendItem';
-import { placeIdState, placesState } from '@/recoil/mapStates';
+import { placeIdState } from '@/recoil/mapStates';
 import Link from 'next/link';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 const RecommendContainer = () => {
-  const placesValue = useRecoilValue(placesState);
   const setPlaceIdState = useSetRecoilState(placeIdState);
 
   const onClickHandler = (placeId: string | undefined) => {
@@ -15,7 +14,7 @@ const RecommendContainer = () => {
 
   return (
     <div>
-      {placesValue.map((place) => {
+      {/* {placesValue.map((place) => {
         return (
           <Link
             key={place.place_id}
@@ -25,7 +24,7 @@ const RecommendContainer = () => {
             <RecommendItem {...place} />
           </Link>
         );
-      })}
+      })} */}
     </div>
   );
 };
