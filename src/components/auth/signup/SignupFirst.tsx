@@ -1,17 +1,18 @@
 'use client';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
-import AuthInput from '../signin/AuthInput';
-import Button from '@/components/common/Button';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { useRouter } from 'next/navigation';
+import { signupState } from '@/recoil/authStates';
 import {
   checkPasswordForm,
   emailForm,
   nicknameForm,
   passwordForm,
 } from '@/utils/formregister';
-import { signupEssentialState, signupState } from '@/recoil/authStates';
+import AuthInput from '../signin/AuthInput';
+import Button from '@/components/common/Button';
+
 interface SignupFirstFormProps {
   email: string;
   password: string;
@@ -20,7 +21,6 @@ interface SignupFirstFormProps {
 }
 
 const SignupFirst = () => {
-  const [essential, setEssential] = useRecoilState(signupEssentialState);
   const setFirstData = useSetRecoilState(signupState);
   const router = useRouter();
   const {
@@ -56,30 +56,24 @@ const SignupFirst = () => {
       password: data.password,
       nickname: data.nickname,
     };
-    setFirstData((prev) => ({ ...prev, ...newData }));
-    setEssential((prev) => !prev);
-    reset();
-    router.push('/signup/second');
-
-    console.log('essental의 false 여부 in signup/SignupFirst', essential);
     console.log(
       '회원가입 필수사항 기입 시 데이터 in signup/SignupFirst',
       newData,
     );
-    // try {
-    //   const response = await fetch('/api/signup', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(newData),
-    //   }).then((response) => response.json());
-    //   console.log('asdfasdf', response);
-    // } catch (error) {
-    //   return console.error('asdfasdfasdfasdf', error);
-    // }
-    // 다른 API가 필요함 조회를 해야되는데 여기서 가입을 해버려서 2번째 페이지에서 에러가 뜬다
-    // 가입을 시키는 것 말고 조회를 하는 API가 필요함
+    setFirstData((prev) => ({ ...prev, email: data.email }));
+    reset();
+
+    const response = await fetch('/api/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newData),
+    }).then((response) => response.json());
+    console.log('클라이언트에서 나오는 response', response);
+    alert(response.message);
+    response.message === '회원가입에 성공하셨습니다.' &&
+      router.push('/signup/second');
   };
   return (
     <section className="h-full relative">

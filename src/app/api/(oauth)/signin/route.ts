@@ -15,7 +15,7 @@ export const POST = async (request: NextRequest) => {
     value: data.accessToken,
     httpOnly: true,
     path: '/',
-    maxAge: 60 * 60,
+    maxAge: 10,
   });
   cookies().set({
     name: 'refreshToken',
@@ -24,18 +24,7 @@ export const POST = async (request: NextRequest) => {
     path: '/',
     maxAge: 60 * 60 * 24,
   });
-  // response.cookies.set({
-  //   name: 'refreshToken',
-  //   value: data.refreshToken,
-  //   httpOnly: true,
-  // });
-  // response.cookies.set({
-  //   name: 'accessToken',
-  //   value: data.accessToken,
-  //   httpOnly: true,
-  // });
   return NextResponse.json(data);
-  // ((response)=> response.json());
 };
 
 // expire 만료시간을 정할 수 있다 정해서 access api 요청 refresh => 로그인 페이지로 보내고
