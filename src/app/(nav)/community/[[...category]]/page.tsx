@@ -1,26 +1,25 @@
 import CommunityBoardList from '@/components/community/CommunityBoardList';
 import CommunityHotTag from '../CommunityHotTag';
+import { Suspense } from 'react';
+import { categoryKO } from '@/utils/utilFunc';
+import dynamic from 'next/dynamic';
+import Link from 'next/link';
+
 interface CategoryPageProps {
   params: {
     category: string[] | null;
   };
 }
-
+const CommunityBoardComponent = dynamic(
+  () => import('@/components/community/CommunityBoardList'),
+  {
+    ssr: true,
+    loading: () => <div>Loading...</div>,
+  },
+);
 const CommunityPage = async ({ params }: CategoryPageProps) => {
   const category = params.category ? params.category[0] : 'All';
   const tags = params.category ? params.category[1] || [] : null;
-  const categoryKO = (category: string) => {
-    switch (category) {
-      case 'communication':
-        return '동향소통';
-      case 'review':
-        return '후기';
-      case 'Life':
-        return '생활정보';
-      default:
-        return category;
-    }
-  };
 
   const FetchUrl =
     category === 'All' ? 'All' : `category?category=${categoryKO(category)}`;
@@ -30,12 +29,16 @@ const CommunityPage = async ({ params }: CategoryPageProps) => {
   ).then<string[]>((res) => res.json());
 
   return (
-    <section className="w-full max-w-2xl flex flex-col">
+    <section className="w-full max-w-2xl flex flex-col relative">
       {TagCategory && (
         <CommunityHotTag Hottag={TagCategory} category={category} />
       )}
       {/* <h1>{category && category}</h1> */}
-      <CommunityBoardList Category={category} />
+      <CommunityBoardComponent Category={category} />
+      <Link
+        href={'/write'}
+        className="fixed bottom-20 right-0 w-12 h-12 bg-neutral-700 rounded-full"
+      ></Link>
     </section>
   );
 };

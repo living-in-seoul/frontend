@@ -26,13 +26,14 @@ const DefaultLogin = () => {
   });
 
   const onSubmitHandler: SubmitHandler<RequestLogin> = async (data) => {
-    await fetch('/api/signin', {
+    const response = await fetch('/api/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
-    });
+    }).then((response) => response.json());
+    alert(response.msg);
     reset();
     router.push(`${callbackUrl[0]}`);
   };
@@ -45,7 +46,7 @@ const DefaultLogin = () => {
       <div className="flex flex-col justify-between">
         <AuthInput
           errorsMessage={errors.email?.message}
-          id="email"
+          id="signinEmail"
           isErrors={errors.email}
           isSubmitted={isSubmitted}
           label="아이디(이메일)"
@@ -54,7 +55,7 @@ const DefaultLogin = () => {
         />
         <AuthInput
           errorsMessage={errors.password?.message}
-          id="password"
+          id="signinPassword"
           isErrors={errors.password}
           isSubmitted={isSubmitted}
           label="비밀번호"

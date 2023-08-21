@@ -3,6 +3,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 
 import { Inter } from 'next/font/google';
+import RecoilProvider from '@/context/RecoilProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,10 +18,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={inter.className}>
       <head></head>
-      <body className={inter.className}>
-        <SWRConfigContext>{children}</SWRConfigContext>
+      <body className="flex flex-col min-h-screen items-center">
+        <RecoilProvider>
+          <SWRConfigContext>
+            <div className="w-full max-w-md">{children}</div>
+          </SWRConfigContext>
+        </RecoilProvider>
       </body>
     </html>
   );

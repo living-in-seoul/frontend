@@ -1,4 +1,5 @@
 import SignupFirst from '@/components/auth/signup/SignupFirst';
+import SignupHeader from '@/components/auth/signup/SignupHeader';
 import SignupSecond from '@/components/auth/signup/SignupSecond';
 
 interface EmailSigninPageProps {

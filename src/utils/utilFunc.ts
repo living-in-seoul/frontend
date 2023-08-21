@@ -45,3 +45,17 @@ export const getTimeAgo = (javaDate: string): string => {
   if (minutes > 0) return `${minutes}분 전`;
   return `${seconds}초 전`;
 };
+
+/** 카테고리 한글화 */
+export const categoryKO = (category: string) => {
+  switch (category) {
+    case 'communication':
+      return '동향소통';
+    case 'review':
+      return '후기';
+    case 'Life':
+      return '생활정보';
+    default:
+      return category;
+  }
+};
