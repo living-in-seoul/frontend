@@ -3,24 +3,25 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import AuthInput from '../signin/AuthInput';
 import Button from '@/components/common/Button';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { useRouter } from 'next/navigation';
 import useGetDate from '@/hooks/useGetDate';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import RadioInput from './RadioInput';
 import { birthDateForm, hometownForm } from '@/utils/formregister';
-import { signupEssentialState, signupState } from '@/recoil/authStates';
+import { callbackUrlState, signupState } from '@/recoil/authStates';
 import Table from '@/components/item/Table';
+import { genderArray } from '@/utils/constants/auth';
 
-interface FormPorps {
+interface SignupSecondFormPorps {
   hometown: string;
   birthDate: string;
 }
-const genderArray = ['여성', '남성'];
+
 const SignupSecond = () => {
   const [gender, setGeder] = useState('');
   const [signupData, setSignupData] = useRecoilState(signupState);
-  const essential = useRecoilValue(signupEssentialState);
+  const callbackUrl = useRecoilState(callbackUrlState);
   const router = useRouter();
   const nowDate = useGetDate();
   const {
@@ -28,7 +29,7 @@ const SignupSecond = () => {
     handleSubmit,
     reset,
     formState: { isSubmitted, errors },
-  } = useForm<FormPorps>({
+  } = useForm<SignupSecondFormPorps>({
     mode: 'onSubmit',
     defaultValues: {
       hometown: '',
@@ -45,28 +46,26 @@ const SignupSecond = () => {
       },
     },
   });
-  const onSubmitHandler: SubmitHandler<FormPorps> = async (data) => {
+  const onSubmitHandler: SubmitHandler<SignupSecondFormPorps> = async (
+    data,
+  ) => {
     const newData = { ...signupData, ...data, gender };
     setSignupData((prev) => ({ ...prev, ...data, gender }));
-    reset();
-
+    console.log('뉴데이터', newData);
     const response = await fetch('/api/signup', {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(newData),
     }).then((response) => response.json());
-    response.message === '회원가입에 성공하셨습니다.' &&
-      router.push('/signin/user');
+    console.log(response);
+    alert(response.message);
+    router.push(`${callbackUrl[0]}`);
+    reset();
   };
-
-  useEffect(() => {
-    essential && router.back();
-  });
   const onSelectHandler = (movedDate: string) => {
-    const testData = '1995-10-10';
-    setSignupData((prev) => ({ ...prev, movedDate: testData }));
+    setSignupData((prev) => ({ ...prev, movedDate }));
   };
   return (
     <section className="h-full">
@@ -102,7 +101,7 @@ const SignupSecond = () => {
           </div>
           <AuthInput
             id="hometown"
-            placeholder="ex) 안동시, 부산광역시 ..."
+            placeholder="ex) 경상북도 안동시"
             label="출신지역"
             mainProps={register('hometown', hometownForm)}
             isSubmitted={isSubmitted}

@@ -1,6 +1,6 @@
 'use client';
 import { useHandleTags } from '@/hooks/useHandleTags';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState, useCallback, FormEvent } from 'react';
 import Icons from '../common/Icons';
 import { downdrop } from '@/utils/Icon';
 import MapBottomSheet from '../map/bottomsheet/MapBottomSheet';
@@ -40,6 +40,34 @@ const WriteContent = () => {
   const onChangeTag = (e: ChangeEvent<HTMLInputElement>) => {
     setTagText(e.target.value);
   };
+  const onSubmit = useCallback(
+    async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const data = new FormData();
+
+      const post = {
+        category: formData.category,
+        content: formData.content,
+        hashtag: '#' + formData.hashTag.join('#'),
+        // location: formData.location,
+      };
+
+      data.append(
+        'post',
+        new Blob([JSON.stringify(post)], { type: 'application/json' }),
+      );
+      // if (imageState) {
+      //   for (let file of imageState) {
+      //     data.append('photos', file);
+      //   }
+      // }
+      await fetch(`/api/write`, {
+        method: 'POST',
+        body: data,
+      });
+    },
+    [formData],
+  );
 
   return (
     <>

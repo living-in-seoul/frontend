@@ -1,10 +1,5 @@
-'use client';
 import SigninButtons from '@/components/auth/signin/SigninButtons';
 import SigninWelcome from '@/components/auth/signin/SigninWelcome';
-import { callbackUrlState } from '@/recoil/authStates';
-import { useEffect } from 'react';
-import { useSetRecoilState } from 'recoil';
-
 interface SigninProps {
   searchParams: {
     callbackUrl: string;
@@ -12,11 +7,6 @@ interface SigninProps {
 }
 
 const SignIpPage = ({ searchParams: { callbackUrl } }: SigninProps) => {
-  const setCallbackUrl = useSetRecoilState(callbackUrlState);
-  useEffect(() => {
-    setCallbackUrl(callbackUrl);
-  });
-
   return (
     <section className="flex flex-col ">
       <SigninWelcome />
@@ -26,7 +16,7 @@ const SignIpPage = ({ searchParams: { callbackUrl } }: SigninProps) => {
         </span>
         <div className="absolute top-0 w-full h-5 border-b border-b-zinc-400 " />
       </div>
-      <SigninButtons />
+      <SigninButtons callbackUrl={callbackUrl} />
     </section>
   );
 };

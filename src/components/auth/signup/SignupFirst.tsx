@@ -1,18 +1,19 @@
 'use client';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
-import AuthInput from '../signin/AuthInput';
-import Button from '@/components/common/Button';
 import { useSetRecoilState } from 'recoil';
 import { useRouter } from 'next/navigation';
+import { signupState } from '@/recoil/authStates';
 import {
   checkPasswordForm,
   emailForm,
   nicknameForm,
   passwordForm,
 } from '@/utils/formregister';
-import { signupEssentialState, signupState } from '@/recoil/authStates';
-interface FormProps {
+import AuthInput from '../signin/AuthInput';
+import Button from '@/components/common/Button';
+
+interface SignupFirstFormProps {
   email: string;
   password: string;
   checkPassword: string;
@@ -20,7 +21,6 @@ interface FormProps {
 }
 
 const SignupFirst = () => {
-  const setEssential = useSetRecoilState(signupEssentialState);
   const setFirstData = useSetRecoilState(signupState);
   const router = useRouter();
   const {
@@ -29,7 +29,7 @@ const SignupFirst = () => {
     reset,
     getValues,
     formState: { isSubmitted, errors },
-  } = useForm<FormProps>({
+  } = useForm<SignupFirstFormProps>({
     mode: 'onSubmit',
     defaultValues: {
       email: '',
@@ -50,16 +50,30 @@ const SignupFirst = () => {
     },
   };
 
-  const onSubmitHandler: SubmitHandler<FormProps> = (data) => {
+  const onSubmitHandler: SubmitHandler<SignupFirstFormProps> = async (data) => {
     const newData = {
       email: data.email,
       password: data.password,
       nickname: data.nickname,
     };
-    setFirstData((prev) => ({ ...prev, ...newData }));
-    setEssential((prev) => !prev);
+    console.log(
+      '회원가입 필수사항 기입 시 데이터 in signup/SignupFirst',
+      newData,
+    );
+    setFirstData((prev) => ({ ...prev, email: data.email }));
     reset();
-    router.push('/signup/second');
+
+    const response = await fetch('/api/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newData),
+    }).then((response) => response.json());
+    console.log('클라이언트에서 나오는 response', response);
+    alert(response.message);
+    response.message === '회원가입에 성공하셨습니다.' &&
+      router.push('/signup/second');
   };
   return (
     <section className="h-full relative">
@@ -69,8 +83,7 @@ const SignupFirst = () => {
       >
         <div className="">
           <AuthInput
-            key="email"
-            id="email"
+            id="signupEmail"
             placeholder="ex) seuol123@vival.com"
             label="아이디(이메일)"
             mainProps={register('email', emailForm)}
@@ -79,8 +92,7 @@ const SignupFirst = () => {
             errorsMessage={errors.email?.message}
           />
           <AuthInput
-            key="password"
-            id="password"
+            id="signupPassword"
             isText={false}
             placeholder="영문, 숫자, 특수문자 조합 10자리 이상"
             label="비밀번호"
@@ -90,7 +102,6 @@ const SignupFirst = () => {
             errorsMessage={errors.password?.message}
           />
           <AuthInput
-            key="checkPassword"
             id="checkPassword"
             isText={false}
             placeholder="ex)비밀번호를 재입력해주세요"
@@ -101,7 +112,6 @@ const SignupFirst = () => {
             errorsMessage={errors.checkPassword?.message}
           />
           <AuthInput
-            key="nickname"
             id="nickname"
             placeholder="닉네임을 입력해주세요"
             label="닉네임"
