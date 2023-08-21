@@ -13,7 +13,7 @@ export default function SigninLayout({
   const route = useRouter();
 
   return (
-    <main className="px-4 h-screen  flex flex-col relativ ">
+    <main className="px-4 h-screen flex flex-col relative">
       <div className="pt-5 mb-16">
         <Icons path={close} fill="#404040" onClick={() => route.back()} />
       </div>

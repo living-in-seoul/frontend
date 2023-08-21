@@ -78,7 +78,6 @@ const DefaultLogin = () => {
           </div>
         </div>
       </div>
-      {/* h-screen설정을 하니깐 스크롤바가 나오는데 이거 어떻게 해결하냐 */}
       <div className="absolute w-full bottom-0">
         <Button
           size="w-full"

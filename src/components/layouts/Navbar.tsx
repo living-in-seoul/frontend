@@ -50,15 +50,16 @@ const NavBarArray = [
   },
   {
     name: '마이페이지',
-    path: '/place/ChIJdT3Zb-2ifDURejyrGy8OIII/1',
+    path: '/transport',
     iconPath: comunity,
   },
 ];
 
 const Navbar = () => {
   const pathname = usePathname();
+  const MainPathName = '/' + pathname.split('/')[1];
   return (
-    <nav className="fixed bottom-0 right-0 w-full border bg-white">
+    <nav className="fixed bottom-0 right-auto max-w-md w-full border bg-white">
       <div className="flex-row h-[60px] flex w-full justify-center px-4 pt-2">
         {NavBarArray.map((item) => (
           <Link
@@ -68,7 +69,7 @@ const Navbar = () => {
           >
             <Icons
               path={item.iconPath}
-              fill={pathname === item.path ? '#000' : '#636363'}
+              fill={MainPathName === item.path ? '#000' : '#636363'}
             />
             <div className="text-center text-black text-xs font-normal leading-3">
               {item.name}

@@ -11,7 +11,6 @@ const UploadImage = () => {
       <div
         className={`${baseClassName()}`}
         onClick={() => setImagePortalState(true)}
-        //파일 집어넣기!!!
       >
         <UploadIcon />
         <span className="text-[0.3rem] font-neutral-300">사진 추가</span>

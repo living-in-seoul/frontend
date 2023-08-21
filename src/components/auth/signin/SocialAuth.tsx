@@ -1,5 +1,4 @@
 'use client';
-import React from 'react';
 import SocialIcons from './SocialIcon';
 import { redirect, useRouter } from 'next/navigation';
 interface SocialAuthProps {

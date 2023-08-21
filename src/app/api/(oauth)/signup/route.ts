@@ -5,6 +5,5 @@ import { NextRequest, NextResponse } from 'next/server';
 export const POST = async (request: NextRequest) => {
   const body: RequestRegister = await request.json();
   const data = await postSignup(body);
-
   return NextResponse.json(data);
 };

@@ -1,4 +1,5 @@
 import { atom } from 'recoil';
+
 export const signupState = atom<RequestRegister>({
   key: 'signupFistState',
   default: {

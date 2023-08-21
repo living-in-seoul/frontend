@@ -1,3 +1,5 @@
+'use client';
+
 import {
   GoogleMap,
   DirectionsService,
@@ -5,7 +7,6 @@ import {
 } from '@react-google-maps/api';
 import React, { useRef, useState, useEffect } from 'react';
 import MapBottomSheet from './bottomsheet/MapBottomSheet';
-import { MapStyleVersionThree } from '@/utils/styles';
 
 const containerStyle = {
   width: '100vw',
@@ -93,4 +94,5 @@ export default MyMap;
 // 1-1 맵 검색시 우 출발 도착 정하기
 // 1-2 출발시간 , 도착시간 정하기
 // 1-3 경로 저장 및 경로확인 페이지
-// 1-4
+// 1-4 바텀시트에 경로 확인 및 경로 정하기
+// 등등
