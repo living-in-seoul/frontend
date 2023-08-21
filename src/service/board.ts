@@ -10,10 +10,6 @@ export const writeBoard = async (form: any) => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/posts`, {
       body: form,
       method: 'POST',
-      headers: {
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJza2R1ZDM2NjlAZ21haWwuY29tIiwiZXhwIjoxNjkyMzc1ODMwLCJpYXQiOjE2OTIzNzIyMzB9.GqKi-vmcLYXudw1wIu0VmlYMKsCID9e0_P7gKzzaltU',
-      },
     });
 
     console.log(response);

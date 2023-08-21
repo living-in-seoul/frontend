@@ -3,7 +3,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import AuthInput from '../signin/AuthInput';
 import Button from '@/components/common/Button';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useRouter } from 'next/navigation';
 import {
   checkPasswordForm,
@@ -12,7 +12,7 @@ import {
   passwordForm,
 } from '@/utils/formregister';
 import { signupEssentialState, signupState } from '@/recoil/authStates';
-interface FormProps {
+interface SignupFirstFormProps {
   email: string;
   password: string;
   checkPassword: string;
@@ -20,7 +20,7 @@ interface FormProps {
 }
 
 const SignupFirst = () => {
-  const setEssential = useSetRecoilState(signupEssentialState);
+  const [essential, setEssential] = useRecoilState(signupEssentialState);
   const setFirstData = useSetRecoilState(signupState);
   const router = useRouter();
   const {
@@ -29,7 +29,7 @@ const SignupFirst = () => {
     reset,
     getValues,
     formState: { isSubmitted, errors },
-  } = useForm<FormProps>({
+  } = useForm<SignupFirstFormProps>({
     mode: 'onSubmit',
     defaultValues: {
       email: '',
@@ -50,7 +50,7 @@ const SignupFirst = () => {
     },
   };
 
-  const onSubmitHandler: SubmitHandler<FormProps> = (data) => {
+  const onSubmitHandler: SubmitHandler<SignupFirstFormProps> = async (data) => {
     const newData = {
       email: data.email,
       password: data.password,
@@ -60,6 +60,26 @@ const SignupFirst = () => {
     setEssential((prev) => !prev);
     reset();
     router.push('/signup/second');
+
+    console.log('essental의 false 여부 in signup/SignupFirst', essential);
+    console.log(
+      '회원가입 필수사항 기입 시 데이터 in signup/SignupFirst',
+      newData,
+    );
+    // try {
+    //   const response = await fetch('/api/signup', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(newData),
+    //   }).then((response) => response.json());
+    //   console.log('asdfasdf', response);
+    // } catch (error) {
+    //   return console.error('asdfasdfasdfasdf', error);
+    // }
+    // 다른 API가 필요함 조회를 해야되는데 여기서 가입을 해버려서 2번째 페이지에서 에러가 뜬다
+    // 가입을 시키는 것 말고 조회를 하는 API가 필요함
   };
   return (
     <section className="h-full relative">
@@ -69,8 +89,7 @@ const SignupFirst = () => {
       >
         <div className="">
           <AuthInput
-            key="email"
-            id="email"
+            id="signupEmail"
             placeholder="ex) seuol123@vival.com"
             label="아이디(이메일)"
             mainProps={register('email', emailForm)}
@@ -79,8 +98,7 @@ const SignupFirst = () => {
             errorsMessage={errors.email?.message}
           />
           <AuthInput
-            key="password"
-            id="password"
+            id="signupPassword"
             isText={false}
             placeholder="영문, 숫자, 특수문자 조합 10자리 이상"
             label="비밀번호"
@@ -90,7 +108,6 @@ const SignupFirst = () => {
             errorsMessage={errors.password?.message}
           />
           <AuthInput
-            key="checkPassword"
             id="checkPassword"
             isText={false}
             placeholder="ex)비밀번호를 재입력해주세요"
@@ -101,7 +118,6 @@ const SignupFirst = () => {
             errorsMessage={errors.checkPassword?.message}
           />
           <AuthInput
-            key="nickname"
             id="nickname"
             placeholder="닉네임을 입력해주세요"
             label="닉네임"
