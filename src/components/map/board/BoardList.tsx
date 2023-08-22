@@ -1,13 +1,12 @@
-'use client';
 import PostItem from '@/components/community/PostItem';
-import { boardListState, markerIdState } from '@/recoil/mapStates';
 import Link from 'next/link';
-import { useRecoilValue } from 'recoil';
 
-const BoardList = () => {
-  const boardList = useRecoilValue(boardListState);
-  const markerIdValue = useRecoilValue(markerIdState);
+interface BoardListProps {
+  markerIdValue: number | null;
+  boardList: ResponseRegister | null;
+}
 
+const BoardList = ({ markerIdValue, boardList }: BoardListProps) => {
   return (
     <article className="flex flex-col border-b-4">
       <div className="w-full justify-between flex"></div>
