@@ -19,3 +19,7 @@ export const callbackUrlState = atom<string>({
   key: 'callbackUrlState',
   default: '',
 });
+export const AuthOpenModalState = atom<boolean>({
+  key: 'AuthopenModalState',
+  default: false,
+});

@@ -3,10 +3,11 @@ import { socialUrls } from '@/utils/constants/auth';
 import SocialAuth from './SocialAuth';
 import { callbackUrlState } from '@/recoil/authStates';
 import { useEffect } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 const SigninButtons = ({ callbackUrl }: { callbackUrl: string }) => {
   const setCallbackUrl = useSetRecoilState(callbackUrlState);
+  const callbackUrls = useRecoilValue(callbackUrlState);
   useEffect(() => {
     setCallbackUrl(callbackUrl);
   }, []);

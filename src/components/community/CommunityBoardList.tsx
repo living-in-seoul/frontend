@@ -4,6 +4,8 @@ import PostItem from './PostItem';
 import { useState } from 'react';
 import Select from '../common/Select';
 import Loading from '@/app/loading';
+import { useRecoilState } from 'recoil';
+import { communityKeyState } from '@/recoil/communityStates';
 
 interface CommunityBoardProps {
   title?: string;
@@ -12,8 +14,16 @@ interface CommunityBoardProps {
 }
 const CommunityBoardList = ({ Category, tags }: CommunityBoardProps) => {
   const [isPop, setIsPop] = useState<SelectPopType>('newer');
+  const [communityKey, setCommunityKey] = useRecoilState(communityKeyState);
   const { data: lists, isLoading } = useSWR<ResponseRegister>(
     `/api/community/${Category}/${tags}?category=${'newer'}`,
+
+    {
+      onSuccess: (data, key, config) => {
+        console.log(data, key);
+        setCommunityKey(key);
+      },
+    },
   );
 
   return (
@@ -34,7 +44,13 @@ const CommunityBoardList = ({ Category, tags }: CommunityBoardProps) => {
       </div>
       {isLoading && <Loading></Loading>}
       {lists?.result.map((post) => (
-        <PostItem {...post} key={post.post.postId} />
+        <PostItem
+          category={Category}
+          tags={tags}
+          isPop={isPop}
+          {...post}
+          key={post.post.postId}
+        />
       ))}
       {/* <CategoryPostList /> */}
     </article>

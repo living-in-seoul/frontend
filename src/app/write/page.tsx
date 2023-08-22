@@ -70,7 +70,10 @@ const WritePage = () => {
       <WriteContent />
       {openImagePortal && (
         <ModalPortal nodeName="imagePortal">
-          <ModalOutside onClose={() => setOpenImagePortal(false)}>
+          <ModalOutside
+            className="overflow-hidden p-2 bg-white w-4/5 h-1/4 rounded-2xl max-w-7xl"
+            onClose={() => setOpenImagePortal(false)}
+          >
             <UploadImageModal onClose={() => setOpenImagePortal(false)} />
           </ModalOutside>
         </ModalPortal>
