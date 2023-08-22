@@ -14,7 +14,7 @@ const PlacesAutoComplete = () => {
   const [inputLocation, setInputLocation] = useState<string>('');
   const debounceKeyword = useDebounce(inputLocation);
   const { data, isLoading } = useSWR<PlacesResponse>(
-    debounceKeyword ? `api/map/${debounceKeyword}` : null,
+    debounceKeyword ? `api/map/search/${debounceKeyword}` : null,
   );
   const setPlaceIdState = useSetRecoilState(placeIdState);
   const setOpenFilterState = useSetRecoilState(openFilterState);
