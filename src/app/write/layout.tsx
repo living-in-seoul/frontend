@@ -1,3 +1,5 @@
+import MapProvider from '@/context/MapProvider';
+
 export default function WriteLayout({
   children,
 }: {
@@ -5,8 +7,11 @@ export default function WriteLayout({
 }) {
   return (
     <main className="w-full h-full">
-      {children}
-      <div id="imagePortal" />
+      <MapProvider>
+        {children}
+        <div id="imagePortal" />
+        <div id="mapPortal" />
+      </MapProvider>
     </main>
   );
 }

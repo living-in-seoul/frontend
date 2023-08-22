@@ -10,6 +10,11 @@ export const ImagePortalState = atom<boolean>({
   default: false,
 });
 
+export const MapPortalState = atom<boolean>({
+  key: 'MapPortalState',
+  default: false,
+});
+
 export const formDataState = atom<RequestBoardWrite>({
   key: 'FormDataState',
   default: {
