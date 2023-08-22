@@ -24,11 +24,13 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.45.4",
     "react-multi-carousel": "^2.8.4",
+    "react-xml-parser": "^1.1.8",
     "recoil": "^0.7.7",
     "swr": "^2.2.0",
     "tailwind-scrollbar-hide": "^1.1.7",
     "tailwindcss": "^3.3.3",
-    "typescript": "5.1.6"
+    "typescript": "5.1.6",
+    "xml2js": "^0.6.2"
   },
   "devDependencies": {
     "@types/google.maps": "^3.53.6",
