@@ -7,9 +7,19 @@ import Select from '../common/Select';
 import { Comment, Like } from '@/utils/Icon';
 import CommunityLikeBtn from '@/app/(nav)/community/CommunityLikeBtn';
 
-interface PostItemProps extends ResponsePost {}
+interface PostItemProps extends ResponsePost {
+  category?: string;
+  tags?: string | never[] | null;
+  isPop?: SelectPopType;
+}
 
-const PostItem = ({ post, user }: PostItemProps) => {
+const PostItem = ({
+  post,
+  user,
+  category: cate,
+  isPop,
+  tags,
+}: PostItemProps) => {
   const {
     content,
     postImg,
@@ -87,10 +97,10 @@ const PostItem = ({ post, user }: PostItemProps) => {
             {contents}
           </span>
         </div>
-        {postImg && (
+        {postImg[0] && (
           <div className="relative w-16 h-16 bg-white rounded-xl shadow overflow-hidden">
             <Image
-              src={profile}
+              src={postImg[0]?.postImg}
               alt={`postImg`}
               fill
               className="w-full h-full"
@@ -126,7 +136,13 @@ const PostItem = ({ post, user }: PostItemProps) => {
           <div className="text-neutral-700 text-xs font-normal leading-3">
             0
           </div>
-          <CommunityLikeBtn likeSize={likeSize} postId={postId} />
+          <CommunityLikeBtn
+            category={cate}
+            isPop={isPop}
+            tags={tags}
+            likeSize={likeSize}
+            postId={postId}
+          />
         </div>
       </div>
     </article>

@@ -37,6 +37,7 @@ const CommunityPage = async ({ params }: CategoryPageProps) => {
         href={'/write'}
         className="fixed bottom-20 right-0 w-12 h-12 bg-neutral-700 rounded-full"
       ></Link>
+      <div id="portalSignin" />
     </section>
   );
 };

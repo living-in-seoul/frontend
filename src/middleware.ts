@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export const middleware = async (request: NextRequest) => {
   const accessToken = request.cookies.get('accessToken');
   const refreshToken = request.cookies.get('refreshToken');
-  if (!refreshToken) {
+  if (!accessToken) {
     // if (request.nextUrl.pathname.startsWith('/api')) {
     //   return NextResponse.json({ message: '회원전용입니다' });
     // }

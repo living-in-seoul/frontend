@@ -1,32 +1,56 @@
 import { redirect } from 'next/navigation';
-import { instance } from './instance';
-import { NextRequest, NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
+import { NextRequest } from 'next/server';
 
 /** 회원가입 필수사항 시 */
 export const postSignup = async (data: RequestEssentialRegister) => {
-  const response = await instance
-    .post(`/auth/signup1`, data)
-    .then((response) => response.data)
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER}/auth/signup1`,
+    {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    },
+  )
+    .then((response) => response.json())
     .catch((error) => error.response);
+
   return response;
 };
 /** 회원가입 선택사항 시 */
 export const putSignup = async (data: RequestNonessentialRegister) => {
   const { email } = data;
   delete data.email;
-  const response = await instance
-    .put(`/auth/signup2?email=${email}`, data)
-    .then((response) => response.data)
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER}/auth/signup2?email=${email}`,
+    {
+      method: 'PUT',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    },
+  )
+    .then((response) => response.json())
     .catch((error) => error.response);
+  console.log('sdfsdfsdfsdf', response);
   return response;
 };
 
 /** 로그인 시 */
 export const postSingin = async (data: RequestLogin) => {
-  const response = await instance
-    .post(`/auth/login`, data)
-    .then((response) => response.data)
+  const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/auth/login`, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+  })
+    .then((response) => response.json())
     .catch((error) => error.response);
   return response;
 };
@@ -64,11 +88,11 @@ export const refreshToken = async (request: NextRequest) => {
       console.log('리프레쉬토큰인데 한번 찍어보자', response);
       // 여기서 response의 accessToken을 setCookies 해주면 됨
       // cookies().set({
-      //   name: 'accessToken',
-      //   value: response.accessToken,
-      //   httpOnly: true,
-      //   path: '/',
-      //   maxAge: 60,
+      // name: 'accessToken',
+      // value: response.accessToken,
+      // httpOnly: true,
+      // path: '/',
+      // maxAge: 60,
       // })
     }
     if (response.status === 403) {

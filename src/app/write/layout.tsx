@@ -8,7 +8,7 @@ export default function WriteLayout({
 }) {
   return (
     <main className="w-full h-full">
-      <RecoilRoot>{children}</RecoilRoot>
+      {children}
       <div id="imagePortal" />
     </main>
   );
