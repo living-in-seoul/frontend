@@ -58,6 +58,14 @@ interface UserProfile {
   profileImg?: string;
 }
 
+/** 위치 정보 데이터  */
+interface PostLocation {
+  dong: string;
+  gu: string;
+  lat: string;
+  lng: string;
+}
+
 interface BoardInfo {
   postId: number;
   hashtag: string;
@@ -89,9 +97,11 @@ interface ResponseRegister {
 }
 
 interface ResponsePost {
+  location: PostLocation;
   user: UserProfile;
   post: BoardInfo;
 }
+
 /**게시물 검색 자동완성 개별 데이터 */
 interface SearchResult {
   postId: number;

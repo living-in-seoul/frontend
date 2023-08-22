@@ -23,10 +23,10 @@ const MapBottomSheet = ({ children, fixed }: MapBottomSheetProps) => {
         transform: `translateY(-${sheetHeight})`,
         transition: 'transform 150ms ease-out',
         height: `${fixed ? `calc(100% - 200px)` : sheetHeight}px`,
-        top: `${fixed ? `calc(100% - 200px)` : `calc(100% - 90px)`}`,
+        top: `${fixed ? `calc(100% - 200px)` : `calc(100% - 170px)`}`,
       }}
       ref={fixed ? null : sheet}
-      className={`max-w-md flex flex-col justify-center items-center fixed bottom-0 left-0 rounded-t-3xl bg-white z-1 w-full border-t-2 px-4 pt-5 shadow-2xl border-neutral-200 `}
+      className={`max-w-md flex flex-col justify-center items-center fixed bottom-0 rounded-t-3xl bg-white w-full border-t-2 px-2 pt-3 shadow-2xl border-neutral-200 `}
     >
       <BottomSheetHeader />
       <div
