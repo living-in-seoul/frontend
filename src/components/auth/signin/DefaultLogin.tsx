@@ -33,6 +33,8 @@ const DefaultLogin = () => {
       },
       body: JSON.stringify(data),
     }).then((response) => response.json());
+
+    localStorage.setItem('accessToken', response.accessToken);
     alert(response.msg);
     reset();
     router.push(`${callbackUrl[0]}`);
