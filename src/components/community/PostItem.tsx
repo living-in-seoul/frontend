@@ -15,14 +15,7 @@ interface PostItemProps extends ResponsePost {
   onMap?: boolean;
 }
 
-const PostItem = ({
-  post,
-  user,
-  onMap,
-  category: cate,
-  isPop,
-  tags,
-}: PostItemProps) => {
+const PostItem = ({ post, user, onMap, hasLiked }: PostItemProps) => {
   const {
     content,
     postImg,
@@ -152,11 +145,9 @@ const PostItem = ({
             0
           </div>
           <CommunityLikeBtn
-            category={cate}
-            isPop={isPop}
-            tags={tags}
             likeSize={likeSize}
             postId={postId}
+            hasLiked={hasLiked}
           />
         </div>
       </div>

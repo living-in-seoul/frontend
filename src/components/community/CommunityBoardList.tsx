@@ -1,11 +1,12 @@
 'use client';
 import useSWR from 'swr';
 import PostItem from './PostItem';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Select from '../common/Select';
 import Loading from '@/app/loading';
-import { useRecoilState } from 'recoil';
 import { communityKeyState } from '@/recoil/communityStates';
+import { useSetRecoilState } from 'recoil';
+import usePosts from '@/hooks/usePosts';
 
 interface CommunityBoardProps {
   title?: string;
@@ -14,17 +15,12 @@ interface CommunityBoardProps {
 }
 const CommunityBoardList = ({ Category, tags }: CommunityBoardProps) => {
   const [isPop, setIsPop] = useState<SelectPopType>('newer');
-  const [communityKey, setCommunityKey] = useRecoilState(communityKeyState);
-  const { data: lists, isLoading } = useSWR<ResponseRegister>(
-    `/api/community/${Category}/${tags}?category=${'newer'}`,
+  const setCommunityState = useSetRecoilState(communityKeyState);
 
-    {
-      onSuccess: (data, key, config) => {
-        console.log(data, key);
-        setCommunityKey(key);
-      },
-    },
-  );
+  const { posts: lists, isLoading } = usePosts();
+  useEffect(() => {
+    setCommunityState(`/api/community/${Category}/${tags}?category=${'newer'}`);
+  }, [Category, setCommunityState, tags]);
 
   return (
     <article className="flex flex-col border-b-4">

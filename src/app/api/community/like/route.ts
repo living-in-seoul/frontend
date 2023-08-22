@@ -24,6 +24,6 @@ export const POST = async (req: NextRequest) => {
       },
     },
   ).then((res) => res.json());
-  console.log(res);
-  return NextResponse.json('dasdasd');
+  console.log('좋아요버튼 누름 : ', res.message);
+  return NextResponse.json(res.message);
 };
