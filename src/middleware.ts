@@ -29,11 +29,11 @@ export const middleware = async (request: NextRequest) => {
 
 export const config = {
   matcher: [
-    '/write',
-    '/api/write',
-    '/api/liked',
-    '/signin/:path*',
-    '/signup/first',
+    // '/write',
+    // '/api/write',
+    // '/api/liked',
+    // '/signin/:path*',
+    // '/signup/first',
   ],
 };
 

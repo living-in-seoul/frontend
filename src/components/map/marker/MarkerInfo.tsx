@@ -1,5 +1,4 @@
 'use client';
-import { MarkerF } from '@react-google-maps/api';
 import ModalPortal from '../../modal/ModalPortal';
 import { useEffect, useRef } from 'react';
 

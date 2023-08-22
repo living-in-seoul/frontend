@@ -1,4 +1,5 @@
-import { getBoardListByCat } from '@/service/map';
+import { getCommunityList } from '@/service/comunity';
+import { getBoardListAll, getBoardListByCat } from '@/service/map';
 import { NextRequest, NextResponse } from 'next/server';
 
 interface Context {
@@ -11,7 +12,15 @@ export const GET = async (req: NextRequest, context: Context) => {
     slug: [category, gu, dong],
   } = context.params;
 
-  return await getBoardListByCat(category, gu, dong).then((data) =>
-    NextResponse.json(data),
-  );
+  if (category !== '전체') {
+    console.log('ss');
+    return getBoardListByCat(category, gu, dong).then((data) =>
+      NextResponse.json(data),
+    );
+  } else {
+    console.log('ㅎㅇ');
+    return getCommunityList('All', null, null).then((data) =>
+      NextResponse.json(data),
+    );
+  }
 };

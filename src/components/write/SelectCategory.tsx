@@ -13,7 +13,7 @@ const SelectCategory = ({
 }: SelectCategoryProp) => {
   return (
     <div className="flex flex-col gap-1.5 px-4 h-full">
-      <span className="w-full text-[1.3rem] font-semibold mb-2.5">
+      <span className="w-full text-[1.15rem] font-semibold mb-2.5">
         주제 선택
       </span>
       <div className="flex flex-col justify-between  h-full">
@@ -25,7 +25,7 @@ const SelectCategory = ({
               key={idx}
             >
               <span
-                className={` text-[1.12rem]  w-[95%] h-full my-0.5 ${
+                className={` text-[0.9rem]  w-[95%] h-full my-0.5 ${
                   !selected && selectedOption && `text-zinc-400`
                 }`}
                 onClick={() => onSelectOptionHandler(idx)}

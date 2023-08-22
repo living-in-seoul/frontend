@@ -17,6 +17,7 @@ const UploadImage = () => {
       </div>
       {ImageStateValue && ImageStateValue.length > 0 ? (
         <div className={`${baseClassName()}`}>
+          {/* 미리보기 어케하냐.. */}
           <span>미리보기 준비중!</span>
         </div>
       ) : (
