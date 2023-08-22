@@ -2,6 +2,7 @@ import CommunityHotTag from '../CommunityHotTag';
 import { categoryKO } from '@/utils/utilFunc';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
+import Loading from '@/app/loading';
 
 interface CategoryPageProps {
   params: {
@@ -11,8 +12,12 @@ interface CategoryPageProps {
 const CommunityBoardComponent = dynamic(
   () => import('@/components/community/CommunityBoardList'),
   {
-    ssr: true,
-    loading: () => <div>Loading...</div>,
+    ssr: false,
+    loading: () => (
+      <div>
+        <Loading />
+      </div>
+    ),
   },
 );
 const CommunityPage = async ({ params }: CategoryPageProps) => {

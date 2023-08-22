@@ -42,7 +42,7 @@ export default CategoryList;
 
 const displayOption = (noScroll: boolean | undefined) => {
   if (noScroll) {
-    return 'w-full flex whitespace-nowrap  flex-wrap  items-center gap-1 px-2';
+    return 'w-full flex h-full whitespace-nowrap flex-wrap items-center gap-1 px-2';
   } else {
     return 'flex whitespace-nowrap scrollbar-hide overflow-x-auto';
   }

@@ -13,7 +13,7 @@ const UploadImage = () => {
         onClick={() => setImagePortalState(true)}
       >
         <UploadIcon />
-        <span className="text-[0.3rem] font-neutral-300">사진 추가</span>
+        <span className="text-[0.8rem] font-neutral-300">사진 추가</span>
       </div>
       {ImageStateValue && ImageStateValue.length > 0 ? (
         <div className={`${baseClassName()}`}>
