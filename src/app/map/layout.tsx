@@ -1,4 +1,5 @@
 import MapBottomSheet from '@/components/map/bottomsheet/MapBottomSheet';
+import BottomSheetOption from '@/components/map/BottomSheetOption';
 import MapProvider from '@/context/MapProvider';
 
 export default function MapLayout({ children }: { children: React.ReactNode }) {
@@ -7,7 +8,7 @@ export default function MapLayout({ children }: { children: React.ReactNode }) {
       <MapProvider>
         {children}
         <MapBottomSheet>
-          <span>hi</span>
+          <BottomSheetOption />
         </MapBottomSheet>
       </MapProvider>
     </section>

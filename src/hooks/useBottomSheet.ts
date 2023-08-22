@@ -17,10 +17,8 @@ export const useBottomSheet = (minY: number) => {
     contentBeingTouched: false,
   });
 
-  const breakpoints = {};
-
   useEffect(() => {
-    const maxY = window.innerHeight - 160;
+    const maxY = window.innerHeight - 240;
     const ableToMoveSheet = () => {
       const { touchMove, contentBeingTouched } = metrics.current;
 
