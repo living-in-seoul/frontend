@@ -5,7 +5,7 @@ import useSWR from 'swr';
 import Input from '../../common/Input';
 import { FormEvent } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { openFilterState, placeIdState } from '@/recoil/mapStates';
+import { placeIdState } from '@/recoil/mapStates';
 import { useRouter } from 'next/navigation';
 
 const PlacesAutoComplete = () => {
@@ -17,7 +17,6 @@ const PlacesAutoComplete = () => {
     debounceKeyword ? `api/map/search/${debounceKeyword}` : null,
   );
   const setPlaceIdState = useSetRecoilState(placeIdState);
-  const setOpenFilterState = useSetRecoilState(openFilterState);
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputLocation(e.target.value);
   };
@@ -47,10 +46,6 @@ const PlacesAutoComplete = () => {
     [data, setPlaceIdState],
   );
 
-  const onOpenFilterIcon = () => {
-    setOpenFilterState(true);
-  };
-
   return (
     <section className="flex flex-col justify-center items-center w-full pt-4 text-xs">
       {isLoading && <div>loading!</div>}
@@ -60,7 +55,6 @@ const PlacesAutoComplete = () => {
         onChange={onChangeHandler}
         onSubmit={onSubmit}
         onFocus={onFocusHandler}
-        onClick={onOpenFilterIcon}
       />
       {openUl && (
         <ul className="flex flex-col justify-center items-center bg-white w-full rounded-xl h-full">

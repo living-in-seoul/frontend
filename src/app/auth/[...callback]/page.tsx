@@ -1,12 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-interface Req extends NextApiRequest {
-  searchParams: {
-    state: string;
-    code: string;
-    scope: string;
-  };
-}
-async function Callback(req: Req, res: NextApiResponse) {
+// interface Req extends NextApiRequest {
+//   searchParams: {
+//     state: string;
+//     code: string;
+//     scope: string;
+//   };
+// }
+async function Callback(req: any, res: NextApiResponse) {
   const { searchParams } = req;
 
   // code 넘기고 이거저거 하고 여기서 유저등록이 되면 거기다가 이메일로인식해서

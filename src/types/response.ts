@@ -100,6 +100,7 @@ interface ResponsePost {
   location: PostLocation;
   user: UserProfile;
   post: BoardInfo;
+  hasLiked: boolean;
 }
 
 /**게시물 검색 자동완성 개별 데이터 */

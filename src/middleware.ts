@@ -5,7 +5,6 @@ export const middleware = async (request: NextRequest) => {
   const refreshToken = request.cookies.get('refreshToken');
   if (refreshToken) {
     const { pathname, search, origin, basePath } = request.nextUrl;
-    console.log('여기서 뭘 가지고오니', search);
     const nesSearch = search.split('=')[1] ?? 'home';
     const signInUrl = new URL(`${basePath}/${nesSearch}`, origin);
     // signInUrl.searchParams.append(
@@ -24,8 +23,6 @@ export const middleware = async (request: NextRequest) => {
   //   });
   //   return response;
   // }
-  console.log('미들웨어 거치는 지 확인하기');
-  console.log('나 토큰', refreshToken);
   // 실험해보기 signin route에서 headers에 담기는지
   return NextResponse.next();
 };
