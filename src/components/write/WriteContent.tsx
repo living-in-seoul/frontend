@@ -73,7 +73,7 @@ const WriteContent = () => {
     <>
       <form className="flex flex-col mt-2 w-full h-full justify-center items-center">
         <div
-          className="flex justify-center text-xs text-center text-zinc-700 w-[90%] mb-5 border border-zinc-300 h-7 items-center gap-3 rounded-2xl"
+          className="flex justify-center text-sm text-center text-zinc-700 w-[90%] mb-5 border border-zinc-300 h-7 items-center gap-3 rounded-2xl"
           onClick={onOpenCategories}
         >
           <span>
@@ -83,7 +83,7 @@ const WriteContent = () => {
         </div>
         <textarea
           name="content"
-          className="w-[95%] h-full text-sm p-3 outline-none"
+          className="w-[95%] h-full text-base p-3 outline-none"
           placeholder="서울바이벌 이웃들과 자유롭게 소통해보세요!"
           rows={15}
           value={formData.content}
@@ -102,7 +102,7 @@ const WriteContent = () => {
         <div className="flex gap-3 w-full mt-2 px-6">
           {formData.hashTag.map((tag, _) => (
             <div
-              className="bg-neutral-200 rounded-xl px-2 text-xs"
+              className="bg-neutral-200 rounded-xl px-2 text-sm"
               key={tag}
               onClick={() => onDeleteTag(tag)}
             >
