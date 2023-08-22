@@ -1,7 +1,15 @@
+/** 맵 토글 (커뮤니티 or 교통정보)  */
+type MapToggle = 'community' | 'transport';
+
 /** 경도 위도 */
 interface LatLng {
   lat: number;
   lng: number;
+}
+
+interface Gudong {
+  gu: guchung;
+  dong: string;
 }
 
 /**바텀시트 이벤트 메트릭스 */

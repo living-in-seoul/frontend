@@ -2,11 +2,7 @@
 
 import FilterModalRadius from '../../common/Slider';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import {
-  filterOptionState,
-  openFilterState,
-  rangeState,
-} from '@/recoil/mapStates';
+import { filterOptionState, openFilterState } from '@/recoil/mapStates';
 import Button from '@/components/common/Button';
 import LocationFilter from './LocationFilter';
 import Slider from '../../common/Slider';
@@ -16,7 +12,6 @@ const FilterModal = () => {
   const [filterOption, setFilterOptionState] =
     useRecoilState(filterOptionState);
   const openFilterValue = useRecoilValue(openFilterState);
-  const [range, setRangeState] = useRecoilState(rangeState);
   const setOpenFilterState = useSetRecoilState(openFilterState);
 
   const onCloseFilterModal = () => {
@@ -36,7 +31,8 @@ const FilterModal = () => {
       case '장소유형':
         return <LocationTypeFilter />;
       case '거리':
-        return <Slider range={range} setRange={setRangeState} />;
+        // return <Slider range={range} setRange={setRangeState} />;
+        return;
 
       default:
         break;
