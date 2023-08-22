@@ -10,8 +10,8 @@ const SigninButtons = ({ callbackUrl }: { callbackUrl: string }) => {
   const callbackUrls = useRecoilValue(callbackUrlState);
   useEffect(() => {
     setCallbackUrl(callbackUrl);
-  }, [callbackUrl, setCallbackUrl]);
-  console.log(callbackUrls);
+  }, []);
+
   return (
     <div className="mt-5 flex flex-col gap-3 ">
       {socialUrls.map(({ text, url, bgColor, color }, index) => (

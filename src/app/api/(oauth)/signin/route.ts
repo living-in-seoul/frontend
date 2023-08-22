@@ -24,6 +24,7 @@ export const POST = async (request: NextRequest) => {
     path: '/',
     maxAge: 60 * 60 * 24,
   });
+
   return NextResponse.json(data);
 };
 

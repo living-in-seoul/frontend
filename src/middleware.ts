@@ -3,34 +3,41 @@ import { NextRequest, NextResponse } from 'next/server';
 export const middleware = async (request: NextRequest) => {
   const accessToken = request.cookies.get('accessToken');
   const refreshToken = request.cookies.get('refreshToken');
-  if (!accessToken) {
-    // if (request.nextUrl.pathname.startsWith('/api')) {
-    //   return NextResponse.json({ message: '회원전용입니다' });
-    // }
+  if (refreshToken) {
     const { pathname, search, origin, basePath } = request.nextUrl;
-    const signInUrl = new URL(`${basePath}/signin`, origin);
-    signInUrl.searchParams.append(
-      'callbackUrl',
-      `${basePath}${pathname}${search}`,
-    );
+    console.log('여기서 뭘 가지고오니', search);
+    const nesSearch = search.split('=')[1] ?? 'home';
+    const signInUrl = new URL(`${basePath}/${nesSearch}`, origin);
+    // signInUrl.searchParams.append(
+    //   'callbackUrl',
+    //   `${basePath}${pathname}${search}`,
+    // );
     return NextResponse.redirect(signInUrl);
   }
 
-  if (request.nextUrl.pathname.startsWith('/api')) {
-    const requestHeaders = new Headers(request.headers);
-    accessToken &&
-      requestHeaders.set('Authorization', `Bearer ${accessToken.value}`);
-    const response = NextResponse.next({
-      request: { headers: requestHeaders },
-    });
-    return response;
-  }
-
+  // if (request.nextUrl.pathname.startsWith('/api')) {
+  //   const requestHeaders = new Headers(request.headers);
+  //   accessToken &&
+  //     requestHeaders.set('Authorization', `Bearer ${accessToken.value}`);
+  //   const response = NextResponse.next({
+  //     request: { headers: requestHeaders },
+  //   });
+  //   return response;
+  // }
+  console.log('미들웨어 거치는 지 확인하기');
+  console.log('나 토큰', refreshToken);
+  // 실험해보기 signin route에서 headers에 담기는지
   return NextResponse.next();
 };
 
 export const config = {
-  matcher: ['/write', '/api/write', '/api/liked'],
+  matcher: [
+    '/write',
+    '/api/write',
+    '/api/liked',
+    '/signin/:path*',
+    '/signup/first',
+  ],
 };
 
 // 만료 됬을 때 로직 짜기  O

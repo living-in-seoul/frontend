@@ -119,6 +119,20 @@ const WriteContent = () => {
           />
         </MapBottomSheet>
       )}
+      <button
+        onClick={async () => {
+          const accessToken = localStorage.getItem('accessToken');
+          return await fetch('/api/write?code=r', {
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+              authorization: 'Bearer ' + accessToken,
+            },
+          }).then((response) => response.json());
+        }}
+      >
+        asdfasdf
+      </button>
     </>
   );
 };

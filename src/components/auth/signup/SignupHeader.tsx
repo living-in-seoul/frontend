@@ -1,11 +1,15 @@
 'use client';
 import Icons from '@/components/common/Icons';
+import { callbackUrlState } from '@/recoil/authStates';
 import { back } from '@/utils/Icon';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useRecoilValue } from 'recoil';
 
 const SignupHeader = ({ slug }: { slug: string }) => {
   const router = useRouter();
+  const aaaaa = useRecoilValue(callbackUrlState);
+  const href = aaaaa ?? '/home';
   return (
     <div className="flex flex-row justify-between">
       <div className="pt-5 " onClick={() => router.back()}>
@@ -14,7 +18,7 @@ const SignupHeader = ({ slug }: { slug: string }) => {
       {!(slug === 'first') && (
         <Link
           className="pt-8 text-xs text-neutral-500 cursor-pointer border-b-neutral-400 border-b-2"
-          href={'/signin/user'}
+          href={`/${href}`}
         >
           건너뛰기
         </Link>
