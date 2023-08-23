@@ -1,4 +1,10 @@
+'use client';
+
+import { signupState } from '@/recoil/authStates';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import { useSetRecoilState } from 'recoil';
 interface Req extends NextApiRequest {
   searchParams: {
     state: string;
@@ -6,15 +12,28 @@ interface Req extends NextApiRequest {
     scope: string;
   };
 }
-async function Callback(req: Req, res: NextApiResponse) {
+const CallbackPage = (req: Req) => {
+  const setSignupData = useSetRecoilState(signupState);
+  const router = useRouter();
   const { searchParams } = req;
-
-  // code 넘기고 이거저거 하고 여기서 유저등록이 되면 거기다가 이메일로인식해서
-  //  추가정보 받는 페이지로 넘기고 그 담에는 로그인 페이지 자동적으로 가서 ㄱㄱ
+  const { code } = searchParams;
+  useEffect(() => {
+    const response = fetch('/api/callback', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(code),
+    }).then((response) => response.json());
+    console.log(response);
+    // setSignupData();
+    // return router.push('/signup/second')
+    // 여기서 이메일 셋하고 다음으로 넘기기
+  }, []);
   return <div></div>;
-}
+};
 
-export default Callback;
+export default CallbackPage;
 
 // 1 회원이 정보가 없을 때
 // 페이지로 들어오게 되면 서버랑 통신을해서 db에 회원 저장 소셜기반 email을 전 받아요

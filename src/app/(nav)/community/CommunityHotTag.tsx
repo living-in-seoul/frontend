@@ -13,20 +13,21 @@ const CommunityHotTag = ({ Hottag, category }: CommunityHotTag) => {
         현재 HOT한 해시태그
       </h1>
       <ul className="py-3 pl-4 gap-2.5 flex whitespace-nowrap scrollbar-hide overflow-x-auto">
-        {Hottag.map((tag) => (
-          <Link
-            key={tag}
-            href={`/community/${category}/${tag}`}
-            prefetch={false}
-          >
-            <Select
-              title={`#${tag}`}
+        {Hottag &&
+          Hottag?.map((tag) => (
+            <Link
               key={tag}
-              className="rounded-md"
-              disable
-            />
-          </Link>
-        ))}
+              href={`/community/${category}/${tag}`}
+              prefetch={false}
+            >
+              <Select
+                title={`#${tag}`}
+                key={tag}
+                className="rounded-md"
+                disable
+              />
+            </Link>
+          ))}
       </ul>
     </section>
   );

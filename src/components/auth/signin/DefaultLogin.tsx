@@ -4,13 +4,14 @@ import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import AuthInput from './AuthInput';
 import Button from '@/components/common/Button';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { emailForm, passwordForm } from '@/utils/formregister';
 import { useRecoilState } from 'recoil';
 import { callbackUrlState } from '@/recoil/authStates';
 
 const DefaultLogin = () => {
   const callbackUrl = useRecoilState(callbackUrlState);
+  console.log(callbackUrl);
   const router = useRouter();
   const {
     register,
@@ -37,7 +38,7 @@ const DefaultLogin = () => {
     localStorage.setItem('accessToken', response.accessToken);
     alert(response.msg);
     reset();
-    router.push(`${callbackUrl[0]}`);
+    router.replace(`/${callbackUrl[0]}`);
   };
 
   return (
