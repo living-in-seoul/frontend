@@ -1,3 +1,5 @@
+import { Tangerine } from 'next/font/google';
+
 /**요청 재시도 */
 export async function retryFetch(
   url: string,
@@ -58,4 +60,24 @@ export const categoryKO = (category: string) => {
     default:
       return category;
   }
+};
+
+export const DetailNewData = (data: ResponseDetailData) => {
+  const headerData = { category: data.result.post.category };
+  const maintag = data.result.post.hashtag.split('#').filter((tag) => tag)[0];
+  const mainData = {
+    nickname: data.result.user.nickname,
+    hasLiked: data.hasLiked,
+    ...data.result.post,
+  };
+  const commentData = {
+    commentSize: data.result.post.commentSize,
+    comments: data.result.post.comments,
+  };
+  const hotTagData = {
+    tag: maintag,
+    category: data.result.post.category,
+  };
+  const newData = { headerData, mainData, commentData, hotTagData };
+  return newData;
 };

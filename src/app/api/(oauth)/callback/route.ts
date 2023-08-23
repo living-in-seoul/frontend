@@ -1,5 +1,3 @@
-import { oauthGetToken, oauthSignin } from '@/service/user';
-import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
 // export async function POST(req: NextRequest) {
@@ -25,8 +23,8 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const POST = async (req: NextRequest) => {
   const body: RequestOauthLogin = await req.json();
-  const data = await oauthGetToken(body);
-  const response = NextResponse.json(data);
+  // const data = await oauthGetToken(body);
+  // const response = NextResponse.json(data);
   // 엑세스토큰까지 받아오는거 완료했는데 이후로 바디에 줘야하는지 헤더에 줘야하는지 정해서 주고 받기 코드
-  return response;
+  return NextResponse.json('hi');
 };

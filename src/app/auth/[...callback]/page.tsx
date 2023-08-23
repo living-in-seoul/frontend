@@ -17,19 +17,20 @@ const CallbackPage = (req: Req) => {
   const router = useRouter();
   const { searchParams } = req;
   const { code } = searchParams;
-  useEffect(() => {
-    const response = fetch('/api/callback', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(code),
-    }).then((response) => response.json());
-    console.log(response);
-    // setSignupData();
-    // return router.push('/signup/second')
-    // 여기서 이메일 셋하고 다음으로 넘기기
-  }, []);
+  console.log('code', code);
+  // useEffect(() => {
+  //   const response = fetch('/api/callback', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify(code),
+  //   }).then((response) => response.json());
+  //   console.log(response);
+  // setSignupData();
+  // return router.push('/signup/second')
+  // 여기서 이메일 셋하고 다음으로 넘기기
+  // }, []);
   return <div></div>;
 };
 
