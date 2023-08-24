@@ -1,26 +1,8 @@
 import Link from 'next/link';
+import { LINK_NAME } from '@/utils/constants/board';
 import NavLink from '../CommunityLink';
 
-const LINK_NAME = [
-  {
-    link: null,
-    name: '전체',
-  },
-  {
-    link: 'review',
-    name: '후기',
-  },
-  {
-    link: 'communication',
-    name: '동향소통',
-  },
-  {
-    link: 'Life',
-    name: '생활정보',
-  },
-];
-
-export default async function CommunityLayout({
+export default function CommunityLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -48,12 +30,6 @@ export default async function CommunityLayout({
       </div>
       {/* {user === 'Yes' ? <>있음</> : <>없음</>} */}
       <div>{children}</div>
-      <Link
-        href={'/write'}
-        className="fixed bottom-20 right-0 w-12 h-12 bg-neutral-700 rounded-full"
-      >
-        a
-      </Link>
     </section>
   );
 }

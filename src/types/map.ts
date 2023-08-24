@@ -57,6 +57,8 @@ interface Term {
   value: string;
 }
 
+/** LatLng 함수일 경우 */
+
 /** 주변 장소 추천 request types */
 interface RequestPlaces {
   location: LatLng;
@@ -67,52 +69,13 @@ interface RequestPlaces {
 /** 맵 장소 세부 response by place id*/
 interface PlaceByPlaceIdResponse {
   html_attributions: string[];
-  result: PlaceResult;
+  result: google.maps.places.PlaceResult;
   status: string;
 }
 
-/** 맵 장소 세부 결과(result) response by place id*/
-interface PlaceResult {
-  address_components: AddressComponent[];
-  adr_address: string;
-  business_status?: string;
-  delivery: boolean;
-  dine_in: boolean;
-  formatted_address?: string;
-  formatted_phone_number: string;
-  geometry: Geometry;
-  icon: string;
-  icon_background_color: string;
-  icon_mask_base_uri: string;
-  international_phone_number: string;
-  name: string;
-  photos: Photo[];
-  place_id: string;
-  plus_code: PlusCode;
-  price_level: number;
-  rating: number;
-  reference: string;
-  reservable: boolean;
-  reviews: Review[];
-  serves_beer: boolean;
-  serves_breakfast: boolean;
-  serves_brunch: boolean;
-  serves_dinner: boolean;
-  serves_lunch: boolean;
-  serves_wine: boolean;
-  takeout: boolean;
-  types: string[];
-  url: string;
-  user_ratings_total: number;
-  utc_offset: number;
-  vicinity: string;
-  website: string;
-  wheelchair_accessible_entrance: boolean;
-}
-
-interface ResponseImageGoogle {
-  results: GooglePlacePickedResult[];
-}
+// interface ResponseImageGoogle {
+//   results: GooglePlacePickedResult[];
+// }
 
 interface Dong {
   type: string;
@@ -173,23 +136,23 @@ type SeoulCoords = {
   };
 };
 
-type GooglePlacePickedResult = Pick<
-  PlaceResult,
-  | 'business_status'
-  | 'formatted_address'
-  | 'geometry'
-  | 'icon'
-  | 'icon_background_color'
-  | 'icon_mask_base_uri'
-  | 'name'
-  | 'photos'
-  | 'place_id'
-  | 'plus_code'
-  | 'rating'
-  | 'reference'
-  | 'types'
-  | 'user_ratings_total'
->;
+// type GooglePlacePickedResult = Pick<
+//   PlaceResult,
+//   | 'business_status'
+//   | 'formatted_address'
+//   | 'geometry'
+//   | 'icon'
+//   | 'icon_background_color'
+//   | 'icon_mask_base_uri'
+//   | 'name'
+//   | 'photos'
+//   | 'place_id'
+//   | 'plus_code'
+//   | 'rating'
+//   | 'reference'
+//   | 'types'
+//   | 'user_ratings_total'
+// >;
 interface AddressComponent {
   long_name: string;
   short_name: string;

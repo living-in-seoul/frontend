@@ -21,7 +21,7 @@ export const formDataState = atom<RequestBoardWrite>({
     category: '',
     hashTag: [],
     content: '',
-    lat: 37.5519,
-    lng: 126.9918,
+    lat: 0,
+    lng: 0,
   },
 });

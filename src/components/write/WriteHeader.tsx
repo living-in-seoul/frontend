@@ -50,7 +50,7 @@ const WriteHeader = () => {
   );
 
   return (
-    <div className="h-16  w-full flex justify-between items-center px-6">
+    <div className="h-16 mt-4 w-full flex justify-between items-center px-6">
       <div className="flex items-center gap-5">
         {<Icons path={back} onClick={onClickToBack} />}
         <span className="text-[1.1rem] font-semibold">글 작성하기</span>

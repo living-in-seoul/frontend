@@ -1,10 +1,10 @@
 import { checked } from '@/utils/Icon';
-import { BoardOptions } from '@/utils/constants/board';
 import Icons from '../common/Icons';
+import { LINK_NAME } from '@/utils/constants/board';
 
 interface SelectCategoryProp {
   selectedOption: string | null;
-  onSelectOptionHandler: (data: number) => void;
+  onSelectOptionHandler: (data: string) => void;
 }
 
 const SelectCategory = ({
@@ -17,8 +17,9 @@ const SelectCategory = ({
         주제 선택
       </span>
       <div className="flex flex-col justify-between  h-full">
-        {BoardOptions.map((option, idx) => {
-          const selected = selectedOption === option;
+        {LINK_NAME.map(({ name, link }, idx) => {
+          console.log(name, link);
+          const selected = selectedOption === name;
           return (
             <div
               className="flex justify-around items-center w-full h-full "
@@ -28,9 +29,9 @@ const SelectCategory = ({
                 className={` text-[0.9rem]  w-[95%] h-full my-0.5 ${
                   !selected && selectedOption && `text-zinc-400`
                 }`}
-                onClick={() => onSelectOptionHandler(idx)}
+                onClick={() => onSelectOptionHandler(name)}
               >
-                {option}
+                {name}
               </span>
               <span className="w-[5%] h-full text-zinc-600">
                 {selected && <Icons path={checked} />}

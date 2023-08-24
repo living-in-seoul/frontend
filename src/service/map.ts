@@ -10,30 +10,6 @@ export const getPlacesAutoComplete = async (text: string) => {
   ).then((res) => res.json());
 };
 
-/** 카테고리별 보드 리스트 (카테고리맵용) */
-export const getBoardListByCat = async (
-  category: string,
-  gu: string,
-  dong: string,
-) => {
-  return fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/tags/post/category?category=${
-      category
-      //&gu=${gu}&dong=${dong}` 구랑 동 추가하기 !!
-    }&size=10&page=1&hashtagName=&type=`,
-  ).then((res) => {
-    return res.json();
-  });
-};
-
-export const getBoardListAll = async () => {
-  return fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/posts/get?page=1&size=2`,
-  ).then((res) => {
-    return res.json();
-  });
-};
-
 /** placeId로 장소 세부 정보 가져오기 */
 export const getPlaceByPlaceId = async (placeId: string) => {
   return fetch(
