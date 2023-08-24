@@ -1,5 +1,4 @@
 'use client';
-//모듈화해라
 import reactDOM from 'react-dom';
 
 interface ModalPortalProps {

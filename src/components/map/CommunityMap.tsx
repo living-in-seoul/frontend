@@ -1,6 +1,5 @@
 'use client';
 import { useEffect, useState } from 'react';
-import useSWR from 'swr';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import useMapInstance from '@/hooks/useMapInstance';
 import { MapStyleVersionTwo } from '@/utils/styles';
@@ -13,6 +12,8 @@ import {
   gudongState,
   markerIdState,
 } from '@/recoil/mapStates';
+import { communityKeyState } from '@/recoil/communityStates';
+import usePosts from '@/hooks/usePosts';
 
 const containerStyle = {
   width: '100%',
@@ -39,10 +40,15 @@ const CommunityMap = () => {
   const currentValue = useRecoilValue(currentState);
   const setBoardListState = useSetRecoilState(boardListState);
   const [markerId, setMarkerId] = useRecoilState(markerIdState);
-  const { data: boardList } = useSWR<ResponseRegister>(
-    //sample gu -> gudong으로 바꾸기
-    `/api/map/category/${filterOption}/${sample[0].gu}/${sample[0].dong}`,
-  );
+  const setCommunityKey = useSetRecoilState(communityKeyState);
+  const { posts: boardList } = usePosts();
+
+  useEffect(() => {
+    setCommunityKey(
+      `/api/map/category?category=${filterOption}&gu=${sample[0].gu}&dong=${sample[0].dong}`,
+    );
+    console.log(filterOption);
+  }, [filterOption, setCommunityKey]);
 
   useEffect(() => {
     if (boardList) {
@@ -101,7 +107,7 @@ const CommunityMap = () => {
                   }}
                 >
                   <div
-                    className=" relative flex-none flex justify-center items-center p-0 m-0 h-2 w-10 overflow-hidden"
+                    className=" relative flex-none flex justify-center items-center p-0 m-0 h-2 w-10 overflow-hidden "
                     onClick={(e) => onClickMarker(e, postId, latlng)}
                   >
                     <span className="fixed flex justify-center items-center w-24 h-[40px]  rounded-3xl bg-zinc-700 text-white">
@@ -118,9 +124,3 @@ const CommunityMap = () => {
 };
 
 export default CommunityMap;
-
-// 1. 전체 보드 리스트 가져오기 -> 왜 안되지?
-// 3. 마커 커스텀 (윈도우박스)
-// 2. 디테일 페이지 제작
-// 4. 업로드 페이지, 맵페이지 - 현재 위치 가져오기
-// 5. 맵 - 게시글 작성, 현재 위치 버튼 만들기

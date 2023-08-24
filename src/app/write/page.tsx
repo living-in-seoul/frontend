@@ -2,8 +2,8 @@
 
 import ModalOutside from '@/components/modal/ModalOutside';
 import ModalPortal from '@/components/modal/ModalPortal';
-import ChooseLocation from '@/components/write/ChooseLocation';
-import UploadImageModal from '@/components/write/UploadImageModal';
+import ChooseLocation from '@/components/write/location/ChooseLocation';
+import UploadImageModal from '@/components/write/Image/UploadImageModal';
 import WriteContent from '@/components/write/WriteContent';
 import WriteHeader from '@/components/write/WriteHeader';
 import { ImagePortalState, MapPortalState } from '@/recoil/BoardStates';
