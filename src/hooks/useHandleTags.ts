@@ -23,7 +23,7 @@ export const useHandleTags = ({
 
   const onAddTag: AddTagHandler = useCallback(
     //타입 바꿔라
-    (e: any) => {
+    (e) => {
       e.preventDefault();
       if (!formData.hashTag.includes(tagText)) {
         setFormData((prev: { hashTag: string[] }) => ({
@@ -41,7 +41,7 @@ export const useHandleTags = ({
 
   const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      e.preventDefault(); // 기본 동작(폼 제출 등)을 막기 위해
+      e.preventDefault();
       onAddTag(e);
     }
   };

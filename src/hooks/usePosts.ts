@@ -15,7 +15,6 @@ const usePosts = () => {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
       onSuccess: (data, key, config) => {
-        console.log(data, key);
         setCommunityKey(key);
       },
     },

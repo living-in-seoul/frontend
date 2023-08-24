@@ -36,7 +36,6 @@ export const getCommunityListWithToken = async (
       }/tags/post/category?size=10&page=1&hashtagName=${hashtags}&category=${categoryKO(
         category,
       )}&type=${postType}`,
-
       {
         headers: {
           'Content-Type': 'application/json',

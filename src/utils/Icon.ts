@@ -89,3 +89,9 @@ export const location = {
   width: 24,
   height: 24,
 };
+
+export const closeX = {
+  path: 'M8 0L0 8M0 0L8 8',
+  width: 8,
+  height: 8,
+};
