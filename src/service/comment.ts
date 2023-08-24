@@ -1,17 +1,17 @@
 /**댓글 달기 POST */
 import { cookies } from 'next/headers';
 
-const token = cookies().get('accessToken');
-export const postComment = async (data: RequestCommentPost) => {
-  console.log(token);
+export const postComment = async (body: string, postId: string) => {
+  const token = cookies().get('accessToken');
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/auth/oauth/login`,
+    `${process.env.NEXT_PUBLIC_SERVER}/comment/${postId}`,
     {
       method: 'POST',
       headers: {
-        authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+        authorization: 'Bearer ' + token?.value,
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(body),
     },
   )
     .then((response) => response.json())

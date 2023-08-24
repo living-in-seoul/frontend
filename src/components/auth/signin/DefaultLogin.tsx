@@ -11,7 +11,6 @@ import { callbackUrlState } from '@/recoil/authStates';
 
 const DefaultLogin = () => {
   const callbackUrl = useRecoilState(callbackUrlState);
-  console.log(callbackUrl);
   const router = useRouter();
   const {
     register,
@@ -25,7 +24,7 @@ const DefaultLogin = () => {
       password: '',
     },
   });
-
+  const url = callbackUrl[0] ?? 'home';
   const onSubmitHandler: SubmitHandler<RequestLogin> = async (data) => {
     const response = await fetch('/api/signin', {
       method: 'POST',
@@ -36,7 +35,7 @@ const DefaultLogin = () => {
     }).then((response) => response.json());
     alert(response.msg);
     reset();
-    router.push(`/${callbackUrl[0]}`);
+    router.push(`/${url}`);
   };
 
   return (

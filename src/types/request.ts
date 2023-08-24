@@ -64,4 +64,5 @@ interface RequestBoardSearch {
 /** 댓글 달기 요청 데이터 */
 interface RequestCommentPost {
   comment: string;
+  postId: string;
 }

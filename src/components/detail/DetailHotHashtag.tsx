@@ -1,4 +1,5 @@
 import PostItem from '../community/PostItem';
+
 interface DetailHotHashtagProps {
   tag: string;
   category: string;
@@ -19,6 +20,7 @@ const DetailHotHashtag = async ({ data }: { data: DetailHotHashtagProps }) => {
             location={data.location}
             post={data.post}
             user={data.user}
+            hasLiked
           />
         ))}
     </div>

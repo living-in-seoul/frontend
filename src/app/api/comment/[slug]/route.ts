@@ -7,9 +7,9 @@ interface Context {
 }
 
 export const POST = async (request: NextRequest, context: Context) => {
-  console.log('bbbbbbbbbb', context.params.slug);
+  const postId = context.params.slug;
   const body = await request.json();
-  const data = postComment(body);
+  const data = await postComment(body, postId);
   const response = NextResponse.json(data);
   return response;
 };

@@ -1,12 +1,11 @@
 import { AuthOpenModalState } from '@/recoil/authStates';
 import { communityKeyState } from '@/recoil/communityStates';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import useSWR, { useSWRConfig } from 'swr';
 
-const usePosts = () => {
-  const communityKey = useRecoilValue(communityKeyState);
+const usePosts = (onDetail = false) => {
   const setAuthOpenModal = useSetRecoilState(AuthOpenModalState);
-  const setCommunityKey = useSetRecoilState(communityKeyState);
+  const [communityKey, setCommunityKey] = useRecoilState(communityKeyState);
 
   const { data: posts, isLoading } = useSWR<ResponseRegister>(
     communityKey,
@@ -23,6 +22,7 @@ const usePosts = () => {
 
   const setLike = (postId: number) => {
     fetch(`/api/community/like`, {
+      next: { revalidate: 0 },
       method: 'POST',
       body: JSON.stringify({ postId }),
       headers: {
@@ -32,7 +32,7 @@ const usePosts = () => {
       if (res.status === 200) {
         mutate(communityKey);
         return res.json();
-      } else if (res.status === 401) {
+      } else if (res.status === 401 && !onDetail) {
         setAuthOpenModal(true);
         document.body.style.overflow = 'hidden';
       } else {

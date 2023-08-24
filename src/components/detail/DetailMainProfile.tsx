@@ -2,6 +2,7 @@ import { largeEmptyHeart, largeHeart } from '@/utils/Icon';
 import Icons from '../common/Icons';
 import UserProfile from '../item/UserProfile';
 import { DetailMainProps } from './DetailMain';
+import DetailLikeBtn from './DetailLikeBtn';
 
 const DetailMainProfile = async ({ data }: { data: DetailMainProps }) => {
   // const likeState = await fetch(
@@ -15,17 +16,12 @@ const DetailMainProfile = async ({ data }: { data: DetailMainProps }) => {
         nickname={data.nickname}
         postViewCount={data.postViewCount}
       />
-      {data && data.hasLiked ? (
-        <div className="relative flex justify-center items-center">
-          <Icons path={largeHeart} fill="#404040" />
-          <span className="absolute text-white ">{data.likeSize}</span>
-        </div>
-      ) : (
-        <div className="relative flex justify-center items-center">
-          <Icons path={largeEmptyHeart} fill="#404040" />
-          <span className="absolute text-white ">{data.likeSize}</span>
-        </div>
-      )}
+      <DetailLikeBtn
+        onDetail={true}
+        likeSize={data.likeSize}
+        postId={data.postId}
+        hasLiked={data.hasLiked}
+      />
     </div>
   );
 };

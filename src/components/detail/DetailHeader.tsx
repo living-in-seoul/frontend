@@ -11,7 +11,7 @@ interface DetailHeaderProps {
 const DetailHeader = ({ data }: DetailHeaderProps) => {
   const route = useRouter();
   return (
-    <div className="flex flex-row justify-between  px-4 pt-4 pb-8">
+    <div className="flex flex-row justify-between  px-4 py-4">
       <div className="flex flex-row gap-4">
         <div>
           <Icons path={back} fill="#404040" onClick={() => route.back()} />
