@@ -10,7 +10,7 @@ import UserProfile from '../item/UserProfile';
 
 interface PostItemProps extends ResponsePost {
   category?: string;
-  tags?: string | never[] | null;
+  tags?: string | never[] | null | string[];
   isPop?: SelectPopType;
 
   onMap?: boolean;
@@ -30,6 +30,8 @@ const PostItem = ({ post, user, onMap, hasLiked }: PostItemProps) => {
   const { nickname, profileImg } = user;
   const FullContent = content.length > 100;
   const shortContent = content.slice(0, 100);
+  const userName = user.nickname.slice(0, 10);
+
   const HastagsContent = (hashtag: string) => {
     const HashTags = hashtag.split('#').filter((tag) => tag !== '');
     return (

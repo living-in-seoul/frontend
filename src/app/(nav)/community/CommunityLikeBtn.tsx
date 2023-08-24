@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import AuthModal from './AuthModal';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import usePosts from '@/hooks/usePosts';
+import { communityKeyState } from '@/recoil/communityStates';
 
 interface CommunityLikeBtnProps {
   likeSize: number;
@@ -21,7 +22,7 @@ const CommunityLikeBtn = ({
   hasLiked,
 }: CommunityLikeBtnProps) => {
   const [authOpenModal, setAuthOpenModal] = useRecoilState(AuthOpenModalState);
-  const { setLike } = usePosts();
+  const { setLike } = usePosts(communityKeyState);
 
   useEffect(() => {
     return () => {

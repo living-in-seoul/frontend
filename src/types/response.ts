@@ -62,8 +62,8 @@ interface UserProfile {
 interface PostLocation {
   dong: string;
   gu: string;
-  lat: string;
-  lng: string;
+  lat: number;
+  lng: number;
 }
 
 interface BoardInfo {

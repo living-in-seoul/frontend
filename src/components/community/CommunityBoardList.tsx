@@ -3,7 +3,7 @@ import useSWR from 'swr';
 import PostItem from './PostItem';
 import { useEffect, useState } from 'react';
 import Select from '../common/Select';
-import Loading from '@/app/loading';
+import Loading from '@/components/loading';
 import { communityKeyState } from '@/recoil/communityStates';
 import { useSetRecoilState } from 'recoil';
 import usePosts from '@/hooks/usePosts';
@@ -17,7 +17,7 @@ const CommunityBoardList = ({ Category, tags }: CommunityBoardProps) => {
   const [isPop, setIsPop] = useState<SelectPopType>('newer');
   const setCommunityState = useSetRecoilState(communityKeyState);
 
-  const { posts: lists, isLoading } = usePosts();
+  const { posts: lists, isLoading } = usePosts(communityKeyState);
   useEffect(() => {
     setCommunityState(`/api/community/${Category}/${tags}?category=${'newer'}`);
   }, [Category, setCommunityState, tags]);

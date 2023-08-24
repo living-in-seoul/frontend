@@ -8,6 +8,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      animation: {
+        skeleton: 'loading 1.5s infinite',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
@@ -19,8 +22,8 @@ module.exports = {
         },
       },
       colors: {
-        customYellows: '#FEE500' 
-      }
+        customYellows: '#FEE500',
+      },
     },
   },
   plugins: [require('tailwind-scrollbar-hide')],

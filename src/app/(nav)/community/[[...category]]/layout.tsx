@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { LINK_NAME } from '@/utils/constants/board';
 import NavLink from '../CommunityLink';
 
@@ -6,6 +7,11 @@ export default function CommunityLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // const user = await fetch('http://localhost:3000/api/user', {
+  //   method: 'GET',
+  //   cache: 'no-cache',
+  // }).then((res) => res.json());
+  // console.log(user);
   return (
     <section>
       <div className="relative flex flex-col justify-between w-full h-40 bg-neutral-200">
@@ -22,7 +28,7 @@ export default function CommunityLayout({
           ))}
         </nav>
       </div>
-
+      {/* {user === 'Yes' ? <>있음</> : <>없음</>} */}
       <div>{children}</div>
     </section>
   );

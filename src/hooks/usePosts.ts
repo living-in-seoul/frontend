@@ -1,23 +1,22 @@
 import { AuthOpenModalState } from '@/recoil/authStates';
 import { communityKeyState } from '@/recoil/communityStates';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { RecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import useSWR, { useSWRConfig } from 'swr';
 
-const usePosts = (onDetail = false) => {
+const usePosts = (state: RecoilState<string>) => {
+  const communityKey = useRecoilValue(state);
   const setAuthOpenModal = useSetRecoilState(AuthOpenModalState);
-  const [communityKey, setCommunityKey] = useRecoilState(communityKeyState);
+  const setPostKey = useSetRecoilState(state);
 
-  const { data: posts, isLoading } = useSWR<ResponseRegister>(
-    communityKey,
-
-    {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-      onSuccess: (data, key, config) => {
-        setCommunityKey(key);
-      },
+  const { data: posts, isLoading } = useSWR<ResponseRegister>(communityKey, {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+    onSuccess: (data, key, config) => {
+      console.log(data, key);
+      setPostKey(key);
     },
-  );
+  });
   const { mutate } = useSWRConfig();
 
   const setLike = (postId: number) => {
