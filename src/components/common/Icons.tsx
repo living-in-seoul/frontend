@@ -5,6 +5,7 @@ export interface IconProps {
     path: string;
     width: number;
     height: number;
+    pathFill?: string;
   };
   fill?: string;
   stroke?: string;
@@ -12,7 +13,6 @@ export interface IconProps {
   option?: Partial<SVGProps<SVGPathElement>>;
   className?: string;
 }
-
 const Icons = ({ path, fill, onClick, option, className }: IconProps) => {
   return (
     <svg
@@ -23,7 +23,7 @@ const Icons = ({ path, fill, onClick, option, className }: IconProps) => {
       fill={fill}
       className={className}
     >
-      <path d={path.path} {...option} />
+      <path d={path.path} fill={path.pathFill} {...option} />
     </svg>
   );
 };

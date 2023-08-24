@@ -30,7 +30,7 @@ const CommunityPage = async ({ params }: CategoryPageProps) => {
     `https://seoulvival.com:8080/tags/${FetchUrl}`,
     { next: { revalidate: 2000 } },
   ).then<string[]>((res) => res.json());
-
+  console.log(TagCategory);
   return (
     <section className="w-full max-w-2xl flex flex-col relative">
       {TagCategory && (
