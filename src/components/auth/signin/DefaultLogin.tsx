@@ -36,7 +36,7 @@ const DefaultLogin = () => {
     }).then((response) => response.json());
     alert(response.msg);
     reset();
-    router.replace(`/${callbackUrl[0]}`);
+    router.push(`/${callbackUrl[0]}`);
   };
 
   return (

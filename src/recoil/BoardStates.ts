@@ -10,13 +10,18 @@ export const ImagePortalState = atom<boolean>({
   default: false,
 });
 
+export const MapPortalState = atom<boolean>({
+  key: 'MapPortalState',
+  default: false,
+});
+
 export const formDataState = atom<RequestBoardWrite>({
   key: 'FormDataState',
   default: {
     category: '',
     hashTag: [],
     content: '',
-    lat: 37.5519,
-    lng: 126.9918,
+    lat: 0,
+    lng: 0,
   },
 });

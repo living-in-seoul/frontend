@@ -1,7 +1,7 @@
 import { ImagePortalState, ImageState } from '@/recoil/BoardStates';
 import { ChangeEvent, useState } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import Button from '../common/Button';
+import Button from '../../common/Button';
 
 interface UploadImageModalProps {
   onClose: () => void;
@@ -17,7 +17,6 @@ const UploadImageModal = ({ onClose }: UploadImageModalProps) => {
       setImageState(filesArray);
       setOpenImagePortal(false);
     }
-    console.log(imageState);
   };
 
   return (

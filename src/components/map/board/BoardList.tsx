@@ -1,13 +1,12 @@
-'use client';
 import PostItem from '@/components/community/PostItem';
-import { boardListState, markerIdState } from '@/recoil/mapStates';
 import Link from 'next/link';
-import { useRecoilValue } from 'recoil';
 
-const BoardList = () => {
-  const boardList = useRecoilValue(boardListState);
-  const markerIdValue = useRecoilValue(markerIdState);
+interface BoardListProps {
+  markerIdValue: number | null;
+  boardList: ResponseRegister | null;
+}
 
+const BoardList = ({ markerIdValue, boardList }: BoardListProps) => {
   return (
     <article className="flex flex-col border-b-4">
       <div className="w-full justify-between flex"></div>
@@ -15,11 +14,14 @@ const BoardList = () => {
         //상세 게시물 조회 api 만들기!
         <div>{markerIdValue}</div>
       ) : (
-        <div>
+        <div className="h-full overflow-y-auto">
           {boardList?.result.map((post) => (
-            <Link href={`/detail/${post.post.postId}`} key={post.post.postId}>
+            <div key={post.post.postId} className="w-full mb-0.5">
+              <Link href={`/detail/${post.post.postId}`}>
+                <div className=" absolute w-full h-[110px] bg-transparant overflow-scroll "></div>
+              </Link>
               <PostItem {...post} key={post.post.postId} onMap />
-            </Link>
+            </div>
           ))}
         </div>
       )}

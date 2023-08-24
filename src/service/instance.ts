@@ -52,7 +52,14 @@ instance.interceptors.response.use(
 //   const accessToken =
 //     req.headers.get('authorization') || req.cookies.get('accessToken');
 //   const refreshToken = req.cookies.get('refreshToken');
+// const checkToken = async (req: NextRequest, res: NextRequest) => {
+//   const accessToken =
+//     req.headers.get('authorization') || req.cookies.get('accessToken');
+//   const refreshToken = req.cookies.get('refreshToken');
 
+//   if (!accessToken && !refreshToken) {
+//     return res.status(401).json({ message: 'No tokens provided' });
+//   }
 //   if (!accessToken && !refreshToken) {
 //     return res.status(401).json({ message: 'No tokens provided' });
 //   }
@@ -65,7 +72,25 @@ instance.interceptors.response.use(
 //         token: accessToken,
 //       },
 //     );
+//   try {
+//     // 액세스 토큰 유효성 검사
+//     const validationResponse = await axios.post(
+//       'YOUR_SPRING_BOOT_ENDPOINT/validateAccessToken',
+//       {
+//         token: accessToken,
+//       },
+//     );
 
+//     if (validationResponse.data.isValid) {
+//       next();
+//     } else if (refreshToken) {
+//       // 리프래시 토큰으로 새 액세스 토큰 획득
+//       const tokenResponse = await axios.post(
+//         'YOUR_SPRING_BOOT_ENDPOINT/refreshAccessToken',
+//         {
+//           refreshToken,
+//         },
+//       );
 //     if (validationResponse.data.isValid) {
 //       next();
 //     } else if (refreshToken) {

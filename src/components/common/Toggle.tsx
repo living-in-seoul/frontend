@@ -12,7 +12,7 @@ const Toggle = ({ options, active, toggleHandler }: ToggleProps) => {
   const toggleWidth = 100 / options.length;
 
   return (
-    <div className="relative flex justify-between items-center px-2 w-[170px] h-8 bg-neutral-500 rounded-2xl text-[0.72rem] ">
+    <div className="relative flex justify-between items-center px-2 w-[170px] h-8 bg-neutral-500 rounded-2xl text-[0.72rem] hover:cursor-pointer">
       <div
         className="absolute top-0 left-0 h-[78%] w-full mx-2 my-1 flex justify-center items-center bg-white transition-transform duration-500 ease-in-out rounded-2xl"
         style={{
@@ -25,7 +25,9 @@ const Toggle = ({ options, active, toggleHandler }: ToggleProps) => {
         return (
           <div
             key={option.key}
-            className="flex items-center justify-center w-full  rounded-xl z-10 relative"
+            className={`flex items-center justify-center w-full  rounded-xl z-10 relative ${
+              !isActive && 'text-white'
+            }`}
             onClick={() => toggleHandler(option.key)}
           >
             {option.name + ' 맵'}

@@ -1,3 +1,4 @@
+import ActionButtons from '@/components/map/actions/ActionButtons';
 import MapBottomSheet from '@/components/map/bottomsheet/MapBottomSheet';
 import BottomSheetOption from '@/components/map/BottomSheetOption';
 import MapProvider from '@/context/MapProvider';
@@ -10,6 +11,7 @@ export default function MapLayout({ children }: { children: React.ReactNode }) {
         <MapBottomSheet>
           <BottomSheetOption />
         </MapBottomSheet>
+        <ActionButtons />
       </MapProvider>
     </section>
   );

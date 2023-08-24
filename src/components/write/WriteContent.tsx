@@ -1,33 +1,32 @@
 'use client';
 import { useHandleTags } from '@/hooks/useHandleTags';
-import { ChangeEvent, useState, useCallback, FormEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 import Icons from '../common/Icons';
-import { downdrop } from '@/utils/Icon';
+import { closeX, downdrop, tags } from '@/utils/Icon';
 import MapBottomSheet from '../map/bottomsheet/MapBottomSheet';
-import { BoardOptions } from '@/utils/constants/board';
-import UploadImage from './UploadImage';
-import { useRecoilState } from 'recoil';
-import { formDataState } from '@/recoil/BoardStates';
+import UploadImage from './Image/UploadImage';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { MapPortalState, formDataState } from '@/recoil/BoardStates';
 import SelectCategory from './SelectCategory';
+import SelectedLocation from './location/SelectedLocation';
+import DisplayTags from './tags/DisplayTags';
 
 const WriteContent = () => {
   const [formData, setFormData] = useRecoilState(formDataState);
   const [tagText, setTagText] = useState<string>('');
   const [openSelect, setOpenSelect] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const { onAddTag, onDeleteTag } = useHandleTags({
+  const setImagePortalState = useSetRecoilState(MapPortalState);
+  const { handleKeyPress, onDeleteTag } = useHandleTags({
     tagText,
     setFormData,
     setTagText,
   });
-  const onSelectOptionHandler = (idx: number) => {
-    setOpenSelect(false);
-    setSelectedOption(BoardOptions[idx]);
-    setFormData((prev) => ({ ...prev, category: BoardOptions[idx] }));
-  };
 
-  const onOpenCategories = () => {
-    setOpenSelect(true);
+  const onSelectOptionHandler = (name: string) => {
+    name === '전체' ? setSelectedOption('') : setSelectedOption(name);
+    setOpenSelect(false);
+    setFormData((prev) => ({ ...prev, category: name }));
   };
 
   const onChangeInputHandler = (
@@ -40,99 +39,72 @@ const WriteContent = () => {
   const onChangeTag = (e: ChangeEvent<HTMLInputElement>) => {
     setTagText(e.target.value);
   };
-  const onSubmit = useCallback(
-    async (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      const data = new FormData();
 
-      const post = {
-        category: formData.category,
-        content: formData.content,
-        hashtag: '#' + formData.hashTag.join('#'),
-        // location: formData.location,
-      };
-
-      data.append(
-        'post',
-        new Blob([JSON.stringify(post)], { type: 'application/json' }),
-      );
-      // if (imageState) {
-      //   for (let file of imageState) {
-      //     data.append('photos', file);
-      //   }
-      // }
-      await fetch(`/api/write`, {
-        method: 'POST',
-        body: data,
-      });
-    },
-    [formData],
-  );
+  console.log(formData);
 
   return (
     <>
-      <form className="flex flex-col mt-2 w-full h-full justify-center items-center">
+      <form className="flex flex-col w-full h-[85vh] justify-between items-center">
         <div
-          className="flex justify-center text-sm text-center text-zinc-700 w-[90%] mb-5 border border-zinc-300 h-7 items-center gap-3 rounded-2xl"
-          onClick={onOpenCategories}
+          className="flex justify-center text-sm text-center text-zinc-700 w-[90%] border border-zinc-300 h-8 mt-4 items-center gap-3 rounded-3xl"
+          onClick={() => setOpenSelect(true)}
         >
-          <span>
-            {selectedOption ? selectedOption : '주제를 선택해 주세요.'}
-          </span>
+          {selectedOption ? selectedOption : '주제를 선택해 주세요.'}
           <Icons path={downdrop} />
         </div>
         <textarea
           name="content"
-          className="w-[95%] h-full text-base p-3 outline-none"
-          placeholder="서울바이벌 이웃들과 자유롭게 소통해보세요!"
-          rows={15}
+          className="w-full h-full max-h-[55%] text-base px-4 outline-none "
+          placeholder="서울바이벌 이웃들과 자유롭게 소통해 보세요!"
+          rows={8}
           value={formData.content}
           onChange={(e) => onChangeInputHandler(e)}
         />
-        <UploadImage />
-        <div className="mt-10 w-full px-6 ">
-          <input
-            value={tagText}
-            onChange={(e) => onChangeTag(e)}
-            placeholder="장소 태그"
-          />
-          {/* any바꾸삼 */}
-          <button onClick={(e: any) => onAddTag(e)}>태그 추가</button>
+        <div className="flex flex-col w-full h-[16%]">
+          <div className="flex justify-center items-center h-full border-t border-stone-300 px-5 w-full text-sm ">
+            <Icons path={tags} fill="none" option={{ stroke: '#B8B8B8' }} />
+            <input
+              className="h-full w-36 outline-none ml-4"
+              value={tagText}
+              onChange={(e) => onChangeTag(e)}
+              onKeyPress={(e) => handleKeyPress(e)}
+              placeholder="#해시태그를 입력해주세요"
+            />
+            <DisplayTags tags={formData.hashTag} onDeleteTag={onDeleteTag} />
+          </div>
+          <div
+            className="flex justify-start gap-2 items-center h-full border-t border-b border-stone-300 text-xs text-gray-400 px-4 w-full hover:cursor-pointer"
+            onClick={() => setImagePortalState(true)}
+          >
+            <SelectedLocation />
+            <Icons
+              path={closeX}
+              option={{
+                stroke: '#787878',
+                strokeLinecap: 'round',
+                strokeLinejoin: 'round',
+              }}
+            />
+          </div>
         </div>
-        <div className="flex gap-3 w-full mt-2 px-6">
-          {formData.hashTag.map((tag, _) => (
-            <div
-              className="bg-neutral-200 rounded-xl px-2 text-sm"
-              key={tag}
-              onClick={() => onDeleteTag(tag)}
-            >
-              #{tag}
-            </div>
-          ))}
+        <div className="w-full px-5">
+          <UploadImage />
         </div>
       </form>
       {openSelect && (
-        <MapBottomSheet fixed>
-          <SelectCategory
-            selectedOption={selectedOption}
-            onSelectOptionHandler={onSelectOptionHandler}
-          />
-        </MapBottomSheet>
+        <>
+          <div
+            className="fixed top-0 left-0 w-[100%] h-[100%] bg-black opacity-40 "
+            onClick={() => setOpenSelect(false)}
+          ></div>
+          <MapBottomSheet fixed>
+            <SelectCategory
+              selectedOption={selectedOption}
+              onSelectOptionHandler={onSelectOptionHandler}
+            />
+          </MapBottomSheet>
+        </>
       )}
-      <button
-        onClick={async () => {
-          const accessToken = localStorage.getItem('accessToken');
-          return await fetch('/api/write?code=r', {
-            headers: {
-              'Content-Type': 'application/json',
-              Accept: 'application/json',
-              authorization: 'Bearer ' + accessToken,
-            },
-          }).then((response) => response.json());
-        }}
-      >
-        asdfasdf
-      </button>
     </>
   );
 };

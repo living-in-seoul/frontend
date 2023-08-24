@@ -1,8 +1,8 @@
 'use client';
 
-import CategoryList from '@/components/item/CategoryList';
+import Select from '@/components/common/Select';
 import { filterOptionState, markerIdState } from '@/recoil/mapStates';
-import { MapBoardOptions } from '@/utils/constants/constants';
+import { LINK_NAME } from '@/utils/constants/board';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
 const FilterOptions = () => {
@@ -10,19 +10,30 @@ const FilterOptions = () => {
     useRecoilState(filterOptionState);
   const setMarkerIdState = useSetRecoilState(markerIdState);
 
-  const onClickToSet = (filter: string) => {
-    setFilterOptionState(filter);
-    setMarkerIdState(null);
+  const onClickToSet = (filter: string | null) => {
+    if (filter) {
+      setFilterOptionState(filter);
+      setMarkerIdState(null);
+    } else {
+      setFilterOptionState('All');
+      setMarkerIdState(null);
+    }
   };
 
   return (
-    <div className="flex justify-center items-center w-full h-[20%] ">
-      <CategoryList
-        categories={MapBoardOptions}
-        selectedCategory={filterOption}
-        setSelectedCategory={(filter) => onClickToSet(filter)}
-        dropdown
-      />
+    <div className="flex justify-between items-center w-full px-6 py-5 h-10 ">
+      {LINK_NAME.map(({ name, link }, i) => {
+        const selected = filterOption === link;
+        return (
+          <Select
+            key={i}
+            size="medium"
+            title={name}
+            onClick={() => onClickToSet(link)}
+            select={selected}
+          />
+        );
+      })}
     </div>
   );
 };
