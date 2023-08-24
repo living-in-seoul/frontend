@@ -21,6 +21,7 @@ const usePosts = (state: RecoilState<string>) => {
 
   const setLike = (postId: number) => {
     fetch(`/api/community/like`, {
+      next: { revalidate: 0 },
       method: 'POST',
       body: JSON.stringify({ postId }),
       headers: {
@@ -30,7 +31,7 @@ const usePosts = (state: RecoilState<string>) => {
       if (res.status === 200) {
         mutate(communityKey);
         return res.json();
-      } else if (res.status === 401) {
+      } else if (res.status === 401 && !onDetail) {
         setAuthOpenModal(true);
         document.body.style.overflow = 'hidden';
       } else {

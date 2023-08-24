@@ -1,33 +1,33 @@
 'use client';
 import { imageIcon, paperAirplaneIcon, smallMarkerIcon } from '@/utils/Icon';
 import Icons from '../common/Icons';
-import { SubmitHandler, useForm } from 'react-hook-form';
 import { commentForm } from '@/utils/formregister';
+import { FormEvent } from 'react';
+import useInput from '@/hooks/useInput';
 
 interface SubmitProps {
   comment: string;
 }
-const DetailNavbar = ({ postId }: { postId: string }) => {
-  const { register, handleSubmit, resetField } = useForm({
-    mode: 'onSubmit',
-    defaultValues: { comment: '' },
-  });
 
-  const onSubmitHandler: SubmitHandler<SubmitProps> = async (data) => {
+const DetailNavbar = ({ postId }: { postId: string }) => {
+  const [form, onChangeHandler, setComment] = useInput({ comment: '' });
+  const onSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log('aaaaaaaaaaaa', form.comment);
+    console.log('aaaaaaaaaaaa', typeof form.comment);
     const response = await fetch(`/api/comment/${postId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({ comment: form.comment }),
     }).then((response) => response.json());
   };
-  resetField('comment');
   return (
     <div className="fixed bottom-0">
       <nav className="fixed bottom-0 right-auto max-w-md w-full border bg-white">
         <form
-          onSubmit={handleSubmit(onSubmitHandler)}
+          onSubmit={onSubmitHandler}
           className="flex-row h-[60px] flex w-full items-center justify-around px-4 "
         >
           <Icons
@@ -46,8 +46,9 @@ const DetailNavbar = ({ postId }: { postId: string }) => {
             option={{ stroke: '#404040', strokeWidth: '1.3' }}
           />
           <input
-            id="comment"
-            {...register('comment', commentForm)}
+            name="comment"
+            value={form.comment}
+            onChange={onChangeHandler}
             className="border rounded-3xl w-64 h-8 pl-3 bg-neutral-300"
             placeholder="댓글을 입력해주세요"
             type="text"
