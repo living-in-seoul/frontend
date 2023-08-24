@@ -4,8 +4,8 @@ import { NextRequest, NextResponse } from 'next/server';
 /** 구글맵 자동완성 검색어 데이터 가져오기 */
 export const GET = async () => {
   console.log('--------------------------------------');
-  const xmlData = await getYouth();
-  console.log('in route에서의 data', xmlData);
+  // const xmlData = await getYouth();
+  // console.log('in route에서의 data', xmlData);
 
   // xml2js.parse(xmlData, (err: any, result: any) => {
   //   if (err) {

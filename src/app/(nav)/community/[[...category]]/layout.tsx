@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import NavLink from '../CommunityLink';
 
 const LINK_NAME = [
@@ -19,11 +20,16 @@ const LINK_NAME = [
   },
 ];
 
-export default function CommunityLayout({
+export default async function CommunityLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // const user = await fetch('http://localhost:3000/api/user', {
+  //   method: 'GET',
+  //   cache: 'no-cache',
+  // }).then((res) => res.json());
+  // console.log(user);
   return (
     <section>
       <div className="relative flex flex-col justify-between w-full h-40 bg-neutral-200">
@@ -40,8 +46,14 @@ export default function CommunityLayout({
           ))}
         </nav>
       </div>
-
+      {/* {user === 'Yes' ? <>있음</> : <>없음</>} */}
       <div>{children}</div>
+      <Link
+        href={'/write'}
+        className="fixed bottom-20 right-0 w-12 h-12 bg-neutral-700 rounded-full"
+      >
+        a
+      </Link>
     </section>
   );
 }
