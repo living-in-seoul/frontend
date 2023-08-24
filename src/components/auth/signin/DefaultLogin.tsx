@@ -37,7 +37,7 @@ const DefaultLogin = () => {
     localStorage.setItem('accessToken', response.accessToken);
     alert(response.msg);
     reset();
-    router.push(`${callbackUrl[0]}`);
+    router.push(`/${callbackUrl[0]}`);
   };
 
   return (
