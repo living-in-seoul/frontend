@@ -1,5 +1,3 @@
-// 데이터 정해지면 type 바꿔라 꼭 잊지말고
-
 import { cookies } from 'next/headers';
 
 interface ResponseDataType {

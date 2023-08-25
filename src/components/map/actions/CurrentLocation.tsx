@@ -28,7 +28,7 @@ const CurrentLocation = () => {
 
   return (
     <div
-      className="p-1.5 bg-white rounded-full shadow-2xl hover:cursor-pointer"
+      className="p-2 bg-white rounded-full shadow-3xl hover:cursor-pointer"
       onClick={onClickHandler}
     >
       <Icons path={currentLoaction} />

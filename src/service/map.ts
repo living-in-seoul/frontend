@@ -16,3 +16,9 @@ export const getPlaceByPlaceId = async (placeId: string) => {
     `${process.env.NEXT_PUBLIC_GOOGLE_PLACES_DETAILS_URL}&language=ko&place_id=${placeId}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY}`,
   ).then<PlaceByPlaceIdResponse>((res) => res.json());
 };
+
+export const getPlaceByPostId = async (postId: string) => {
+  return fetch(
+    `${process.env.NEXT_PUBLIC_GOOGLE_PLACES_DETAILS_URL}/posts/get/${postId}`,
+  ).then<ResponseDetailData>((res) => res.json());
+};

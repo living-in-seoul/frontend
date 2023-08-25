@@ -1,5 +1,6 @@
 import PostItem from '@/components/community/PostItem';
 import Link from 'next/link';
+import useSWR from 'swr';
 
 interface BoardListProps {
   markerIdValue: number | null;
@@ -7,20 +8,22 @@ interface BoardListProps {
 }
 
 const BoardList = ({ markerIdValue, boardList }: BoardListProps) => {
+  const { data } = useSWR(`api/map/detail/${markerIdValue}`);
+  console.log(data);
   return (
-    <article className="flex flex-col border-b-4">
+    <article className="flex flex-col border-b-4 ">
       <div className="w-full justify-between flex"></div>
       {markerIdValue ? (
-        //상세 게시물 조회 api 만들기!
-        <div>{markerIdValue}</div>
+        <div>
+          {/* {<PostItem category={Category} tags={tags} isPop={isPop} {...post} onMap={true}/>} */}
+        </div>
       ) : (
-        <div className="h-full overflow-y-auto">
+        <div className="h-full overflow-y-auto ">
           {boardList?.result.map((post) => (
             <div key={post.post.postId} className="w-full mb-0.5">
               <Link href={`/detail/${post.post.postId}`}>
-                <div className=" absolute w-full h-[110px] bg-transparant overflow-scroll "></div>
+                <PostItem {...post} key={post.post.postId} onMap />
               </Link>
-              <PostItem {...post} key={post.post.postId} onMap />
             </div>
           ))}
         </div>

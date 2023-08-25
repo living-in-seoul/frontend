@@ -13,8 +13,6 @@ const DetailNavbar = ({ postId }: { postId: string }) => {
   const [form, onChangeHandler, setComment] = useInput({ comment: '' });
   const onSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('aaaaaaaaaaaa', form.comment);
-    console.log('aaaaaaaaaaaa', typeof form.comment);
     const response = await fetch(`/api/comment/${postId}`, {
       method: 'POST',
       headers: {
