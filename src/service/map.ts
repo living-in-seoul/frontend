@@ -17,8 +17,8 @@ export const getPlaceByPlaceId = async (placeId: string) => {
   ).then<PlaceByPlaceIdResponse>((res) => res.json());
 };
 
-export const getPlaceByPostId = async (postId: string) => {
+export const getPostByPostId = async (postId: string) => {
   return fetch(
-    `${process.env.NEXT_PUBLIC_GOOGLE_PLACES_DETAILS_URL}/posts/get/${postId}`,
+    `${process.env.NEXT_PUBLIC_SERVER}/posts/get/${postId}`,
   ).then<ResponseDetailData>((res) => res.json());
 };
