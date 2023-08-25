@@ -1,6 +1,7 @@
 'use client';
+import Link from 'next/link';
 import SocialIcons from './SocialIcon';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 interface SocialAuthProps {
   text: string;
   url: string;
@@ -9,12 +10,9 @@ interface SocialAuthProps {
 }
 
 const SocialAuth = ({ text, url, bgColor, color }: SocialAuthProps) => {
-
   const router = useRouter();
 
-  const oauthHandler = (url: string) => {
-    redirect(url);
-  };
+  const oauthHandler = (url: string) => {};
 
   return (
     <>
@@ -32,21 +30,23 @@ const SocialAuth = ({ text, url, bgColor, color }: SocialAuthProps) => {
           </button>
         </div>
       ) : (
-        <form
-          className={`relative rounded-xl h-12 flex flex-row justify-center items-center border p-3 ${bgColor} ${color}`}
-          action={() => oauthHandler(url)}
-        >
-          <div className="absolute left-4">
-            <SocialIcons text={text} />
-          </div>
-
-          <button
-            className=" w-full h-full text-center font-semibold"
-            type="submit"
+        <Link href={url}>
+          <form
+            className={`relative rounded-xl h-12 flex flex-row justify-center items-center border p-3 ${bgColor} ${color}`}
+            // action={() => oauthHandler(url)}
           >
-            {text}로 시작하기
-          </button>
-        </form>
+            <div className="absolute left-4">
+              <SocialIcons text={text} />
+            </div>
+
+            <button
+              className=" w-full h-full text-center font-semibold"
+              type="submit"
+            >
+              {text}로 시작하기
+            </button>
+          </form>
+        </Link>
       )}
     </>
   );
