@@ -23,3 +23,18 @@ export const AuthOpenModalState = atom<boolean>({
   key: 'AuthopenModalState',
   default: false,
 });
+
+export const signupGenderState = atom<string>({
+  key: 'signupGenderState',
+  default: '',
+});
+
+export const profileOpenModalState = atom<boolean>({
+  key: 'profileOpenModalState',
+  default: false,
+});
+
+export const profileSecondOpenModalState = atom<boolean>({
+  key: 'profileSecondOpenModalState',
+  default: false,
+});
