@@ -3,13 +3,13 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import AuthInput from '../signin/AuthInput';
 import Button from '@/components/common/Button';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { useRouter } from 'next/navigation';
 import useGetDate from '@/hooks/useGetDate';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import RadioInput from './RadioInput';
 import { birthDateForm, hometownForm } from '@/utils/formregister';
-import { signupEssentialState, signupState } from '@/recoil/authStates';
+import { callbackUrlState, signupState } from '@/recoil/authStates';
 import Table from '@/components/item/Table';
 import { genderArray } from '@/utils/constants/auth';
 
@@ -21,7 +21,7 @@ interface SignupSecondFormPorps {
 const SignupSecond = () => {
   const [gender, setGeder] = useState('');
   const [signupData, setSignupData] = useRecoilState(signupState);
-  const essential = useRecoilValue(signupEssentialState);
+  const callbackUrl = useRecoilState(callbackUrlState);
   const router = useRouter();
   const nowDate = useGetDate();
   const {
@@ -51,22 +51,19 @@ const SignupSecond = () => {
   ) => {
     const newData = { ...signupData, ...data, gender };
     setSignupData((prev) => ({ ...prev, ...data, gender }));
+    console.log('뉴데이터', newData);
     const response = await fetch('/api/signup', {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(newData),
     }).then((response) => response.json());
-    alert(response.msg);
-
-    router.push('/signin/user');
+    console.log(response);
+    alert(response.message);
+    router.push(`${callbackUrl[0]}`);
     reset();
   };
-
-  useEffect(() => {
-    essential && router.back();
-  });
   const onSelectHandler = (movedDate: string) => {
     setSignupData((prev) => ({ ...prev, movedDate }));
   };

@@ -25,7 +25,18 @@ const WriteHeader = () => {
         hashtag: '#' + formData.hashTag.join('#'),
         lat: formData.lat,
         lng: formData.lng,
+        gu: '강남구',
+        dong: '신사동',
       };
+      // const post = {
+      //   "category" : "동향소통",
+      //   "hashtag" : "#태그1",
+      //   "content" : "내용입니다.",
+      //   "lat": 12,
+      //   "lng": 13,
+      //   "gu": "강남구",
+      //   "dong" : "신사동"
+      //   }
 
       data.append(
         'post',
@@ -41,16 +52,17 @@ const WriteHeader = () => {
         console.log(key, value);
       }
 
-      await fetch('/api/write', {
+      const response = await fetch('/api/write', {
         method: 'POST',
         body: data,
-      });
+      }).then((response) => response.json());
+      alert(response);
     },
     [formData, imageState],
   );
 
   return (
-    <div className="h-16  w-full flex justify-between items-center px-6">
+    <div className="h-16 mt-4 w-full flex justify-between items-center px-6">
       <div className="flex items-center gap-5">
         {<Icons path={back} onClick={onClickToBack} />}
         <span className="text-[1.1rem] font-semibold">글 작성하기</span>

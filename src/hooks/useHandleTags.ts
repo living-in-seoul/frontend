@@ -1,5 +1,5 @@
 import { formDataState } from '@/recoil/BoardStates';
-import { MouseEvent, useCallback } from 'react';
+import { KeyboardEvent, MouseEvent, useCallback } from 'react';
 import { useRecoilValue } from 'recoil';
 
 interface HandleTagsTypes {
@@ -9,7 +9,9 @@ interface HandleTagsTypes {
 }
 
 type AddTagHandler = (
-  e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  e:
+    | MouseEvent<HTMLButtonElement, MouseEvent>
+    | KeyboardEvent<HTMLInputElement>,
 ) => void;
 
 export const useHandleTags = ({
@@ -21,7 +23,7 @@ export const useHandleTags = ({
 
   const onAddTag: AddTagHandler = useCallback(
     //타입 바꿔라
-    (e: any) => {
+    (e) => {
       e.preventDefault();
       if (!formData.hashTag.includes(tagText)) {
         setFormData((prev: { hashTag: string[] }) => ({
@@ -37,6 +39,13 @@ export const useHandleTags = ({
     [formData.hashTag, setFormData, setTagText, tagText],
   );
 
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      onAddTag(e);
+    }
+  };
+
   const onDeleteTag = useCallback(
     (tag: string) => {
       setFormData((prev: { hashTag: string[] }) => ({
@@ -48,5 +57,5 @@ export const useHandleTags = ({
     [setFormData, setTagText],
   );
 
-  return { onAddTag, onDeleteTag };
+  return { onAddTag, onDeleteTag, handleKeyPress };
 };

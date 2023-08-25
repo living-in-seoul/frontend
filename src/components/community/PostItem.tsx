@@ -5,10 +5,18 @@ import { getTimeAgo } from '@/utils/utilFunc';
 import { profile } from '../../../public';
 import Select from '../common/Select';
 import { Comment, Like } from '@/utils/Icon';
+import CommunityLikeBtn from '@/app/(nav)/community/CommunityLikeBtn';
+import UserProfile from '../item/UserProfile';
 
-interface PostItemProps extends ResponsePost {}
+interface PostItemProps extends ResponsePost {
+  category?: string;
+  tags?: string | never[] | null | string[];
+  isPop?: SelectPopType;
 
-const PostItem = ({ post, user }: PostItemProps) => {
+  onMap?: boolean;
+}
+
+const PostItem = ({ post, user, onMap, hasLiked }: PostItemProps) => {
   const {
     content,
     postImg,
@@ -17,10 +25,13 @@ const PostItem = ({ post, user }: PostItemProps) => {
     createdAt,
     postViewCount,
     likeSize,
+    postId,
   } = post;
   const { nickname, profileImg } = user;
   const FullContent = content.length > 100;
   const shortContent = content.slice(0, 100);
+  const userName = user.nickname.slice(0, 10);
+
   const HastagsContent = (hashtag: string) => {
     const HashTags = hashtag.split('#').filter((tag) => tag !== '');
     return (
@@ -50,34 +61,11 @@ const PostItem = ({ post, user }: PostItemProps) => {
   );
   return (
     <article className="flex flex-col border-b last:border-[0] px-4 pt-[25px]">
-      <div className="flex w-full">
-        {/* 유저 */}
-        <div className="relative shrink-0 w-[36px] h-[36px] rounded-full overflow-hidden">
-          <Image
-            src={profile}
-            alt={`user`}
-            fill
-            className="absolute top-0"
-            sizes={'36px'}
-          />
-        </div>
-
-        <div className="flex flex-col gap-1 justify-center px-[10px]">
-          <div className="flex items-center gap-2">
-            {/* 닉네임 */}
-            <h3 className="text-black text-xs font-semibold leading-3">
-              {nickname}
-            </h3>
-            {/* 레벨 */}
-            <p className="text-neutral-600 text-xs font-medium leading-3">
-              Lv.1
-            </p>
-          </div>
-          <div className="text-neutral-500 text-xs font-normal leading-3">
-            {getTimeAgo(createdAt)} · 조회수 {postViewCount}
-          </div>
-        </div>
-      </div>
+      <UserProfile
+        createdAt={createdAt}
+        nickname={nickname}
+        postViewCount={postViewCount}
+      />
       {/* 컨텐츠 */}
       <div className="w-full flex justify-between">
         <div className="flex basis-2/3 pt-4 whitespace-pre-wrap">
@@ -85,10 +73,10 @@ const PostItem = ({ post, user }: PostItemProps) => {
             {contents}
           </span>
         </div>
-        {postImg && (
+        {postImg[0] && (
           <div className="relative w-16 h-16 bg-white rounded-xl shadow overflow-hidden">
             <Image
-              src={profile}
+              src={postImg[0]?.postImg}
               alt={`postImg`}
               fill
               className="w-full h-full"
@@ -124,15 +112,11 @@ const PostItem = ({ post, user }: PostItemProps) => {
           <div className="text-neutral-700 text-xs font-normal leading-3">
             0
           </div>
-          <Icons
-            path={Like}
-            option={{
-              fill: '##404040',
-            }}
+          <CommunityLikeBtn
+            likeSize={likeSize}
+            postId={postId}
+            hasLiked={hasLiked}
           />
-          <div className="text-neutral-700 text-xs font-normal leading-3">
-            {likeSize}
-          </div>
         </div>
       </div>
     </article>

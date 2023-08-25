@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import AuthInput from './AuthInput';
 import Button from '@/components/common/Button';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { emailForm, passwordForm } from '@/utils/formregister';
 import { useRecoilState } from 'recoil';
 import { callbackUrlState } from '@/recoil/authStates';
@@ -24,7 +24,7 @@ const DefaultLogin = () => {
       password: '',
     },
   });
-
+  const url = callbackUrl[0] ?? 'home';
   const onSubmitHandler: SubmitHandler<RequestLogin> = async (data) => {
     const response = await fetch('/api/signin', {
       method: 'POST',
@@ -35,7 +35,7 @@ const DefaultLogin = () => {
     }).then((response) => response.json());
     alert(response.msg);
     reset();
-    router.push(`${callbackUrl[0]}`);
+    router.push(`/${url}`);
   };
 
   return (

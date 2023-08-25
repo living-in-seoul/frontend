@@ -1,21 +1,62 @@
 import { redirect } from 'next/navigation';
+import { NextRequest } from 'next/server';
 import { instance } from './instance';
-import { NextRequest, NextResponse } from 'next/server';
 
-/**회원가입 시 */
-export const postSignup = async (data: RequestRegister) => {
+/** 회원가입 필수사항 시 */
+export const postSignup = async (data: RequestEssentialRegister) => {
   const response = await instance
-    .post(`/auth/signup`, data)
-    .then((response) => response.data)
+    .post('/auth/signup1', data)
+    .catch((err) => err.response);
+  console.log('헤더에는 무슨 값이 담길까요?', response.headers);
+  // const response = await fetch(
+  //   `${process.env.NEXT_PUBLIC_SERVER}/auth/signup1`,
+  //   {
+  //     method: 'POST',
+  //     body: JSON.stringify(data),
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Accept: 'application/json',
+  //     },
+  //   },
+  // )
+  //   .then((response) => response.json())
+  //   .catch((error) => error.response);
+
+  return response;
+};
+/** 회원가입 선택사항 시 */
+export const putSignup = async (data: RequestNonessentialRegister) => {
+  const { email } = data;
+  delete data.email;
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER}/auth/signup2?email=${email}`,
+    {
+      method: 'PUT',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    },
+  )
+    .then((response) => response.json())
     .catch((error) => error.response);
+
   return response;
 };
 
-/**로그인 시 */
+/** 로그인 시 */
 export const postSingin = async (data: RequestLogin) => {
-  const response = await instance
-    .post(`/auth/login`, data)
-    .then((response) => response.data)
+  const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/auth/login`, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+  })
+    .then((response) => response.json())
     .catch((error) => error.response);
   return response;
 };
@@ -23,48 +64,16 @@ export const postSingin = async (data: RequestLogin) => {
 export async function oauthHandler(url: string) {
   redirect(url);
 }
-/**소셜로그인 시 */
+/** 소셜로그인 시 */
 export const oauthSignin = async (data: RequestOauthLogin) => {
-  await fetch(`${process.env.NEXT_PUBLIC_SERVER}/auth/oauth/login`, {
-    method: 'POST',
-    body: JSON.stringify(data),
-  }).then((response) => response.json());
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER}/auth/oauth/login`,
+    {
+      method: 'POST',
+      body: JSON.stringify(data),
+    },
+  )
+    .then((response) => response.json())
+    .catch((error) => error.response);
+  return response;
 };
-
-/**유저프로필 가져오기 및 토큰 재발급 */
-export const getProfile = async (request: NextRequest) => {
-  const accessToken = request.cookies.get('accessToken');
-  const refreshToken = request.cookies.get('refreshToken');
-  if (accessToken) {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER}/auth/profile`,
-      {
-        method: 'GET',
-        headers: {
-          Authorization: 'Bearer ' + refreshToken?.value,
-        },
-      },
-    );
-    if (response.status === 200) {
-      // 여기서 response의 accessToken을 setCookies 해주면 됨
-      // cookies().set({
-      //   name: 'accessToken',
-      //   value: data.accessToken,
-      //   httpOnly: true,
-      //   path: '/',
-      //   maxAge: 60,
-      // })
-    } else if (response.status === 403) {
-      const { pathname, search, origin, basePath } = request.nextUrl;
-      const signInUrl = new URL(`${basePath}/signin`, origin);
-      signInUrl.searchParams.append(
-        'callbackUrl',
-        `${basePath}${pathname}${search}`,
-      );
-      // 리다이렉트 시킬 수 있는 로직이 필요함
-      // 통신구조를 이해할 필요가 있음
-      return NextResponse.redirect(signInUrl);
-    }
-  }
-};
-// access token만 발급하는 api를 만들자 refreshToken은 그 이후에 호출하면 됨

@@ -1,23 +1,19 @@
-'use client';
+import ActionButtons from '@/components/map/actions/ActionButtons';
 import MapBottomSheet from '@/components/map/bottomsheet/MapBottomSheet';
-import { RecoilRoot } from 'recoil';
-import dynamic from 'next/dynamic';
-import Loading from '../loading';
+import BottomSheetOption from '@/components/map/BottomSheetOption';
+import MapHeader from '@/components/map/header/MapHeader';
 
-const DynamicMap = dynamic(() => import('../../components/map/Map'), {
-  ssr: false,
-  loading: () => <Loading />,
-});
+import MapProvider from '@/context/MapProvider';
 
 export default function MapLayout({ children }: { children: React.ReactNode }) {
   return (
     <section className="w-full max-w-md h-screen relative">
-      <RecoilRoot>
-        {children}
-        <MapBottomSheet>
-          <span>hi</span>
-        </MapBottomSheet>
-      </RecoilRoot>
+      <MapHeader />
+      <MapProvider>{children}</MapProvider>
+      <MapBottomSheet>
+        <BottomSheetOption />
+      </MapBottomSheet>
+      <ActionButtons />
     </section>
   );
 }

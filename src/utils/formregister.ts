@@ -58,3 +58,11 @@ export const birthDateForm = {
     message: '숫자와 하이픈을 적어주세요',
   },
 };
+
+export const commentForm = {
+  required: '댓글을 적어주세요',
+  pattern: {
+    value: /^[가-힣a-zA-Z\\s\\p{P}]{1,100}$/,
+    message: '100자 이내로 적어주세요',
+  },
+};

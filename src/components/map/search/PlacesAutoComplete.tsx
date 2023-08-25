@@ -5,19 +5,19 @@ import useSWR from 'swr';
 import Input from '../../common/Input';
 import { FormEvent } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { openFilterState, placeIdState } from '@/recoil/mapStates';
+import { placeIdState } from '@/recoil/mapStates';
 import { useRouter } from 'next/navigation';
+import Icons from '@/components/common/Icons';
+import { search } from '@/utils/Icon';
 
 const PlacesAutoComplete = () => {
-  const router = useRouter();
   const [openUl, setOpenUl] = useState<boolean>(false);
   const [inputLocation, setInputLocation] = useState<string>('');
   const debounceKeyword = useDebounce(inputLocation);
   const { data, isLoading } = useSWR<PlacesResponse>(
-    debounceKeyword ? `api/map/${debounceKeyword}` : null,
+    debounceKeyword ? `api/map/search/${debounceKeyword}` : null,
   );
   const setPlaceIdState = useSetRecoilState(placeIdState);
-  const setOpenFilterState = useSetRecoilState(openFilterState);
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputLocation(e.target.value);
   };
@@ -31,9 +31,8 @@ const PlacesAutoComplete = () => {
       setPlaceIdState(placeId);
       setOpenUl(false);
       setInputLocation('');
-      router.push(`/place/${placeId}`);
     },
-    [router, setPlaceIdState],
+    [setPlaceIdState],
   );
 
   const onSubmit = useCallback(
@@ -47,20 +46,50 @@ const PlacesAutoComplete = () => {
     [data, setPlaceIdState],
   );
 
-  const onOpenFilterIcon = () => {
-    setOpenFilterState(true);
-  };
-
   return (
-    <section className="flex flex-col justify-center items-center w-full pt-4 text-xs">
+    <div className="flex flex-col justify-center items-center w-full text-xs">
       {isLoading && <div>loading!</div>}
       <Input
-        placeholder="지역명, 도로명, 지하철역으로 검색"
+        placeholder="장소 이름을 입력해주세요"
         value={inputLocation}
         onChange={onChangeHandler}
         onSubmit={onSubmit}
         onFocus={onFocusHandler}
-        onClick={onOpenFilterIcon}
+        formColor="bg-gray-300"
+        inputColor="bg-gray-300"
+        rightElement={
+          <Icons
+            path={search}
+            option={{
+              fill: 'none',
+              stroke: '#040000',
+              strokeWidth: '1.8',
+              strokeMiterlimit: '10',
+            }}
+          />
+          // path 여러갠디..
+          // <svg
+          //   width="24"
+          //   height="24"
+          //   viewBox="0 0 24 24"
+          //   fill="none"
+          //   xmlns="http://www.w3.org/2000/svg"
+          // >
+          //   <path
+          //     d="M10.4019 16.8038C13.9376 16.8038 16.8038 13.9376 16.8038 10.4019C16.8038 6.86624 13.9376 4 10.4019 4C6.86623 4 4 6.86624 4 10.4019C4 13.9376 6.86623 16.8038 10.4019 16.8038Z"
+          //     stroke="#040000"
+          //     stroke-width="1.8"
+          //     stroke-miterlimit="10"
+          //   />
+          //   <path
+          //     d="M16.8038 16.8038L20 20"
+          //     stroke="#040000"
+          //     stroke-width="1.8"
+          //     stroke-miterlimit="10"
+          //     stroke-linecap="round"
+          //   />
+          // </svg>
+        }
       />
       {openUl && (
         <ul className="flex flex-col justify-center items-center bg-white w-full rounded-xl h-full">
@@ -79,7 +108,7 @@ const PlacesAutoComplete = () => {
           {data?.predictions.length === 0 && <li>검색 결과가 없습니다.</li>}
         </ul>
       )}
-    </section>
+    </div>
   );
 };
 

@@ -1,12 +1,9 @@
 import { atom } from 'recoil';
-
-export const signupState = atom<RequestRegister>({
+export const signupState = atom<RequestNonessentialRegister>({
   key: 'signupFistState',
   default: {
     email: '',
-    nickname: '',
     gender: '',
-    password: '',
     hometown: '',
     movedDate: '',
     birthDate: '',
@@ -21,4 +18,8 @@ export const signupEssentialState = atom<boolean>({
 export const callbackUrlState = atom<string>({
   key: 'callbackUrlState',
   default: '',
+});
+export const AuthOpenModalState = atom<boolean>({
+  key: 'AuthopenModalState',
+  default: false,
 });

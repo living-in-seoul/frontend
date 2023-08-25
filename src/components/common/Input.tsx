@@ -10,6 +10,8 @@ interface SearchInputProps {
   onClick?: () => void;
   rightElement?: JSX.Element;
   leftElement?: JSX.Element;
+  formColor?: string;
+  inputColor?: string;
 }
 
 const Input = ({
@@ -21,21 +23,26 @@ const Input = ({
   onClick,
   rightElement,
   leftElement,
+  formColor,
+  inputColor,
 }: SearchInputProps) => {
   return (
     <section className="w-full flex justify-center items-center ">
       <form
-        className="ml-4 w-4/5 rounded-[1.875rem] bg-white h-[38px] flex items-center justify-between shadow-sm border border-neutral-300 px-4"
+        className={`ml-4 w-4/5 rounded-[1.875rem]  h-[38px] flex items-center justify-between shadow-sm border border-neutral-300 px-4 ${
+          formColor ? formColor : 'bg-white'
+        }`}
         onSubmit={onSubmit}
       >
         <input
-          className="outline-none text-sm w-full pl-3"
+          className={`outline-none text-sm w-full pl-3 ${inputColor}`}
           placeholder={placeholder}
           value={value}
           onFocus={onFocus}
           onChange={onChange}
           onClick={onClick}
         ></input>
+        {rightElement}
       </form>
       <ul></ul>
     </section>

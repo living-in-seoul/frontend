@@ -1,17 +1,12 @@
-'use client';
-import { signupEssentialState } from '@/recoil/authStates';
-import { useRecoilValue } from 'recoil';
-
-const SignupWelcome = () => {
-  const isEssential = useRecoilValue(signupEssentialState);
+const SignupWelcome = ({ slug }: { slug: string }) => {
   return (
     <div>
       <div className="flex flxe-row justify-between items-center">
         <div className="text-neutral-700 text-2xl font-semibold leading-10">
-          {isEssential ? '회원가입 필수사항' : '회원가입 선택사항'}
+          {slug === 'first' ? '회원가입 필수사항' : '회원가입 선택사항'}
         </div>{' '}
         <div className="relative flex flex-row w-20 justify-between">
-          {isEssential ? (
+          {slug === 'first' ? (
             <>
               <div className="w-8 h-8 bg-teal-400 rounded-full flex justify-center items-center">
                 <span className="text-white text-sm font-normal">1</span>
@@ -34,7 +29,7 @@ const SignupWelcome = () => {
         </div>
       </div>
       <div className="text-neutral-400 text-sm font-normal leading-7">
-        {isEssential
+        {slug === 'first'
           ? '아래 사항을 모두 입력해 주세요'
           : '가입 시 맞춤화된 정보를 제공해 드려요'}
       </div>

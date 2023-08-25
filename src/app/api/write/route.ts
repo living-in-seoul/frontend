@@ -1,25 +1,22 @@
 import { writeBoard } from '@/service/board';
-import { getProfile } from '@/service/user';
+import { refreshToken, setAuthorization } from '@/service/token';
 import { NextRequest, NextResponse } from 'next/server';
-
+import { cookies } from 'next/headers';
+import axios from 'axios';
 /**글쓰기 페이지 post api */
 
 // 데이터 정해지면 type 바꿔라 꼭 잊지말고
 export const POST = async (request: NextRequest) => {
-  console.log('토큰이 들어있나요?', request.headers);
-
   const form = await request.formData();
-  for (const [key, value] of form.entries()) {
-    console.log('asdfas', key, value);
-  }
-  getProfile(request);
-  return writeBoard(form)
-    .then((data) => {
-      console.log(data);
-      return new NextResponse('Success');
-    })
-    .catch((error) => {
-      console.error(error);
-      return new NextResponse('Error', { status: 500 });
-    });
+  const data = await writeBoard(form).then((data) => data.message);
+  return NextResponse.json(data);
+};
+
+export const GET = async (req: NextRequest) => {
+  const cookiesStorage = cookies();
+  const token = cookiesStorage.get('refreshToken');
+  console.log('리프레시 조회하기', token);
+  const params = req.nextUrl.searchParams;
+  const query = params.get('code');
+  return NextResponse.json(query);
 };

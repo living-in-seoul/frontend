@@ -1,1 +1,1 @@
-type CategoryType = 'purpose' | 'location';
+type SelectPopType = 'newer' | 'popular';

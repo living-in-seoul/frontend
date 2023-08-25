@@ -7,26 +7,31 @@ interface CommunityHotTag {
 }
 
 const CommunityHotTag = ({ Hottag, category }: CommunityHotTag) => {
+  console.log(Hottag);
   return (
     <section className="w-full border-b py-6">
       <h1 className="w-full text-black py-3 px-4 text-lg font-semibold leading-none">
         현재 HOT한 해시태그
       </h1>
       <ul className="py-3 pl-4 gap-2.5 flex whitespace-nowrap scrollbar-hide overflow-x-auto">
-        {Hottag.map((tag) => (
-          <Link
-            key={tag}
-            prefetch={false}
-            href={`/community/${category}/${tag}`}
-          >
-            <Select
-              title={`#${tag}`}
+        {Hottag ? (
+          Hottag?.map((tag) => (
+            <Link
               key={tag}
-              className="rounded-md"
-              disable
-            />
-          </Link>
-        ))}
+              href={`/community/${category}/${tag}`}
+              prefetch={false}
+            >
+              <Select
+                title={`#${tag}`}
+                key={tag}
+                className="rounded-md"
+                disable
+              />
+            </Link>
+          ))
+        ) : (
+          <>비어있어요</>
+        )}
       </ul>
     </section>
   );

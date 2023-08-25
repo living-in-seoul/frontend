@@ -1,3 +1,5 @@
+import { Tangerine } from 'next/font/google';
+
 /**요청 재시도 */
 export async function retryFetch(
   url: string,
@@ -27,7 +29,7 @@ export const getImageSrc = (code: string) => {
 const convertToJSDate = (javaDate: string): Date => {
   const dateWithoutMicroseconds = javaDate.slice(0, 23);
   const date = new Date(dateWithoutMicroseconds);
-  date.setHours(date.getHours() - 9);
+  date.setHours(date.getHours());
   return date;
 };
 
@@ -59,3 +61,32 @@ export const categoryKO = (category: string) => {
       return category;
   }
 };
+
+export const DetailNewData = (data: ResponseDetailData) => {
+  const headerData = { category: data.result.post.category };
+  const maintag = data.result.post.hashtag.split('#').filter((tag) => tag)[0];
+  const mainData = {
+    nickname: data.result.user.nickname,
+    hasLiked: data.hasLiked,
+    ...data.result.post,
+  };
+  const commentData = {
+    commentSize: data.result.post.commentSize,
+    comments: data.result.post.comments,
+    hasLiked: data.hasLiked,
+  };
+  const hotTagData = {
+    tag: maintag,
+    category: data.result.post.category,
+  };
+  const newData = { headerData, mainData, commentData, hotTagData };
+  return newData;
+};
+
+// 쿠키 와 와이어샤크 : 구글 브라우저의 네트워크 탭에 보이는 여러 응답값이 있는데
+// 이 프로그램을 사용하면 더 자세하게 그에 대해서 알 수 있다
+//
+
+//s3를 사용한 이유는 시간여유가 없던 것에 의해서 이미지 호스팅을 함
+// 보일러 플레이트가 생각보다 크지 않고 그것을 통해서 클라이언트에서 핸들링해서
+// 부담이 덜 간다

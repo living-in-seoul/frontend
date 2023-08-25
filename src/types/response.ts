@@ -58,6 +58,14 @@ interface UserProfile {
   profileImg?: string;
 }
 
+/** 위치 정보 데이터  */
+interface PostLocation {
+  dong: string;
+  gu: string;
+  lat: number;
+  lng: number;
+}
+
 interface BoardInfo {
   postId: number;
   hashtag: string;
@@ -89,9 +97,12 @@ interface ResponseRegister {
 }
 
 interface ResponsePost {
+  location: PostLocation;
   user: UserProfile;
   post: BoardInfo;
+  hasLiked: boolean;
 }
+
 /**게시물 검색 자동완성 개별 데이터 */
 interface SearchResult {
   postId: number;
@@ -168,4 +179,70 @@ interface ResponseCityImageData extends CityData {
       southwest: LatLng;
     };
   };
+}
+
+/**유저 정보 데이터*/
+interface User {
+  nickname: string;
+  email: string;
+}
+
+/**포스트 이미지 정보 데이터 */
+interface PostImage {
+  id: number;
+  postImg: string;
+}
+
+/**포스트 정보 데이터 */
+interface Post {
+  postId: number;
+  hashtag: string;
+  content: string;
+  postImg: PostImage[];
+  createdAt: string;
+  modifiedAt: string;
+  lat: number;
+  lng: number;
+  category: string;
+  likeSize: number;
+  postViewCount: number;
+  comments: Comment[];
+  commentSize: number;
+}
+
+/**디테일 포스트 정보 데이터   */
+interface ResponseDetailData {
+  msg: string;
+  result: {
+    user: User;
+    post: Post;
+    location: PostLocation;
+  };
+  hasLiked: boolean;
+}
+
+/**포스트 댓글 데이터   */
+interface Comment {
+  createdAt: string;
+  modifiedAt: string;
+  nickname: string;
+  commentId: number;
+  comment: string;
+}
+
+interface ResultItem {
+  user: User;
+  post: Post;
+  location: PostLocation;
+  hasLiked: boolean;
+}
+
+interface ResponsePopularCategoryHashtag {
+  msg: string;
+  pageable: {
+    totalPages: number;
+    totalElements: number;
+    size: number;
+  };
+  result: ResultItem[];
 }

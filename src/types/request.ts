@@ -10,10 +10,13 @@ interface RequestOauthLogin {
 }
 
 /** 회원가입 요청 데이터 */
-interface RequestRegister {
+interface RequestEssentialRegister {
   email: string;
   nickname: string;
   password: string;
+}
+interface RequestNonessentialRegister {
+  email?: string;
   gender: string;
   birthDate: string;
   hometown: string;
@@ -56,4 +59,10 @@ interface RequestAllBoard {
 /** 게시물 검색 요청 데이터 */
 interface RequestBoardSearch {
   search: string;
+}
+
+/** 댓글 달기 요청 데이터 */
+interface RequestCommentPost {
+  comment: string;
+  postId: string;
 }

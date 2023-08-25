@@ -1,7 +1,6 @@
 import SWRConfigContext from '@/context/SWRConfigContext';
 import './globals.css';
 import type { Metadata } from 'next';
-
 import { Inter } from 'next/font/google';
 import RecoilProvider from '@/context/RecoilProvider';
 
@@ -26,6 +25,7 @@ export default function RootLayout({
             <div className="w-full max-w-md">{children}</div>
           </SWRConfigContext>
         </RecoilProvider>
+        <div id="portalSignin" />
       </body>
     </html>
   );

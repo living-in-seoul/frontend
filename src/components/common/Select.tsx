@@ -4,13 +4,16 @@ interface Props {
   onClick?: () => void;
   className?: string;
   disable?: boolean;
-  size?: 'large' | 'small' | 'default';
+  size?: 'large' | 'medium' | 'small' | 'default';
+  selectTag?: boolean;
 }
 
 const getButtonSizeStyles = (size: string) => {
   switch (size) {
     case 'small':
       return { div: 'py-1 px-[8px]', span: 'text-[10px] text-zinc-600' };
+    case 'medium':
+      return { div: 'py-[5px] px-2.5', span: 'text-[10px]' };
     case 'large':
       return { div: '', span: '' };
     case 'default':
@@ -30,6 +33,7 @@ const Select = ({
   select = false,
   size = 'default',
   onClick,
+  selectTag = false,
 }: Props) => {
   return (
     <div
@@ -37,13 +41,14 @@ const Select = ({
       className={`${className} ${
         getButtonSizeStyles(size).div
       } transition-all rounded-3xl border font-normal justify-center items-center gap-2.5 inline-flex ${
-        select ? 'bg-neutral-500' : 'border-zinc-400'
-      }`}
+        select ? 'bg-neutral-400' : 'border-zinc-400'
+      }
+      ${selectTag ? 'bg-neutral-700' : 'white'}`}
     >
       <span
         className={`${getButtonSizeStyles(size).span} ${
           select ? 'text-black' : 'text-neutral-500'
-        }`}
+        } ${selectTag ? 'text-white' : 'text-black'}`}
       >
         {title}
       </span>

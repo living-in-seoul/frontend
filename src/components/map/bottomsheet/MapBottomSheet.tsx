@@ -18,25 +18,31 @@ const MapBottomSheet = ({ children, fixed }: MapBottomSheetProps) => {
   }, []);
 
   return (
-    <section
-      style={{
-        transform: `translateY(-${sheetHeight})`,
-        transition: 'transform 150ms ease-out',
-        height: `${fixed ? `calc(100% - 200px)` : sheetHeight}px`,
-        top: `${fixed ? `calc(100% - 200px)` : `calc(100% - 90px)`}`,
-      }}
-      ref={fixed ? null : sheet}
-      className={`max-w-md flex flex-col justify-center items-center fixed bottom-0 left-0 rounded-t-3xl bg-white z-1 w-full border-t-2 px-4 pt-5 shadow-2xl border-neutral-200 `}
-    >
-      <BottomSheetHeader />
-      <div
-        className="h-full w-full overflow-auto smooth-scroll"
-        ref={content}
-        onClick={(e) => e.stopPropagation()}
+    <>
+      <section
+        style={{
+          transform: `translateY(-${sheetHeight})`,
+          transition: 'transform 150ms ease-out',
+          height: `${fixed ? `calc(100% - 200px)` : sheetHeight}px`,
+          top: `${fixed ? `calc(100% - 200px)` : `calc(100% - 170px)`}`,
+        }}
+        ref={fixed ? null : sheet}
+        className={`z-20 max-w-md flex flex-col justify-center items-center fixed bottom-0 rounded-t-3xl bg-white w-full border-t-2 px-2 pt-3 shadow-2xl border-neutral-200 `}
       >
-        <div className="flex flex-col h-full z-10">{children}</div>
-      </div>
-    </section>
+        {/* <div
+          ref={header}
+          className="z-15 w-full cursor-pointer h-10 bg-slate-500"
+        ></div> */}
+        <BottomSheetHeader />
+        <div
+          className="h-full w-full overflow-auto smooth-scroll"
+          ref={content}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="flex flex-col h-full z-10">{children}</div>
+        </div>
+      </section>
+    </>
   );
 };
 
