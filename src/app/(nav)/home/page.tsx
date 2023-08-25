@@ -10,7 +10,6 @@ interface PageProps {
 
 const HomePage = ({ params, searchParams }: PageProps) => {
   const { hashtag, locationTag, hometownTag } = searchParams;
-  console.log(searchParams);
   return (
     <section
       className={`relative flex-col flex w-full justify-center h-full bg-white`}

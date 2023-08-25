@@ -193,6 +193,42 @@ interface PostImage {
   postImg: string;
 }
 
+/**포스트 댓글 데이터   */
+interface Comment {
+  nickname: string;
+  comment: string;
+  createdAt: string;
+  userImg: string | null;
+  commentHasLiked: boolean;
+  reComments: ReComment[];
+}
+
+interface ResultItem {
+  user: User;
+  post: Post;
+  location: PostLocation;
+  hasLiked: boolean;
+}
+
+interface ResponsePopularCategoryHashtag {
+  msg: string;
+  pageable: {
+    totalPages: number;
+    totalElements: number;
+    size: number;
+  };
+  result: ResultItem[];
+}
+/** 대댓글 데이터 */
+interface ReComment {
+  id: number;
+  nickname: string;
+  reComment: string;
+  createdAt: string;
+  modifiedAt: string;
+  userImg: string | null;
+}
+
 /**포스트 정보 데이터 */
 interface Post {
   postId: number;
@@ -217,32 +253,7 @@ interface ResponseDetailData {
     user: User;
     post: Post;
     location: PostLocation;
+    hasLiked: boolean;
+    comments: Comment[];
   };
-  hasLiked: boolean;
-}
-
-/**포스트 댓글 데이터   */
-interface Comment {
-  createdAt: string;
-  modifiedAt: string;
-  nickname: string;
-  commentId: number;
-  comment: string;
-}
-
-interface ResultItem {
-  user: User;
-  post: Post;
-  location: PostLocation;
-  hasLiked: boolean;
-}
-
-interface ResponsePopularCategoryHashtag {
-  msg: string;
-  pageable: {
-    totalPages: number;
-    totalElements: number;
-    size: number;
-  };
-  result: ResultItem[];
 }

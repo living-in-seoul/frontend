@@ -18,7 +18,6 @@ const usePosts = (state: RecoilState<string>) => {
     },
   });
   const { mutate } = useSWRConfig();
-
   const setLike = (postId: number) => {
     fetch(`/api/community/like`, {
       method: 'POST',
