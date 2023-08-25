@@ -7,6 +7,7 @@ interface PageProps {
   params: { slug: string };
   searchParams: { [key: string]: string | string[] | undefined };
 }
+
 const HomePage = ({ params, searchParams }: PageProps) => {
   const { hashtag, locationTag, hometownTag } = searchParams;
   console.log(searchParams);

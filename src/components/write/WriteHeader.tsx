@@ -25,7 +25,18 @@ const WriteHeader = () => {
         hashtag: '#' + formData.hashTag.join('#'),
         lat: formData.lat,
         lng: formData.lng,
+        gu: '강남구',
+        dong: '신사동',
       };
+      // const post = {
+      //   "category" : "동향소통",
+      //   "hashtag" : "#태그1",
+      //   "content" : "내용입니다.",
+      //   "lat": 12,
+      //   "lng": 13,
+      //   "gu": "강남구",
+      //   "dong" : "신사동"
+      //   }
 
       data.append(
         'post',
@@ -37,14 +48,10 @@ const WriteHeader = () => {
         });
       }
 
-      for (let [key, value] of data.entries()) {
-        console.log(key, value);
-      }
-
-      await fetch('/api/write', {
+      const res = await fetch('/api/write', {
         method: 'POST',
         body: data,
-      });
+      }).then((res) => res.json());
     },
     [formData, imageState],
   );

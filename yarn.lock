@@ -377,6 +377,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:*":
+  version: 20.5.4
+  resolution: "@types/node@npm:20.5.4"
+  checksum: 18de76c990e1c298183661cfc7cf16c9384531538c8090cc27bc3cab801e7c46b9f6943591ab0433955dd57961601684cc0fb19ba2deee9609e137c91afd2e25
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:20.4.8":
   version: 20.4.8
   resolution: "@types/node@npm:20.4.8"
@@ -415,6 +422,15 @@ __metadata:
   version: 0.16.3
   resolution: "@types/scheduler@npm:0.16.3"
   checksum: 2b0aec39c24268e3ce938c5db2f2e77f5c3dd280e05c262d9c2fe7d890929e4632a6b8e94334017b66b45e4f92a5aa42ba3356640c2a1175fa37bef2f5200767
+  languageName: node
+  linkType: hard
+
+"@types/xml2js@npm:^0.4.11":
+  version: 0.4.11
+  resolution: "@types/xml2js@npm:0.4.11"
+  dependencies:
+    "@types/node": "*"
+  checksum: d0e7d2a8c7e0a53147c777a6756bdea0eb26a3de0d3c1f42c17e63332e4e2dc532f687c19ca26a0518336f5de60e1ec4345d7ef71e7ba0656fcf3390c9388eb5
   languageName: node
   linkType: hard
 
@@ -3395,13 +3411,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-xml-parser@npm:^1.1.8":
-  version: 1.1.8
-  resolution: "react-xml-parser@npm:1.1.8"
-  checksum: a208f0f631959e2dd98c7faa4f9fcc3b6e576118389380704052a28cd69b26906613b2284d0851ce0ba4245bac7992d721764ce55991afd616f2e275159da9cc
-  languageName: node
-  linkType: hard
-
 "react@npm:18.2.0":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
@@ -3671,6 +3680,7 @@ __metadata:
     "@types/node": 20.4.8
     "@types/react": ^18.2.20
     "@types/react-dom": ^18.2.7
+    "@types/xml2js": ^0.4.11
     autoprefixer: ^10.4.14
     axios: ^1.4.0
     eslint: 8.46.0
@@ -3683,7 +3693,6 @@ __metadata:
     react-hook-form: ^7.45.4
     react-hot-toast: ^2.4.1
     react-multi-carousel: ^2.8.4
-    react-xml-parser: ^1.1.8
     recoil: ^0.7.7
     swr: ^2.2.0
     tailwind-scrollbar-hide: ^1.1.7

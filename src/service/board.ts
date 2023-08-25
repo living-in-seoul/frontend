@@ -4,15 +4,18 @@ interface ResponseDataType {
   message: string;
   code: number;
 }
+
 /**글쓰기 post */
-export const writeBoard = async (form: any) => {
+export const writeBoard = async (form: any, Token: string) => {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/posts`, {
       body: form,
       method: 'POST',
+      headers: {
+        Authorization: 'Bearer' + Token,
+      },
     });
 
-    console.log(response);
     return response;
   } catch (error: any) {
     console.log('ehlsmsdfasdfa', error.message);

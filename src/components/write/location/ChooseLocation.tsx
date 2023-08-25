@@ -56,11 +56,8 @@ const ChooseLocation = ({ onClose }: ChooseLocationProps) => {
 
   useEffect(() => {
     if (data && data.result.geometry?.location) {
-      const lat = data.result.geometry?.location.lat;
-      const lng = data.result.geometry?.location.lng;
-      const newCenter = { lat, lng };
       setDetail(data.result);
-      setCenter(newCenter);
+      setCenter(data.result.geometry?.location);
     }
   }, [data, detail, setCenter, setDetail]);
 
