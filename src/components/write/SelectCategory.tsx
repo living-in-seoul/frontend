@@ -17,8 +17,7 @@ const SelectCategory = ({
         주제 선택
       </span>
       <div className="flex flex-col justify-between  h-full">
-        {LINK_NAME.map(({ name, link }, idx) => {
-          console.log(name, link);
+        {LINK_NAME.slice(1).map(({ name }, idx) => {
           const selected = selectedOption === name;
           return (
             <div

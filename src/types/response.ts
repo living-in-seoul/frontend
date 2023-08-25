@@ -228,6 +228,16 @@ interface Comment {
   nickname: string;
   commentId: number;
   comment: string;
+  reCommentList: ReComment[];
+}
+
+interface ReComment {
+  createdAt: string;
+  modifiedAt: string;
+  nickname: string;
+  id: number;
+  reComment: string;
+  userImg: null;
 }
 
 interface ResultItem {

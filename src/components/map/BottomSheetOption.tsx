@@ -8,17 +8,12 @@ import {
 import BoardList from './board/BoardList';
 
 const BottomSheetOption = () => {
-  const toggleMapValue = useRecoilValue(toggleMapState);
   const boardList = useRecoilValue(boardListState);
   const markerIdValue = useRecoilValue(markerIdState);
 
   return (
     <section>
-      {toggleMapValue === 'community' ? (
-        <BoardList boardList={boardList} markerIdValue={markerIdValue} />
-      ) : (
-        <div>transport</div>
-      )}
+      <BoardList boardList={boardList} markerIdValue={markerIdValue} />
     </section>
   );
 };
