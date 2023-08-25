@@ -17,7 +17,7 @@ const DetailMainProfile = async ({ data }: { data: DetailMainProps }) => {
         postViewCount={data.postViewCount}
       />
       <DetailLikeBtn
-        onDetail={true}
+        type={'detail'}
         likeSize={data.likeSize}
         postId={data.postId}
         hasLiked={data.hasLiked}

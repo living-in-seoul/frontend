@@ -15,14 +15,14 @@ const DetailPage = async ({ params }: DetailPageProps) => {
   const { slug: postId } = params;
   const detailData = await fetch(
     `https://seoulvival.com:8080/posts/get/${postId}`,
-    { next: { revalidate: 0 } },
+    { next: { tags: ['like'] }, cache: 'no-store' },
   ).then<ResponseDetailData>((res) => res.json());
   const newData = DetailNewData(detailData);
   return (
     <section className="w-full max-w-md h-screen relative">
       <DetailHeader data={newData.headerData} />
       <DetailMain data={newData.mainData} />
-      {/* <DetailComment data={newData.commentData} /> */}
+      <DetailComment data={newData.commentData} />
       <DetailHotHashtag data={newData.hotTagData} />
       <DetailNavbar postId={postId} />
       <div className="flex w-full h-16"></div>

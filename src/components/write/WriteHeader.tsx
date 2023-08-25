@@ -3,13 +3,14 @@ import { back } from '@/utils/Icon';
 import Icons from '../common/Icons';
 import { useRouter } from 'next/navigation';
 import Button from '../common/Button';
-import { MouseEvent, useCallback } from 'react';
+import { MouseEvent, useCallback, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { ImageState, formDataState } from '@/recoil/BoardStates';
 
 const WriteHeader = () => {
   const formData = useRecoilValue(formDataState);
   const imageState = useRecoilValue(ImageState);
+  const [openConfirm, setOpenConfirm] = useState(false);
   const router = useRouter();
   const onClickToBack = () => {
     router.back();
@@ -48,10 +49,15 @@ const WriteHeader = () => {
         });
       }
 
-      const res = await fetch('/api/write', {
+      for (let [key, value] of data.entries()) {
+        console.log(key, value);
+      }
+
+      const response = await fetch('/api/write', {
         method: 'POST',
         body: data,
-      }).then((res) => res.json());
+      }).then((response) => response.json());
+      alert(response);
     },
     [formData, imageState],
   );

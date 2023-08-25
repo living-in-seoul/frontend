@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Icons from '../common/Icons';
 import { getTimeAgo } from '@/utils/utilFunc';
-
 import { profile } from '../../../public';
 import Select from '../common/Select';
 import { Comment, Like } from '@/utils/Icon';
@@ -64,6 +63,7 @@ const PostItem = ({ post, user, onMap, hasLiked }: PostItemProps) => {
         createdAt={createdAt}
         nickname={nickname}
         postViewCount={postViewCount}
+        onMap={true}
       />
       {/* 컨텐츠 */}
       <div className="w-full flex justify-between">

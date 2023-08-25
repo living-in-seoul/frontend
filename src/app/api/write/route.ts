@@ -6,30 +6,8 @@ import axios from 'axios';
 // 데이터 정해지면 type 바꿔라 꼭 잊지말고
 export const POST = async (request: NextRequest) => {
   const form = await request.formData();
-  const Token = request.cookies.get('accessToken')?.value;
-  if (!Token) {
-    return new Response('No token', { status: 401 });
-  }
-  const response = await axios
-    .post(`${process.env.NEXT_PUBLIC_SERVER}/posts`, form, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${Token}`,
-      },
-    })
-    .then((res) => res.data)
-    .catch((err) => console.log(err));
-
-  return NextResponse.json(response);
-  // writeBoard(form, Token)
-  //   .then((data) => {
-  //     // console.log(data);
-  //     return new NextResponse('Success');
-  //   })
-  //   .catch((error) => {
-  //     // console.error(error);
-  //     return new NextResponse('Error', { status: 500 });
-  //   });
+  const data = await writeBoard(form).then((data) => data.message);
+  return NextResponse.json(data);
 };
 
 export const GET = async (req: NextRequest) => {

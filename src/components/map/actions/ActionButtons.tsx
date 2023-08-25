@@ -4,7 +4,7 @@ import WriteButton from './WriteButton';
 
 const ActionButtons = () => {
   return (
-    <section className=" flex flex-col justify-between absolute z-10 bottom-48 right-4 h-24">
+    <section className="flex flex-col justify-between absolute bottom-48 right-5 h-28">
       <Link href={'/write'}>
         <WriteButton />
       </Link>

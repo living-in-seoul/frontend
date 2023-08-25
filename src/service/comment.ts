@@ -18,3 +18,20 @@ export const postComment = async (body: string, postId: string) => {
     .catch((error) => error.response);
   return response;
 };
+
+export const setDetailLike = async (postId: string) => {
+  const token = cookies().get('accessToken');
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER}/posts/${postId}/like`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'Bearer ' + token?.value,
+      },
+    },
+  )
+    .then((response) => response.json())
+    .catch((error) => error.response);
+  return response;
+};
