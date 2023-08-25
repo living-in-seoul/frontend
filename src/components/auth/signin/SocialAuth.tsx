@@ -12,7 +12,9 @@ interface SocialAuthProps {
 const SocialAuth = ({ text, url, bgColor, color }: SocialAuthProps) => {
   const router = useRouter();
 
-  const oauthHandler = (url: string) => {};
+  const oauthHandler = (url: string) => {
+    window.location.href = url;
+  };
 
   return (
     <>
@@ -30,23 +32,21 @@ const SocialAuth = ({ text, url, bgColor, color }: SocialAuthProps) => {
           </button>
         </div>
       ) : (
-        <Link href={url} prefetch={false}>
-          <form
-            className={`relative rounded-xl h-12 flex flex-row justify-center items-center border p-3 ${bgColor} ${color}`}
-            // action={() => oauthHandler(url)}
-          >
-            <div className="absolute left-4">
-              <SocialIcons text={text} />
-            </div>
+        <form
+          className={`relative rounded-xl h-12 flex flex-row justify-center items-center border p-3 ${bgColor} ${color}`}
+          action={() => oauthHandler(url)}
+        >
+          <div className="absolute left-4">
+            <SocialIcons text={text} />
+          </div>
 
-            <button
-              className=" w-full h-full text-center font-semibold"
-              type="submit"
-            >
-              {text}로 시작하기
-            </button>
-          </form>
-        </Link>
+          <button
+            className=" w-full h-full text-center font-semibold"
+            type="submit"
+          >
+            {text}로 시작하기
+          </button>
+        </form>
       )}
     </>
   );

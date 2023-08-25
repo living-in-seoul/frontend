@@ -1,3 +1,4 @@
+'use client';
 import PostItem from '@/components/community/PostItem';
 import Link from 'next/link';
 import useSWR from 'swr';
@@ -9,13 +10,21 @@ interface BoardListProps {
 
 const BoardList = ({ markerIdValue, boardList }: BoardListProps) => {
   const { data } = useSWR(`api/map/detail/${markerIdValue}`);
-  console.log(data);
+
   return (
     <article className="flex flex-col border-b-4 ">
       <div className="w-full justify-between flex"></div>
       {markerIdValue ? (
         <div>
-          {/* {<PostItem category={Category} tags={tags} isPop={isPop} {...post} onMap={true}/>} */}
+          {/* {
+            <PostItem
+              category={Category}
+              tags={tags}
+              isPop={isPop}
+              {...post}
+              onMap={true}
+            />
+          } */}
         </div>
       ) : (
         <div className="h-full overflow-y-auto ">
