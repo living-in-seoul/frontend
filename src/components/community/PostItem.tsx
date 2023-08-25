@@ -12,7 +12,6 @@ interface PostItemProps extends ResponsePost {
   category?: string;
   tags?: string | never[] | null | string[];
   isPop?: SelectPopType;
-
   onMap?: boolean;
 }
 
