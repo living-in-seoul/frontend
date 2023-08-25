@@ -15,7 +15,7 @@ const DetailPage = async ({ params }: DetailPageProps) => {
   const { slug: postId } = params;
   const detailData = await fetch(
     `https://seoulvival.com:8080/posts/get/${postId}`,
-    { next: { revalidate: 0 } },
+    { next: { tags: ['like'] }, cache: 'no-store' },
   ).then<ResponseDetailData>((res) => res.json());
   const newData = DetailNewData(detailData);
   return (

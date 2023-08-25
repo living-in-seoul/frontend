@@ -63,3 +63,6 @@ const DetailNavbar = ({ postId }: { postId: string }) => {
 };
 
 export default DetailNavbar;
+
+// 핸드폰에서 확인 할 내용 로그인페이지에서 인풋에 포커스가 되면 줌이 된다
+// 디테일에서 댓글달기 위로 올라오는 느낌으로 하기

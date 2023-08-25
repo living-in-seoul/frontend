@@ -1,7 +1,6 @@
 'use client';
 
 import { signupState } from '@/recoil/authStates';
-import type { NextApiRequest, NextApiResponse } from 'next';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
