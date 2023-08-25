@@ -30,7 +30,7 @@ const SocialAuth = ({ text, url, bgColor, color }: SocialAuthProps) => {
           </button>
         </div>
       ) : (
-        <Link href={url}>
+        <Link href={url} prefetch={false}>
           <form
             className={`relative rounded-xl h-12 flex flex-row justify-center items-center border p-3 ${bgColor} ${color}`}
             // action={() => oauthHandler(url)}
