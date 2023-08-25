@@ -17,28 +17,18 @@ const DetailLikeBtn = ({
   hasLiked,
   onDetail = false,
 }: DetailLikeBtnProps) => {
-  const { setLike } = usePosts(true);
-  const likeHandler = () => {
-    setLike(postId);
-  };
   const text = onDetail && 'detail';
   switch (text) {
     case 'detail':
       return (
         <>
           {hasLiked ? (
-            <div
-              onClick={likeHandler}
-              className="relative flex justify-center items-center"
-            >
+            <div className="relative flex justify-center items-center">
               <Icons path={largeHeart} fill="#404040" />
               <span className="absolute text-white ">{likeSize}</span>
             </div>
           ) : (
-            <div
-              onClick={likeHandler}
-              className="relative flex justify-center items-center"
-            >
+            <div className="relative flex justify-center items-center">
               <Icons
                 path={largeEmptyHeart}
                 fill="none"
@@ -53,7 +43,7 @@ const DetailLikeBtn = ({
       return (
         <div className="flex gap-2">
           {hasLiked ? (
-            <div onClick={likeHandler}>
+            <div>
               <Icons
                 fill="red"
                 className={'cursor-pointer'}
@@ -64,7 +54,7 @@ const DetailLikeBtn = ({
               />
             </div>
           ) : (
-            <div onClick={likeHandler}>
+            <div>
               <Icons
                 path={Like}
                 className={'cursor-pointer'}

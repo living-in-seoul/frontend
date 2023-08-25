@@ -31,7 +31,7 @@ const usePosts = (state: RecoilState<string>) => {
       if (res.status === 200) {
         mutate(communityKey);
         return res.json();
-      } else if (res.status === 401 && !onDetail) {
+      } else if (res.status === 401) {
         setAuthOpenModal(true);
         document.body.style.overflow = 'hidden';
       } else {

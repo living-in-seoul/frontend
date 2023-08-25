@@ -2,29 +2,36 @@ import { writeBoard } from '@/service/board';
 import { refreshToken, setAuthorization } from '@/service/token';
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import axios from 'axios';
 /**글쓰기 페이지 post api */
 
 // 데이터 정해지면 type 바꿔라 꼭 잊지말고
 export const POST = async (request: NextRequest) => {
-  console.log('헤더 좀 보자', request.headers);
-
-  const refresh = await refreshToken(request);
-  console.log(`리프레시 어떤놈이 출려되노`, refresh);
-
   const form = await request.formData();
-  for (const [key, value] of form.entries()) {
-    console.log('asdfas', key, value);
+  const Token = request.cookies.get('accessToken')?.value;
+  if (!Token) {
+    return new Response('No token', { status: 401 });
   }
-
-  return writeBoard(form)
-    .then((data) => {
-      console.log(data);
-      return new NextResponse('Success');
+  const response = await axios
+    .post(`${process.env.NEXT_PUBLIC_SERVER}/posts`, form, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${Token}`,
+      },
     })
-    .catch((error) => {
-      console.error(error);
-      return new NextResponse('Error', { status: 500 });
-    });
+    .then((res) => res.data)
+    .catch((err) => console.log(err));
+
+  return NextResponse.json(response);
+  // writeBoard(form, Token)
+  //   .then((data) => {
+  //     // console.log(data);
+  //     return new NextResponse('Success');
+  //   })
+  //   .catch((error) => {
+  //     // console.error(error);
+  //     return new NextResponse('Error', { status: 500 });
+  //   });
 };
 
 export const GET = async (req: NextRequest) => {

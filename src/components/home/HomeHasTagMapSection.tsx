@@ -3,7 +3,6 @@ import HomeSectionTitle from './HomeSectionTitle';
 import Select from '@/components/common/Select';
 import PostItem from '@/components/community/PostItem';
 import MapProvider from '@/context/MapProvider';
-import HomeHashtagMap from './HomeHashtagMap';
 import { memo } from 'react';
 import dynamic from 'next/dynamic';
 

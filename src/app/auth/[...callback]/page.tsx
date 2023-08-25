@@ -5,7 +5,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
-interface Req extends NextApiRequest {
+interface Req {
   searchParams: {
     state: string;
     code: string;

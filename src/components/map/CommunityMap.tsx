@@ -1,6 +1,11 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import {
+  RecoilState,
+  useRecoilState,
+  useRecoilValue,
+  useSetRecoilState,
+} from 'recoil';
 import useMapInstance from '@/hooks/useMapInstance';
 import { MapStyleVersionTwo } from '@/utils/styles';
 import { GoogleMap, InfoWindowF, MarkerF } from '@react-google-maps/api';
@@ -41,7 +46,7 @@ const CommunityMap = () => {
   const setBoardListState = useSetRecoilState(boardListState);
   const [markerId, setMarkerId] = useRecoilState(markerIdState);
   const setCommunityKey = useSetRecoilState(communityKeyState);
-  const { posts: boardList } = usePosts();
+  const { posts: boardList } = usePosts(communityKeyState);
 
   useEffect(() => {
     setCommunityKey(
