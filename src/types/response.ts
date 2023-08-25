@@ -253,7 +253,32 @@ interface ResponseDetailData {
     user: User;
     post: Post;
     location: PostLocation;
-    hasLiked: boolean;
-    comments: Comment[];
+  };
+  hasLiked: boolean;
+}
+
+/**포스트 댓글 데이터   */
+interface Comment {
+  createdAt: string;
+  modifiedAt: string;
+  nickname: string;
+  commentId: number;
+  comment: string;
+  reCommentList: ReComment[];
+}
+
+interface ResultItem {
+  user: User;
+  post: Post;
+  location: PostLocation;
+  hasLiked: boolean;
+}
+
+interface ResponsePopularCategoryHashtag {
+  msg: string;
+  pageable: {
+    totalPages: number;
+    totalElements: number;
+    size: number;
   };
 }

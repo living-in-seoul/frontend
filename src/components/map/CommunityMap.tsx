@@ -1,14 +1,9 @@
 'use client';
-import { useEffect, useState } from 'react';
-import {
-  RecoilState,
-  useRecoilState,
-  useRecoilValue,
-  useSetRecoilState,
-} from 'recoil';
+import { useEffect } from 'react';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import useMapInstance from '@/hooks/useMapInstance';
 import { MapStyleVersionTwo } from '@/utils/styles';
-import { GoogleMap, InfoWindowF, MarkerF } from '@react-google-maps/api';
+import { GoogleMap, MarkerF } from '@react-google-maps/api';
 import {
   boardListState,
   centerState,
@@ -19,18 +14,9 @@ import {
 } from '@/recoil/mapStates';
 import { communityKeyState } from '@/recoil/communityStates';
 import usePosts from '@/hooks/usePosts';
+import CustomOverlayMarker from './marker/CustomOverlayMarker';
+import { CommContainerStyle, mapOptions } from '@/utils/constants/constants';
 
-const containerStyle = {
-  width: '100%',
-  height: '90vh',
-};
-const mapOptions: google.maps.MapOptions = {
-  fullscreenControl: true,
-  gestureHandling: 'greedy',
-  disableDoubleClickZoom: true,
-  disableDefaultUI: true,
-  styles: MapStyleVersionTwo,
-};
 const sample = [
   { gu: '강남구', dong: '신사동' },
   { gu: '강남구', dong: '역삼동' },
@@ -38,13 +24,13 @@ const sample = [
 
 const CommunityMap = () => {
   const { map, onLoad, onUnmount } = useMapInstance();
-  const [zoom, setZoom] = useState(18);
+  // const [zoom, setZoom] = useState(16);
+  const [markerId, setMarkerId] = useRecoilState(markerIdState);
   const [center, setCenter] = useRecoilState(centerState);
   const filterOption = useRecoilValue(filterOptionState);
   const gudong = useRecoilValue(gudongState);
   const currentValue = useRecoilValue(currentState);
   const setBoardListState = useSetRecoilState(boardListState);
-  const [markerId, setMarkerId] = useRecoilState(markerIdState);
   const setCommunityKey = useSetRecoilState(communityKeyState);
   const { posts: boardList } = usePosts(communityKeyState);
 
@@ -56,13 +42,8 @@ const CommunityMap = () => {
   }, [filterOption, setCommunityKey]);
 
   useEffect(() => {
-    if (boardList) {
-      setBoardListState(boardList);
-      console.log(boardList);
-    }
-    if (currentValue) {
-      setCenter(currentValue);
-    }
+    if (boardList) setBoardListState(boardList);
+    if (currentValue) setCenter(currentValue);
   }, [boardList, currentValue, filterOption, setBoardListState, setCenter]);
 
   useEffect(() => {
@@ -81,45 +62,35 @@ const CommunityMap = () => {
   };
 
   return (
-    <section className="w-full h-full relative">
+    <section className="w-full h-full relative z-100">
       <GoogleMap
-        mapContainerStyle={containerStyle}
+        mapContainerStyle={CommContainerStyle}
         center={center}
-        zoom={zoom}
+        zoom={10}
         onLoad={onLoad}
         onUnmount={onUnmount}
-        options={{
-          ...mapOptions,
-        }}
+        options={mapOptions}
       >
-        {<MarkerF position={center} />}
         <>
+          {/* 현위치 */}
+          {/* <MarkerF position={currentValue} /> */}
+          {/* boardlist */}
           {boardList &&
             boardList.result.map((post) => {
               const { postId, hashtag } = post.post;
               const latlng: LatLng = {
-                // lat: Number(post.location.lat),
-                // lng: Number(post.location.lng),
-                lat: 37.4967,
-                lng: 127.063,
+                lat: Number(post.location.lat),
+                lng: Number(post.location.lng),
               };
               return (
-                <InfoWindowF
+                <CustomOverlayMarker
                   key={postId}
                   position={latlng}
-                  options={{
-                    pixelOffset: new window.google.maps.Size(0, -25),
+                  text={`# ${hashtag.split('#')[1]}`}
+                  onClick={(e: google.maps.event) => {
+                    onClickMarker(e, postId, latlng);
                   }}
-                >
-                  <div
-                    className=" relative flex-none flex justify-center items-center p-0 m-0 h-2 w-10 overflow-hidden "
-                    onClick={(e) => onClickMarker(e, postId, latlng)}
-                  >
-                    <span className="fixed flex justify-center items-center w-24 h-[40px]  rounded-3xl bg-zinc-700 text-white">
-                      # {hashtag.split('#')[1]}
-                    </span>
-                  </div>
-                </InfoWindowF>
+                />
               );
             })}
         </>

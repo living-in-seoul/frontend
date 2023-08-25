@@ -32,7 +32,7 @@ const mapOptions: google.maps.MapOptions = {
   styles: MapStyleVersionTwo,
 };
 
-const containerStyleForMap = { width: '100%', height: '100%' };
+const containerStyleForMap = { width: '100%', height: '90%' };
 
 const ChooseLocation = ({ onClose }: ChooseLocationProps) => {
   const placeId = useRecoilValue(placeIdState);
@@ -46,6 +46,7 @@ const ChooseLocation = ({ onClose }: ChooseLocationProps) => {
   );
 
   const onClickMap = (e: google.maps.MapMouseEvent) => {
+    console.log('Sss');
     if (e.latLng) {
       const lat = e.latLng.lat();
       const lng = e.latLng.lng();
@@ -57,7 +58,7 @@ const ChooseLocation = ({ onClose }: ChooseLocationProps) => {
   useEffect(() => {
     if (data && data.result.geometry?.location) {
       setDetail(data.result);
-      setCenter(data.result.geometry?.location);
+      setCenter(data.result.geometry.location);
     }
   }, [data, detail, setCenter, setDetail]);
 
@@ -90,7 +91,7 @@ const ChooseLocation = ({ onClose }: ChooseLocationProps) => {
       <div className="relative flex justify-center items-center mt-5 pb-5">
         <PlacesAutoComplete />
       </div>
-      <div className="h-[70%] w-full relative">
+      <div className="h-[70%] w-full relative ">
         <GoogleMap
           onClick={(e) => onClickMap(e)}
           mapContainerStyle={containerStyleForMap}

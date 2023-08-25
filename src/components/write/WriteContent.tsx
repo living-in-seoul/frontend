@@ -2,7 +2,7 @@
 import { useHandleTags } from '@/hooks/useHandleTags';
 import { ChangeEvent, useState } from 'react';
 import Icons from '../common/Icons';
-import { closeX, downdrop, tags } from '@/utils/Icon';
+import { closeX, downdrop, hashtagIcon, tags } from '@/utils/Icon';
 import MapBottomSheet from '../map/bottomsheet/MapBottomSheet';
 import UploadImage from './Image/UploadImage';
 import { useRecoilState, useSetRecoilState } from 'recoil';
@@ -61,10 +61,16 @@ const WriteContent = () => {
           onChange={(e) => onChangeInputHandler(e)}
         />
         <div className="flex flex-col w-full h-[16%]">
-          <div className="flex justify-center items-center h-full border-t border-stone-300 px-5 w-full text-sm ">
-            <Icons path={tags} fill="none" option={{ stroke: '#B8B8B8' }} />
+          <div className="flex justify-center items-center h-full border-t border-stone-300 px-4 w-full text-sm ">
+            <div>
+              <Icons
+                path={tags}
+                fill="#b4b4b4"
+                option={{ stroke: '#B8B8B8' }}
+              />
+            </div>
             <input
-              className="h-full w-36 outline-none ml-4"
+              className="w-full outline-none ml-2"
               value={tagText}
               onChange={(e) => onChangeTag(e)}
               onKeyPress={(e) => handleKeyPress(e)}

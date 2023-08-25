@@ -19,15 +19,15 @@ export const toggleMapState = atom<'community' | 'transport'>({
 /**구, 동 서초구 서초동! */
 export const gudongState = atom<string>({
   key: 'dongState',
-  default: '서초구 서초동', //수정필요
+  default: '',
 });
 
 /** 맵 센터 !! */
 export const centerState = atom<LatLng | google.maps.LatLng>({
   key: 'centerState',
   default: {
-    lat: 37.4967,
-    lng: 127.063,
+    lat: 37.4962,
+    lng: 127.065,
   },
 });
 

@@ -1,6 +1,7 @@
 //페이지별로 파일 분리
 
 import { Libraries } from '@react-google-maps/api';
+import { MapStyleVersionTwo } from '../styles';
 
 export const seoulCenterCoords: Partial<SeoulCoords> = {
   강남구: { lat: 37.5172, lng: 127.0473 },
@@ -70,7 +71,15 @@ export const googleMapsLibraries: Libraries = [
   'marker',
 ];
 
-export const containerStyle = {
+export const CommContainerStyle = {
   width: '100%',
-  height: '100vh',
+  height: '90vh',
+};
+
+export const mapOptions: google.maps.MapOptions = {
+  fullscreenControl: true,
+  gestureHandling: 'greedy',
+  disableDoubleClickZoom: true,
+  disableDefaultUI: true,
+  styles: MapStyleVersionTwo,
 };

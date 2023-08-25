@@ -10,7 +10,6 @@ interface MapProviderProps {
 const MapProvider = ({ children, type = 'defalut' }: MapProviderProps) => {
   return (
     <LoadScriptNext
-      preventGoogleFontsLoading
       googleMapsApiKey={`${process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY}`}
       loadingElement={
         type === 'home' ? (
