@@ -25,6 +25,11 @@ const wishlist = {
   width: 28,
   height: 28,
 };
+const myPageIcon = {
+  path: 'M14 24.9083L12.3084 23.3683C6.30004 17.92 2.33337 14.315 2.33337 9.91667C2.33337 6.31167 5.15671 3.5 8.75004 3.5C10.78 3.5 12.7284 4.445 14 5.92667C15.2717 4.445 17.22 3.5 19.25 3.5C22.8434 3.5 25.6667 6.31167 25.6667 9.91667C25.6667 14.315 21.7 17.92 15.6917 23.3683L14 24.9083Z',
+  width: 28,
+  height: 28,
+};
 
 const NavBarArray = [
   {
@@ -42,16 +47,6 @@ const NavBarArray = [
     name: '지도',
     path: '/map',
     iconPath: map,
-  },
-  {
-    name: '위시리스트',
-    path: '/wishlist',
-    iconPath: wishlist,
-  },
-  {
-    name: '마이페이지',
-    path: '/transport',
-    iconPath: comunity,
   },
 ];
 
@@ -76,6 +71,37 @@ const Navbar = () => {
             </div>
           </Link>
         ))}
+        <Link
+          href={'/mypage'}
+          className="basis-1/5 justify-center items-center flex flex-col gap-1"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="27"
+            height="27"
+            viewBox="0 0 27 27"
+            fill="none"
+          >
+            <g clip-path="url(#clip0_980_957)">
+              <path
+                d="M23.7 18.3379C22.464 16.9701 20.964 15.8786 19.2946 15.132C17.6252 14.3854 15.8224 14 14 14C12.1776 14 10.3748 14.3854 8.70543 15.132C7.03601 15.8786 5.53604 16.9701 4.3 18.3379C4.10917 18.5534 4.00242 18.8329 4 19.1235V23.8373C4.00404 24.1471 4.12739 24.4428 4.34335 24.6604C4.5593 24.878 4.85047 25 5.15385 25H22.8462C23.1522 25 23.4457 24.8758 23.662 24.6548C23.8784 24.4338 24 24.1341 24 23.8216V19.1078C23.9939 18.8227 23.8874 18.5493 23.7 18.3379Z"
+                fill="#636363"
+              />
+              <path
+                d="M13.5 13C16.5376 13 19 10.5376 19 7.5C19 4.46243 16.5376 2 13.5 2C10.4624 2 8 4.46243 8 7.5C8 10.5376 10.4624 13 13.5 13Z"
+                fill="#636363"
+              />
+            </g>
+            <defs>
+              <clipPath id="clip0_980_957">
+                <rect width="27" height="27" fill="white" />
+              </clipPath>
+            </defs>
+          </svg>
+          <div className="text-center text-black text-xs font-normal leading-3">
+            마이페이지
+          </div>
+        </Link>
       </div>
     </nav>
   );

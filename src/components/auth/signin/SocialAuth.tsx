@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import SocialIcons from './SocialIcon';
 import { redirect, useRouter } from 'next/navigation';
 interface SocialAuthProps {
@@ -9,11 +10,10 @@ interface SocialAuthProps {
 }
 
 const SocialAuth = ({ text, url, bgColor, color }: SocialAuthProps) => {
-
   const router = useRouter();
 
   const oauthHandler = (url: string) => {
-    redirect(url);
+    window.location.href = url;
   };
 
   return (
