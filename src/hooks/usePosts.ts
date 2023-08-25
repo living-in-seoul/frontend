@@ -21,7 +21,6 @@ const usePosts = (state: RecoilState<string>) => {
 
   const setLike = (postId: number) => {
     fetch(`/api/community/like`, {
-      next: { revalidate: 0 },
       method: 'POST',
       body: JSON.stringify({ postId }),
       headers: {

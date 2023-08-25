@@ -1,5 +1,4 @@
 'use client';
-import useSWR from 'swr';
 import PostItem from './PostItem';
 import { useEffect, useState } from 'react';
 import Select from '../common/Select';

@@ -48,10 +48,15 @@ const WriteHeader = () => {
         });
       }
 
-      const res = await fetch('/api/write', {
+      for (let [key, value] of data.entries()) {
+        console.log(key, value);
+      }
+
+      const response = await fetch('/api/write', {
         method: 'POST',
         body: data,
-      }).then((res) => res.json());
+      }).then((response) => response.json());
+      alert(response);
     },
     [formData, imageState],
   );

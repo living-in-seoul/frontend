@@ -1,45 +1,71 @@
 'use client';
-
-import usePosts from '@/hooks/usePosts';
 import Icons from '../common/Icons';
 import { Like, largeEmptyHeart, largeHeart } from '@/utils/Icon';
-
+import { revalidatePath } from 'next/cache';
+import { useState, useTransition } from 'react';
+import useSWR from 'swr';
 interface DetailLikeBtnProps {
   likeSize: number;
   postId: number;
   hasLiked?: boolean;
-  onDetail?: boolean;
+  type?: 'detail' | 'comment';
 }
 
 const DetailLikeBtn = ({
   likeSize,
   postId,
   hasLiked,
-  onDetail = false,
+  type = 'comment',
 }: DetailLikeBtnProps) => {
-  const text = onDetail && 'detail';
-  switch (text) {
+  const [isPending, startTransition] = useTransition();
+  const [LikeState, setLikeState] = useState<number>(likeSize);
+  const [hasLikeState, setHasLikeState] = useState<boolean | undefined>(
+    hasLiked,
+  );
+  const onClickHandler = async () => {
+    try {
+      const response = await fetch(`/api/comment/like/${postId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      }).then((response) => response.json());
+    } catch (error) {
+      setHasLikeState((prev) => !prev);
+    }
+
+    startTransition(() => {
+      setLikeState((prev) => (hasLikeState ? prev + 1 : prev - 1));
+      setHasLikeState((prev) => !prev);
+    });
+  };
+
+  switch (type) {
     case 'detail':
       return (
         <>
-          {hasLiked ? (
-            <div className="relative flex justify-center items-center">
+          {!hasLikeState ? (
+            <div
+              onClick={onClickHandler}
+              className="relative flex justify-center items-center"
+            >
               <Icons path={largeHeart} fill="#404040" />
-              <span className="absolute text-white ">{likeSize}</span>
+              <span className="absolute text-white ">{LikeState}</span>
             </div>
           ) : (
-            <div className="relative flex justify-center items-center">
+            <div
+              onClick={onClickHandler}
+              className="relative flex justify-center items-center"
+            >
               <Icons
                 path={largeEmptyHeart}
                 fill="none"
                 option={{ stroke: '#B8B8B8' }}
               />
-              <span className="absolute  ">{likeSize}</span>
+              <span className="absolute  ">{LikeState}</span>
             </div>
           )}
         </>
       );
-    default:
+    case 'comment':
       return (
         <div className="flex gap-2">
           {hasLiked ? (
