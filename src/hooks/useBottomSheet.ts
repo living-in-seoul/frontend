@@ -3,8 +3,8 @@
 import { useEffect, useRef } from 'react';
 
 export const useBottomSheet = (minY: number) => {
-  const sheet = useRef<HTMLDivElement>(null); //바텀 시트 영역
-  const content = useRef<HTMLDivElement>(null); // 컨텐츠 영역
+  const sheet = useRef<HTMLDivElement>(null);
+  const content = useRef<HTMLDivElement>(null);
   const metrics = useRef<BottomSheetMetrics>({
     touchStart: {
       sheetY: 0,
@@ -22,8 +22,8 @@ export const useBottomSheet = (minY: number) => {
     const ableToMoveSheet = () => {
       const { touchMove, contentBeingTouched } = metrics.current;
 
-      if (!contentBeingTouched) {
-        return true;
+      if (contentBeingTouched) {
+        return false;
       }
 
       if (sheet.current!.getBoundingClientRect().y !== minY) {
@@ -128,14 +128,33 @@ export const useBottomSheet = (minY: number) => {
       sheet.current!.addEventListener('touchmove', handleTouchMove);
       sheet.current!.addEventListener('touchend', handleTouchEnd);
     }
+    return () => {
+      if (sheet.current) {
+        sheet.current!.removeEventListener('touchstart', handleTouchStart);
+        sheet.current!.removeEventListener('touchmove', handleTouchMove);
+        sheet.current!.removeEventListener('touchend', handleTouchEnd);
+      }
+    };
   }, [minY]);
 
   useEffect(() => {
     const handleTouchStartContent = (e: TouchEvent) => {
-      if (e.target === content.current) {
-        metrics.current!.contentBeingTouched = true;
+      if (content.current?.contains(e.target as Node)) {
+        metrics.current.contentBeingTouched = true;
       }
     };
+
+    const handleTouchMoveContent = (e: TouchEvent) => {
+      if (content.current?.contains(e.target as Node)) {
+        metrics.current.contentBeingTouched = true;
+      }
+    };
+    const handleTouchEndContent = (e: TouchEvent) => {
+      metrics.current.contentBeingTouched = false;
+    };
+
+    content.current!.addEventListener('touchend', handleTouchEndContent);
+    content.current!.addEventListener('touchmove', handleTouchMoveContent);
     content.current!.addEventListener('touchstart', handleTouchStartContent);
   }, []);
 

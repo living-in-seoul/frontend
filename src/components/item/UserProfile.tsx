@@ -19,16 +19,17 @@ const UserProfile = ({
     <>
       <div className="flex w-full">
         {/* 유저 */}
-
-        <div className="relative shrink-0 w-[36px] h-[36px] rounded-full overflow-hidden">
-          <Image
-            src={profile}
-            alt={`user`}
-            fill
-            className="absolute top-0"
-            sizes={'36px'}
-          />
-        </div>
+        {!onMap && (
+          <div className="relative shrink-0 w-[36px] h-[36px] rounded-full overflow-hidden">
+            <Image
+              src={profile}
+              alt={`user`}
+              fill
+              className="absolute top-0"
+              sizes={'36px'}
+            />
+          </div>
+        )}
 
         <div
           className={`flex ${
@@ -38,11 +39,13 @@ const UserProfile = ({
           <div className="flex items-center gap-2">
             {/* 닉네임 */}
             <h3
-              className={`text-xs truncate max-w-[80px]  ${
-                onMap ? 'text-neutral-500 ' : 'font-semibold text-black'
-              } leading-3`}
+              className={`text-xs truncate  ${
+                onMap
+                  ? 'text-neutral-500 max-w-[180px]'
+                  : 'font-semibold text-black'
+              } leading-3 max-w-[80px] `}
             >
-              {nickname}
+              {onMap ? `${nickname}님이 등록 ·` : nickname}
             </h3>
             {/* 레벨 */}
             {!onMap && (
@@ -52,8 +55,7 @@ const UserProfile = ({
             )}
           </div>
           <div className="text-neutral-500 text-xs font-normal leading-3">
-            {getTimeAgo(createdAt)}{' '}
-            {postViewCount && `· 조회수 ${postViewCount}`}
+            {getTimeAgo(createdAt)} {`· 조회수 ${postViewCount}`}
           </div>
         </div>
       </div>

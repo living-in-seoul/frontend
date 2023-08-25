@@ -20,7 +20,7 @@ const SelectedLocation = () => {
         />
         {detail ? (
           <>
-            <div className="w-[85%] ">
+            <div className="w-full ml-3">
               <h1 className="text-[0.88rem] font-semibold mb-1 text-black">
                 {detail?.name}
               </h1>

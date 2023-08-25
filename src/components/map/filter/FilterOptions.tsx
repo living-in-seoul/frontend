@@ -21,17 +21,18 @@ const FilterOptions = () => {
   };
 
   return (
-    <div className="flex justify-between items-center w-full px-6 py-5 h-10 ">
+    <div className="flex justify-between items-center w-full px-7 py-5 h-10 ">
       {LINK_NAME.map(({ name, link }, i) => {
         const selected = filterOption === link;
         return (
-          <Select
-            key={i}
-            size="medium"
-            title={name}
-            onClick={() => onClickToSet(link)}
-            select={selected}
-          />
+          <div key={i} className="w-16 h-7">
+            <Select
+              size="full"
+              title={name}
+              onClick={() => onClickToSet(link)}
+              select={selected}
+            />
+          </div>
         );
       })}
     </div>
