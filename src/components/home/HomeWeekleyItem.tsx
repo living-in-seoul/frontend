@@ -25,7 +25,7 @@ const HomeWeekleyItem = ({ post, user }: ResponsePost) => {
               />
 
               <div className="text-black text-xs font-normal">
-                {post.likeSize}
+                {post.postViewCount}
               </div>
             </div>
           </div>

@@ -1,5 +1,3 @@
-import { writeBoard } from '@/service/board';
-import { refreshToken, setAuthorization } from '@/service/token';
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import axios from 'axios';
