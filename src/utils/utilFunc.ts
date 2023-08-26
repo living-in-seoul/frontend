@@ -67,13 +67,13 @@ export const DetailNewData = (data: ResponseDetailData) => {
   const maintag = data.result.post.hashtag.split('#').filter((tag) => tag)[0];
   const mainData = {
     nickname: data.result.user.nickname,
-    hasLiked: data.hasLiked,
+    hasLiked: data.result.hasLiked,
     ...data.result.post,
   };
   const commentData = {
     commentSize: data.result.post.commentSize,
-    comments: data.result.post.comments,
-    hasLiked: data.hasLiked,
+    comments: data.result.comments,
+    hasLiked: data.result.hasLiked,
   };
   const hotTagData = {
     tag: maintag,

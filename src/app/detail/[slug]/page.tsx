@@ -3,7 +3,9 @@ import DetailHeader from '@/components/detail/DetailHeader';
 import DetailHotHashtag from '@/components/detail/DetailHotHashtag';
 import DetailMain from '@/components/detail/DetailMain';
 import DetailNavbar from '@/components/detail/DetailNavbar';
+import { getBoard } from '@/service/board';
 import { DetailNewData } from '@/utils/utilFunc';
+import { constSelector } from 'recoil';
 
 interface DetailPageProps {
   params: {
@@ -13,17 +15,21 @@ interface DetailPageProps {
 
 const DetailPage = async ({ params }: DetailPageProps) => {
   const { slug: postId } = params;
-  const detailData = await fetch(
-    `https://seoulvival.com:8080/posts/get/${postId}`,
-    { next: { tags: ['like'] }, cache: 'no-store' },
-  ).then<ResponseDetailData>((res) => res.json());
-  const newData = DetailNewData(detailData);
+  const detailData = await getBoard(postId);
+  const newData = detailData && DetailNewData(detailData);
   return (
     <section className="w-full max-w-md h-screen relative">
-      <DetailHeader data={newData.headerData} />
-      <DetailMain data={newData.mainData} />
-      <DetailComment data={newData.commentData} />
-      <DetailHotHashtag data={newData.hotTagData} />
+      {newData && (
+        <>
+          <DetailHeader data={newData.headerData} />
+          <DetailMain data={newData.mainData} />
+          <DetailComment
+            commentSize={newData.commentData.commentSize}
+            postId={postId}
+          />
+          <DetailHotHashtag data={newData.hotTagData} />
+        </>
+      )}
       <DetailNavbar postId={postId} />
       <div className="flex w-full h-16"></div>
     </section>

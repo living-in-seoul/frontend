@@ -7,7 +7,6 @@ interface CommunityHotTag {
 }
 
 const CommunityHotTag = ({ Hottag, category }: CommunityHotTag) => {
-  console.log(Hottag);
   return (
     <section className="w-full border-b py-6">
       <h1 className="w-full text-black py-3 px-4 text-lg font-semibold leading-none">
