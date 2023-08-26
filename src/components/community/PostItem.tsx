@@ -63,7 +63,7 @@ const PostItem = ({ post, user, onMap, hasLiked }: PostItemProps) => {
         createdAt={createdAt}
         nickname={nickname}
         postViewCount={postViewCount}
-        onMap={true}
+        onMap={onMap ? true : false}
       />
       {/* 컨텐츠 */}
       <div className="w-full flex justify-between">

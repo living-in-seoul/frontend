@@ -6,14 +6,19 @@ import Button from '../common/Button';
 import { MouseEvent, useCallback, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { ImageState, formDataState } from '@/recoil/BoardStates';
+import ModalOutside from '../modal/ModalOutside';
+import Warning from './modal/Warning';
+import ModalPortal from '../modal/ModalPortal';
 
 const WriteHeader = () => {
   const formData = useRecoilValue(formDataState);
   const imageState = useRecoilValue(ImageState);
   const [openConfirm, setOpenConfirm] = useState(false);
+
   const router = useRouter();
   const onClickToBack = () => {
-    router.back();
+    setOpenConfirm(true);
+    // router.back();
   };
 
   const onSubmit = useCallback(
@@ -29,15 +34,6 @@ const WriteHeader = () => {
         gu: '강남구',
         dong: '신사동',
       };
-      // const post = {
-      //   "category" : "동향소통",
-      //   "hashtag" : "#태그1",
-      //   "content" : "내용입니다.",
-      //   "lat": 12,
-      //   "lng": 13,
-      //   "gu": "강남구",
-      //   "dong" : "신사동"
-      //   }
 
       data.append(
         'post',
@@ -63,21 +59,33 @@ const WriteHeader = () => {
   );
 
   return (
-    <div className="h-16 mt-4 w-full flex justify-between items-center px-6">
-      <div className="flex items-center gap-5">
-        {<Icons path={back} onClick={onClickToBack} />}
-        <span className="text-[1.1rem] font-semibold">글 작성하기</span>
+    <>
+      <div className="h-16 mt-4 w-full flex justify-between items-center px-6">
+        <div className="flex items-center gap-5">
+          {<Icons path={back} onClick={onClickToBack} />}
+          <span className="text-[1.1rem] font-semibold">글 작성하기</span>
+        </div>
+        <div className="w-20 h-8 text-white">
+          <Button
+            title="등록하기"
+            size="full"
+            bgColor="bg-neutral-200"
+            className="text-white"
+            onClick={(e) => onSubmit(e)}
+          />
+        </div>
       </div>
-      <div className="w-20 h-8 text-white">
-        <Button
-          title="등록하기"
-          size="full"
-          bgColor="bg-neutral-200"
-          className="text-white"
-          onClick={(e) => onSubmit(e)}
-        />
-      </div>
-    </div>
+      {openConfirm && (
+        <ModalPortal nodeName="confirmPortal">
+          <ModalOutside
+            onClose={() => setOpenConfirm(false)}
+            className=" overflow-hidden p-2 bg-white w-4/5 h-1/2 py-10 rounded-2xl max-w-7xl"
+          >
+            <Warning />
+          </ModalOutside>
+        </ModalPortal>
+      )}
+    </>
   );
 };
 

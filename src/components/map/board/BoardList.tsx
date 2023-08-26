@@ -15,17 +15,17 @@ const BoardList = ({ markerIdValue, boardList }: BoardListProps) => {
     <article className="flex flex-col border-b-4 ">
       <div className="w-full justify-between flex"></div>
       {markerIdValue ? (
-        <div>
-          {/* {
+        <>
+          {data?.result && (
             <PostItem
-              category={Category}
-              tags={tags}
-              isPop={isPop}
-              {...post}
+              location={data.result.location}
+              post={data.result.post}
+              user={data.result.user}
+              hasLiked
               onMap={true}
             />
-          } */}
-        </div>
+          )}
+        </>
       ) : (
         <div className="h-full overflow-y-auto ">
           {boardList?.result.map((post) => (
