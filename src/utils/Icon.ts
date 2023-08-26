@@ -169,3 +169,9 @@ export const paperAirplaneIcon = {
   height: 24,
   pathFill: '#404040',
 };
+
+export const warning = {
+  path: 'M21 36.5002V36.5217M21 24V6.3913',
+  width: 42,
+  height: 42,
+};

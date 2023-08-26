@@ -11,6 +11,7 @@ export default function WriteLayout({
         {children}
         <div id="imagePortal" />
         <div id="mapPortal" />
+        <div id="confirmPortal" />
       </MapProvider>
     </main>
   );

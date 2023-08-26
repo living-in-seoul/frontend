@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface ModalOutsideProps {
   children: React.ReactNode;
   onClose: () => void;
@@ -8,17 +6,17 @@ interface ModalOutsideProps {
 
 const ModalOutside = ({ children, onClose, className }: ModalOutsideProps) => {
   return (
-    <section
-      className="fixed top-0 left-0 flex flex-col justify-center items-center w-full h-full z-50 bg-black opacity-40"
-      onClick={(event) => {
-        if (event.target === event.currentTarget) {
-          onClose();
-        }
-      }}
-    >
-      <div className={className}>{children}</div>
-    </section>
+    <div className="fixed top-0 left-0 flex justify-center items-center w-full h-full ">
+      <div
+        className="absolute top-0 left-0 w-full h-full bg-black opacity-40"
+        onClick={(event) => {
+          if (event.target === event.currentTarget) {
+            onClose();
+          }
+        }}
+      ></div>
+      <div className={`absolute bg-white ${className}`}>{children}</div>
+    </div>
   );
 };
-
 export default ModalOutside;

@@ -1,6 +1,3 @@
-/** 맵 토글 (커뮤니티 or 교통정보)  */
-type MapToggle = 'community' | 'transport';
-
 /** 경도 위도 */
 interface LatLng {
   lat: number;
