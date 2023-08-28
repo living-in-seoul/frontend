@@ -31,7 +31,7 @@ export const config = {
     // '/write',
     // '/api/write',
     // '/api/liked',
-    '/signin/:path*',
+    // '/signin/:path*',
     // '/signup/first',
   ],
 };

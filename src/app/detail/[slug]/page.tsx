@@ -1,7 +1,7 @@
-import DetailComment from '@/components/detail/DetailComment';
+import DetailComment from '@/components/detail/comment/DetailComment';
 import DetailHeader from '@/components/detail/DetailHeader';
 import DetailHotHashtag from '@/components/detail/DetailHotHashtag';
-import DetailMain from '@/components/detail/DetailMain';
+import DetailMain from '@/components/detail/main/DetailMain';
 import DetailNavbar from '@/components/detail/DetailNavbar';
 import { getBoard } from '@/service/board';
 import { DetailNewData } from '@/utils/utilFunc';
@@ -23,11 +23,11 @@ const DetailPage = async ({ params }: DetailPageProps) => {
         <>
           <DetailHeader data={newData.headerData} />
           <DetailMain data={newData.mainData} />
-          <DetailComment
-            commentSize={newData.commentData.commentSize}
-            postId={postId}
+          <DetailComment postId={postId} />
+          <DetailHotHashtag
+            mainPostId={Number(postId)}
+            data={newData.hotTagData}
           />
-          <DetailHotHashtag data={newData.hotTagData} />
         </>
       )}
       <DetailNavbar postId={postId} />

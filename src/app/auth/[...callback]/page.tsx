@@ -15,21 +15,19 @@ const CallbackPage = (req: Req) => {
   const setSignupData = useSetRecoilState(signupState);
   const router = useRouter();
   const { searchParams } = req;
-  const { code } = searchParams;
-  console.log('code', code);
-  // useEffect(() => {
-  //   const response = fetch('/api/callback', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify(code),
-  //   }).then((response) => response.json());
-  //   console.log(response);
-  // setSignupData();
-  // return router.push('/signup/second')
-  // 여기서 이메일 셋하고 다음으로 넘기기
-  // }, []);
+  const { code, state } = searchParams;
+  console.log('aaaaaaaaaaaaaa', code, state);
+  useEffect(() => {
+    const response = fetch('/api/callback', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ code, state }),
+    }).then((response) => response.json());
+    console.log(response);
+    return router.push('/signup/second');
+  }, []);
   return <div></div>;
 };
 

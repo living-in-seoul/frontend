@@ -1,6 +1,7 @@
 import DetailMainProfile from './DetailMainProfile';
 import DetailMainContents from './DetailMainContents';
 import DetailMainTags from './DetailMainTags';
+import DetailButtons from './DetailButtons';
 
 export interface DetailMainProps extends Post {
   nickname: string;
@@ -9,10 +10,11 @@ export interface DetailMainProps extends Post {
 
 const DetailMain = ({ data }: { data: DetailMainProps }) => {
   return (
-    <section className="flex flex-col gap-6 py-6 border-b-2">
+    <section className="flex flex-col gap-6 py-6 border-b-2  px-4">
       <DetailMainProfile data={data} />
       <DetailMainContents data={data} />
       <DetailMainTags data={data} />
+      <DetailButtons data={data} />
     </section>
   );
 };

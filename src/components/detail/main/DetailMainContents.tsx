@@ -1,11 +1,11 @@
 import Image from 'next/image';
-import Icons from '../common/Icons';
+import Icons from '../../common/Icons';
 import { hashtagIcon } from '@/utils/Icon';
 import { DetailMainProps } from './DetailMain';
 
 const DetailMainContents = ({ data }: { data: DetailMainProps }) => {
   return (
-    <div className="px-4">
+    <div>
       <div className=" flex flex-col gap-4  ">
         <div className="overflow-auto">
           {data.content}

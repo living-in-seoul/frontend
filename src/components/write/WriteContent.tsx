@@ -51,8 +51,6 @@ const WriteContent = () => {
     setTagText(e.target.value);
   };
 
-  console.log(formData);
-
   return (
     <>
       <form className="flex flex-col w-full h-[85vh] justify-between items-center">

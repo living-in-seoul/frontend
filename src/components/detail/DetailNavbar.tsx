@@ -1,24 +1,26 @@
 'use client';
 import { imageIcon, paperAirplaneIcon, smallMarkerIcon } from '@/utils/Icon';
 import Icons from '../common/Icons';
-import { commentForm } from '@/utils/formregister';
-import { FormEvent } from 'react';
-import useInput from '@/hooks/useInput';
-
-interface SubmitProps {
-  comment: string;
-}
+import { FormEvent, useEffect, useRef, useState } from 'react';
 
 const DetailNavbar = ({ postId }: { postId: string }) => {
-  const [form, onChangeHandler, setComment] = useInput({ comment: '' });
+  const [comment, setComment] = useState<string>('');
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const handleResizeHeight = (e: any) => {
+    setComment(e.target.value);
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height =
+        textareaRef.current.scrollHeight + 'px';
+    }
+  };
   const onSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
     const response = await fetch(`/api/comment/${postId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ comment: form.comment }),
+      body: JSON.stringify({ comment }),
     }).then((response) => response.json());
   };
   return (
@@ -26,7 +28,7 @@ const DetailNavbar = ({ postId }: { postId: string }) => {
       <nav className="fixed bottom-0 right-auto max-w-md w-full border bg-white">
         <form
           onSubmit={onSubmitHandler}
-          className="flex-row h-[60px] flex w-full items-center justify-around px-4 "
+          className="flex-row h-fit flex w-full items-end justify-around px-4 py-4 "
         >
           <Icons
             path={imageIcon}
@@ -43,13 +45,15 @@ const DetailNavbar = ({ postId }: { postId: string }) => {
             fill="none"
             option={{ stroke: '#404040', strokeWidth: '1.3' }}
           />
-          <input
+          <textarea
+            ref={textareaRef}
+            value={comment}
+            onChange={handleResizeHeight}
             name="comment"
-            value={form.comment}
-            onChange={onChangeHandler}
-            className="border rounded-3xl w-64 h-8 pl-3 bg-neutral-300"
+            className="border rounded-3xl w-64 min-h-[20px] pl-3 bg-neutral-300 overflow-auto resize-none max-h-28"
             placeholder="댓글을 입력해주세요"
-            type="text"
+            rows={1}
+            wrap="hard"
           />
           <button type="submit">
             <Icons path={paperAirplaneIcon} fill="none" />
