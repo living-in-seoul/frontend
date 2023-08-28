@@ -241,7 +241,6 @@ interface Post {
 interface ResponseDetailData {
   msg: string;
   result: {
-    hasLiked: any;
     user: User;
     post: Post;
     location: PostLocation;

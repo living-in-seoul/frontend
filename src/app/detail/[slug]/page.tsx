@@ -24,7 +24,10 @@ const DetailPage = async ({ params }: DetailPageProps) => {
           <DetailHeader data={newData.headerData} />
           <DetailMain data={newData.mainData} />
           <DetailComment postId={postId} />
-          <DetailHotHashtag mainPostId={postId} data={newData.hotTagData} />
+          <DetailHotHashtag
+            mainPostId={Number(postId)}
+            data={newData.hotTagData}
+          />
         </>
       )}
       <DetailNavbar postId={postId} />

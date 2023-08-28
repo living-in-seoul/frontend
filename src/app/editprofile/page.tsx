@@ -9,7 +9,8 @@ const EditProfilePage = async () => {
   return (
     <section className="flex flex-col relative w-full h-full gap-6">
       <EditProfileHeader />
-      <EditProfileImage profileImg={profileImageUrl} />
+      <EditProfileImage />
+      {/* profileImg={profileImageUrl} */}
       <EditProfileInfo profile={userProfile} />
       <div id="portalSignin" />
       <div id="portalSignin2" />

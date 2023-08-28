@@ -53,7 +53,7 @@ const EditProfileInfo = ({ profile }: { profile: ResponseUserProfileData }) => {
   useEffect(() => {
     setGenderState(gender);
   }, []);
-  const onSubmitHandler = async (e: MouseEvent<HTMLButtonElement>) => {
+  const onSubmitHandler = async (e: any) => {
     e.preventDefault();
     const data = new FormData();
     const post = {
