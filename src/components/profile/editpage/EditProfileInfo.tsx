@@ -23,7 +23,7 @@ import { MouseEvent, useEffect } from 'react';
 const EditProfileInfo = ({ profile }: { profile: ResponseUserProfileData }) => {
   const { birthDate, gender, hometown, movedDate, nickname } = profile;
   const [signupData, setSignupData] = useRecoilState(signupState);
-  const setGenderState = useSetRecoilState(signupGenderState);
+  const [genderState, setGenderState] = useRecoilState(signupGenderState);
   const callbackUrl = useRecoilState(callbackUrlState);
   const router = useRouter();
   const nowDate = useGetDate();
@@ -53,38 +53,36 @@ const EditProfileInfo = ({ profile }: { profile: ResponseUserProfileData }) => {
   useEffect(() => {
     setGenderState(gender);
   }, []);
-  const onSubmitHandler = async (e: any) => {
-    e.preventDefault();
-    const data = new FormData();
-    const post = {
-      // nickname: formData.category,
-      // content: formData.content,
-      // hashtag: '#' + formData.hashTag.join('#'),
-      // lat: formData.lat,
-      // lng: formData.lng,
-      // gu: '강남구',
-      // dong: '신사동',
+  const onSubmitHandler = async (data: any) => {
+    const formData = new FormData();
+    const user = {
+      nickname: data.nickname,
+      birthDate: data.birthDate,
+      hometown: data.hometown,
+      gender: genderState,
+      movedDate: signupData.movedDate,
     };
-    data.append(
-      'post',
-      new Blob([JSON.stringify(post)], { type: 'application/json' }),
-    );
-    // data.append('photos', file);
-    for (let [key, value] of data.entries()) {
-      console.log(key, value);
-    }
+    console.log('xzcvzxcvzxcvx', user);
+    // data.append(
+    //   'post',
+    //   new Blob([JSON.stringify(post)], { type: 'application/json' }),
+    // );
+    // // data.append('photos', file);
+    // for (let [key, value] of data.entries()) {
+    //   console.log(key, value);
+    // }
 
-    const response = await fetch('/api/signup', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    }).then((response) => response.json());
-    console.log(response);
-    alert(response.message);
-    router.push(`${callbackUrl[0]}`);
-    reset();
+    // const response = await fetch('/api/signup', {
+    //   method: 'PUT',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(data),
+    // }).then((response) => response.json());
+    // console.log(response);
+    // alert(response.message);
+    // router.push(`${callbackUrl[0]}`);
+    // reset();
   };
   const onSelectHandler = (movedDate: string) => {
     setSignupData((prev) => ({ ...prev, movedDate }));

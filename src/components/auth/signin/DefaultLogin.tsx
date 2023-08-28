@@ -25,7 +25,7 @@ const DefaultLogin = () => {
     },
   });
   console.log(callbackUrl);
-  const url = callbackUrl[0] ?? 'home';
+  const url = callbackUrl[0] ?? '/home';
   const onSubmitHandler: SubmitHandler<RequestLogin> = async (data) => {
     const response = await fetch('/api/signin', {
       method: 'POST',
