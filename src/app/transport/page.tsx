@@ -1,4 +1,5 @@
 'use client';
+import MapProvider from '@/context/MapProvider';
 import { Libraries } from '@react-google-maps/api';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
@@ -11,7 +12,9 @@ const TransPortPage = () => {
   const [library, setLibrary] = useState<Libraries>(['routes', 'geometry']);
   return (
     <>
-      <DynamicMap />
+      <MapProvider>
+        <DynamicMap />
+      </MapProvider>
     </>
   );
 };
