@@ -13,7 +13,7 @@ const usePosts = (state: RecoilState<string>) => {
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
     onSuccess: (data, key, config) => {
-      console.log(data, key);
+      console.log(data);
       setPostKey(key);
     },
   });

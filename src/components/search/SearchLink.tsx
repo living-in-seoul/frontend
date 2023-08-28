@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-export default function NavLink({
+export default function SearchLink({
   category,
   children,
 }: {
@@ -13,19 +13,17 @@ export default function NavLink({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const link = category.link ? `/community/${category.link}` : '/community';
+  const link = category.link ? `/search?category=${category.link}` : '/search';
 
   const isActive = category.link
     ? `${category.link}` === pathname.split('/')[2]
-    : pathname.split('/')[2] === 'All' || pathname === '/community';
+    : pathname.split('/')[2] === 'All' || pathname === '/search';
 
   return (
     <Link
       href={link}
       style={{ fontWeight: isActive ? 'bold' : 'normal' }}
-      className={`grow flex items-center justify-center py-4 ${
-        isActive && 'border-b-4 border-neutral-500'
-      }`}
+      className={`relative w-1/4 flex items-center justify-center py-4`}
     >
       {children}
     </Link>

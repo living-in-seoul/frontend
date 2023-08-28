@@ -1,4 +1,9 @@
-import { getHomeList, getHomeListWithToken } from '@/service/home';
+import {
+  getHomeHomeTownPostList,
+  getHomeList,
+  getHomeListWithToken,
+  getHomeReviewPostList,
+} from '@/service/home';
 import { NextRequest, NextResponse } from 'next/server';
 
 interface Context {
@@ -11,6 +16,18 @@ export const GET = async (req: NextRequest, context: Context) => {
   const hashtagName = searchParams.get('hashtag') ?? '';
   const Token = req.cookies.get('accessToken')?.value;
   const postType = searchParams.get('postType') ?? 'newer';
+
+  if (category === 'reviews') {
+    return await getHomeReviewPostList(hashtagName).then((res) =>
+      NextResponse.json(res),
+    );
+  }
+  if (category === 'hometown') {
+    return await getHomeHomeTownPostList(hashtagName).then((res) =>
+      NextResponse.json(res),
+    );
+  }
+
   if (Token) {
     return await getHomeListWithToken(
       category,

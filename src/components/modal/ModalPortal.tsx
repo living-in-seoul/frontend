@@ -1,4 +1,3 @@
-'use client';
 import reactDOM from 'react-dom';
 
 interface ModalPortalProps {

@@ -4,6 +4,10 @@ import {
   GoogleMap,
   DirectionsService,
   DirectionsRenderer,
+  MarkerClustererF,
+  MarkerF,
+  MarkerClusterer,
+  Marker,
 } from '@react-google-maps/api';
 import React, { useRef, useState, useEffect } from 'react';
 import MapBottomSheet from './bottomsheet/MapBottomSheet';
@@ -24,17 +28,17 @@ const MyMap: React.FC = () => {
   const [currentLocation, setCurrentLocation] = useState<any>(null);
   const directionsPanelRef = useRef(null);
 
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const pos = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        };
-        setCurrentLocation(pos);
-      });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition((position) => {
+  //       const pos = {
+  //         lat: position.coords.latitude,
+  //         lng: position.coords.longitude,
+  //       };
+  //       setCurrentLocation(pos);
+  //     });
+  //   }
+  // }, []);
 
   const directionsCallback = (
     response: google.maps.DirectionsResult | null,
@@ -48,7 +52,44 @@ const MyMap: React.FC = () => {
       }
     }
   };
+  const mapContainerStyle = {
+    width: '100%',
+    height: '400px',
+  };
 
+  const defaultCenter = {
+    lat: 37.5665,
+    lng: 126.978,
+  };
+
+  const markers = [
+    { lat: 37.5715, lng: 126.978 },
+    { lat: 37.5715, lng: 126.978 },
+    { lat: 37.5715, lng: 126.978 },
+    // ... 다른 위치 데이터
+  ];
+  const location = [
+    { lat: 37.5655, lng: 126.971 },
+    { lat: 37.5665, lng: 126.973 },
+    { lat: 37.5675, lng: 126.975 },
+    { lat: 37.5685, lng: 126.977 },
+    { lat: 37.5695, lng: 126.979 },
+  ];
+  function customCalculator(markers: any[], num: number) {
+    // 클러스터에 포함된 마커들을 콘솔에 출력
+    markers.forEach((marker) => {
+      console.log(marker.getPosition()); // 각 마커의 위치 출력
+      // 필요한 경우 marker의 다른 속성들도 출력할 수 있습니다.
+    });
+
+    var count = markers.length;
+    var index = 1;
+
+    return {
+      text: count.toString(),
+      index: index,
+    };
+  }
   return (
     <GoogleMap
       mapContainerStyle={containerStyle}
@@ -60,31 +101,41 @@ const MyMap: React.FC = () => {
         }
       }
     >
-      {currentLocation && !hasRequested && (
-        <DirectionsService
-          options={{
-            origin: currentLocation,
-            // 강남역 위도, 경도
-            destination: new google.maps.LatLng(37.3948, 127.1112),
-            travelMode: google.maps.TravelMode.TRANSIT,
-          }}
-          callback={(response, status) => {
-            directionsCallback(response, status);
-            setHasRequested(true);
-          }}
-        />
-      )}
-      {directions && (
-        <DirectionsRenderer
-          options={{
-            directions: directions,
-            panel: directionsPanelRef.current,
-          }}
-        />
-      )}
-      <MapBottomSheet>
-        <div ref={directionsPanelRef} className="w-full"></div>
-      </MapBottomSheet>
+      <MarkerClusterer calculator={customCalculator}>
+        {(clusterer) => (
+          <>
+            <MarkerF
+              key="marker1"
+              position={location[0]}
+              clusterer={clusterer}
+            />
+
+            <MarkerF
+              key="marker2"
+              position={location[1]}
+              clusterer={clusterer}
+            />
+
+            <MarkerF
+              key="marker3"
+              position={location[2]}
+              clusterer={clusterer}
+            />
+
+            <MarkerF
+              key="marker4"
+              position={location[3]}
+              clusterer={clusterer}
+            />
+
+            <MarkerF
+              key="marker5"
+              position={location[4]}
+              clusterer={clusterer}
+            />
+          </>
+        )}
+      </MarkerClusterer>
     </GoogleMap>
   );
 };
