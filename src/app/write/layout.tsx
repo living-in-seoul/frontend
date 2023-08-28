@@ -6,7 +6,7 @@ export default function WriteLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="w-full h-full">
+    <main className="relative w-full h-full">
       <MapProvider>
         {children}
         <div id="imagePortal" />

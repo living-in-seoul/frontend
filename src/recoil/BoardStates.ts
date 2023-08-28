@@ -23,5 +23,8 @@ export const formDataState = atom<RequestBoardWrite>({
     content: '',
     lat: 0,
     lng: 0,
+    lname: '',
+    address: '',
+    gu: '',
   },
 });

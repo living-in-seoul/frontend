@@ -25,15 +25,6 @@ interface ResponseAccessToken {
   accessToken: string;
 }
 
-/** 전체 맵 조회 - 유저 위치 구,동 받기*/
-interface ResponseLocation {
-  msg: string;
-  result: {
-    gu: string;
-    dong: string;
-  };
-}
-
 /** 게시물 상세 페이지 데이터 (게시물+유저정보) */
 interface ResponseBoardDetail {
   msg: string;
@@ -250,6 +241,7 @@ interface Post {
 interface ResponseDetailData {
   msg: string;
   result: {
+    hasLiked: any;
     user: User;
     post: Post;
     location: PostLocation;

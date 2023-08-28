@@ -1,4 +1,4 @@
-import { Tangerine } from 'next/font/google';
+import { seoulCenterCoords } from './constants/constants';
 
 /**요청 재시도 */
 export async function retryFetch(
@@ -90,3 +90,4 @@ export const DetailNewData = (data: ResponseDetailData) => {
 //s3를 사용한 이유는 시간여유가 없던 것에 의해서 이미지 호스팅을 함
 // 보일러 플레이트가 생각보다 크지 않고 그것을 통해서 클라이언트에서 핸들링해서
 // 부담이 덜 간다
+//이건 뭐죠

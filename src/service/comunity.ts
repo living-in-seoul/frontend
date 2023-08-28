@@ -9,7 +9,7 @@ export const getCommunityList = async (
     const response = await fetch(
       `${
         process.env.NEXT_PUBLIC_SERVER
-      }/tags/post/category?size=10&page=1&hashtagName=${hashtags}&category=${categoryKO(
+      }/tags/post/category?size=100&page=1&hashtagName=${hashtags}&category=${categoryKO(
         category,
       )}&type=${postType}`,
       { next: { revalidate: 2000 } },
@@ -33,7 +33,7 @@ export const getCommunityListWithToken = async (
     const response = await fetch(
       `${
         process.env.NEXT_PUBLIC_SERVER
-      }/tags/post/category?size=10&page=1&hashtagName=${hashtags}&category=${categoryKO(
+      }/tags/post/category?size=50&page=1&hashtagName=${hashtags}&category=${categoryKO(
         category,
       )}&type=${postType}`,
       {
@@ -46,7 +46,7 @@ export const getCommunityListWithToken = async (
     return response;
   }
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/posts/get?size=10&page=1`,
+    `${process.env.NEXT_PUBLIC_SERVER}/posts/get?size=50&page=1`,
 
     {
       headers: {
