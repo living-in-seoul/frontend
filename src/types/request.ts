@@ -7,6 +7,7 @@ interface RequestLogin {
 /** 소셜 로그인 요청 데이터*/
 interface RequestOauthLogin {
   code: string;
+  state: string;
 }
 
 /** 회원가입 요청 데이터 */
@@ -21,6 +22,15 @@ interface RequestNonessentialRegister {
   birthDate: string;
   hometown: string;
   movedDate: string;
+}
+
+interface RequestProfilePutData {
+  nickname: string;
+  birthDate: string;
+  gender: string;
+  hometown: string;
+  movedDate: string;
+  거주지역: string;
 }
 
 /** 게시물 작성 요청 데이터 */

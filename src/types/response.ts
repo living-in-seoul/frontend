@@ -191,7 +191,7 @@ interface Comment {
   createdAt: string;
   userImg: string | null;
   commentHasLiked: boolean;
-  reComments: ReComment[];
+  reComments: ReComment[] | null;
 }
 
 interface ResultItem {
@@ -212,11 +212,11 @@ interface ResponsePopularCategoryHashtag {
 }
 /** 대댓글 데이터 */
 interface ReComment {
-  id: number;
+  reCommentId: number;
   nickname: string;
   reComment: string;
   createdAt: string;
-  modifiedAt: string;
+  reCommentHasLiked: boolean;
   userImg: string | null;
 }
 
@@ -245,20 +245,47 @@ interface ResponseDetailData {
     user: User;
     post: Post;
     location: PostLocation;
+    hasLiked: boolean;
   };
+}
+
+interface PostResult {
+  user: User;
+  post: Post;
+  location: PostLocation;
   hasLiked: boolean;
+}
+
+interface ResponseMyPostData {
+  msg: string;
+  pageable: {
+    totalPages: number;
+    totalElements: number;
+    size: number;
+  };
+
+  result: PostResult[];
 }
 
 /**포스트 댓글 데이터   */
 interface Comment {
+  userImg: string | null;
   createdAt: string;
-  modifiedAt: string;
   nickname: string;
   commentId: number;
   comment: string;
+  commentSize: number;
+  commentHasLiked: boolean;
   reCommentList: ReComment[];
 }
-
+interface ResponseCommentData {
+  pageable: {
+    totalPages: number;
+    totalElements: number;
+    size: number;
+  };
+  comments: Comment[];
+}
 interface ResultItem {
   user: User;
   post: Post;
@@ -273,4 +300,13 @@ interface ResponsePopularCategoryHashtag {
     totalElements: number;
     size: number;
   };
+}
+/**유저 프로필 정보 데이터   */
+interface ResponseUserProfileData {
+  nickname: string;
+  birthDate: string;
+  movedDate: string;
+  gender: string;
+  hometown: string;
+  porfileImageUrl: string;
 }

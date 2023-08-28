@@ -1,34 +1,29 @@
 'use client';
 
-import { SubmitHandler, useForm } from 'react-hook-form';
-
+import { useForm } from 'react-hook-form';
 import Button from '@/components/common/Button';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useRouter } from 'next/navigation';
 import useGetDate from '@/hooks/useGetDate';
-import { useState } from 'react';
-
 import {
   birthDateForm,
   hometownForm,
   nicknameForm,
 } from '@/utils/formregister';
-import { callbackUrlState, signupState } from '@/recoil/authStates';
+import {
+  callbackUrlState,
+  signupGenderState,
+  signupState,
+} from '@/recoil/authStates';
 import Table from '@/components/item/Table';
-import { genderArray } from '@/utils/constants/auth';
 import AuthInput from '@/components/auth/signin/AuthInput';
-import RadioInput from '@/components/auth/signup/RadioInput';
 import EditProfileRadioBtn from './EditProfileRadioBtn';
-import Icons from '@/components/common/Icons';
-import { blackMarkerIcon } from '@/utils/Icon';
+import { MouseEvent, useEffect } from 'react';
 
-interface SignupSecondFormPorps {
-  hometown: string;
-  birthDate: string;
-}
-
-const EditProfileInfo = () => {
+const EditProfileInfo = ({ profile }: { profile: ResponseUserProfileData }) => {
+  const { birthDate, gender, hometown, movedDate, nickname } = profile;
   const [signupData, setSignupData] = useRecoilState(signupState);
+  const setGenderState = useSetRecoilState(signupGenderState);
   const callbackUrl = useRecoilState(callbackUrlState);
   const router = useRouter();
   const nowDate = useGetDate();
@@ -40,9 +35,9 @@ const EditProfileInfo = () => {
   } = useForm({
     mode: 'onSubmit',
     defaultValues: {
-      hometown: '',
-      birthDate: '',
-      nickname: '',
+      hometown,
+      birthDate,
+      nickname,
     },
   });
   const newBirthDayFrom = register('birthDate', {
@@ -55,18 +50,36 @@ const EditProfileInfo = () => {
       },
     },
   });
-  const onSubmitHandler: SubmitHandler<SignupSecondFormPorps> = async (
-    data,
-  ) => {
-    const newData = { ...signupData, ...data };
-    setSignupData((prev) => ({ ...prev, ...data }));
-    console.log('뉴데이터', newData);
+  useEffect(() => {
+    setGenderState(gender);
+  }, []);
+  const onSubmitHandler = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const data = new FormData();
+    const post = {
+      // nickname: formData.category,
+      // content: formData.content,
+      // hashtag: '#' + formData.hashTag.join('#'),
+      // lat: formData.lat,
+      // lng: formData.lng,
+      // gu: '강남구',
+      // dong: '신사동',
+    };
+    data.append(
+      'post',
+      new Blob([JSON.stringify(post)], { type: 'application/json' }),
+    );
+    // data.append('photos', file);
+    for (let [key, value] of data.entries()) {
+      console.log(key, value);
+    }
+
     const response = await fetch('/api/signup', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(newData),
+      body: JSON.stringify(data),
     }).then((response) => response.json());
     console.log(response);
     alert(response.message);
@@ -77,23 +90,21 @@ const EditProfileInfo = () => {
     setSignupData((prev) => ({ ...prev, movedDate }));
   };
   return (
-    <section className="h-full">
+    <section>
       <form
-        onSubmit={handleSubmit(onSubmitHandler)}
-        className="flex flex-col gap-5 h-full justify-between"
+        onSubmit={handleSubmit((e) => onSubmitHandler(e))}
+        className="flex flex-col gap-10 h-full justify-between"
       >
-        <div className="">
-          <div className="">
-            <AuthInput
-              id="nickname"
-              placeholder="닉네임을 입력해주세요"
-              label="닉네임"
-              mainProps={register('nickname', nicknameForm)}
-              isSubmitted={isSubmitted}
-              isErrors={errors.nickname}
-              errorsMessage={errors.nickname?.message}
-            />
-          </div>
+        <div className="flex flex-col gap-4 pb-20">
+          <AuthInput
+            id="nickname"
+            placeholder="닉네임을 입력해주세요"
+            label="닉네임"
+            mainProps={register('nickname', nicknameForm)}
+            isSubmitted={isSubmitted}
+            isErrors={errors.nickname}
+            errorsMessage={errors.nickname?.message}
+          />
           <AuthInput
             id="birthDate"
             placeholder="yyyy-mm-dd"
@@ -123,23 +134,25 @@ const EditProfileInfo = () => {
             height="h-24"
             label="서울 거주 기간"
           />
-          <div className="flex flex-col gap-3">
+          {/* <div className="flex flex-col gap-3">
             <label className="text-neutral-500 text-sm ">거주 지역</label>
             <div className="w-full h-12 text-base border border-zinc-400 rounded-xl px-4 outline-teal-400 flex items-center ">
               <Icons path={blackMarkerIcon} fill="none" />
               <span>서울시 전체</span>
             </div>
-          </div>
+          </div> */}
         </div>
-        <Button
-          type="submit"
-          size="w-full"
-          title="수정하기"
-          bgColor="bg-zinc-300"
-          border="none"
-          color="text-white"
-          hoverColor="bg-teal-400"
-        />
+        <div className="bottom-0 mb-2">
+          <Button
+            type="submit"
+            size="w-full"
+            title="수정하기"
+            bgColor="bg-zinc-300"
+            border="none"
+            color="text-white"
+            hoverColor="bg-teal-400"
+          />
+        </div>
       </form>
     </section>
   );

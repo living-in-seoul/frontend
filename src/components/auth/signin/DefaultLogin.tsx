@@ -24,6 +24,7 @@ const DefaultLogin = () => {
       password: '',
     },
   });
+  console.log(callbackUrl);
   const url = callbackUrl[0] ?? 'home';
   const onSubmitHandler: SubmitHandler<RequestLogin> = async (data) => {
     const response = await fetch('/api/signin', {
@@ -35,7 +36,7 @@ const DefaultLogin = () => {
     }).then((response) => response.json());
     alert(response.msg);
     reset();
-    router.push(`/${url}`);
+    router.push(url);
   };
 
   return (

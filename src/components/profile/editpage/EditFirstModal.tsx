@@ -1,40 +1,30 @@
 'use client';
 
-import ModalOutside from '@/components/modal/ModalOutside';
-import ModalPortal from '@/components/modal/ModalPortal';
 import { profileSecondOpenModalState } from '@/recoil/authStates';
-import { useRecoilState } from 'recoil';
-import EditSecondModal from './EditSecondModal';
+import { useSetRecoilState } from 'recoil';
 
-export const profileModalArray = ['로그아웃', '회원탈퇴'];
+export const profileModalArray = [
+  { text: '로그아웃', color: 'text-blue-600' },
+  { text: '회원탈퇴', color: 'text-red-600' },
+];
 const EditFirstModal = () => {
-  const [profileSecondOpenModal, setProfileSecondOpenModal] = useRecoilState(
+  const setProfileSecondOpenModal = useSetRecoilState(
     profileSecondOpenModalState,
   );
+
   return (
     <article>
-      {profileModalArray.map((text) => (
+      {profileModalArray.map((profile) => (
         <div
-          key={text}
-          className="border-y-2 py-3 flex justify-center"
-          onClick={() => setProfileSecondOpenModal(true)}
+          key={profile.text}
+          className={`border-t-2 py-3 flex justify-center border-collapse ${profile.color}`}
+          onClick={() => {
+            setProfileSecondOpenModal(true);
+          }}
         >
-          <span>{text}</span>
+          <span>{profile.text}</span>
         </div>
       ))}
-      {profileSecondOpenModal && (
-        <ModalPortal nodeName="portalSignin">
-          <ModalOutside
-            className=" bg-white shadow-sm"
-            onClose={() => {
-              setProfileSecondOpenModal(false);
-              document.body.style.overflow = 'auto';
-            }}
-          >
-            <EditSecondModal />
-          </ModalOutside>
-        </ModalPortal>
-      )}
     </article>
   );
 };

@@ -10,6 +10,18 @@ export const signupState = atom<RequestNonessentialRegister>({
   },
 });
 
+export const userPorfileState = atom<RequestProfilePutData>({
+  key: 'userPorfileState',
+  default: {
+    nickname: '',
+    birthDate: '',
+    gender: '',
+    hometown: '',
+    movedDate: '',
+    거주지역: '',
+  },
+});
+
 export const signupEssentialState = atom<boolean>({
   key: 'isEssentialState',
   default: true,
