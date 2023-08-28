@@ -1,9 +1,7 @@
-//페이지별로 파일 분리
-
-import { Libraries } from '@react-google-maps/api';
 import { MapStyleVersionTwo } from '../styles';
 
 export const seoulCenterCoords: Partial<SeoulCoords> = {
+  전체: { lat: 37.5519, lng: 126.9918 },
   강남구: { lat: 37.5172, lng: 127.0473 },
   강동구: { lat: 37.5301, lng: 127.1238 },
   강서구: { lat: 37.5509, lng: 126.8495 },
@@ -36,39 +34,6 @@ export const outerCoords = [
   { lat: 38.634, lng: 131.8727 },
   { lat: 33.0041, lng: 131.8727 },
   { lat: 33.0041, lng: 124.5863 },
-];
-
-export const Filters = [
-  { name: '음식점', category: 'restaurants' },
-  { name: '카페', category: 'cafe' },
-  { name: '편의점', category: 'convenience_store' },
-  { name: '마트', category: 'supermarket' },
-  { name: '은행', category: 'bank' },
-  { name: '병원', category: 'hospital' },
-  { name: '약국', category: 'pharmacy' },
-  { name: '헬스장', category: 'gym' },
-  { name: '세탁시설', category: 'laundry' },
-  { name: '공원', category: 'park' },
-  { name: '도서관', category: 'library' },
-  { name: 'atm', category: 'atm' },
-  { name: '문화시설', category: 'museum' },
-  { name: '대학가', category: 'university' },
-  { name: '영화관', category: 'movie_theater' },
-];
-
-export const categories = [
-  '여성이 많은',
-  '남성이 많은',
-  '매우 붐빔',
-  '여유 로운',
-];
-
-export const MapBoardOptions = ['전체', '후기', '동향소통', '생활정보'];
-
-export const googleMapsLibraries: Libraries = [
-  'places',
-  'visualization',
-  'marker',
 ];
 
 export const CommContainerStyle = {

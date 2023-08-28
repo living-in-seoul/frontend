@@ -5,21 +5,25 @@ import {
 import { NextRequest, NextResponse } from 'next/server';
 
 interface Context {
-  //동도 타입 있으면 바꾸기
-  params: { slug: [string, guchung, string] };
+  params: { slug: [string, guchung] };
 }
+
+//서울시 전체일 경우 추가하기 (gu null)
 
 export const GET = async (req: NextRequest, context: Context) => {
   const { searchParams } = req.nextUrl;
   const category = searchParams.get('category') ?? 'All';
   const gu = searchParams.get('gu');
-  const dong = searchParams.get('dong');
   const Token = req.cookies.get('accessToken')?.value;
 
   if (Token) {
-    return await getCommunityListWithToken(category, 'newer', '', Token).then(
-      (data) => NextResponse.json(data),
-    );
+    const list = await getCommunityListWithToken(category, 'newer', '', Token);
+    if (gu) {
+      const data = list.result.filter((data: any) => data.location.gu === gu);
+      return NextResponse.json(data);
+    } else {
+      return NextResponse.json(list.result);
+    }
   }
 
   return await getCommunityList(category, 'newer', '').then((data) =>

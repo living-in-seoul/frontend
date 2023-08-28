@@ -1,49 +1,59 @@
+//현위치로 center 갈 때 header 안 바뀌는거 괜찮나?
+
 'use client';
-import { useEffect } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useEffect, useState } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import useMapInstance from '@/hooks/useMapInstance';
-import { MapStyleVersionTwo } from '@/utils/styles';
 import { GoogleMap, MarkerF } from '@react-google-maps/api';
 import {
   boardListState,
-  centerState,
   currentState,
   filterOptionState,
-  gudongState,
   markerIdState,
 } from '@/recoil/mapStates';
 import { communityKeyState } from '@/recoil/communityStates';
 import usePosts from '@/hooks/usePosts';
 import CustomOverlayMarker from './marker/CustomOverlayMarker';
-import { CommContainerStyle, mapOptions } from '@/utils/constants/constants';
-
-const sample = [
-  { gu: '강남구', dong: '신사동' },
-  { gu: '강남구', dong: '역삼동' },
-];
+import {
+  CommContainerStyle,
+  mapOptions,
+  seoulCenterCoords,
+} from '@/utils/constants/constants';
 
 const CommunityMap = () => {
   const { map, onLoad, onUnmount } = useMapInstance();
-  // const [zoom, setZoom] = useState(16);
-  const [markerId, setMarkerId] = useRecoilState(markerIdState);
-  const [center, setCenter] = useRecoilState(centerState);
+  const [center, setCenter] = useState<LatLng | null | undefined>(null);
+  const { posts: boardList } = usePosts(communityKeyState);
   const filterOption = useRecoilValue(filterOptionState);
-  const gudong = useRecoilValue(gudongState);
   const currentValue = useRecoilValue(currentState);
+  const setMarkerId = useSetRecoilState(markerIdState);
   const setBoardListState = useSetRecoilState(boardListState);
   const setCommunityKey = useSetRecoilState(communityKeyState);
-  const { posts: boardList } = usePosts(communityKeyState);
+
+  //로컬스토리지 여기서 잠깐 저장좀
+  localStorage.setItem('location', '강남구');
 
   useEffect(() => {
-    setCommunityKey(
-      `/api/map/category?category=${filterOption}&gu=${sample[0].gu}&dong=${sample[0].dong}`,
-    );
-    console.log(filterOption);
+    const getCenter = () => {
+      const gu = localStorage.getItem('location') as guchung;
+      console.log(gu);
+      if (gu && seoulCenterCoords.hasOwnProperty(gu)) {
+        setCenter(seoulCenterCoords[gu]);
+      } else {
+        setCenter(seoulCenterCoords.전체);
+      }
+    };
+    getCenter();
+  }, []);
+
+  useEffect(() => {
+    const gu = localStorage.getItem('location') as guchung;
+    setCommunityKey(`/api/map/category?category=${filterOption}&gu=${gu}`);
   }, [filterOption, setCommunityKey]);
 
   useEffect(() => {
     if (boardList) setBoardListState(boardList);
-    if (currentValue) setCenter(currentValue);
+    if (currentValue.lat !== 0) setCenter(currentValue);
   }, [boardList, currentValue, filterOption, setBoardListState, setCenter]);
 
   useEffect(() => {
@@ -65,34 +75,32 @@ const CommunityMap = () => {
     <section className="w-full h-full relative z-100">
       <GoogleMap
         mapContainerStyle={CommContainerStyle}
-        center={center}
-        zoom={10}
+        center={center ?? undefined}
         onLoad={onLoad}
         onUnmount={onUnmount}
         options={mapOptions}
       >
         <>
           {/* 현위치 */}
-          {/* <MarkerF position={currentValue} /> */}
+          <MarkerF position={currentValue} />
           {/* boardlist */}
-          {boardList &&
-            boardList.result.map((post) => {
-              const { postId, hashtag } = post.post;
-              const latlng: LatLng = {
-                lat: Number(post.location.lat),
-                lng: Number(post.location.lng),
-              };
-              return (
-                <CustomOverlayMarker
-                  key={postId}
-                  position={latlng}
-                  text={`# ${hashtag.split('#')[1]}`}
-                  onClick={(e: google.maps.event) => {
-                    onClickMarker(e, postId, latlng);
-                  }}
-                />
-              );
-            })}
+          {boardList?.result.map((post) => {
+            const { postId, hashtag } = post.post;
+            const latlng: LatLng = {
+              lat: Number(post.location.lat),
+              lng: Number(post.location.lng),
+            };
+            return (
+              <CustomOverlayMarker
+                key={postId}
+                position={latlng}
+                text={`# ${hashtag?.split('#')[1]}`}
+                onClick={(e: google.maps.event) => {
+                  onClickMarker(e, postId, latlng);
+                }}
+              />
+            );
+          })}
         </>
       </GoogleMap>
     </section>

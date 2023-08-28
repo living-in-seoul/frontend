@@ -31,10 +31,10 @@ const PostItem = ({ post, user, onMap, hasLiked }: PostItemProps) => {
   const userName = user.nickname.slice(0, 10);
 
   const HastagsContent = (hashtag: string) => {
-    const HashTags = hashtag.split('#').filter((tag) => tag !== '');
+    // const HashTags = hashtag.split('#').filter((tag) => tag !== '');
     return (
       <ul className="flex gap-2">
-        {HashTags.map((tag, index) => (
+        {/* {HashTags.map((tag, index) => (
           <div key={tag + index} className="flex items-center">
             <span className="text-neutral-600 text-xs font-normal leading-3">
               {'#'}
@@ -43,7 +43,7 @@ const PostItem = ({ post, user, onMap, hasLiked }: PostItemProps) => {
               {tag}
             </span>
           </div>
-        ))}
+        ))} */}
       </ul>
     );
   };
