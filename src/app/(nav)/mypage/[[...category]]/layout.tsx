@@ -2,17 +2,7 @@ import Navbar from '@/components/layouts/Navbar';
 import MypageHeader from '@/components/profile/mypage/MypageHeader';
 import MypageProfile from '@/components/profile/mypage/MypageProfile';
 import MypageLink from '@/components/profile/mypage/MypageLink';
-
-export const MYPAGE_LINK_NAME = [
-  {
-    link: 'scrapped',
-    name: '찜한 글',
-  },
-  {
-    link: 'writed',
-    name: '작성한 글',
-  },
-];
+import { MYPAGE_LINK_NAME } from '@/utils/constants/board';
 
 export default function NavbarLayout({
   children,

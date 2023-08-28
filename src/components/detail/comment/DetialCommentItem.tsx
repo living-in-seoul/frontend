@@ -5,7 +5,6 @@ import UserProfile from '../../item/UserProfile';
 import { useEffect, useRef, useState } from 'react';
 import LikeCommentCase from './LikeCommentCase';
 import { useRecoilValue } from 'recoil';
-import { inputRefState } from '@/recoil/commentState';
 interface DetialCommentItemProps {
   commentData: Comment;
   children: React.ReactNode;
@@ -22,7 +21,8 @@ const DetialCommentItem = ({
   const { createdAt, nickname, comment, commentId, commentHasLiked } =
     commentData;
   const [onModal, setOnModal] = useState<boolean>(false);
-  const modalRef = useRef(null);
+  const modalRef = useRef<HTMLDivElement | null>(null);
+  const spanRef = useRef<HTMLSpanElement | null>(null);
   const handleClickOutside = (e: any) => {
     if (modalRef.current && !modalRef.current.contains(e.target)) {
       setOnModal(false);
@@ -38,7 +38,7 @@ const DetialCommentItem = ({
     e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
   ) => {
     try {
-      if (e.target.id === '삭제하기') {
+      if (spanRef.current?.id === '삭제하기') {
         const response = await fetch(`/api/comment/${commentId}`, {
           method: 'DELETE',
           headers: {
@@ -67,6 +67,7 @@ const DetialCommentItem = ({
           >
             {modalArray.map((modal) => (
               <span
+                ref={spanRef}
                 key={modal.text}
                 id={modal.text}
                 className={`${modal.color}`}

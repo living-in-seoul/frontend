@@ -4,19 +4,11 @@ import { useRecoilValue } from 'recoil';
 import Icons from '../../common/Icons';
 import { location } from '@/utils/Icon';
 import { formDataState } from '@/recoil/BoardStates';
-import { useEffect, useState } from 'react';
 
 const SelectedLocation = () => {
   const detail = useRecoilValue(detailState);
   const formData = useRecoilValue(formDataState);
   const currentValue = useRecoilValue(currentState);
-  const [isCurrent, setIsCurrent] = useState(false);
-
-  useEffect(() => {
-    setIsCurrent(
-      formData.lat === currentValue.lat && formData.lng === currentValue.lng,
-    );
-  }, [currentValue.lat, currentValue.lng, formData.lat, formData.lng]);
 
   return (
     <div className="flex justify-between w-full h-full items-center bg-white ">
@@ -37,8 +29,6 @@ const SelectedLocation = () => {
               </p>
             </div>
           </>
-        ) : isCurrent ? (
-          <p className="ml-2 text-sm text-neutral-400">현위치로 설정</p>
         ) : (
           <p className="ml-2 text-sm text-neutral-400">
             공유할 위치를 선택해 주세요
