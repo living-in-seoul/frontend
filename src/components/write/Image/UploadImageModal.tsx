@@ -14,12 +14,12 @@ const UploadImageModal = ({ onClose }: UploadImageModalProps) => {
   const onChangePostImg = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const filesArray = Array.from(e.target.files);
+      if ((imageState ? imageState.length : 0) + filesArray.length > 5) {
+        alert('5개 이하로 넣어주세영');
+        return;
+      }
       setImageState(filesArray);
       setOpenImagePortal(false);
-    }
-    //수정하기!!!5개 리밋
-    if (imageState && imageState.length > 5) {
-      alert('5개 이하로 넣어주세영');
     }
   };
 

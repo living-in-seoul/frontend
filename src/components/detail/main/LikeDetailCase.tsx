@@ -6,7 +6,7 @@ import { useRecoilState } from 'recoil';
 import { AuthOpenModalState } from '@/recoil/authStates';
 import ModalPortal from '../../modal/ModalPortal';
 import ModalOutside from '../../modal/ModalOutside';
-import AuthModal from '@/app/(nav)/community/AuthModal';
+// import AuthModal from '@/app/(nav)/community/AuthModal';
 
 interface LikeDetailCaseProps {
   likeSize: number;
@@ -72,7 +72,7 @@ const LikeDetailCase = ({
               document.body.style.overflow = 'auto';
             }}
           >
-            <AuthModal />
+            {/* <AuthModal /> */}
           </ModalOutside>
         </ModalPortal>
       )}

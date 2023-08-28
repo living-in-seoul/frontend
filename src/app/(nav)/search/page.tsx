@@ -1,4 +1,5 @@
-import SearchComponent from '@/components/community/SearchComponent';
+import SearchComponent from '@/components/search/SearchComponent';
+
 interface PageProps {
   searchParams: { [key: string]: string | undefined };
 }

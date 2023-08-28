@@ -1,5 +1,5 @@
-import SearchComponent from '@/components/community/SearchComponent';
 import Modal from '@/components/layouts/Modal';
+import SearchComponent from '@/components/search/SearchComponent';
 interface PageProps {
   searchParams: { [key: string]: string | undefined };
 }

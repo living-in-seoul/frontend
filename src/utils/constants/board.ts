@@ -34,3 +34,14 @@ export const SEARCH_LINK_NAME = [
     name: '생활정보',
   },
 ];
+
+export const MYPAGE_LINK_NAME = [
+  {
+    link: 'scrapped',
+    name: '찜한 글',
+  },
+  {
+    link: 'writed',
+    name: '작성한 글',
+  },
+];
