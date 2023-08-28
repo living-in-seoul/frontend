@@ -1,4 +1,4 @@
-import { Tangerine } from 'next/font/google';
+import { seoulCenterCoords } from './constants/constants';
 
 /**요청 재시도 */
 export async function retryFetch(
@@ -67,19 +67,14 @@ export const DetailNewData = (data: ResponseDetailData) => {
   const maintag = data.result.post.hashtag.split('#').filter((tag) => tag)[0];
   const mainData = {
     nickname: data.result.user.nickname,
-    hasLiked: data.hasLiked,
+    hasLiked: data.result.hasLiked,
     ...data.result.post,
-  };
-  const commentData = {
-    commentSize: data.result.post.commentSize,
-    comments: data.result.post.comments,
-    hasLiked: data.hasLiked,
   };
   const hotTagData = {
     tag: maintag,
     category: data.result.post.category,
   };
-  const newData = { headerData, mainData, commentData, hotTagData };
+  const newData = { headerData, mainData, hotTagData };
   return newData;
 };
 

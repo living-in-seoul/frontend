@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from 'react';
 
-const ZOOM = 11;
+const ZOOM = 14;
 
 const useMapInstance = () => {
   const [map, setMap] = useState<google.maps.Map | null>(null);

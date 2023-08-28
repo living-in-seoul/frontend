@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import axios from 'axios';
 import { writeBoard } from '@/service/board';
-/**글쓰기 페이지 post api */
 
-// 데이터 정해지면 type 바꿔라 꼭 잊지말고
+/**글쓰기 페이지 post api */
 export const POST = async (request: NextRequest) => {
   const form = await request.formData();
   const data = await writeBoard(form).then((data) => data.message);

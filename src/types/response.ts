@@ -25,15 +25,6 @@ interface ResponseAccessToken {
   accessToken: string;
 }
 
-/** 전체 맵 조회 - 유저 위치 구,동 받기*/
-interface ResponseLocation {
-  msg: string;
-  result: {
-    gu: string;
-    dong: string;
-  };
-}
-
 /** 게시물 상세 페이지 데이터 (게시물+유저정보) */
 interface ResponseBoardDetail {
   msg: string;
@@ -194,6 +185,42 @@ interface PostImage {
   postImg: string;
 }
 
+/**포스트 댓글 데이터   */
+interface Comment {
+  nickname: string;
+  comment: string;
+  createdAt: string;
+  userImg: string | null;
+  commentHasLiked: boolean;
+  reComments: ReComment[] | null;
+}
+
+interface ResultItem {
+  user: User;
+  post: Post;
+  location: PostLocation;
+  hasLiked: boolean;
+}
+
+interface ResponsePopularCategoryHashtag {
+  msg: string;
+  pageable: {
+    totalPages: number;
+    totalElements: number;
+    size: number;
+  };
+  result: ResultItem[];
+}
+/** 대댓글 데이터 */
+interface ReComment {
+  reCommentId: number;
+  nickname: string;
+  reComment: string;
+  createdAt: string;
+  reCommentHasLiked: boolean;
+  userImg: string | null;
+}
+
 /**포스트 정보 데이터 */
 interface Post {
   postId: number;
@@ -218,29 +245,47 @@ interface ResponseDetailData {
     user: User;
     post: Post;
     location: PostLocation;
+    hasLiked: boolean;
   };
+}
+
+interface PostResult {
+  user: User;
+  post: Post;
+  location: PostLocation;
   hasLiked: boolean;
+}
+
+interface ResponseMyPostData {
+  msg: string;
+  pageable: {
+    totalPages: number;
+    totalElements: number;
+    size: number;
+  };
+
+  result: PostResult[];
 }
 
 /**포스트 댓글 데이터   */
 interface Comment {
+  userImg: string | null;
   createdAt: string;
-  modifiedAt: string;
   nickname: string;
   commentId: number;
   comment: string;
+  commentSize: number;
+  commentHasLiked: boolean;
   reCommentList: ReComment[];
 }
-
-interface ReComment {
-  createdAt: string;
-  modifiedAt: string;
-  nickname: string;
-  id: number;
-  reComment: string;
-  userImg: null;
+interface ResponseCommentData {
+  pageable: {
+    totalPages: number;
+    totalElements: number;
+    size: number;
+  };
+  comments: Comment[];
 }
-
 interface ResultItem {
   user: User;
   post: Post;
@@ -255,5 +300,13 @@ interface ResponsePopularCategoryHashtag {
     totalElements: number;
     size: number;
   };
-  result: ResultItem[];
+}
+/**유저 프로필 정보 데이터   */
+interface ResponseUserProfileData {
+  nickname: string;
+  birthDate: string;
+  movedDate: string;
+  gender: string;
+  hometown: string;
+  porfileImageUrl: string;
 }

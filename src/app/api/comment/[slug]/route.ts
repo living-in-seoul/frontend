@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { postComment } from '@/service/comment';
-import { revalidatePath } from 'next/cache';
-
+import { deleteComment, postComment } from '@/service/comment';
+import { getComment } from '@/service/board';
 interface Context {
   params: { slug: string };
 }
@@ -10,11 +9,19 @@ export const POST = async (request: NextRequest, context: Context) => {
   const postId = context.params.slug;
   const body = await request.json();
   const data = await postComment(body, postId);
+  return NextResponse.json(data);
+};
 
-  if (data.status === 200) {
-    console.log('간다잇!');
-    revalidatePath(`https://seoulvival.com:8080/posts/get/${postId}`);
-  }
-  const response = NextResponse.json(data);
-  return response;
+export const GET = async (request: NextRequest, context: Context) => {
+  const postId = context.params.slug;
+  const data = await getComment(postId);
+  const newData = data?.comments;
+  return NextResponse.json(newData);
+};
+
+export const DELETE = async (request: NextRequest, context: Context) => {
+  const postId = context.params.slug;
+  const data = await deleteComment(postId);
+  const newData = data?.comments;
+  return NextResponse.json(newData);
 };

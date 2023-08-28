@@ -22,10 +22,10 @@ const AuthInput = ({
 }: AuthInputProps) => {
   return (
     <div className="flex flex-col gap-3">
-      <label className="text-neutral-500 ">{label}</label>
-      <div className="pb-8 h-24">
+      <label className="text-neutral-500 text-sm ">{label}</label>
+      <div>
         <input
-          className="w-full h-14 text-sm border border-zinc-400 rounded-xl px-4 outline-teal-400"
+          className="w-full h-12 text-base border border-zinc-400 rounded-xl px-4 outline-teal-400"
           autoComplete={isText ? 'username' : 'new-password'}
           id={id}
           type={isText ? 'text' : 'password'}

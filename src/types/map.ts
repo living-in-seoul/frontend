@@ -1,15 +1,9 @@
 /** 맵 토글 (커뮤니티 or 교통정보)  */
-type MapToggle = 'community' | 'transport';
 
 /** 경도 위도 */
 interface LatLng {
   lat: number;
   lng: number;
-}
-
-interface Gudong {
-  gu: guchung;
-  dong: string;
 }
 
 /**바텀시트 이벤트 메트릭스 */
@@ -57,8 +51,6 @@ interface Term {
   value: string;
 }
 
-/** LatLng 함수일 경우 */
-
 /** 주변 장소 추천 request types */
 interface RequestPlaces {
   location: LatLng;
@@ -103,7 +95,7 @@ interface Properties {
 }
 
 type guchung =
-  | ''
+  | '전체'
   | '강남구'
   | '강동구'
   | '강북구'

@@ -10,6 +10,18 @@ export const signupState = atom<RequestNonessentialRegister>({
   },
 });
 
+export const userPorfileState = atom<RequestProfilePutData>({
+  key: 'userPorfileState',
+  default: {
+    nickname: '',
+    birthDate: '',
+    gender: '',
+    hometown: '',
+    movedDate: '',
+    거주지역: '',
+  },
+});
+
 export const signupEssentialState = atom<boolean>({
   key: 'isEssentialState',
   default: true,
@@ -21,5 +33,20 @@ export const callbackUrlState = atom<string>({
 });
 export const AuthOpenModalState = atom<boolean>({
   key: 'AuthopenModalState',
+  default: false,
+});
+
+export const signupGenderState = atom<string>({
+  key: 'signupGenderState',
+  default: '',
+});
+
+export const profileOpenModalState = atom<boolean>({
+  key: 'profileOpenModalState',
+  default: false,
+});
+
+export const profileSecondOpenModalState = atom<boolean>({
+  key: 'profileSecondOpenModalState',
   default: false,
 });

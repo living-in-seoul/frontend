@@ -9,23 +9,25 @@ interface BoardListProps {
 }
 
 const BoardList = ({ markerIdValue, boardList }: BoardListProps) => {
-  const { data } = useSWR(`api/map/detail/${markerIdValue}`);
+  const { data } = useSWR<ResponseBoardDetail>(
+    `api/map/detail/${markerIdValue}`,
+  );
 
   return (
     <article className="flex flex-col border-b-4 ">
       <div className="w-full justify-between flex"></div>
       {markerIdValue ? (
-        <div>
-          {/* {
+        <>
+          {data?.result && (
             <PostItem
-              category={Category}
-              tags={tags}
-              isPop={isPop}
-              {...post}
+              location={data.result.location}
+              post={data.result.post}
+              user={data.result.user}
+              hasLiked
               onMap={true}
             />
-          } */}
-        </div>
+          )}
+        </>
       ) : (
         <div className="h-full overflow-y-auto ">
           {boardList?.result.map((post) => (

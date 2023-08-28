@@ -6,7 +6,7 @@ export default function SigninLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="px-4 h-screen  flex flex-col relativ ">
+    <main className="px-4 h-screen  flex flex-col relativ gap-10 ">
       <SigninHeader />
       {children}
     </main>

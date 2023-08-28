@@ -41,7 +41,7 @@ const UserProfile = ({
             <h3
               className={`text-xs truncate  ${
                 onMap
-                  ? 'text-neutral-500 max-w-[180px]'
+                  ? 'text-neutral-500 max-w-full'
                   : 'font-semibold text-black'
               } leading-3 max-w-[80px] `}
             >
@@ -55,7 +55,8 @@ const UserProfile = ({
             )}
           </div>
           <div className="text-neutral-500 text-xs font-normal leading-3">
-            {getTimeAgo(createdAt)} {`· 조회수 ${postViewCount}`}
+            {getTimeAgo(createdAt)}{' '}
+            {postViewCount && `· 조회수 ${postViewCount}`}
           </div>
         </div>
       </div>

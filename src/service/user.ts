@@ -1,27 +1,13 @@
 import { redirect } from 'next/navigation';
 import { NextRequest } from 'next/server';
 import { instance } from './instance';
+import { cookies } from 'next/headers';
 
 /** 회원가입 필수사항 시 */
 export const postSignup = async (data: RequestEssentialRegister) => {
   const response = await instance
     .post('/auth/signup1', data)
     .catch((err) => err.response);
-  console.log('헤더에는 무슨 값이 담길까요?', response.headers);
-  // const response = await fetch(
-  //   `${process.env.NEXT_PUBLIC_SERVER}/auth/signup1`,
-  //   {
-  //     method: 'POST',
-  //     body: JSON.stringify(data),
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       Accept: 'application/json',
-  //     },
-  //   },
-  // )
-  //   .then((response) => response.json())
-  //   .catch((error) => error.response);
-
   return response;
 };
 /** 회원가입 선택사항 시 */
@@ -66,14 +52,29 @@ export async function oauthHandler(url: string) {
 }
 /** 소셜로그인 시 */
 export const oauthSignin = async (data: RequestOauthLogin) => {
+  const { code, state } = data;
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/auth/oauth/login`,
+    `${process.env.NEXT_PUBLIC_SERVER}/auth/login/${state}`,
     {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify({ code }),
     },
   )
     .then((response) => response.json())
+    .catch((error) => error.response);
+  return response;
+};
+
+/** 프로필 정보 가져오기 */
+export const getProfile = async () => {
+  const token = cookies().get('accessToken')?.value;
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER}/auth/profile`,
+    {
+      headers: { authorization: 'Bearer ' + token },
+    },
+  )
+    .then<ResponseUserProfileData>((response) => response.json())
     .catch((error) => error.response);
   return response;
 };

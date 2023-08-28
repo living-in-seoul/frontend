@@ -22,3 +22,35 @@ export const writeBoard = async (form: any) => {
     console.log('ehlsmsdfasdfa', error.message);
   }
 };
+
+/**postData 가져오기 */
+export const getBoard = async (postId: string) => {
+  try {
+    const response = await fetch(
+      `https://seoulvival.com:8080/posts/get/${postId}`,
+      {
+        next: { tags: ['like'] },
+        cache: 'no-store',
+      },
+    ).then<ResponseDetailData>((res) => res.json());
+    return response;
+  } catch (error: any) {
+    console.log('getBoard error', error.message);
+  }
+};
+
+/**CommentData 가져오기 */
+export const getComment = async (postId: string) => {
+  try {
+    const response = await fetch(
+      `https://seoulvival.com:8080/comment/get/${postId}?page=1&size=3`,
+      {
+        next: { tags: ['like'] },
+        cache: 'no-store',
+      },
+    ).then<ResponseCommentData>((res) => res.json());
+    return response;
+  } catch (error: any) {
+    console.log('getBoard error', error.message);
+  }
+};

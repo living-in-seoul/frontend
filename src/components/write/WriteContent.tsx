@@ -1,12 +1,20 @@
 'use client';
 import { useHandleTags } from '@/hooks/useHandleTags';
+import ModalOutside from '@/components/modal/ModalOutside';
+import ModalPortal from '@/components/modal/ModalPortal';
+import ChooseLocation from '@/components/write/location/ChooseLocation';
+import UploadImageModal from '@/components/write/Image/UploadImageModal';
 import { ChangeEvent, useState } from 'react';
 import Icons from '../common/Icons';
-import { closeX, downdrop, hashtagIcon, tags } from '@/utils/Icon';
+import { closeX, downdrop, tags } from '@/utils/Icon';
 import MapBottomSheet from '../map/bottomsheet/MapBottomSheet';
 import UploadImage from './Image/UploadImage';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { MapPortalState, formDataState } from '@/recoil/BoardStates';
+import {
+  ImagePortalState,
+  MapPortalState,
+  formDataState,
+} from '@/recoil/BoardStates';
 import SelectCategory from './SelectCategory';
 import SelectedLocation from './location/SelectedLocation';
 import DisplayTags from './tags/DisplayTags';
@@ -17,6 +25,9 @@ const WriteContent = () => {
   const [openSelect, setOpenSelect] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const setImagePortalState = useSetRecoilState(MapPortalState);
+  const [openImagePortal, setOpenImagePortal] =
+    useRecoilState(ImagePortalState);
+  const [openMapPortal, setOpenMapPortal] = useRecoilState(MapPortalState);
   const { handleKeyPress, onDeleteTag } = useHandleTags({
     tagText,
     setFormData,
@@ -39,8 +50,6 @@ const WriteContent = () => {
   const onChangeTag = (e: ChangeEvent<HTMLInputElement>) => {
     setTagText(e.target.value);
   };
-
-  console.log(formData);
 
   return (
     <>
@@ -110,6 +119,21 @@ const WriteContent = () => {
             />
           </MapBottomSheet>
         </>
+      )}
+      {openImagePortal && (
+        <ModalPortal nodeName="imagePortal">
+          <ModalOutside
+            className="overflow-hidden p-2 bg-white w-4/5 h-1/4 rounded-2xl max-w-7xl"
+            onClose={() => setOpenImagePortal(false)}
+          >
+            <UploadImageModal onClose={() => setOpenImagePortal(false)} />
+          </ModalOutside>
+        </ModalPortal>
+      )}
+      {openMapPortal && (
+        <ModalPortal nodeName="mapPortal">
+          <ChooseLocation onClose={() => setOpenMapPortal(false)} />
+        </ModalPortal>
       )}
     </>
   );
