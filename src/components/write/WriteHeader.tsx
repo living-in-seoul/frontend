@@ -11,15 +11,14 @@ import Warning from './modal/Warning';
 import ModalPortal from '../modal/ModalPortal';
 
 const WriteHeader = () => {
+  const [openConfirm, setOpenConfirm] = useState(false);
   const formData = useRecoilValue(formDataState);
   const imageState = useRecoilValue(ImageState);
-  const [openConfirm, setOpenConfirm] = useState(false);
-
   const router = useRouter();
-  const onClickToBack = () => {
+
+  const onClickToBack = useCallback(() => {
     setOpenConfirm(true);
-    // router.back();
-  };
+  }, []);
 
   const onSubmit = useCallback(
     async (e: MouseEvent<HTMLButtonElement>) => {
@@ -31,8 +30,9 @@ const WriteHeader = () => {
         hashtag: '#' + formData.hashTag.join('#'),
         lat: formData.lat,
         lng: formData.lng,
-        gu: '강남구',
-        dong: '신사동',
+        gu: formData.gu,
+        address: formData.address,
+        lname: formData.lname,
       };
 
       data.append(
@@ -43,10 +43,6 @@ const WriteHeader = () => {
         imageState.forEach((file) => {
           data.append('photos', file);
         });
-      }
-
-      for (let [key, value] of data.entries()) {
-        console.log(key, value);
       }
 
       const response = await fetch('/api/write', {
@@ -79,9 +75,14 @@ const WriteHeader = () => {
         <ModalPortal nodeName="confirmPortal">
           <ModalOutside
             onClose={() => setOpenConfirm(false)}
-            className=" overflow-hidden p-2 bg-white w-4/5 h-1/2 py-10 rounded-2xl max-w-7xl"
+            className=" overflow-hidden p-2 bg-white w-4/5 py-6 rounded-xl max-w-7xl"
           >
-            <Warning />
+            <Warning
+              mainText="작성 중인 글을 취소하시겠습니까?"
+              subText="작성 취소된 글은 저장되지 않습니다."
+              onConfirm={() => router.back()}
+              onCancel={() => setOpenConfirm(false)}
+            />
           </ModalOutside>
         </ModalPortal>
       )}

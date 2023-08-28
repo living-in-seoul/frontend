@@ -6,7 +6,6 @@ import Input from '../../common/Input';
 import { FormEvent } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { placeIdState } from '@/recoil/mapStates';
-import { useRouter } from 'next/navigation';
 import Icons from '@/components/common/Icons';
 import { search } from '@/utils/Icon';
 
@@ -14,7 +13,7 @@ const PlacesAutoComplete = () => {
   const [openUl, setOpenUl] = useState<boolean>(false);
   const [inputLocation, setInputLocation] = useState<string>('');
   const debounceKeyword = useDebounce(inputLocation);
-  const { data, isLoading } = useSWR<PlacesResponse>(
+  const { data } = useSWR<PlacesResponse>(
     debounceKeyword ? `api/map/search/${debounceKeyword}` : null,
   );
   const setPlaceIdState = useSetRecoilState(placeIdState);
@@ -48,7 +47,6 @@ const PlacesAutoComplete = () => {
 
   return (
     <div className="flex flex-col justify-center items-center w-full text-xs">
-      {isLoading && <div>loading!</div>}
       <Input
         placeholder="장소 이름을 입력해주세요"
         value={inputLocation}
@@ -92,15 +90,20 @@ const PlacesAutoComplete = () => {
         }
       />
       {openUl && (
-        <ul className="flex flex-col justify-center items-center bg-white w-full rounded-xl h-full">
+        <ul className="flex flex-col justify-center bg-white w-full rounded-xl h-full">
           {data?.predictions.map((location, _) => {
             const { place_id, structured_formatting } = location;
+            const parts = structured_formatting.main_text.split(
+              new RegExp(`(${debounceKeyword})`, 'gi'),
+            );
+
             return (
               <li
-                className="pl-3 py-2 "
+                className="px-3 py-3.5 flex justify-start items-center "
                 key={place_id}
                 onClick={() => onClickHandler(place_id)}
               >
+                <Icons path={search} />
                 {structured_formatting.main_text}
               </li>
             );
