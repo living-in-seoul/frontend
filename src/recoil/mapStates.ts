@@ -10,33 +10,21 @@ export const locationTypeState = atom<string>({
   default: '',
 });
 
-/** 어떤 맵인지 */
-export const toggleMapState = atom<'community' | 'transport'>({
-  key: 'toggleMapState',
-  default: 'community',
-});
-
-/**구, 동 서초구 서초동! */
-export const gudongState = atom<string>({
-  key: 'dongState',
-  default: '',
-});
-
 /** 맵 센터 !! */
-export const centerState = atom<LatLng | google.maps.LatLng>({
+export const centerState = atom<LatLng>({
   key: 'centerState',
   default: {
-    lat: 37.4962,
-    lng: 127.065,
+    lat: 0,
+    lng: 0,
   },
 });
 
 /** 유저의 현재 위치 위도경도 */
-export const currentState = atom<LatLng | google.maps.LatLng>({
+export const currentState = atom<LatLng>({
   key: 'currentState',
   default: {
-    lat: 37.4962,
-    lng: 127.065,
+    lat: 0,
+    lng: 0,
   },
 });
 
@@ -69,11 +57,6 @@ export const placeIdState = atom<string>({
   default: '',
 });
 
-/** 구 선택 */
-export const selectGuPlaceState = atom<guchung>({
-  key: 'selectGuPlaceState',
-  default: '',
-});
 export const selectDongPlaceState = atom<string>({
   key: 'selectDongPlaceState',
   default: '',

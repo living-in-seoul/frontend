@@ -1,10 +1,6 @@
 'use client';
 import { useRecoilValue } from 'recoil';
-import {
-  boardListState,
-  markerIdState,
-  toggleMapState,
-} from '@/recoil/mapStates';
+import { boardListState, markerIdState } from '@/recoil/mapStates';
 import BoardList from './board/BoardList';
 
 const BottomSheetOption = () => {

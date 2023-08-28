@@ -9,7 +9,9 @@ interface BoardListProps {
 }
 
 const BoardList = ({ markerIdValue, boardList }: BoardListProps) => {
-  const { data } = useSWR(`api/map/detail/${markerIdValue}`);
+  const { data } = useSWR<ResponseBoardDetail>(
+    `api/map/detail/${markerIdValue}`,
+  );
 
   return (
     <article className="flex flex-col border-b-4 ">

@@ -2,14 +2,18 @@
 
 import FilterOptions from '../filter/FilterOptions';
 import Icons from '@/components/common/Icons';
-import { gudongState } from '@/recoil/mapStates';
-import { useRecoilState } from 'recoil';
 import { back } from '@/utils/Icon';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const MapHeader = () => {
   const router = useRouter();
-  const [gudong, setGudong] = useRecoilState(gudongState);
+  const [gu, setGu] = useState<string>('');
+
+  useEffect(() => {
+    const gu = localStorage.getItem('location');
+    gu ? setGu(gu) : setGu('전체');
+  }, []);
 
   const onClickToBack = () => {
     router.back();
@@ -23,9 +27,7 @@ const MapHeader = () => {
           onClick={onClickToBack}
           className="hover:cursor-pointer"
         />
-        <span className="font-semibold text-[1.1rem]">
-          {gudong === '' ? '서울시 전체' : gudong}
-        </span>
+        <span className="font-semibold text-[1.1rem]">{`서울시 ${gu}`}</span>
       </div>
       <FilterOptions />
     </section>
