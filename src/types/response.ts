@@ -77,6 +77,7 @@ interface BoardInfo {
   lng: number;
   category: string;
   likeSize: number;
+  commentSize: number;
   postViewCount: number;
 
   title?: string;

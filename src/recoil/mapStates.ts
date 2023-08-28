@@ -35,8 +35,8 @@ export const centerState = atom<LatLng | google.maps.LatLng>({
 export const currentState = atom<LatLng | google.maps.LatLng>({
   key: 'currentState',
   default: {
-    lat: 37.4962,
-    lng: 127.065,
+    lat: 37.566535,
+    lng: 126.977969,
   },
 });
 

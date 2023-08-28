@@ -6,7 +6,7 @@ const HomeLocationSeclect = () => {
     <div>
       <div className="flex gap-2.5 justify-center items-center p-2.5">
         <div className="text-black text-base font-semibold leading-relaxed">
-          서초구 서초동
+          서울시 전체
         </div>
         <div className="flex items-center justify-center">
           <Icons

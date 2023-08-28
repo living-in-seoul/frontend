@@ -4,7 +4,6 @@ import { getTimeAgo } from '@/utils/utilFunc';
 import { profile } from '../../../public';
 import Select from '../common/Select';
 import { Comment, Like } from '@/utils/Icon';
-import CommunityLikeBtn from '@/app/(nav)/community/CommunityLikeBtn';
 import UserProfile from '../item/UserProfile';
 
 interface PostItemProps extends ResponsePost {
@@ -23,6 +22,7 @@ const PostItem = ({ post, user, onMap, hasLiked }: PostItemProps) => {
     createdAt,
     postViewCount,
     likeSize,
+    commentSize,
     postId,
   } = post;
   const { nickname, profileImg } = user;
@@ -34,8 +34,8 @@ const PostItem = ({ post, user, onMap, hasLiked }: PostItemProps) => {
     const HashTags = hashtag.split('#').filter((tag) => tag !== '');
     return (
       <ul className="flex gap-2">
-        {HashTags.map((tag, index) => (
-          <div key={tag + index} className="flex items-center">
+        {HashTags.slice(0, 4).map((tag, index) => (
+          <div key={tag + index + Math.random()} className="flex items-center">
             <span className="text-neutral-600 text-xs font-normal leading-3">
               {'#'}
             </span>
@@ -63,16 +63,16 @@ const PostItem = ({ post, user, onMap, hasLiked }: PostItemProps) => {
         createdAt={createdAt}
         nickname={nickname}
         postViewCount={postViewCount}
-        onMap={true}
+        onMap={onMap}
       />
       {/* 컨텐츠 */}
-      <div className="w-full flex justify-between">
+      <div className="w-full flex justify-between min-h-[64px]">
         <div className="flex basis-2/3 pt-4 whitespace-pre-wrap">
           <span className="w-full text-black text-xs font-normal leading-[18px]">
             {contents}
           </span>
         </div>
-        {postImg[0] && (
+        {postImg[0] && /\.(jpg|jpeg|png)$/i.test(postImg[0].postImg) && (
           <div className="relative w-16 h-16 bg-white rounded-xl shadow overflow-hidden">
             <Image
               src={postImg[0]?.postImg}
@@ -90,15 +90,16 @@ const PostItem = ({ post, user, onMap, hasLiked }: PostItemProps) => {
           <Select
             disable
             title={category}
-            className="rounded-md"
+            className="rounded-3xl"
             size="small"
           />
           <div className="flex justify-center items-center">
-            {HastagsContent(hashtag)}
+            {/* {HastagsContent(hashtag)} */}
+            {hashtag}
           </div>
         </div>
         <div className="flex gap-2">
-          <Icons
+          {/* <Icons
             path={Comment}
             option={{
               fill: 'none',
@@ -106,16 +107,20 @@ const PostItem = ({ post, user, onMap, hasLiked }: PostItemProps) => {
               strokeLinecap: 'round',
               strokeLinejoin: 'round',
             }}
-          />
+          /> */}
           {/* 댓글 숫자 */}
-          <div className="text-neutral-700 text-xs font-normal leading-3">
-            0
+          <div className="text-neutral-500 text-xs font-normal leading-3">
+            좋아요 {likeSize}
           </div>
-          <CommunityLikeBtn
+          <div className="text-neutral-500 text-xs font-normal leading-3">
+            댓글 {commentSize}
+          </div>
+
+          {/* <CommunityLikeBtn
             likeSize={likeSize}
             postId={postId}
             hasLiked={hasLiked}
-          />
+          /> */}
         </div>
       </div>
     </article>
