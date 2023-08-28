@@ -70,16 +70,11 @@ export const DetailNewData = (data: ResponseDetailData) => {
     hasLiked: data.result.hasLiked,
     ...data.result.post,
   };
-  const commentData = {
-    commentSize: data.result.post.commentSize,
-    comments: data.result.comments,
-    hasLiked: data.result.hasLiked,
-  };
   const hotTagData = {
     tag: maintag,
     category: data.result.post.category,
   };
-  const newData = { headerData, mainData, commentData, hotTagData };
+  const newData = { headerData, mainData, hotTagData };
   return newData;
 };
 
