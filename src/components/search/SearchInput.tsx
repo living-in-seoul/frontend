@@ -31,6 +31,7 @@ const SearchInput = () => {
   };
 
   useEffect(() => {
+    ref.current?.focus();
     const searchFetch = async () => {
       if (!debounceKeyword) return;
       const Keyword = encodeURIComponent(debounceKeyword);

@@ -7,7 +7,7 @@ const EditImageIcon = () => {
       viewBox="0 0 14 14"
       fill="none"
     >
-      <g clip-path="url(#clip0_980_1006)">
+      <g clipPath="url(#clip0_980_1006)">
         <path
           fill-rule="evenodd"
           clip-rule="evenodd"
@@ -36,4 +36,17 @@ const EditImageIcon = () => {
   );
 };
 
-export default EditImageIcon;
+const WriteIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="48"
+      height="48"
+      viewBox="0 0 48 48"
+      fill="none"
+    >
+      <circle cx="24" cy="24" r="24" fill="#404040" />
+    </svg>
+  );
+};
+export { EditImageIcon, WriteIcon };

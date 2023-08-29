@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import EditImageIcon from './EditImageIcon';
+import { EditImageIcon } from './EditImageIcon';
 import { useRef, useState } from 'react';
 import { profile as baseProfile } from '../../../../public/';
 import { useSetRecoilState } from 'recoil';

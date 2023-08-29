@@ -8,7 +8,7 @@ const SearchPage = ({ searchParams }: PageProps) => {
   const search = searchParams.search || '';
   return (
     <Modal>
-      <SearchComponent search={search} />
+      <SearchComponent category={searchParams.category || ''} search={search} />
     </Modal>
   );
 };

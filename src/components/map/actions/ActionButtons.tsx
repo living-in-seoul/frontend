@@ -6,7 +6,7 @@ const ActionButtons = () => {
   return (
     <section className="flex flex-col justify-between absolute bottom-48 right-5 h-28">
       <Link href={'/write'}>
-        <WriteButton />
+        <WriteButton section="map" />
       </Link>
       <CurrentLocation />
     </section>

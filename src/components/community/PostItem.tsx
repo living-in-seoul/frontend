@@ -68,7 +68,7 @@ const PostItem = ({ post, user, onMap, hasLiked }: PostItemProps) => {
       {/* 컨텐츠 */}
       <div className="w-full flex justify-between min-h-[64px]">
         <div className="flex basis-2/3 pt-4 whitespace-pre-wrap">
-          <span className="w-full text-black text-xs font-normal leading-[18px]">
+          <span className="w-full text-black text-xs font-normal whitespace-pre-wrap leading-[18px]">
             {contents}
           </span>
         </div>
