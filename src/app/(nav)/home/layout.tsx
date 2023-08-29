@@ -1,5 +1,3 @@
-import Navbar from '@/components/layouts/Navbar';
-
 export default function NavbarLayout({
   children,
   hometown,

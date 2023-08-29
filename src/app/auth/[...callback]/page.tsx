@@ -17,6 +17,7 @@ const CallbackPage = (req: Req) => {
   const { searchParams } = req;
   const { code, state } = searchParams;
   console.log('aaaaaaaaaaaaaa', code, state);
+
   useEffect(() => {
     const response = fetch('/api/callback', {
       method: 'POST',

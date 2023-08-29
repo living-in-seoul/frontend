@@ -1,11 +1,20 @@
 import RecentlySearch from './RecentlySearch';
 import ManySearchToday from './ManySearchToday';
 import SearchInput from './SearchInput';
-import SearchBoardList from './SearchBoardList';
-import { v4 as uuidv4 } from 'uuid';
 import CommunityNavbar from '../community/CommunityNavbar';
+import dynamic from 'next/dynamic';
 
-const SearchComponent = async ({ search }: { search: string | null }) => {
+const DynamicSearchBoardList = dynamic(() => import('./SearchBoardList'), {
+  loading: () => <div>Loading...</div>,
+});
+
+const SearchComponent = async ({
+  search,
+  category,
+}: {
+  search: string | null;
+  category: string;
+}) => {
   const fetchsearch = search ?? '';
   const response = await fetch(
     `${
@@ -14,7 +23,7 @@ const SearchComponent = async ({ search }: { search: string | null }) => {
   ).then<ResponseRegister>((res) => res.json());
   return (
     <section className="relative max-w-md top-0 -translate-x-1/2 left-1/2 flex flex-col justify-center items-center w-full h-screen z-50">
-      <div className="relative bg-white w-full h-full max-w-md pt-14">
+      <div className="relative bg-white w-full h-full max-w-md pt-14 ">
         <SearchInput />
         <div className="overflow-y-auto bg-white">
           {!search ? (
@@ -23,12 +32,12 @@ const SearchComponent = async ({ search }: { search: string | null }) => {
               <ManySearchToday />
             </div>
           ) : (
-            <div key={uuidv4()}>
+            <div>
               <CommunityNavbar search />
-              <SearchBoardList
+              <DynamicSearchBoardList
                 firstList={response.result}
                 totalpage={response.pageable.totalPages}
-                Category={''}
+                Category={category}
               />
             </div>
           )}

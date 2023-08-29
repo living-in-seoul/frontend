@@ -4,6 +4,8 @@ import CommunityBoardList from '@/components/community/CommunityBoardList';
 
 import { fetchCommunity } from '@/actions/fetchCommunity';
 import CommunityHotTag from '@/components/community/CommunityHotTag';
+import Icons from '@/components/common/Icons';
+import { HomeWriteIcon } from '@/utils/Icon';
 
 interface PageProps {
   searchParams: { [key: string]: string | undefined };

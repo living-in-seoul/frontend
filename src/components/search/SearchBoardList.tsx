@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { seole } from '../../../public';
 import PostItem from '../community/PostItem';
 import PostItemSkeleton from '../community/PostItemSkeleton';
+import { v4 as uuidv4 } from 'uuid';
 
 interface CommunityBoardProps {
   title?: string;
@@ -58,7 +59,7 @@ const SearchBoardList = ({
   }, [inview]);
   console.log(list);
   return (
-    <article className="flex flex-col border-b-4">
+    <article className="flex flex-col border-b-4" key={uuidv4()}>
       {list.length !== 0 ? (
         list?.map((post) => (
           <PostItem category={Category} {...post} key={post.post.postId} />
@@ -71,7 +72,7 @@ const SearchBoardList = ({
       )}
 
       {lastItem ? (
-        <div>마지막 아이템입니다</div>
+        <div>마지막 아이템입니다 지울것</div>
       ) : (
         <div ref={ref} className="flex flex-col sm:col-span-2 ">
           <PostItemSkeleton />

@@ -3,13 +3,30 @@ import { LINK_NAME, SEARCH_LINK_NAME } from '@/utils/constants/board';
 import NavLink from './CommunityLink';
 import { useSearchParams } from 'next/navigation';
 import SearchLink from '../search/SearchLink';
+import { v4 as uuidv4 } from 'uuid';
 
 const CommunityNavbar = ({ search = false }: { search?: boolean }) => {
   const params = useSearchParams();
   const pathname = params.get('category');
 
   // const pathname = usePathname();
+  console.log(pathname);
   const navBarBottomBar = () => {
+    if (search) {
+      switch (pathname) {
+        case null:
+          return 'left-4';
+        case 'review':
+          return 'left-[calc(25%+0.5rem)]';
+        case 'communication':
+          return 'left-1/2';
+        case 'Life':
+          return 'left-[calc(75%-0.5rem)]';
+        default:
+          return 'left-0/4';
+      }
+    }
+
     switch (pathname) {
       case null:
         return 'left-4';

@@ -48,7 +48,7 @@ const ChooseLocation = ({ onClose }: ChooseLocationProps) => {
   useEffect(() => {
     if (data && data.result.geometry?.location) {
       setDetail(data.result);
-      setCenter(new google.maps.LatLng(data.result.geometry.location));
+      setCenter(data.result.geometry.location);
     }
     console.log(data);
   }, [data, detail, setCenter, setDetail]);
