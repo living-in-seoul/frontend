@@ -9,11 +9,10 @@ export const POST = async (request: NextRequest) => {
   return NextResponse.json(data);
 };
 
-export const GET = async (req: NextRequest) => {
-  const cookiesStorage = cookies();
-  const token = cookiesStorage.get('refreshToken');
-  console.log('리프레시 조회하기', token);
-  const params = req.nextUrl.searchParams;
-  const query = params.get('code');
-  return NextResponse.json(query);
-};
+// export const GET = async (req: NextRequest) => {
+//   const cookiesStorage = cookies();
+//   const token = cookiesStorage.get('refreshToken');
+//   const params = req.nextUrl.searchParams;
+//   const query = params.get('code');
+//   return NextResponse.json(query);
+// };
