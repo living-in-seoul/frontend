@@ -1,9 +1,5 @@
-export default function Home() {
-  // const { data, isLoading, error } = useSWR(`/api/youth`);
+import Youth from '@/components/youth/Youth';
 
-  return (
-    <>
-      <button>sadf</button>
-    </>
-  );
+export default function Home() {
+  return <Youth />;
 }
