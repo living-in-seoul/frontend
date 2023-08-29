@@ -8,8 +8,6 @@ interface Context {
   params: { slug: [string, guchung] };
 }
 
-//서울시 전체일 경우 추가하기 (gu null)
-
 export const GET = async (req: NextRequest, context: Context) => {
   const { searchParams } = req.nextUrl;
   const category = searchParams.get('category') ?? 'All';
@@ -20,9 +18,13 @@ export const GET = async (req: NextRequest, context: Context) => {
     const list = await getCommunityListWithToken(category, 'newer', '', Token);
     if (gu) {
       const data = list.result.filter((data: any) => data.location.gu === gu);
-      return NextResponse.json(data);
+      const newData = {
+        ...list,
+        result: data,
+      };
+      return NextResponse.json(newData);
     } else {
-      return NextResponse.json(list.result);
+      return NextResponse.json(list);
     }
   }
 

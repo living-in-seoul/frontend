@@ -44,7 +44,6 @@ export const useBottomSheet = (minY: number) => {
     };
 
     const handleMouseDown = (e: MouseEvent): void => {
-      console.log(e);
       isDragging = true;
       const { touchStart } = metrics.current;
       touchStart.sheetY = sheet.current!.getBoundingClientRect().y;

@@ -4,7 +4,7 @@
 import { useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import useMapInstance from '@/hooks/useMapInstance';
-import { GoogleMap, MarkerF } from '@react-google-maps/api';
+import { GoogleMap } from '@react-google-maps/api';
 import {
   boardListState,
   currentState,
@@ -36,7 +36,6 @@ const CommunityMap = () => {
   useEffect(() => {
     const getCenter = () => {
       const gu = localStorage.getItem('location') as guchung;
-      console.log(gu);
       if (gu && seoulCenterCoords.hasOwnProperty(gu)) {
         setCenter(seoulCenterCoords[gu]);
       } else {
@@ -82,13 +81,13 @@ const CommunityMap = () => {
       >
         <>
           {/* 현위치 */}
-          <MarkerF position={currentValue} />
+          {/* <MarkerF position={currentValue} /> */}
           {/* boardlist */}
-          {boardList?.result.map((post) => {
+          {boardList?.result.map((post: ResponsePost) => {
             const { postId, hashtag } = post.post;
-            const latlng: LatLng = {
-              lat: Number(post.location.lat),
-              lng: Number(post.location.lng),
+            const latlng = {
+              lat: post.location.lat,
+              lng: post.location.lng,
             };
             return (
               <CustomOverlayMarker

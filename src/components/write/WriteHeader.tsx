@@ -20,39 +20,48 @@ const WriteHeader = () => {
     setOpenConfirm(true);
   }, []);
 
-  const onSubmit = useCallback(
-    async (e: MouseEvent<HTMLButtonElement>) => {
-      e.preventDefault();
-      const data = new FormData();
-      const post = {
-        category: formData.category,
-        content: formData.content,
-        hashtag: '#' + formData.hashTag.join('#'),
-        lat: formData.lat,
-        lng: formData.lng,
-        gu: formData.gu,
-        address: formData.address,
-        lname: formData.lname,
-      };
+  const onSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
 
-      data.append(
-        'post',
-        new Blob([JSON.stringify(post)], { type: 'application/json' }),
-      );
-      if (imageState) {
-        imageState.forEach((file) => {
-          data.append('photos', file);
-        });
-      }
+    const data = new FormData();
+    const post = {
+      category: formData.category,
+      content: formData.content,
+      hashtag: '#' + formData.hashTag.join('#'),
+      lat: formData.lat,
+      lng: formData.lng,
+      gu: formData.gu,
+      address: formData.address,
+      lname: formData.lname,
+    };
+    console.log(post);
 
-      const response = await fetch('/api/write', {
+    data.append(
+      'post',
+      new Blob([JSON.stringify(post)], { type: 'application/json' }),
+    );
+    if (imageState) {
+      imageState.forEach((file) => {
+        data.append('photos', file);
+      });
+    }
+
+    const tokenValidResponse = await fetch('/api/user', {
+      method: 'GET',
+    });
+
+    if (tokenValidResponse.status === 200) {
+      const res = await fetch('/api/write', {
         method: 'POST',
         body: data,
-      }).then((response) => response.json());
-      alert(response);
-    },
-    [formData, imageState],
-  );
+      })
+        .then((response) => response.json())
+        .catch(() => console.log('게시물 업로드 실패')); //로그인은 ㄱㅊ 게시물 post안됬을 때
+      alert(res);
+    } else {
+      console.log('로그인모달 나와주세요');
+    }
+  };
 
   return (
     <>
@@ -91,11 +100,3 @@ const WriteHeader = () => {
 };
 
 export default WriteHeader;
-
-/*
-1. submit 버튼 누른 후 next server api로 요청
-2. cookie에서 AT 꺼내오기 (있음 -> status 200)
-3. 없음 -> RT 가지고 refresh token 요청하기
-4. 200 -> token 날라오면 set하기(신범님 코드 보기 (signin))
-5. set 성공? client에 status 200 / set 실패? 405 보내고 client에서 로그인하라고 모달 띄우기
- */

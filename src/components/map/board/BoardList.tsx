@@ -30,7 +30,7 @@ const BoardList = ({ markerIdValue, boardList }: BoardListProps) => {
         </>
       ) : (
         <div className="h-full overflow-y-auto ">
-          {boardList?.result.map((post) => (
+          {boardList?.result?.map((post) => (
             <div key={post.post.postId} className="w-full mb-0.5">
               <Link href={`/detail/${post.post.postId}`}>
                 <PostItem {...post} key={post.post.postId} onMap />

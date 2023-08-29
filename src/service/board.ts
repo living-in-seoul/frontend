@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 
-interface ResponseDataType {
+interface ResponsenewDataDataType {
   message: string;
   code: number;
 }

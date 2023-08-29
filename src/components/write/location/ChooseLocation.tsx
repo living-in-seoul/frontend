@@ -50,13 +50,17 @@ const ChooseLocation = ({ onClose }: ChooseLocationProps) => {
       setDetail(data.result);
       setCenter(data.result.geometry.location);
     }
-    console.log(data);
+    // if (data && data.result.geometry?.location) {
+    //   setDetail(data.result);
+    //   setCenter(new google.maps.LatLng(data.result.geometry.location));
+    // }
   }, [data, detail, setCenter, setDetail]);
 
   useEffect(() => {
     if (map && center) {
       map.panTo(center);
     }
+    console.log(center);
   }, [map, center]);
 
   const onClickToSelect = () => {
@@ -68,7 +72,6 @@ const ChooseLocation = ({ onClose }: ChooseLocationProps) => {
       lname: data?.result.name ?? '',
       address: data?.result.formatted_address ?? '',
     }));
-    console.log(formData);
     onClose();
   };
 

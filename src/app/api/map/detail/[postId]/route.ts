@@ -9,6 +9,5 @@ interface Context {
 export const GET = async (_: NextRequest, context: Context) => {
   const { postId } = context.params;
   const result = await getPostByPostId(postId);
-  // const post = result.result.post;
   return NextResponse.json(result);
 };
