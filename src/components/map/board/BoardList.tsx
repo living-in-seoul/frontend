@@ -10,7 +10,7 @@ interface BoardListProps {
 
 const BoardList = ({ markerIdValue, boardList }: BoardListProps) => {
   const { data } = useSWR<ResponseBoardDetail>(
-    `api/map/detail/${markerIdValue}`,
+    markerIdValue !== null && `api/map/detail/${markerIdValue}`,
   );
 
   return (

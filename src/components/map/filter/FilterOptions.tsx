@@ -21,11 +21,11 @@ const FilterOptions = () => {
   };
 
   return (
-    <div className="flex justify-between items-center w-full px-10 py-5 h-10 ">
+    <div className="flex justify-between items-center w-full px-7 py-5 h-10 ">
       {LINK_NAME.map(({ name, link }, i) => {
         const selected = filterOption === link;
         return (
-          <div key={i} className="w-16 h-7">
+          <div key={i} className="w-20 h-7">
             <Select
               size="full"
               title={name}

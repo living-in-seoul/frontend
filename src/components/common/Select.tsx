@@ -24,7 +24,7 @@ const getButtonSizeStyles = (size: string) => {
         span: 'text-black text-xs font-normal leading-3',
       };
     case 'full':
-      return { div: 'w-full h-full px-2.5', span: 'text-[0.7rem]' };
+      return { div: 'w-full h-full px-2.5', span: 'text-[0.75rem]' };
     case 'default':
       return {
         div: 'min-w-[80px] py-0.5 px-5 ',

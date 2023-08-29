@@ -1,7 +1,7 @@
 //현위치로 center 갈 때 header 안 바뀌는거 괜찮나?
 
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import useMapInstance from '@/hooks/useMapInstance';
 import { GoogleMap } from '@react-google-maps/api';
@@ -52,6 +52,7 @@ const CommunityMap = () => {
 
   useEffect(() => {
     if (boardList) setBoardListState(boardList);
+    console.log(boardList);
     if (currentValue.lat !== 0) setCenter(currentValue);
   }, [boardList, currentValue, filterOption, setBoardListState, setCenter]);
 
@@ -70,6 +71,15 @@ const CommunityMap = () => {
     setCenter(latlng);
   };
 
+  const onMouseUpHandler = async () => {
+    // const lat = map?.getCenter()?.lat();
+    // const lng = map?.getCenter()?.lng();
+    // const res = await fetch(`/api/map/geo?lat=${lat}&lng=${lng}`, {
+    //   method: 'GET',
+    // }).then((data) => data.json());
+    // console.log(res);
+  };
+
   return (
     <section className="w-full h-full relative z-100">
       <GoogleMap
@@ -78,6 +88,7 @@ const CommunityMap = () => {
         onLoad={onLoad}
         onUnmount={onUnmount}
         options={mapOptions}
+        onMouseUp={onMouseUpHandler}
       >
         <>
           {/* 현위치 */}
