@@ -47,4 +47,5 @@ export const mapOptions: google.maps.MapOptions = {
   disableDoubleClickZoom: true,
   disableDefaultUI: true,
   styles: MapStyleVersionTwo,
+  minZoom: 12,
 };

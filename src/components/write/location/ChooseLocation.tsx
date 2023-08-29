@@ -64,6 +64,7 @@ const ChooseLocation = ({ onClose }: ChooseLocationProps) => {
   }, [map, center]);
 
   const onClickToSelect = () => {
+    console.log(data?.result.formatted_address?.split(' ')[2]);
     setFormData((prev) => ({
       ...prev,
       lat: Number(center.lat),
