@@ -8,13 +8,16 @@ const MypageList = async ({ category }: { category: string }) => {
     category[0] === 'writed'
       ? `https://seoulvival.com:8080/posts/mypost?page=3&size=2`
       : `https://seoulvival.com:8080/posts/myscrap?page=3&size=2`;
-  const myPageData = await fetch(url, {
-    headers: {
-      'Content-Type': 'application/json',
-      authorization: 'Bearer ' + token,
+  const myPageData = await fetch(
+    `https://seoulvival.com:8080/posts/mypost?page=3&size=2`,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'Bearer ' + token,
+      },
+      next: { revalidate: 0 },
     },
-    next: { revalidate: 0 },
-  }).then<ResponseMyPostData>((res) => res.json());
+  ).then<ResponseMyPostData>((res) => res.json());
   console.log(myPageData);
   return (
     <div>

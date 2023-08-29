@@ -21,7 +21,7 @@ export const GET = async (req: NextRequest) => {
           value: newAT,
           httpOnly: true,
           path: '/',
-          maxAge: 60 * 60 * 24,
+          maxAge: 60 * 60 * 2,
         });
         return NextResponse.json(res);
       } catch (error) {

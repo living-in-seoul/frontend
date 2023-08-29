@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
-import { NextRequest } from 'next/server';
 import { instance } from './instance';
 import { cookies } from 'next/headers';
+import { getRefreshToken } from './token';
 
 /** 회원가입 필수사항 시 */
 export const postSignup = async (data: RequestEssentialRegister) => {

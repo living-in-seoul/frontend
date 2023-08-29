@@ -14,7 +14,11 @@ const DetailHeader = ({ data }: DetailHeaderProps) => {
     <div className="flex flex-row justify-between  px-4 py-4">
       <div className="flex flex-row gap-4">
         <div>
-          <Icons path={back} fill="#404040" onClick={() => route.back()} />
+          <Icons
+            path={back}
+            fill="#404040"
+            onClick={() => route.push('/community')}
+          />
         </div>
         <span className="font-bold">{data.category}</span>
       </div>

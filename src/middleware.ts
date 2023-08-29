@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getRefreshToken } from './service/token';
 
 export const middleware = async (request: NextRequest) => {
   const accessToken = request.cookies.get('accessToken');
@@ -33,6 +34,7 @@ export const config = {
     // '/api/liked',
     // '/signin/:path*',
     // '/signup/first',
+    // '/editprofile',
   ],
 };
 

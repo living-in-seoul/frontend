@@ -63,14 +63,6 @@ const EditProfileInfo = ({ profile }: { profile: ResponseUserProfileData }) => {
       movedDate: signupData.movedDate,
     };
     console.log('xzcvzxcvzxcvx', user);
-    // data.append(
-    //   'post',
-    //   new Blob([JSON.stringify(post)], { type: 'application/json' }),
-    // );
-    // // data.append('photos', file);
-    // for (let [key, value] of data.entries()) {
-    //   console.log(key, value);
-    // }
 
     // const response = await fetch('/api/signup', {
     //   method: 'PUT',

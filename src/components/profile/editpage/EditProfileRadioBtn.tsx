@@ -14,7 +14,7 @@ const EditProfileRadioBtn = () => {
         {genderArray.map((checkGender, index) => (
           <RadioInput
             key={index}
-            id="female"
+            id={checkGender}
             label={checkGender}
             checked={gender}
             bgColor="bg-teal-400"

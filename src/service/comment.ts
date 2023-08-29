@@ -1,4 +1,21 @@
 import { cookies } from 'next/headers';
+
+/**CommentData 가져오기 */
+export const getComment = async (postId: string) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER}/comment/get/${postId}?page=1&size=3`,
+      {
+        next: { tags: ['like'] },
+        cache: 'no-store',
+      },
+    ).then<ResponseCommentData>((res) => res.json());
+    return response;
+  } catch (error: any) {
+    console.log('getBoard error', error.message);
+  }
+};
+
 /**댓글 달기 POST */
 export const postComment = async (body: string, postId: string) => {
   const token = cookies().get('accessToken');
@@ -61,6 +78,64 @@ export const setDetailLike = async (postId: string) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+      },
+    },
+  )
+    .then((response) => response.json())
+    .catch((error) => error.response);
+  return response;
+};
+
+/**대댓글 달기 POST */
+export const rePostComment = async (body: string, commentId: string) => {
+  const token = cookies().get('accessToken');
+  console.log('1단계', body, commentId);
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER}/comment/re/${commentId}`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'Bearer ' + token?.value,
+      },
+      body: JSON.stringify(body),
+    },
+  )
+    .then((response) => response.json())
+    .catch((error) => error.response);
+  return response;
+};
+
+/**대댓글 수정 PUT */
+export const putReComment = async (body: string, reCommentId: string) => {
+  const token = cookies().get('accessToken');
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER}/comment/re/${reCommentId}`,
+    {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'Bearer ' + token?.value,
+      },
+      body: JSON.stringify(body),
+    },
+  )
+    .then((response) => response.json())
+    .catch((error) => error.response);
+  return response;
+};
+
+/**대댓글 삭제 DELETE */
+export const deleteReComment = async (reCommentId: string) => {
+  const token = cookies().get('accessToken');
+  console.log('첫번째', reCommentId);
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER}/comment/re/${reCommentId}`,
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'Bearer ' + token?.value,
       },
     },
   )

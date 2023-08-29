@@ -55,7 +55,6 @@ const ChooseLocation = ({ onClose }: ChooseLocationProps) => {
     //   setCenter(new google.maps.LatLng(data.result.geometry.location));
     // }
   }, [data, detail, setCenter, setDetail]);
-
   useEffect(() => {
     if (map && center) {
       map.panTo(center);

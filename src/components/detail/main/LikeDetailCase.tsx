@@ -1,13 +1,13 @@
 'use client';
-import { Like, largeEmptyHeart, largeHeart, scrapIcon } from '@/utils/Icon';
+import { Like, scrapIcon } from '@/utils/Icon';
 import Icons from '../../common/Icons';
 import { useState, useTransition } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { AuthOpenModalState } from '@/recoil/authStates';
 import ModalPortal from '../../modal/ModalPortal';
 import ModalOutside from '../../modal/ModalOutside';
-// import AuthModal from '@/app/(nav)/community/AuthModal';
-
+import AuthModal from '@/components/community/AuthModal';
+import useSWR from 'swr';
 interface LikeDetailCaseProps {
   likeSize: number;
   hasLiked: boolean;
@@ -28,7 +28,9 @@ const LikeDetailCase = ({
     hasLiked,
   );
 
-  const onClickHandler = async () => {
+  const { data: likeData } = useSWR('/');
+  // swr mutate로 업데이트를 해보자!!!!
+  const onClickLikeHandler = async () => {
     fetch(`/api/community/like`, {
       method: 'POST',
       body: JSON.stringify({ postId }),
@@ -42,7 +44,7 @@ const LikeDetailCase = ({
         setAuthOpenModal(true);
         document.body.style.overflow = 'hidden';
       } else {
-        // throw new Error(res.statusText);
+        throw new Error(res.statusText);
       }
     });
     startTransition(() => {
@@ -52,7 +54,7 @@ const LikeDetailCase = ({
   };
   return (
     <>
-      <div onClick={onClickHandler} className="flex flex-row gap-2 w-full">
+      <div onClick={onClickLikeHandler} className="flex flex-row gap-2 w-full">
         <div className="bg-neutral-500 w-full text-white rounded-3xl py-1 flex justify-center items-center gap-3">
           <Icons path={Like} fill="white" />
           <span>{likeSize}</span>
@@ -72,7 +74,7 @@ const LikeDetailCase = ({
               document.body.style.overflow = 'auto';
             }}
           >
-            {/* <AuthModal /> */}
+            <AuthModal />
           </ModalOutside>
         </ModalPortal>
       )}
