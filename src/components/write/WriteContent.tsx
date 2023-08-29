@@ -18,11 +18,14 @@ import {
 import SelectCategory from './SelectCategory';
 import SelectedLocation from './location/SelectedLocation';
 import DisplayTags from './tags/DisplayTags';
+import BottomSheet from '../BottomSheet';
+import { isBottomSheetState } from '@/recoil/communityStates';
 
 const WriteContent = () => {
   const [formData, setFormData] = useRecoilState(formDataState);
   const [tagText, setTagText] = useState<string>('');
-  const [openSelect, setOpenSelect] = useState<boolean>(false);
+  const [isBottomSheetOpen, setisBottomSheetState] =
+    useRecoilState(isBottomSheetState);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const setImagePortalState = useSetRecoilState(MapPortalState);
   const [openImagePortal, setOpenImagePortal] =
@@ -36,7 +39,7 @@ const WriteContent = () => {
 
   const onSelectOptionHandler = (name: string) => {
     name === '전체' ? setSelectedOption('') : setSelectedOption(name);
-    setOpenSelect(false);
+    setisBottomSheetState(false);
     setFormData((prev) => ({ ...prev, category: name }));
   };
 
@@ -56,7 +59,7 @@ const WriteContent = () => {
       <form className="flex flex-col w-full h-[85vh] justify-between items-center">
         <div
           className="flex justify-center text-sm text-center text-zinc-700 w-[90%] border border-zinc-300 h-8 mt-4 items-center gap-3 rounded-3xl"
-          onClick={() => setOpenSelect(true)}
+          onClick={() => setisBottomSheetState(true)}
         >
           {selectedOption ? selectedOption : '주제를 선택해 주세요.'}
           <Icons path={downdrop} />
@@ -106,20 +109,14 @@ const WriteContent = () => {
           <UploadImage />
         </div>
       </form>
-      {openSelect && (
-        <>
-          <div
-            className="fixed top-0 left-0 w-[100%] h-[100%] bg-black opacity-40 "
-            onClick={() => setOpenSelect(false)}
-          ></div>
-          <MapBottomSheet fixed>
-            <SelectCategory
-              selectedOption={selectedOption}
-              onSelectOptionHandler={onSelectOptionHandler}
-            />
-          </MapBottomSheet>
-        </>
-      )}
+      {
+        <BottomSheet>
+          <SelectCategory
+            selectedOption={selectedOption}
+            onSelectOptionHandler={onSelectOptionHandler}
+          />
+        </BottomSheet>
+      }
       {openImagePortal && (
         <ModalPortal nodeName="imagePortal">
           <ModalOutside

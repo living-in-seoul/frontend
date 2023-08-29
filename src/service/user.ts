@@ -78,3 +78,11 @@ export const getProfile = async () => {
     .catch((error) => error.response);
   return response;
 };
+
+/**토큰 있는지만 검사 */
+export const verifyUser = async () => {
+  const token = cookies().get('accessToken')?.value;
+  if (token) {
+    return true;
+  }
+};
