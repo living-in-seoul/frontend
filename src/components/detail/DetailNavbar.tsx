@@ -2,13 +2,14 @@
 import { imageIcon, paperAirplaneIcon, smallMarkerIcon } from '@/utils/Icon';
 import Icons from '../common/Icons';
 import { FormEvent, useEffect, useRef, useState } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   buttonRefState,
+  commentKeyState,
   inputTextRefState,
-  reCommentState,
   totalCommentState,
 } from '@/recoil/commentState';
+import { useSWRConfig } from 'swr';
 
 const DetailNavbar = ({ postId }: { postId: string }) => {
   const [comment, setComment] = useState<string>('');
@@ -17,8 +18,8 @@ const DetailNavbar = ({ postId }: { postId: string }) => {
   const setInputRef = useSetRecoilState(inputTextRefState);
   const setButtonRef = useSetRecoilState(buttonRefState);
   const [commentState, setCommentState] = useRecoilState(totalCommentState);
-  const [reCommentChangeState, setReCommentChangeState] =
-    useRecoilState(reCommentState);
+  const commentUrlKey = useRecoilValue(commentKeyState);
+  const { mutate } = useSWRConfig();
   useEffect(() => {
     setInputRef(textareaRef);
     setButtonRef(buttonRef);
@@ -32,7 +33,6 @@ const DetailNavbar = ({ postId }: { postId: string }) => {
         textareaRef.current.scrollHeight + 'px';
     }
   };
-  console.log(',', commentState);
   const onSubmitCommentHandler = async (e: any) => {
     e.preventDefault();
     console.log(',', commentState);
@@ -48,15 +48,14 @@ const DetailNavbar = ({ postId }: { postId: string }) => {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({ comment }),
-            }).then((response) => response.json())
+            }).then(() => mutate(commentUrlKey))
           : await fetch(`/api/comment/${postId}`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({ comment }),
-            }).then((response) => response.json());
-        return 'hi';
+            }).then(() => mutate(commentUrlKey));
       }
       if (commentState.isReComment) {
         commentState.reCommentChange
@@ -66,18 +65,20 @@ const DetailNavbar = ({ postId }: { postId: string }) => {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({ reComment: comment }),
-            }).then((response) => response.json())
+            }).then(() => mutate(commentUrlKey))
           : await fetch(`/api/comment/re/${commentState.commentId}`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({ reComment: comment }),
-            }).then((response) => response.json());
+            }).then(() => mutate(commentUrlKey));
       }
     } else {
       console.log('로그인모달 나와주세요');
     }
+    console.log('실행되니');
+    setComment('');
   };
   return (
     <div className="fixed bottom-0">

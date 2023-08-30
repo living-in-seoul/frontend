@@ -72,6 +72,7 @@ export const getProfile = async () => {
     `${process.env.NEXT_PUBLIC_SERVER}/auth/profile`,
     {
       headers: { authorization: 'Bearer ' + token },
+      cache: 'no-cache',
     },
   )
     .then<ResponseUserProfileData>((response) => response.json())

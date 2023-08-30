@@ -11,17 +11,28 @@ import {
   totalCommentState,
   totalCommentStateProps,
 } from '@/recoil/commentState';
+import { useSWRConfig } from 'swr';
 interface DetialCommentItemProps {
   commentData: Comment;
   children: React.ReactNode;
+  userNickname: string | undefined;
+  postId: string;
 }
 
 const DetialCommentItem = ({
   commentData,
   children,
+  userNickname,
+  postId,
 }: DetialCommentItemProps) => {
-  const { createdAt, nickname, comment, commentId, commentHasLiked } =
-    commentData;
+  const {
+    commentLikeSize,
+    createdAt,
+    nickname,
+    comment,
+    commentId,
+    commentHasLiked,
+  } = commentData;
   const inputRef = useRecoilValue(inputTextRefState);
   const buttonRef = useRecoilValue(buttonRefState);
   const [onModal, setOnModal] = useState<boolean>(false);
@@ -39,6 +50,7 @@ const DetialCommentItem = ({
   const [totalComment, setTotalComment] =
     useState<totalCommentStateProps>(defaultValue);
   const commentColor = totalComment.isReComment ? 'blue' : '#404040';
+  const mutate = useSWRConfig();
   const handleClickOutside = (e: any) => {
     if (modalRef.current && !modalRef.current.contains(e.target)) {
       setOnModal(false);
@@ -115,14 +127,36 @@ const DetialCommentItem = ({
       setTotalComment((prev) => ({ ...prev, isReComment: !prev.isReComment }));
     }
   };
+
+  const likeHandler = async () => {
+    try {
+      const tokenValidResponse = await fetch('/api/user', {
+        method: 'GET',
+      });
+      if (tokenValidResponse.status === 200) {
+        const response = await fetch('/api/comment/like', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(commentId),
+        }).then((respnse) => respnse.json());
+      }
+    } catch (error) {
+    } finally {
+      setOnModal(false);
+    }
+  };
   return (
-    <div
-      // className="flex flex-col gap-2 relative h-[85px]"
-      className="flex flex-col gap-2"
-    >
+    <div className="flex flex-col gap-2">
       <div className="flex flex-row justify-between relative">
         <UserProfile createdAt={createdAt} nickname={nickname} />
-        <Icons path={detailColThreeDotIcon} onClick={() => setOnModal(true)} />
+        {userNickname === nickname && (
+          <Icons
+            path={detailColThreeDotIcon}
+            onClick={() => setOnModal(true)}
+          />
+        )}
         {onModal && (
           <div
             className="flex flex-col absolute right-0 bg-white rounded-2xl"
@@ -143,8 +177,8 @@ const DetialCommentItem = ({
           <div className="flex flex-row gap-1 items-center">
             <LikeCommentCase
               hasLiked={commentHasLiked}
-              likeHandler={() => console.log('hi')}
-              likeSize={2}
+              likeHandler={likeHandler}
+              likeSize={commentLikeSize}
             />
             <span className="text-xs text-neutral-600">좋아요</span>
           </div>

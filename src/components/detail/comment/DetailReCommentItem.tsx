@@ -12,8 +12,10 @@ import {
 
 const DetailReCommentItem = ({
   reCommentData,
+  userNickname,
 }: {
   reCommentData: ReComment;
+  userNickname: string | undefined;
 }) => {
   const [onModal, setOnModal] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
@@ -95,7 +97,12 @@ const DetailReCommentItem = ({
     >
       <div className="flex flex-row justify-between">
         <UserProfile createdAt={createdAt} nickname={nickname} />
-        <Icons path={detailColThreeDotIcon} onClick={() => setOnModal(true)} />
+        {userNickname === nickname && (
+          <Icons
+            path={detailColThreeDotIcon}
+            onClick={() => setOnModal(true)}
+          />
+        )}
         {onModal && (
           <div
             className="flex flex-col absolute right-0 bg-white rounded-2xl"

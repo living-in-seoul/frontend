@@ -4,14 +4,15 @@ import { getRefreshToken } from './service/token';
 export const middleware = async (request: NextRequest) => {
   const accessToken = request.cookies.get('accessToken');
   const refreshToken = request.cookies.get('refreshToken');
-  if (refreshToken) {
+  if (!accessToken) {
     const { pathname, search, origin, basePath } = request.nextUrl;
     // const nesSearch = search.split('=')[1] ?? 'home';
-    const signInUrl = new URL(`${basePath}/home`, origin);
+    const signInUrl = new URL(`${basePath}/signin`, origin);
     // signInUrl.searchParams.append(
     //   'callbackUrl',
     //   `${basePath}${pathname}${search}`,
     // );
+    console.log(signInUrl);
     return NextResponse.redirect(signInUrl);
   }
 
@@ -35,6 +36,7 @@ export const config = {
     // '/signin/:path*',
     // '/signup/first',
     // '/editprofile',
+    '/mypage',
   ],
 };
 

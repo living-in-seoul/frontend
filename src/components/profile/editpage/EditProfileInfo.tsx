@@ -2,7 +2,7 @@
 
 import { useForm } from 'react-hook-form';
 import Button from '@/components/common/Button';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { useRouter } from 'next/navigation';
 import useGetDate from '@/hooks/useGetDate';
 import {
@@ -24,13 +24,11 @@ const EditProfileInfo = ({ profile }: { profile: ResponseUserProfileData }) => {
   const { birthDate, gender, hometown, movedDate, nickname } = profile;
   const [signupData, setSignupData] = useRecoilState(signupState);
   const [genderState, setGenderState] = useRecoilState(signupGenderState);
-  const callbackUrl = useRecoilState(callbackUrlState);
   const router = useRouter();
   const nowDate = useGetDate();
   const {
     register,
     handleSubmit,
-    reset,
     formState: { isSubmitted, errors },
   } = useForm({
     mode: 'onSubmit',
@@ -64,18 +62,26 @@ const EditProfileInfo = ({ profile }: { profile: ResponseUserProfileData }) => {
     };
     console.log('xzcvzxcvzxcvx', user);
 
-    // const response = await fetch('/api/signup', {
-    //   method: 'PUT',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(data),
-    // }).then((response) => response.json());
-    // console.log(response);
-    // alert(response.message);
-    // router.push(`${callbackUrl[0]}`);
-    // reset();
+    const tokenValidResponse = await fetch('/api/user', {
+      method: 'GET',
+    });
+
+    if (tokenValidResponse.status === 200) {
+      const response = await fetch('/api/signup', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user),
+      }).then((response) => response.json());
+      console.log(response);
+      alert(response.message);
+    } else {
+      console.log('로그인모달 나와주세요');
+    }
+    // router.push('/mypage');
   };
+
   const onSelectHandler = (movedDate: string) => {
     setSignupData((prev) => ({ ...prev, movedDate }));
   };

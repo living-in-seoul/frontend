@@ -77,11 +77,8 @@ const SignupFirst = () => {
   };
   return (
     <section className="h-full relative">
-      <form
-        onSubmit={handleSubmit(onSubmitHandler)}
-        className="flex flex-col gap-5"
-      >
-        <div className="">
+      <form onSubmit={handleSubmit(onSubmitHandler)}>
+        <div className="flex flex-col gap-5">
           <AuthInput
             id="signupEmail"
             placeholder="ex) seuol123@vival.com"

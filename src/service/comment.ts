@@ -72,12 +72,14 @@ export const deleteComment = async (commentId: string) => {
 
 /** 포스트 좋아요 POST */
 export const setDetailLike = async (postId: string) => {
+  const token = cookies().get('accessToken');
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER}/posts/${postId}/like`,
     {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        authorization: 'Bearer ' + token?.value,
       },
     },
   )
@@ -89,7 +91,6 @@ export const setDetailLike = async (postId: string) => {
 /**대댓글 달기 POST */
 export const rePostComment = async (body: string, commentId: string) => {
   const token = cookies().get('accessToken');
-  console.log('1단계', body, commentId);
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER}/comment/re/${commentId}`,
     {
@@ -133,6 +134,41 @@ export const deleteReComment = async (reCommentId: string) => {
     `${process.env.NEXT_PUBLIC_SERVER}/comment/re/${reCommentId}`,
     {
       method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'Bearer ' + token?.value,
+      },
+    },
+  )
+    .then((response) => response.json())
+    .catch((error) => error.response);
+  return response;
+};
+/**포스트 스크랩 */
+export const setDetailScrap = async (postId: string) => {
+  const token = cookies().get('accessToken');
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER}/posts/${postId}/scrap`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'Bearer ' + token?.value,
+      },
+    },
+  )
+    .then((response) => response.json())
+    .catch((error) => error.response);
+  return response;
+};
+
+/** 댓글 좋아요 POST */
+export const setCommentLike = async (commentId: string) => {
+  const token = cookies().get('accessToken');
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER}/comment/${commentId}/like`,
+    {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         authorization: 'Bearer ' + token?.value,

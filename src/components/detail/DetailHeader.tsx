@@ -3,6 +3,8 @@
 import Icons from '@/components/common/Icons';
 import { back, detailColThreeDotIcon, detailLinkIcon } from '@/utils/Icon';
 import { useRouter } from 'next/navigation';
+import EditProfileThreeDot from '../profile/editpage/EditProfileThreeDot';
+import { detailModalArray } from '@/utils/constants/modal';
 interface DetailHeaderProps {
   data: {
     category: string;
@@ -31,11 +33,7 @@ const DetailHeader = ({ data }: DetailHeaderProps) => {
           />
         </div>
         <div>
-          <Icons
-            path={detailColThreeDotIcon}
-            fill="#404040"
-            onClick={() => console.log('기타등등모달을 띄워야할듯')}
-          />
+          <EditProfileThreeDot modalArray={detailModalArray} />
         </div>
       </div>
     </div>

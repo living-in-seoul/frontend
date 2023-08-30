@@ -4,11 +4,7 @@ import LikeDetailCase from './LikeDetailCase';
 const DetailButtons = ({ data }: { data: DetailMainProps }) => {
   return (
     <div>
-      <LikeDetailCase
-        hasLiked={data.hasLiked}
-        likeSize={data.likeSize}
-        postId={data.postId}
-      />
+      <LikeDetailCase postId={data.postId} />
     </div>
   );
 };

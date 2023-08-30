@@ -8,8 +8,9 @@ import { useRecoilValue } from 'recoil';
 
 const SignupHeader = ({ slug }: { slug: string }) => {
   const router = useRouter();
-  const aaaaa = useRecoilValue(callbackUrlState);
-  const href = aaaaa ?? '/home';
+  const callbackUrl = useRecoilValue(callbackUrlState);
+  const href = callbackUrl[0] ?? 'home';
+  console.log(callbackUrl[0]);
   return (
     <div className="flex flex-row justify-between">
       <div className="pt-5 " onClick={() => router.back()}>

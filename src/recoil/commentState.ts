@@ -38,3 +38,8 @@ export const reCommentState = atom<{
   key: 'reCommentState',
   default: { reCommentChange: false, reCommentId: null },
 });
+
+export const commentKeyState = atom<string>({
+  key: 'commentState',
+  default: '',
+});
