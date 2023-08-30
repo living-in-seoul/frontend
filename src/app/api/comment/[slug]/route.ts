@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { deleteComment, postComment } from '@/service/comment';
-import { getComment } from '@/service/board';
+import {
+  deleteComment,
+  getComment,
+  postComment,
+  putComment,
+} from '@/service/comment';
+
 interface Context {
   params: { slug: string };
 }
@@ -24,4 +29,11 @@ export const DELETE = async (request: NextRequest, context: Context) => {
   const data = await deleteComment(postId);
   const newData = data?.comments;
   return NextResponse.json(newData);
+};
+
+export const PUT = async (request: NextRequest, context: Context) => {
+  const commentId = context.params.slug;
+  const body = await request.json();
+  const data = await putComment(body, commentId);
+  return NextResponse.json(data);
 };

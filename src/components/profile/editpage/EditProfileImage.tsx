@@ -1,10 +1,11 @@
 'use client';
 import Image from 'next/image';
-import { EditImageIcon } from './EditImageIcon';
+
 import { useRef, useState } from 'react';
 import { profile as baseProfile } from '../../../../public/';
 import { useSetRecoilState } from 'recoil';
 import { userPorfileState } from '@/recoil/authStates';
+import { EditImageIcon } from './EditImageIcon';
 const EditProfileImage = () => {
   const setProfileImage = useSetRecoilState(userPorfileState);
 
@@ -27,9 +28,10 @@ const EditProfileImage = () => {
             onLoad={() => URL.revokeObjectURL(String(profile))}
             width={72}
             height={72}
+            priority
           />
         ) : (
-          <Image alt="nonProfile" src={baseProfile} />
+          <Image alt="nonProfile" src={baseProfile} priority={false} />
         )}
         <input
           onChange={(e) => onsetProfileHandler(e)}

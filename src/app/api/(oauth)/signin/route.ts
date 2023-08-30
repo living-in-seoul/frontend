@@ -15,7 +15,7 @@ export const POST = async (request: NextRequest) => {
     value: data.accessToken,
     httpOnly: true,
     path: '/',
-    maxAge: 60 * 60 * 24,
+    maxAge: 60 * 60 * 2,
   });
   cookies().set({
     name: 'refreshToken',

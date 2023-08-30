@@ -4,6 +4,7 @@ import Icons from '@/components/common/Icons';
 import { back, detailColThreeDotIcon, detailLinkIcon } from '@/utils/Icon';
 import { useRouter } from 'next/navigation';
 import EditProfileThreeDot from './EditProfileThreeDot';
+import { profileModalArray } from '@/utils/constants/modal';
 
 const EditProfileHeader = () => {
   const route = useRouter();
@@ -15,7 +16,7 @@ const EditProfileHeader = () => {
         </div>
         <span className="font-bold">내 정보 수정</span>
       </div>
-      <EditProfileThreeDot />
+      <EditProfileThreeDot modalArray={profileModalArray} />
     </div>
   );
 };

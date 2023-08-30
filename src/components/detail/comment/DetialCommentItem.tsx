@@ -4,28 +4,64 @@ import Icons from '../../common/Icons';
 import UserProfile from '../../item/UserProfile';
 import { useEffect, useRef, useState } from 'react';
 import LikeCommentCase from './LikeCommentCase';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import {
+  buttonRefState,
+  inputTextRefState,
+  totalCommentState,
+  totalCommentStateProps,
+} from '@/recoil/commentState';
+import { useSWRConfig } from 'swr';
 interface DetialCommentItemProps {
   commentData: Comment;
   children: React.ReactNode;
+  userNickname: string | undefined;
+  postId: string;
 }
 
-export const modalArray = [
-  { text: '수정하기', color: 'text-blue-500' },
-  { text: '삭제하기', color: 'text-red-500' },
-];
 const DetialCommentItem = ({
   commentData,
   children,
+  userNickname,
+  postId,
 }: DetialCommentItemProps) => {
-  const { createdAt, nickname, comment, commentId, commentHasLiked } =
-    commentData;
+  const {
+    commentLikeSize,
+    createdAt,
+    nickname,
+    comment,
+    commentId,
+    commentHasLiked,
+  } = commentData;
+  const inputRef = useRecoilValue(inputTextRefState);
+  const buttonRef = useRecoilValue(buttonRefState);
   const [onModal, setOnModal] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
-  const spanRef = useRef<HTMLSpanElement | null>(null);
+  const [recoilCommentState, setRecoilCommentState] =
+    useRecoilState(totalCommentState);
+  const defaultValue = {
+    isReComment: false,
+    isComment: true,
+    commentId: null,
+    isCommentChange: false,
+    reCommentChange: false,
+    reCommentId: null,
+  };
+  const [totalComment, setTotalComment] =
+    useState<totalCommentStateProps>(defaultValue);
+  const commentColor = totalComment.isReComment ? 'blue' : '#404040';
+  const mutate = useSWRConfig();
   const handleClickOutside = (e: any) => {
     if (modalRef.current && !modalRef.current.contains(e.target)) {
       setOnModal(false);
+    }
+    if (
+      inputRef?.current &&
+      !inputRef.current.contains(e.target) &&
+      buttonRef?.current &&
+      !buttonRef.current.contains(e.target)
+    ) {
+      setTotalComment((prev) => ({ ...prev, isReComment: false }));
     }
   };
   useEffect(() => {
@@ -34,11 +70,36 @@ const DetialCommentItem = ({
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-  const onClickModalHandler = async (
+
+  useEffect(() => {
+    if (totalComment.isCommentChange !== recoilCommentState.isCommentChange) {
+      setRecoilCommentState((prev) => ({
+        ...prev,
+        isReComment: false,
+        isCommentChange: totalComment.isCommentChange,
+        commentId,
+        isComment: true,
+      }));
+    }
+    if (totalComment.isReComment !== recoilCommentState.isReComment) {
+      setRecoilCommentState((prev) => ({
+        ...prev,
+        isComment: false,
+        isReComment: totalComment.isReComment,
+        commentId,
+        isCommentChange: false,
+      }));
+    }
+  }, [totalComment]);
+
+  const onClickDeleteHandler = async (
     e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
   ) => {
     try {
-      if (spanRef.current?.id === '삭제하기') {
+      const tokenValidResponse = await fetch('/api/user', {
+        method: 'GET',
+      });
+      if (tokenValidResponse.status === 200) {
         const response = await fetch(`/api/comment/${commentId}`, {
           method: 'DELETE',
           headers: {
@@ -46,36 +107,67 @@ const DetialCommentItem = ({
           },
         }).then((response) => response.json());
       }
-      console.log('hi');
+    } catch (error) {
+    } finally {
+      setOnModal(false);
+    }
+  };
+  const onClickChagneHandler = () => {
+    if (inputRef?.current) {
+      inputRef.current?.focus();
+      setTotalComment((prev) => ({
+        ...prev,
+        isCommentChange: !prev.isCommentChange,
+      }));
+    }
+  };
+  const onFocusHandler = () => {
+    if (inputRef?.current) {
+      inputRef.current?.focus();
+      setTotalComment((prev) => ({ ...prev, isReComment: !prev.isReComment }));
+    }
+  };
+
+  const likeHandler = async () => {
+    try {
+      const tokenValidResponse = await fetch('/api/user', {
+        method: 'GET',
+      });
+      if (tokenValidResponse.status === 200) {
+        const response = await fetch('/api/comment/like', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(commentId),
+        }).then((respnse) => respnse.json());
+      }
     } catch (error) {
     } finally {
       setOnModal(false);
     }
   };
   return (
-    <div
-      // className="flex flex-col gap-2 relative h-[85px]"
-      className="flex flex-col gap-2"
-    >
+    <div className="flex flex-col gap-2">
       <div className="flex flex-row justify-between relative">
         <UserProfile createdAt={createdAt} nickname={nickname} />
-        <Icons path={detailColThreeDotIcon} onClick={() => setOnModal(true)} />
+        {userNickname === nickname && (
+          <Icons
+            path={detailColThreeDotIcon}
+            onClick={() => setOnModal(true)}
+          />
+        )}
         {onModal && (
           <div
             className="flex flex-col absolute right-0 bg-white rounded-2xl"
             ref={modalRef}
           >
-            {modalArray.map((modal) => (
-              <span
-                ref={spanRef}
-                key={modal.text}
-                id={modal.text}
-                className={`${modal.color}`}
-                onClick={(e) => onClickModalHandler(e)}
-              >
-                {modal.text}
-              </span>
-            ))}
+            <span className="text-blue-500" onClick={onClickChagneHandler}>
+              {totalComment.isCommentChange ? '수정취소' : '수정하기'}
+            </span>
+            <span className="text-red-500" onClick={onClickDeleteHandler}>
+              삭제하기
+            </span>
           </div>
         )}
       </div>
@@ -85,20 +177,20 @@ const DetialCommentItem = ({
           <div className="flex flex-row gap-1 items-center">
             <LikeCommentCase
               hasLiked={commentHasLiked}
-              likeHandler={() => console.log('hi')}
-              likeSize={2}
+              likeHandler={likeHandler}
+              likeSize={commentLikeSize}
             />
             <span className="text-xs text-neutral-600">좋아요</span>
           </div>
           <div
-            onClick={() => console.log('ldasd')}
+            onClick={onFocusHandler}
             className="flex flex-row gap-1 items-center"
           >
             <Icons
               path={Comment}
               option={{
                 fill: 'none',
-                stroke: '#404040',
+                stroke: commentColor,
                 strokeLinecap: 'round',
                 strokeLinejoin: 'round',
               }}

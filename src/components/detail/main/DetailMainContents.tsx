@@ -20,6 +20,7 @@ const DetailMainContents = ({ data }: { data: DetailMainProps }) => {
               width={400}
               height={200}
               className="rounded-lg"
+              property="none"
             />
           ))}
       </div>

@@ -73,7 +73,7 @@ const SignupSecond = () => {
         onSubmit={handleSubmit(onSubmitHandler)}
         className="flex flex-col gap-5 h-full justify-between"
       >
-        <div className="">
+        <div className="flex flex-col gap-5">
           <AuthInput
             id="birthDate"
             placeholder="yyyy-mm-dd"
@@ -84,12 +84,12 @@ const SignupSecond = () => {
             errorsMessage={errors.birthDate?.message}
           />
           <div className="flex flex-col gap-3 ">
-            <label className="text-neutral-500 ">성별</label>
-            <div className="flex flex-row gap-5 pb-10 h-16 items-center ">
+            <label className="text-neutral-500 text-sm ">성별</label>
+            <div className="flex flex-row gap-5 items-center ">
               {genderArray.map((checkGender, index) => (
                 <RadioInput
                   key={index}
-                  id="female"
+                  id={checkGender}
                   label={checkGender}
                   checked={gender}
                   bgColor="bg-teal-400"

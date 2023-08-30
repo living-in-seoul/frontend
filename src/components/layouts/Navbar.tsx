@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import Icons from '../common/Icons';
 import { usePathname } from 'next/navigation';
+import { MypageIcon } from '../profile/editpage/EditImageIcon';
 
 const home = {
   path: 'M0.666626 25.75V8.75L12 0.25L23.3333 8.75V25.75H14.8333V15.8333H9.16663V25.75H0.666626Z',
@@ -72,32 +73,10 @@ const Navbar = () => {
           </Link>
         ))}
         <Link
-          href={'/mypage'}
+          href={'/mypage/scrapped'}
           className="basis-1/5 justify-center items-center flex flex-col gap-1"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="27"
-            height="27"
-            viewBox="0 0 27 27"
-            fill="none"
-          >
-            <g clipPath="url(#clip0_980_957)">
-              <path
-                d="M23.7 18.3379C22.464 16.9701 20.964 15.8786 19.2946 15.132C17.6252 14.3854 15.8224 14 14 14C12.1776 14 10.3748 14.3854 8.70543 15.132C7.03601 15.8786 5.53604 16.9701 4.3 18.3379C4.10917 18.5534 4.00242 18.8329 4 19.1235V23.8373C4.00404 24.1471 4.12739 24.4428 4.34335 24.6604C4.5593 24.878 4.85047 25 5.15385 25H22.8462C23.1522 25 23.4457 24.8758 23.662 24.6548C23.8784 24.4338 24 24.1341 24 23.8216V19.1078C23.9939 18.8227 23.8874 18.5493 23.7 18.3379Z"
-                fill="#636363"
-              />
-              <path
-                d="M13.5 13C16.5376 13 19 10.5376 19 7.5C19 4.46243 16.5376 2 13.5 2C10.4624 2 8 4.46243 8 7.5C8 10.5376 10.4624 13 13.5 13Z"
-                fill="#636363"
-              />
-            </g>
-            <defs>
-              <clipPath id="clip0_980_957">
-                <rect width="27" height="27" fill="white" />
-              </clipPath>
-            </defs>
-          </svg>
+          <MypageIcon />
           <div className="text-center text-black text-xs font-normal leading-3">
             마이페이지
           </div>

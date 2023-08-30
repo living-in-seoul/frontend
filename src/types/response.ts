@@ -193,7 +193,9 @@ interface Comment {
   createdAt: string;
   userImg: string | null;
   commentHasLiked: boolean;
+  commentLikeSize: number;
   reComments: ReComment[] | null;
+  hasReported: boolean;
 }
 
 interface ResultItem {
@@ -237,6 +239,7 @@ interface Post {
   postViewCount: number;
   comments: Comment[];
   commentSize: number;
+  scrapSize: number;
 }
 
 /**디테일 포스트 정보 데이터   */
@@ -310,4 +313,11 @@ interface ResponseUserProfileData {
   gender: string;
   hometown: string;
   porfileImageUrl: string;
+}
+
+/**좋아요 데이터   */
+interface ResponseDetialButtonsData {
+  hasLiked: boolean;
+  likeSize: number;
+  scrapSize: number;
 }

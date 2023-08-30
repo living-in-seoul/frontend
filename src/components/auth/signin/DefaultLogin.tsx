@@ -42,9 +42,9 @@ const DefaultLogin = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmitHandler)}
-      className="flex flex-col flex-grow justify-between "
+      className="flex flex-col flex-grow justify-between"
     >
-      <div className="flex flex-col justify-between">
+      <div className="flex flex-col justify-between gap-6">
         <AuthInput
           errorsMessage={errors.email?.message}
           id="signinEmail"

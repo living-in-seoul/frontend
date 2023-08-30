@@ -28,7 +28,7 @@ export default function MypageLink({
     >
       {children}
       &nbsp;
-      <span className="text-neutral-500 font-normal">30</span>
+      <span className="text-neutral-500 font-normal"></span>
     </Link>
   );
 }

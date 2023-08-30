@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
-import { NextRequest } from 'next/server';
 import { instance } from './instance';
 import { cookies } from 'next/headers';
+import { getRefreshToken } from './token';
 
 /** 회원가입 필수사항 시 */
 export const postSignup = async (data: RequestEssentialRegister) => {
@@ -72,6 +72,7 @@ export const getProfile = async () => {
     `${process.env.NEXT_PUBLIC_SERVER}/auth/profile`,
     {
       headers: { authorization: 'Bearer ' + token },
+      cache: 'no-cache',
     },
   )
     .then<ResponseUserProfileData>((response) => response.json())
