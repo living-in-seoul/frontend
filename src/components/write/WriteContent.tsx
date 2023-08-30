@@ -6,8 +6,7 @@ import ChooseLocation from '@/components/write/location/ChooseLocation';
 import UploadImageModal from '@/components/write/Image/UploadImageModal';
 import { ChangeEvent, useState } from 'react';
 import Icons from '../common/Icons';
-import { closeX, downdrop, tags } from '@/utils/Icon';
-import MapBottomSheet from '../map/bottomsheet/MapBottomSheet';
+import { closeX, downdrop, hashtagIcon } from '@/utils/Icon';
 import UploadImage from './Image/UploadImage';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
@@ -75,14 +74,10 @@ const WriteContent = () => {
         <div className="flex flex-col w-full h-[16%]">
           <div className="flex justify-center items-center h-full border-t border-stone-300 px-4 w-full text-sm ">
             <div>
-              <Icons
-                path={tags}
-                fill="#b4b4b4"
-                option={{ stroke: '#B8B8B8' }}
-              />
+              <Icons path={hashtagIcon} fill="#B8B8B8" />
             </div>
             <input
-              className="w-full outline-none ml-2"
+              className="w-full outline-none ml-2.5"
               value={tagText}
               onChange={(e) => onChangeTag(e)}
               onKeyPress={(e) => handleKeyPress(e)}
@@ -109,14 +104,12 @@ const WriteContent = () => {
           <UploadImage />
         </div>
       </form>
-      {
-        <BottomSheet>
-          <SelectCategory
-            selectedOption={selectedOption}
-            onSelectOptionHandler={onSelectOptionHandler}
-          />
-        </BottomSheet>
-      }
+      <BottomSheet>
+        <SelectCategory
+          selectedOption={selectedOption}
+          onSelectOptionHandler={onSelectOptionHandler}
+        />
+      </BottomSheet>
       {openImagePortal && (
         <ModalPortal nodeName="imagePortal">
           <ModalOutside

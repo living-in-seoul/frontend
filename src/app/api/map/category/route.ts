@@ -13,22 +13,23 @@ export const GET = async (req: NextRequest, context: Context) => {
   const category = searchParams.get('category') ?? 'All';
   const gu = searchParams.get('gu');
   const Token = req.cookies.get('accessToken')?.value;
+  console.log(category, gu);
 
-  if (Token) {
-    const list = await getCommunityListWithToken(category, 'newer', '', Token);
-    if (gu) {
-      const data = list.result.filter((data: any) => data.location.gu === gu);
-      const newData = {
-        ...list,
-        result: data,
-      };
-      return NextResponse.json(newData);
-    } else {
-      return NextResponse.json(list);
-    }
+  const fetchCommunityList = Token
+    ? () => getCommunityListWithToken(category, 'newer', '', Token)
+    : () => getCommunityList(category, 'newer', '');
+  const list = await fetchCommunityList();
+
+  if (gu !== 'null') {
+    const filteredData = list.result.filter(
+      (data: any) => data.location.gu === gu,
+    );
+    const newData = {
+      ...list,
+      result: filteredData,
+    };
+    return NextResponse.json(newData);
+  } else {
+    return NextResponse.json(list);
   }
-
-  return await getCommunityList(category, 'newer', '').then((data) =>
-    NextResponse.json(data),
-  );
 };

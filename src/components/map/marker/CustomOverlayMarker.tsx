@@ -1,19 +1,19 @@
-import { OverlayView, OverlayViewF } from '@react-google-maps/api';
+import { InfoWindowF, OverlayView, OverlayViewF } from '@react-google-maps/api';
 
 const CustomOverlayMarker = ({ position, text, onClick }: any) => {
   return (
-    <OverlayViewF
+    <InfoWindowF
       position={position}
-      mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
-      getPixelPositionOffset={getPixelPositionOffset}
+      // mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+      // getPixelPositionOffset={getPixelPositionOffset}
     >
-      <span
+      <div
         className="flex justify-center items-center w-16 py-1 overflow-hidden rounded-3xl bg-zinc-700 text-white text-sm"
         onClick={onClick}
       >
         {text}
-      </span>
-    </OverlayViewF>
+      </div>
+    </InfoWindowF>
   );
 };
 

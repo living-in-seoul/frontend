@@ -19,7 +19,22 @@ export const centerState = atom<LatLng | google.maps.LatLng>({
 /** 유저의 현재 위치 위도경도 */
 export const currentState = atom<LatLng>({
   key: 'currentState',
-  default: { lat: 37.5519, lng: 126.9918 },
+  default: { lat: 0, lng: 0 },
+});
+
+/**서울시 전체인지? -> zoom */
+export const hasLocation = atom<boolean>({
+  key: 'hasLocationState',
+  default: true,
+});
+
+/** 현재 맵 센터 구/동*/
+export const polygonState = atom<Gudong>({
+  key: 'polygonState',
+  default: {
+    gu: '',
+    dong: '',
+  },
 });
 
 /**유저가 선택한 곳의 디테일 (장소 이름, 주소) */

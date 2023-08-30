@@ -51,8 +51,9 @@ interface UserProfile {
 
 /** 위치 정보 데이터  */
 interface PostLocation {
-  dong: string;
+  address: string;
   gu: string;
+  lname: string;
   lat: number;
   lng: number;
 }

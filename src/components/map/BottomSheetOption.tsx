@@ -1,15 +1,26 @@
 'use client';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { boardListState, markerIdState } from '@/recoil/mapStates';
 import BoardList from './board/BoardList';
+import BottomSheet from '../BottomSheet';
+import { isBottomSheetState } from '@/recoil/communityStates';
+import { useEffect } from 'react';
 
 const BottomSheetOption = () => {
+  const [isBottomSheetOpen, setisBottomSheetState] =
+    useRecoilState(isBottomSheetState);
   const boardList = useRecoilValue(boardListState);
   const markerIdValue = useRecoilValue(markerIdState);
 
+  // useEffect(() => {
+  //   markerIdValue && setisBottomSheetState(true);
+  // }, [markerIdValue, setisBottomSheetState]);
+
   return (
     <section>
-      <BoardList boardList={boardList} markerIdValue={markerIdValue} />
+      <BottomSheet type="map">
+        <BoardList boardList={boardList} markerIdValue={markerIdValue} />
+      </BottomSheet>
     </section>
   );
 };

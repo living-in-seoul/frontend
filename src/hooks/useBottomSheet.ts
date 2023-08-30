@@ -18,7 +18,6 @@ export const useBottomSheet = (minY: number) => {
   });
 
   useEffect(() => {
-    let isDragging = false;
     const maxY = window.innerHeight - 240;
     const ableToMoveSheet = () => {
       const { touchMove, contentBeingTouched } = metrics.current;
@@ -43,30 +42,29 @@ export const useBottomSheet = (minY: number) => {
       touchStart.touchY = e.touches[0].clientY;
     };
 
-    const handleMouseDown = (e: MouseEvent): void => {
-      isDragging = true;
-      const { touchStart } = metrics.current;
-      touchStart.sheetY = sheet.current!.getBoundingClientRect().y;
-      touchStart.touchY = e.clientY;
-    };
-
-    const handleDrag = (currentY: number) => {
+    const handleTouchMove = (e: TouchEvent) => {
       const { touchStart, touchMove } = metrics.current;
+      const currentTouching = e.touches[0];
 
-      if (touchMove.prevTouchY === undefined || touchMove.prevTouchY === 0) {
+      if (touchMove.prevTouchY === undefined) {
+        touchMove.prevTouchY = touchStart.touchY;
+      }
+      if (touchMove.prevTouchY === 0) {
         touchMove.prevTouchY = touchStart.touchY;
       }
 
-      if (touchMove.prevTouchY < currentY) {
+      if (touchMove.prevTouchY < currentTouching.clientY) {
         touchMove.movingDirection = 'down';
       }
 
-      if (touchMove.prevTouchY > currentY) {
+      if (touchMove.prevTouchY > currentTouching.clientY) {
         touchMove.movingDirection = 'up';
       }
 
       if (ableToMoveSheet()) {
-        const diff = currentY - touchStart.sheetY;
+        e.preventDefault();
+
+        const diff = currentTouching.clientY - touchStart.sheetY;
         let nextMoveY = touchStart.sheetY + diff;
 
         if (nextMoveY <= minY) {
@@ -84,17 +82,6 @@ export const useBottomSheet = (minY: number) => {
       } else {
         document.body.style.overflowY = 'hidden';
       }
-    };
-
-    const handleTouchMove = (e: TouchEvent) => {
-      e.preventDefault();
-      handleDrag(e.touches[0].clientY);
-    };
-
-    const handleMouseMove = (e: MouseEvent): void => {
-      if (!isDragging) return;
-      e.preventDefault();
-      handleDrag(e.clientY);
     };
 
     const handleTouchEnd = (e: TouchEvent) => {
@@ -136,64 +123,16 @@ export const useBottomSheet = (minY: number) => {
         contentBeingTouched: false,
       };
     };
-    const handleMouseUp = (e: MouseEvent): void => {
-      if (!isDragging) return;
-      document.body.style.overflowY = 'auto';
-      const { touchStart, touchMove } = metrics.current;
-
-      const currentSheetY = sheet.current!.getBoundingClientRect().y;
-      const draggedDistance = touchStart.touchY - e.clientY; // MouseEvent의 경우 e.clientY 사용
-
-      if (draggedDistance > 50) {
-        sheet.current!.style.setProperty(
-          'transform',
-          `translateY(${minY - maxY}px)`,
-        );
-      } else {
-        if (currentSheetY !== minY) {
-          if (touchMove.movingDirection === 'down') {
-            sheet.current!.style.setProperty('transform', 'translateY(0)');
-          }
-
-          if (touchMove.movingDirection === 'up') {
-            sheet.current!.style.setProperty(
-              'transform',
-              `translateY(${minY - maxY})`,
-            );
-          }
-        }
-      }
-      isDragging = false;
-
-      metrics.current = {
-        touchStart: {
-          sheetY: 0,
-          touchY: 0,
-        },
-        touchMove: {
-          prevTouchY: 0,
-          movingDirection: 'none',
-        },
-        contentBeingTouched: false,
-      };
-    };
-
     if (sheet.current) {
       sheet.current!.addEventListener('touchstart', handleTouchStart);
       sheet.current!.addEventListener('touchmove', handleTouchMove);
       sheet.current!.addEventListener('touchend', handleTouchEnd);
-      sheet.current!.addEventListener('mousedown', handleMouseDown);
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
     }
     return () => {
       if (sheet.current) {
         sheet.current!.removeEventListener('touchstart', handleTouchStart);
         sheet.current!.removeEventListener('touchmove', handleTouchMove);
         sheet.current!.removeEventListener('touchend', handleTouchEnd);
-        sheet.current!.removeEventListener('mousedown', handleMouseDown);
-        document.removeEventListener('mousemove', handleMouseMove);
-        document.removeEventListener('mouseup', handleMouseUp);
       }
     };
   }, [minY]);

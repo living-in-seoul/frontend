@@ -1,13 +1,16 @@
 'use client';
 
+import { polygonState } from '@/recoil/mapStates';
 import FilterOptions from '../filter/FilterOptions';
 import Icons from '@/components/common/Icons';
 import { back } from '@/utils/Icon';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 
 const MapHeader = () => {
   const router = useRouter();
+  const polygonValue = useRecoilValue(polygonState);
   const [gu, setGu] = useState<string>('');
 
   useEffect(() => {
@@ -27,7 +30,9 @@ const MapHeader = () => {
           onClick={onClickToBack}
           className="hover:cursor-pointer"
         />
-        <span className="font-semibold text-[1.1rem]">{`서울시 ${gu}`}</span>
+        <span className="font-semibold text-[1.1rem]">{`서울시 ${
+          polygonValue.gu ? `${polygonValue.gu} ${polygonValue.dong}` : gu
+        }`}</span>
       </div>
       <FilterOptions />
     </section>
