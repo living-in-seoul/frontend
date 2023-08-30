@@ -42,3 +42,19 @@ body.modal-open {
   columns: 2;
   column-gap: 20px;
 }
+
+.gm-style .gm-style-iw-c {
+  background-color: rgb(95, 95, 95) !important;
+}
+
+/* InfoWindow의 화살표 (tail) 색상 변경 */
+
+.gm-style .gm-style-iw-t::before {
+  background-color: rgb(104, 104, 104) !important;
+  box-shadow: none !important;
+}
+
+.gm-style .gm-style-iw-t::after {
+  background-color: rgb(104, 104, 104) !important;
+  box-shadow: none !important;
+}

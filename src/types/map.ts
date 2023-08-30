@@ -51,6 +51,12 @@ interface Term {
   value: string;
 }
 
+/** 맵 센터 구/동 */
+interface Gudong {
+  gu: string;
+  dong: string;
+}
+
 /** 주변 장소 추천 request types */
 interface RequestPlaces {
   location: LatLng;

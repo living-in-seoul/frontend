@@ -38,7 +38,7 @@ export const outerCoords = [
 
 export const CommContainerStyle = {
   width: '100%',
-  height: '90vh',
+  height: '100vh',
 };
 
 export const mapOptions: google.maps.MapOptions = {
@@ -47,5 +47,5 @@ export const mapOptions: google.maps.MapOptions = {
   disableDoubleClickZoom: true,
   disableDefaultUI: true,
   styles: MapStyleVersionTwo,
-  minZoom: 12,
+  minZoom: 10,
 };

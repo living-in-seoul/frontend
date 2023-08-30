@@ -1,22 +1,31 @@
 import { NextRequest, NextResponse } from 'next/server';
-// import { point } from '@turf/helpers';
-// import * as turf from '@turf/turf';
+import seoulData from '@/../public/seoul.json';
+import dongData from '@/../public/dong.json';
+const turf = require('@turf/turf');
 
-/** 구글맵 자동완성 검색어 데이터 가져오기 */
+/** 맵 센터 구/동 계산해서 가져오기*/
 export const GET = async (req: NextRequest) => {
-  // const rawData = require('/public/seoul.json');
   const { searchParams } = req.nextUrl;
   const lat = searchParams.get('lat') ?? '36';
   const lng = searchParams.get('lng') ?? '127';
+  let selectedPoint = turf.point([parseFloat(lng), parseFloat(lat)]);
+  let gu = '';
+  let dong = '';
 
-  // const center = turf.point([parseFloat(lat), parseFloat(lng)]);
+  for (let district of seoulData.features) {
+    let polygon = turf.polygon(district.geometry.coordinates);
 
-  // for (const feature of rawData.features) {
-  //   if (turf.booleanPointInPolygon(center, feature)) {
-  //     console.log('이 좌표는', feature.properties.name, '에 위치해 있습니다.');
-  //     break;
-  //   }
-  // }
+    if (turf.booleanPointInPolygon(selectedPoint, polygon)) {
+      gu = district.properties.SGG_NM;
+      break;
+    }
+  }
+  for (let district of dongData.features) {
+    if (turf.booleanPointInPolygon(selectedPoint, district.geometry)) {
+      dong = district.properties.EMD_NM;
+      break;
+    }
+  }
 
-  return NextResponse.json({ lat, lng });
+  return NextResponse.json({ gu, dong });
 };

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import { GoogleMap, MarkerF } from '@react-google-maps/api';
@@ -12,6 +13,7 @@ import {
   currentState,
   detailState,
   placeIdState,
+  polygonState,
 } from '@/recoil/mapStates';
 import useMapInstance from '@/hooks/useMapInstance';
 import { MapStyleVersionTwo } from '@/utils/styles';
@@ -38,41 +40,51 @@ const ChooseLocation = ({ onClose }: ChooseLocationProps) => {
   const placeId = useRecoilValue(placeIdState);
   const [detail, setDetail] = useRecoilState(detailState);
   const { map, onLoad, onUnmount } = useMapInstance();
+  const [polygonValue, setPolygonState] = useRecoilState(polygonState);
   const [formData, setFormData] = useRecoilState(formDataState);
   const [center, setCenter] = useRecoilState(centerState);
   const currentValue = useRecoilValue(currentState);
   const { data } = useSWR<PlaceByPlaceIdResponse>(
     placeId && `/api/map/place/${placeId}`,
   );
+  console.log(polygonValue);
 
   useEffect(() => {
     if (data && data.result.geometry?.location) {
       setDetail(data.result);
       setCenter(data.result.geometry.location);
     }
-    // if (data && data.result.geometry?.location) {
-    //   setDetail(data.result);
-    //   setCenter(new google.maps.LatLng(data.result.geometry.location));
-    // }
   }, [data, detail, setCenter, setDetail]);
 
   useEffect(() => {
     if (map && center) {
       map.panTo(center);
     }
-    console.log(center);
   }, [map, center]);
 
   const onClickToSelect = () => {
-    console.log(data?.result.formatted_address?.split(' ')[2]);
-    setFormData((prev) => ({
-      ...prev,
-      lat: Number(center.lat),
-      lng: Number(center.lng),
-      gu: data?.result.formatted_address?.split(' ')[2] ?? '',
-      lname: data?.result.name ?? '',
-      address: data?.result.formatted_address ?? '',
-    }));
+    if (data?.result) {
+      setFormData((prev) => ({
+        ...prev,
+        lat: Number(center.lat),
+        lng: Number(center.lng),
+        gu: data?.result.formatted_address?.split(' ')[2] ?? polygonValue.gu,
+        lname: data?.result.name ?? `${polygonValue.gu} ${polygonValue.dong}`,
+        address:
+          data?.result.formatted_address ??
+          `${polygonValue.gu} ${polygonValue.dong}`,
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        lat: Number(map?.getCenter()?.lat()),
+        lng: Number(map?.getCenter()?.lng()),
+        gu: polygonValue.gu,
+        lname: `${polygonValue.gu} ${polygonValue.dong}`,
+        address: `${polygonValue.gu} ${polygonValue.dong}`,
+      }));
+    }
+
     onClose();
   };
 
@@ -83,6 +95,18 @@ const ChooseLocation = ({ onClose }: ChooseLocationProps) => {
       lat: Number(center.lat),
       lng: Number(center.lng),
     }));
+  };
+
+  //커스텀훅으로 배자
+  const onMouseUpHandler = async () => {
+    const lat = map?.getCenter()?.lat();
+    const lng = map?.getCenter()?.lng();
+    const res = await fetch(`/api/map/geo?lat=${lat}&lng=${lng}`, {
+      method: 'GET',
+    }).then((data) => data.json());
+    setPolygonState(res);
+    map?.fitBounds;
+    console.log(res);
   };
 
   return (
@@ -100,6 +124,7 @@ const ChooseLocation = ({ onClose }: ChooseLocationProps) => {
         zoom={11}
         onLoad={onLoad}
         onUnmount={onUnmount}
+        onMouseUp={onMouseUpHandler}
         options={{
           ...mapOptions,
         }}
@@ -109,6 +134,11 @@ const ChooseLocation = ({ onClose }: ChooseLocationProps) => {
         )}
         {currentValue && <MarkerF position={currentValue} />}
       </GoogleMap>
+      <img
+        src="/marker/base.png"
+        className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2"
+        alt="Center Marker"
+      />
       <div className="flex justify-between items-center px-6 pt-5 ">
         <div className="w-4/6">
           <SelectedLocation />
