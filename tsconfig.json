@@ -32,7 +32,9 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
+    "**/*.js",
     "**/*.tsx",
+    "**/*.jsx",
     ".next/types/**/*.ts",
     "src/**/*",
     "pages/api/signincheck"

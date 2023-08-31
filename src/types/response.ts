@@ -320,4 +320,22 @@ interface ResponseDetialButtonsData {
   hasLiked: boolean;
   likeSize: number;
   scrapSize: number;
+  /** 알람액티브 목록 */
+}
+interface ResponseAlarm {
+  msg: string;
+  pageable: {
+    totalPages: number;
+    totalElements: number;
+    size: number;
+  };
+  alarmList: AlarmItem[];
+}
+
+interface AlarmItem {
+  id: number;
+  alarmEventType: string;
+  text: string;
+  isRead: boolean;
+  registeredAt: string;
 }

@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-
 export const POST = async (req: NextRequest) => {
   console.log('likelikelike');
   const { postId } = await req.json();
@@ -11,7 +10,6 @@ export const POST = async (req: NextRequest) => {
   if (postId === undefined) {
     return new Response('잘못된 요청입니다!', { status: 400 });
   }
-
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER}/posts/${postId}/like`,
     {

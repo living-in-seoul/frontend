@@ -8,6 +8,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      transitionProperty: {
+        left: 'left',
+      },
       animation: {
         skeleton: 'loading 1.5s infinite',
       },

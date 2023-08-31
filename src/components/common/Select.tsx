@@ -4,7 +4,7 @@ interface Props {
   onClick?: () => void;
   className?: string;
   disable?: boolean;
-  size?: 'large' | 'medium' | 'small' | 'full' | 'default';
+  size?: 'large' | 'medium' | 'small' | 'full' | 'default' | 'alert';
   selectTag?: boolean;
   Icon?: JSX.Element;
 }
@@ -29,6 +29,11 @@ const getButtonSizeStyles = (size: string) => {
       return {
         div: 'min-w-[80px] py-0.5 px-5 ',
         span: 'text-xs font-normal leading-7',
+      };
+    case 'alert':
+      return {
+        div: 'py-1 px-3 ',
+        span: 'text-center text-white text-xs font-semibold',
       };
     default:
       return { div: 'py-1/2 px-3.5', span: 'text-xs' };

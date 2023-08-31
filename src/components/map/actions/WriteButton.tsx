@@ -2,6 +2,7 @@
 import Icons from '@/components/common/Icons';
 import { isBottomSheetState } from '@/recoil/communityStates';
 import { HomeWriteIcon, write } from '@/utils/Icon';
+import { usePathname } from 'next/navigation';
 import { useSetRecoilState } from 'recoil';
 
 interface WriteButtonProp {
@@ -11,7 +12,10 @@ interface WriteButtonProp {
 
 const WriteButton = ({ section = 'map' }: WriteButtonProp) => {
   const setWritePageModalOpen = useSetRecoilState(isBottomSheetState);
-
+  const pathname = usePathname();
+  if (pathname !== '/community') {
+    return;
+  }
   const MapWriteButton = (
     <div className="p-2 bg-white rounded-full shadow-3xl hover:cursor-pointer">
       <Icons path={write} />

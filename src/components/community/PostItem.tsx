@@ -78,7 +78,7 @@ const PostItem = ({ post, user, onMap, hasLiked }: PostItemProps) => {
               src={postImg[0]?.postImg}
               alt={`postImg`}
               fill
-              className="w-full h-full"
+              className="w-full h-full "
               sizes={'100%'}
             />
           </div>

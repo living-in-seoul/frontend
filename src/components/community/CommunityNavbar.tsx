@@ -3,14 +3,11 @@ import { LINK_NAME, SEARCH_LINK_NAME } from '@/utils/constants/board';
 import NavLink from './CommunityLink';
 import { useSearchParams } from 'next/navigation';
 import SearchLink from '../search/SearchLink';
-import { v4 as uuidv4 } from 'uuid';
 
 const CommunityNavbar = ({ search = false }: { search?: boolean }) => {
   const params = useSearchParams();
   const pathname = params.get('category');
 
-  // const pathname = usePathname();
-  console.log(pathname);
   const navBarBottomBar = () => {
     if (search) {
       switch (pathname) {

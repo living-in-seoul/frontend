@@ -1,4 +1,9 @@
-import { InfoWindowF, OverlayView, OverlayViewF } from '@react-google-maps/api';
+import {
+  InfoWindowF,
+  MarkerF,
+  OverlayView,
+  OverlayViewF,
+} from '@react-google-maps/api';
 
 const CustomOverlayMarker = ({ position, text, onClick }: any) => {
   return (

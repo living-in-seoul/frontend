@@ -100,6 +100,8 @@ const MyMap: React.FC = () => {
           // styles: MapStyleVersionThree,
         }
       }
+      onCenterChanged={() => console.log('center changed')}
+      onMouseOut={() => console.log('asdfasdf clicked')}
     >
       <MarkerClusterer calculator={customCalculator}>
         {(clusterer) => (

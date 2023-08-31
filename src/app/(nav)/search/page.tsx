@@ -5,10 +5,12 @@ interface PageProps {
 }
 const SearchPage = ({ searchParams }: PageProps) => {
   return (
-    <SearchComponent
-      search={searchParams.search || ''}
-      category={searchParams.category || ''}
-    />
+    <>
+      <SearchComponent
+        search={searchParams.search || ''}
+        category={searchParams.category || ''}
+      />
+    </>
   );
 };
 export default SearchPage;

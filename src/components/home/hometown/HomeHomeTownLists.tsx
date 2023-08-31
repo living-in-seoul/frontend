@@ -28,6 +28,7 @@ const HomeHomeTownLists = ({ hashtags }: ReviewListProps) => {
           {group.map((item) => (
             <Link
               key={item.post.postId}
+              onMouseDown={(e) => e.preventDefault()}
               href={`/detail/${item.post.postId}`}
               className="w-full cursor-pointer hover:bg-zinc-200 transition-all duration-200 active:bg-zinc-200"
             >

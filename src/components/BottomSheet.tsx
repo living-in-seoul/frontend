@@ -41,6 +41,13 @@ const BottomSheet = ({ children, type = 'default' }: BottomSheetProps) => {
         ></div>
       )}
       <div
+        className={`fixed inset-0 max-w-md w-full left-1/2 -translate-x-1/2 transition-opacity duration-300 ${
+          isBottomSheetOpen
+            ? 'bg-black opacity-50'
+            : 'opacity-0 pointer-events-none'
+        }`}
+      ></div>
+      <div
         ref={ref}
         className={`fixed max-w-md bg-white z-50 bottom-0 border-t-2 rounded-tl-2xl rounded-tr-2xl px-4 py-7 shadow-2xl border-neutral-200 left-1/2 -translate-x-1/2 w-full transform transition-transform duration-500 ${
           isBottomSheetOpen ? 'translate-y-0' : 'translate-y-full'
