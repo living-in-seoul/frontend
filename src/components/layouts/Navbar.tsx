@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import Icons from '../common/Icons';
 import { usePathname } from 'next/navigation';
-import { ProfileIcon } from '../profile/editpage/EditImageIcon';
+import { MypageIcon, ProfileIcon } from '../profile/editpage/EditImageIcon';
 import { comunity, home, map } from '@/utils/Icon';
 
 const NavBarArray = [
