@@ -5,10 +5,6 @@ interface ModalOutsideProps {
   profile?: boolean;
 }
 
-// const getMdalStyles = (profile: boolean) => {
-//   const style = profile ? : "fixed top-0 left-0 flex flex-col justify-center items-center w-full h-full z-10 bg-black opacity-40"
-// }
-
 const ModalOutside = ({
   children,
   onClose,

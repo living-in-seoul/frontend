@@ -22,12 +22,6 @@ export const currentState = atom<LatLng>({
   default: { lat: 0, lng: 0 },
 });
 
-/**서울시 전체인지? -> zoom */
-// export const hasLocation = atom<boolean>({
-//   key: 'hasLocationState',
-//   default: true,
-// });
-
 /** 현재 맵 센터 구/동*/
 export const polygonState = atom<Gudong>({
   key: 'polygonState',

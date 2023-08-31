@@ -1,7 +1,7 @@
 import { MouseEventHandler } from 'react';
 
 interface Props {
-  title: string;
+  title: string | JSX.Element;
   size:
     | 'small'
     | 'medium'
