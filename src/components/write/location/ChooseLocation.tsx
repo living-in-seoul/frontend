@@ -104,8 +104,6 @@ const ChooseLocation = ({ onClose }: ChooseLocationProps) => {
       method: 'GET',
     }).then((data) => data.json());
     setPolygonState(res);
-    map?.fitBounds;
-    console.log(res);
   };
 
   return (
