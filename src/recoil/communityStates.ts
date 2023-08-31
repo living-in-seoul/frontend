@@ -13,7 +13,3 @@ export const recentlySearchedState = atom<string[]>({
   key: 'recentlySearchedState',
   default: [],
 });
-export const isBottomSheetState = atom<boolean>({
-  key: 'isBottomSheetState',
-  default: false,
-});

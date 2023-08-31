@@ -1,17 +1,20 @@
 'use client';
 import useOutsideClick from '@/hooks/useOutsideClick';
-import { isBottomSheetState } from '@/recoil/communityStates';
 import React, { ReactNode, useEffect, useRef, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { RecoilState, useRecoilState } from 'recoil';
 
 interface BottomSheetProps {
   children: ReactNode;
+  state: RecoilState<boolean>;
   type?: 'map' | 'default';
 }
 
-const BottomSheet = ({ children, type = 'default' }: BottomSheetProps) => {
-  const [isBottomSheetOpen, setisBottomSheetState] =
-    useRecoilState(isBottomSheetState);
+const BottomSheet = ({
+  children,
+  state,
+  type = 'default',
+}: BottomSheetProps) => {
+  const [isBottomSheetOpen, setisBottomSheetState] = useRecoilState(state);
   const scrollY = useRef(0);
   const ref = useRef<HTMLDivElement | null>(null);
 
@@ -20,30 +23,23 @@ const BottomSheet = ({ children, type = 'default' }: BottomSheetProps) => {
   });
   useEffect(() => {
     if (isBottomSheetOpen) {
-      // scrollY.current = window.scrollY;
-      // document.body.classList.add('modal-open');
-      // document.body.style.top = `-${scrollY.current}px`;
+      scrollY.current = window.scrollY;
+      document.body.classList.add('modal-open');
+      document.body.style.top = `-${scrollY.current}px`;
     } else {
-      // document.body.classList.remove('modal-open');
-      // window.scrollTo(0, scrollY.current);
+      document.body.classList.remove('modal-open');
+      window.scrollTo(0, scrollY.current);
     }
   }, [isBottomSheetOpen]);
 
   return (
-    <div className="relative bg-black w-full h-full">
-      {type === 'default' && (
-        <div
-          className={`fixed inset-0 max-w-md w-full left-1/2 -translate-x-1/2 transition-opacity duration-300 ${
-            isBottomSheetOpen
-              ? 'bg-black opacity-50'
-              : 'opacity-0 pointer-events-none'
-          }`}
-        ></div>
-      )}
+    <div className="relative  w-full h-full">
       <div
-        className={`fixed inset-0 max-w-md w-full left-1/2 -translate-x-1/2 transition-opacity duration-300 ${
+        className={`z-50 fixed inset-0 max-w-md w-full left-1/2 -translate-x-1/2 transition-opacity duration-300 ${
           isBottomSheetOpen
-            ? 'bg-black opacity-50'
+            ? type === 'map'
+              ? ''
+              : 'bg-black opacity-50'
             : 'opacity-0 pointer-events-none'
         }`}
       ></div>

@@ -9,6 +9,7 @@ import { ImageState, formDataState } from '@/recoil/BoardStates';
 import ModalOutside from '../modal/ModalOutside';
 import Warning from './modal/Warning';
 import ModalPortal from '../modal/ModalPortal';
+import BeatLoader from '../common/Spinner';
 
 const WriteHeader = () => {
   const [openConfirm, setOpenConfirm] = useState(false);
@@ -80,7 +81,9 @@ const WriteHeader = () => {
         </div>
         <div className="w-20 h-8 text-white">
           <Button
-            title={isLoading ? '로딩중!' : '등록하기'} //로딩 스피너?
+            title={
+              isLoading ? <BeatLoader size={10} color="#2DDAB0" /> : '등록하기'
+            }
             size="full"
             bgColor="bg-neutral-200"
             className="text-white"

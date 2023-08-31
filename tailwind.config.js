@@ -25,6 +25,11 @@ module.exports = {
         },
       },
       colors: {
+        primary: '#2DDAB0',
+        secondary: '#DEFFF7',
+        darkGray: '',
+        mediumGray: '#D9D9D9',
+        lightGray: '',
         customYellows: '#FEE500',
       },
     },

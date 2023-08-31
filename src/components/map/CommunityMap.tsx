@@ -1,10 +1,10 @@
-//현위치로 center 갈 때 header 안 바뀌는거 괜찮나?
-
 'use client';
+
 import { useCallback, useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import useMapInstance from '@/hooks/useMapInstance';
-import { GoogleMap, MarkerF } from '@react-google-maps/api';
+import { GoogleMap } from '@react-google-maps/api';
+import toast, { Toaster } from 'react-hot-toast';
 import {
   boardListState,
   currentState,
@@ -12,10 +12,7 @@ import {
   markerIdState,
   polygonState,
 } from '@/recoil/mapStates';
-import {
-  communityKeyState,
-  isBottomSheetState,
-} from '@/recoil/communityStates';
+import { communityKeyState } from '@/recoil/communityStates';
 import usePosts from '@/hooks/usePosts';
 import CustomOverlayMarker from './marker/CustomOverlayMarker';
 import {
@@ -23,11 +20,12 @@ import {
   mapOptions,
   seoulCenterCoords,
 } from '@/utils/constants/constants';
+import { mapBottomSheetState } from '@/recoil/bottomsheet';
 
 const CommunityMap = () => {
   const { map, onLoad, onUnmount } = useMapInstance();
   const [isBottomSheetOpen, setisBottomSheetState] =
-    useRecoilState(isBottomSheetState);
+    useRecoilState(mapBottomSheetState);
   const [center, setCenter] = useState<LatLng | null | undefined>(null);
   const { posts: boardList } = usePosts(communityKeyState);
   const [polygonValue, setPolygonState] = useRecoilState(polygonState);
@@ -38,7 +36,7 @@ const CommunityMap = () => {
   const setCommunityKey = useSetRecoilState(communityKeyState);
 
   //로컬스토리지 여기서 잠깐 저장좀
-  // localStorage.setItem('location', '강남구');
+  localStorage.setItem('location', '강남구');
 
   useEffect(() => {
     const getCenter = () => {
@@ -53,10 +51,21 @@ const CommunityMap = () => {
 
   useEffect(() => {
     const gu = polygonValue.gu;
+    const length = boardList?.pageable.totalElements ?? 0;
     setCommunityKey(
       `/api/map/category?category=${filterOption}&gu=${encodeURIComponent(gu)}`,
     );
-  }, [filterOption, polygonValue.gu, setCommunityKey]);
+    localStorage.setItem('lastVisited', polygonValue.gu);
+
+    boardList &&
+      toast(`${gu} ${length}건`, {
+        icon: '📍',
+      });
+
+    if (!gu) {
+      toast.error('서울 지역으로 이동해주세요.');
+    }
+  }, [boardList, filterOption, polygonValue.gu, setCommunityKey]);
 
   useEffect(() => {
     if (boardList) setBoardListState(boardList);
@@ -122,6 +131,7 @@ const CommunityMap = () => {
           })}
         </>
       </GoogleMap>
+      <Toaster position="bottom-center" />
     </section>
   );
 };

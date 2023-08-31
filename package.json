@@ -30,6 +30,7 @@
     "react-hook-form": "^7.45.4",
     "react-hot-toast": "^2.4.1",
     "react-multi-carousel": "^2.8.4",
+    "react-spinners": "^0.13.8",
     "recoil": "^0.7.7",
     "swr": "^2.2.0",
     "tailwind-scrollbar-hide": "^1.1.7",

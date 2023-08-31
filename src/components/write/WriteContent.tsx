@@ -18,13 +18,14 @@ import SelectCategory from './SelectCategory';
 import SelectedLocation from './location/SelectedLocation';
 import DisplayTags from './tags/DisplayTags';
 import BottomSheet from '../BottomSheet';
-import { isBottomSheetState } from '@/recoil/communityStates';
+import { writeBottomSheetState } from '@/recoil/bottomsheet';
 
 const WriteContent = () => {
   const [formData, setFormData] = useRecoilState(formDataState);
   const [tagText, setTagText] = useState<string>('');
-  const [isBottomSheetOpen, setisBottomSheetState] =
-    useRecoilState(isBottomSheetState);
+  const [isBottomSheetOpen, setisBottomSheetState] = useRecoilState(
+    writeBottomSheetState,
+  );
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const setImagePortalState = useSetRecoilState(MapPortalState);
   const [openImagePortal, setOpenImagePortal] =
@@ -104,7 +105,7 @@ const WriteContent = () => {
           <UploadImage />
         </div>
       </form>
-      <BottomSheet>
+      <BottomSheet state={writeBottomSheetState}>
         <SelectCategory
           selectedOption={selectedOption}
           onSelectOptionHandler={onSelectOptionHandler}
