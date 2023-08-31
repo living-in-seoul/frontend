@@ -11,12 +11,12 @@ import { useRecoilValue } from 'recoil';
 const MapHeader = () => {
   const router = useRouter();
   const polygonValue = useRecoilValue(polygonState);
-  const [gu, setGu] = useState<string>('');
+  // const [gu, setGu] = useState<string>('');
 
-  useEffect(() => {
-    const gu = localStorage.getItem('location');
-    gu ? setGu(gu) : setGu('전체');
-  }, []);
+  // useEffect(() => {
+  //   const gu = localStorage.getItem('location');
+  //   gu ? setGu(gu) : setGu('전체');
+  // }, []);
 
   const onClickToBack = () => {
     router.back();
@@ -30,9 +30,8 @@ const MapHeader = () => {
           onClick={onClickToBack}
           className="hover:cursor-pointer"
         />
-        <span className="font-semibold text-[1.1rem]">{`서울시 ${
-          polygonValue.gu ? `${polygonValue.gu} ${polygonValue.dong}` : gu
-        }`}</span>
+        <span className="font-semibold text-[1.1rem]">{`서울시 
+          ${polygonValue.gu} ${polygonValue.dong}`}</span>
       </div>
       <FilterOptions />
     </section>

@@ -4,7 +4,7 @@ import Icons from '../common/Icons';
 import { useRouter } from 'next/navigation';
 import Button from '../common/Button';
 import { MouseEvent, useCallback, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { ImageState, formDataState } from '@/recoil/BoardStates';
 import ModalOutside from '../modal/ModalOutside';
 import Warning from './modal/Warning';
@@ -12,8 +12,9 @@ import ModalPortal from '../modal/ModalPortal';
 
 const WriteHeader = () => {
   const [openConfirm, setOpenConfirm] = useState(false);
-  const formData = useRecoilValue(formDataState);
-  const imageState = useRecoilValue(ImageState);
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useRecoilState(formDataState);
+  const [imageState, setImageState] = useRecoilState(ImageState);
   const router = useRouter();
 
   const onClickToBack = useCallback(() => {
@@ -22,6 +23,7 @@ const WriteHeader = () => {
 
   const onSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    setIsLoading(true);
 
     const data = new FormData();
     const post = {
@@ -51,16 +53,22 @@ const WriteHeader = () => {
     });
 
     if (tokenValidResponse.status === 200) {
-      const res = await fetch('/api/write', {
-        method: 'POST',
-        body: data,
-      })
-        .then((response) => response.json())
-        .catch(() => console.log('게시물 업로드 실패')); //로그인은 ㄱㅊ 게시물 post안됬을 때
-      alert(res);
+      try {
+        const res = await fetch('/api/write', {
+          method: 'POST',
+          body: data,
+        });
+        const message = await res.json();
+        alert(message);
+        setImageState(null);
+        router.back();
+      } catch (e) {
+        alert('게시물 작성 실패!');
+      }
     } else {
-      console.log('로그인모달 나와주세요');
+      alert('로그인 모달 나와주세요');
     }
+    setIsLoading(false);
   };
 
   return (
@@ -72,11 +80,12 @@ const WriteHeader = () => {
         </div>
         <div className="w-20 h-8 text-white">
           <Button
-            title="등록하기"
+            title={isLoading ? '로딩중!' : '등록하기'} //로딩 스피너?
             size="full"
             bgColor="bg-neutral-200"
             className="text-white"
             onClick={(e) => onSubmit(e)}
+            disable={isLoading}
           />
         </div>
       </div>

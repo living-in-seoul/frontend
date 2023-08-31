@@ -43,18 +43,32 @@ body.modal-open {
   column-gap: 20px;
 }
 
+.gm-style .gm-style-iw {
+  cursor: pointer !important;
+  border: none;
+  scale: 1;
+  transition: all 0.3s;
+}
+
+.gm-style .gm-style-iw:hover,
+.gm-style .gm-style-iw:active {
+  cursor: pointer !important;
+  scale: 1.04;
+}
+
+/* InfoWindow의 화살표 (테일) 스타일링 */
+.gm-style .gm-style-iw-t::before,
+.gm-style .gm-style-iw-t::after {
+  background-color: rgb(63, 63, 70) !important;
+  box-shadow: none !important;
+}
+
 .gm-style .gm-style-iw-c {
-  background-color: rgb(95, 95, 95) !important;
+  background-color: rgb(63, 63, 70) !important;
 }
 
 /* InfoWindow의 화살표 (tail) 색상 변경 */
 
-.gm-style .gm-style-iw-t::before {
-  background-color: rgb(104, 104, 104) !important;
-  box-shadow: none !important;
-}
-
-.gm-style .gm-style-iw-t::after {
-  background-color: rgb(104, 104, 104) !important;
-  box-shadow: none !important;
+.gm-style .gm-style-iw-tc::after {
+  background-color: rgb(63, 63, 70) !important;
 }
