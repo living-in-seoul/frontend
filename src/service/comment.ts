@@ -15,6 +15,21 @@ export const getComment = async (postId: string) => {
     console.log('getBoard error', error.message);
   }
 };
+/**추가 CommentData 가져오기 */
+export const getMoreComment = async (postId: string, page: string) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER}/comment/get/${postId}?page=${page}&size=3`,
+      {
+        next: { tags: ['like'] },
+        cache: 'no-store',
+      },
+    ).then<ResponseCommentData>((res) => res.json());
+    return response;
+  } catch (error: any) {
+    console.log('getBoard error', error.message);
+  }
+};
 
 /**댓글 달기 POST */
 export const postComment = async (body: string, postId: string) => {

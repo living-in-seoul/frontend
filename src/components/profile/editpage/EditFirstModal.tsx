@@ -3,6 +3,7 @@
 import ModalOutside from '@/components/modal/ModalOutside';
 import ModalPortal from '@/components/modal/ModalPortal';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useState, useTransition } from 'react';
 const DynamicWarning = dynamic(
   () => import('@/components/write/modal/Warning'),
@@ -25,6 +26,17 @@ const EditFirstModal = ({
 }) => {
   const [onModal, setOnModal] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const route = useRouter();
+
+  const logOutHandler = async () => {
+    const response = await fetch('/api/user', {
+      method: 'DELETE',
+    }).then((response) => {
+      if (response.status === 200) {
+        route.push('/home');
+      }
+    });
+  };
   return (
     <article>
       {modalArray.map((profile, index) => (
@@ -49,10 +61,10 @@ const EditFirstModal = ({
                 }}
               >
                 <DynamicWarning
-                  mainText="ggg"
-                  onCancel={() => console.log('hi')}
-                  onConfirm={() => console.log('bye')}
-                  subText="zzzz"
+                  mainText="로그아웃하시겠습니까?"
+                  onCancel={() => setOnModal(false)}
+                  onConfirm={() => logOutHandler()}
+                  subText=""
                 />
               </ModalOutside>
             </ModalPortal>

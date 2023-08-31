@@ -2,7 +2,7 @@
 
 import { useForm } from 'react-hook-form';
 import Button from '@/components/common/Button';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { useRouter } from 'next/navigation';
 import useGetDate from '@/hooks/useGetDate';
 import {
@@ -11,20 +11,24 @@ import {
   nicknameForm,
 } from '@/utils/formregister';
 import {
-  callbackUrlState,
+  profileImageState,
   signupGenderState,
   signupState,
 } from '@/recoil/authStates';
 import Table from '@/components/item/Table';
 import AuthInput from '@/components/auth/signin/AuthInput';
 import EditProfileRadioBtn from './EditProfileRadioBtn';
-import { MouseEvent, useEffect } from 'react';
-
+import { useEffect, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
+import { deepEqual } from '@/utils/utilFunc';
 const EditProfileInfo = ({ profile }: { profile: ResponseUserProfileData }) => {
-  const { birthDate, gender, hometown, movedDate, nickname } = profile;
+  const { birthDate, gender, hometown, nickname, movedDate } = profile;
+  const newProfile = { birthDate, gender, hometown, nickname, movedDate };
+  const [isLoading, setIsLoading] = useState(false);
+  const [myProfile, setMyProfile] = useState(newProfile);
   const [signupData, setSignupData] = useRecoilState(signupState);
   const [genderState, setGenderState] = useRecoilState(signupGenderState);
-  const router = useRouter();
+  const profileImage = useRecoilValue(profileImageState);
   const nowDate = useGetDate();
   const {
     register,
@@ -38,6 +42,7 @@ const EditProfileInfo = ({ profile }: { profile: ResponseUserProfileData }) => {
       nickname,
     },
   });
+
   const newBirthDayFrom = register('birthDate', {
     ...birthDateForm,
     validate: {
@@ -48,11 +53,17 @@ const EditProfileInfo = ({ profile }: { profile: ResponseUserProfileData }) => {
       },
     },
   });
+
   useEffect(() => {
     setGenderState(gender);
   }, []);
-  const onSubmitHandler = async (data: any) => {
-    const formData = new FormData();
+  const onSubmitHandler = async (data: {
+    hometown: string;
+    birthDate: string;
+    nickname: string;
+  }) => {
+    setIsLoading(true);
+    const newData = new FormData();
     const user = {
       nickname: data.nickname,
       birthDate: data.birthDate,
@@ -60,26 +71,36 @@ const EditProfileInfo = ({ profile }: { profile: ResponseUserProfileData }) => {
       gender: genderState,
       movedDate: signupData.movedDate,
     };
-    console.log('xzcvzxcvzxcvx', user);
 
-    const tokenValidResponse = await fetch('/api/user', {
-      method: 'GET',
-    });
-
-    if (tokenValidResponse.status === 200) {
-      const response = await fetch('/api/signup', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(user),
-      }).then((response) => response.json());
-      console.log(response);
-      alert(response.message);
+    if (deepEqual(user, newProfile) === true) {
+      setIsLoading(false);
+      return toast.error('동일한 유저정보입니다');
     } else {
-      console.log('로그인모달 나와주세요');
+      newData.append(
+        'user',
+        new Blob([JSON.stringify(user)], { type: 'application/json' }),
+      );
+      profileImage && newData.append('photo', profileImage);
+      const tokenValidResponse = await fetch('/api/user', {
+        method: 'GET',
+      });
+
+      if (tokenValidResponse.status === 200) {
+        const response = await fetch('/api/profile', {
+          method: 'PUT',
+          body: newData,
+        })
+          .then((response) => response.json())
+          .catch(() => toast.error('통신 실패'))
+          .finally(() => setIsLoading(false));
+        if (response.status === 200) {
+          toast.success(response.message);
+        }
+      } else {
+        console.log('로그인모달 나와주세요');
+      }
+      // router.push('/mypage');
     }
-    // router.push('/mypage');
   };
 
   const onSelectHandler = (movedDate: string) => {
@@ -87,8 +108,9 @@ const EditProfileInfo = ({ profile }: { profile: ResponseUserProfileData }) => {
   };
   return (
     <section>
+      <Toaster />
       <form
-        onSubmit={handleSubmit((e) => onSubmitHandler(e))}
+        onSubmit={handleSubmit((data) => onSubmitHandler(data))}
         className="flex flex-col gap-10 h-full justify-between"
       >
         <div className="flex flex-col gap-4 pb-20">
@@ -142,11 +164,12 @@ const EditProfileInfo = ({ profile }: { profile: ResponseUserProfileData }) => {
           <Button
             type="submit"
             size="w-full"
-            title="수정하기"
+            title={isLoading ? '수정 중' : '수정하기'}
             bgColor="bg-zinc-300"
             border="none"
             color="text-white"
             hoverColor="bg-teal-400"
+            disabled={isLoading}
           />
         </div>
       </form>

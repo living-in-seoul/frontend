@@ -22,6 +22,11 @@ export const userPorfileState = atom<RequestProfilePutData>({
   },
 });
 
+export const profileImageState = atom<File | null>({
+  key: 'profileImageState',
+  default: null,
+});
+
 export const signupEssentialState = atom<boolean>({
   key: 'isEssentialState',
   default: true,
