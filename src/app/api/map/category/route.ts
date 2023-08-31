@@ -5,7 +5,6 @@ import { NextRequest, NextResponse } from 'next/server';
 interface Context {
   params: { slug: [string, guchung] };
 }
-
 export const GET = async (req: NextRequest, context: Context) => {
   const { searchParams } = req.nextUrl;
   const category = searchParams.get('category') ?? 'All';
