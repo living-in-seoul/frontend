@@ -6,7 +6,7 @@ export const getRefreshToken = async () => {
   const refreshToken = cookies().get('refreshToken')?.value;
   const data = JSON.stringify({ refreshToken: refreshToken });
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/auth/refresh`,
+    `${process.env.NEXT_PUBLIC_SERVER}/token/refresh`,
     {
       method: 'POST',
       headers: {

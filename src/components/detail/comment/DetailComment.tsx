@@ -6,15 +6,9 @@ import useSWR from 'swr';
 import { useSetRecoilState } from 'recoil';
 import { commentKeyState } from '@/recoil/commentState';
 
-const DetailComment = ({
-  postId,
-  nickname,
-}: {
-  postId: string;
-  nickname: string;
-}) => {
+const DetailComment = ({ postId }: { postId: string }) => {
   const setCommentKey = useSetRecoilState(commentKeyState);
-  const { data: comments, error } = useSWR<Comment[]>(`/api/comment/${postId}`);
+  const { data: comments } = useSWR<Comment[]>(`/api/comment/${postId}`);
   const [list, setList] = useState<Comment[] | undefined>([]);
   const [page, setPage] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -38,15 +32,14 @@ const DetailComment = ({
         <DetialCommentItem
           key={comment.nickname + index}
           commentData={comment}
-          userNickname={userNickname}
-          postId={postId}
+          userNickname={userNickname ?? ''}
         >
           <>
             {comment.reComments?.map((reComment, index) => (
               <DetailReCommentItem
                 key={index}
                 reCommentData={reComment}
-                userNickname={userNickname}
+                userNickname={userNickname ?? ''}
               />
             ))}
           </>

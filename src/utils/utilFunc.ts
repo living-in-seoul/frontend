@@ -117,3 +117,14 @@ export function deepEqual(obj1: any, obj2: any) {
 
   return true;
 }
+
+interface FromDataObject {
+  [key: string]: any;
+}
+export function formDataToObject(formData: FormDataEntryValue) {
+  const object: FromDataObject = {};
+  formData.forEach((value, key) => {
+    object[key] = value;
+  });
+  return object;
+}

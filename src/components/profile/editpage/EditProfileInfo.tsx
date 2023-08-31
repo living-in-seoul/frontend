@@ -71,7 +71,7 @@ const EditProfileInfo = ({ profile }: { profile: ResponseUserProfileData }) => {
       gender: genderState,
       movedDate: signupData.movedDate,
     };
-
+    console.log(user, '유저랍니당');
     if (deepEqual(user, newProfile) === true) {
       setIsLoading(false);
       return toast.error('동일한 유저정보입니다');
@@ -152,13 +152,6 @@ const EditProfileInfo = ({ profile }: { profile: ResponseUserProfileData }) => {
             height="h-24"
             label="서울 거주 기간"
           />
-          {/* <div className="flex flex-col gap-3">
-            <label className="text-neutral-500 text-sm ">거주 지역</label>
-            <div className="w-full h-12 text-base border border-zinc-400 rounded-xl px-4 outline-teal-400 flex items-center ">
-              <Icons path={blackMarkerIcon} fill="none" />
-              <span>서울시 전체</span>
-            </div>
-          </div> */}
         </div>
         <div className="bottom-0 mb-2">
           <Button

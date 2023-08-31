@@ -6,7 +6,6 @@ import {
   postComment,
   putComment,
 } from '@/service/comment';
-import { constSelector } from 'recoil';
 
 interface Context {
   params: { slug: string };

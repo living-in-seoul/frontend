@@ -45,7 +45,6 @@ export const config = {
     // '/api/write',
     // '/api/liked',
     '/signin/:path*',
-    // '/signup/first',
     // '/editprofile',
     '/mypage',
   ],
