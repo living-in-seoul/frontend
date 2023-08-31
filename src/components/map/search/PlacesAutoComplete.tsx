@@ -6,9 +6,7 @@ import Input from '../../common/Input';
 import { FormEvent } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { placeIdState } from '@/recoil/mapStates';
-import Icons from '@/components/common/Icons';
-import { search } from '@/utils/Icon';
-import SearchIcon from './SearchIcon';
+import { SearchIcon } from '@/components/profile/editpage/EditImageIcon';
 
 const PlacesAutoComplete = () => {
   const [openUl, setOpenUl] = useState<boolean>(false);

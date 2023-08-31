@@ -9,7 +9,6 @@ import {
   boardListState,
   currentState,
   filterOptionState,
-  hasLocation,
   markerIdState,
   polygonState,
 } from '@/recoil/mapStates';
@@ -31,10 +30,9 @@ const CommunityMap = () => {
     useRecoilState(isBottomSheetState);
   const [center, setCenter] = useState<LatLng | null | undefined>(null);
   const { posts: boardList } = usePosts(communityKeyState);
-  const setPolygonState = useSetRecoilState(polygonState);
+  const [polygonValue, setPolygonState] = useRecoilState(polygonState);
   const filterOption = useRecoilValue(filterOptionState);
   const currentValue = useRecoilValue(currentState);
-  const setHasLocation = useSetRecoilState(hasLocation);
   const setMarkerId = useSetRecoilState(markerIdState);
   const setBoardListState = useSetRecoilState(boardListState);
   const setCommunityKey = useSetRecoilState(communityKeyState);
@@ -44,22 +42,21 @@ const CommunityMap = () => {
 
   useEffect(() => {
     const getCenter = () => {
-      const gu = localStorage.getItem('location') as guchung;
+      const gu =
+        (localStorage.getItem('location') as guchung) ?? polygonValue.gu;
       if (gu && seoulCenterCoords.hasOwnProperty(gu)) {
         setCenter(seoulCenterCoords[gu]);
-        seoulCenterCoords[gu];
-      } else {
-        setCenter(seoulCenterCoords.전체);
-        setHasLocation(false);
       }
     };
     getCenter();
-  }, [setHasLocation]);
+  }, []);
 
   useEffect(() => {
-    const gu = localStorage.getItem('location') as guchung;
-    setCommunityKey(`/api/map/category?category=${filterOption}&gu=${gu}`);
-  }, [filterOption, setCommunityKey]);
+    const gu = polygonValue.gu;
+    setCommunityKey(
+      `/api/map/category?category=${filterOption}&gu=${encodeURIComponent(gu)}`,
+    );
+  }, [filterOption, polygonValue.gu, setCommunityKey]);
 
   useEffect(() => {
     if (boardList) setBoardListState(boardList);
@@ -72,30 +69,13 @@ const CommunityMap = () => {
     }
   }, [map, center]);
 
-  useEffect(() => {
-    const locations = boardList?.result?.map((l) => {
-      return { lat: l.location.lat, lng: l.location.lng };
-    });
-    if (map) {
-      const bounds = new window.google.maps.LatLngBounds();
-      locations?.forEach((loc) => {
-        bounds.extend(loc);
-      });
-      map.fitBounds(bounds);
-    }
-  }, [boardList?.result, map]);
-
-  useEffect(() => {
-    console.log(isBottomSheetOpen);
-  }, [isBottomSheetOpen]);
-
   const onClickMarker = useCallback(
     (_: google.maps.event, postId: number, latlng: LatLng) => {
       setMarkerId(postId);
       setCenter(latlng);
       setisBottomSheetState(true);
     },
-    [setisBottomSheetState],
+    [setMarkerId, setisBottomSheetState],
   );
 
   const onMouseUpHandler = async () => {
@@ -105,8 +85,6 @@ const CommunityMap = () => {
       method: 'GET',
     }).then((data) => data.json());
     setPolygonState(res);
-    map?.fitBounds;
-    console.log(res);
   };
 
   return (
@@ -123,9 +101,7 @@ const CommunityMap = () => {
         }}
       >
         <>
-          {/* 현위치 */}
           {/* <MarkerF position={currentValue} /> */}
-          {/* boardlist */}
           {boardList?.result.map((post: ResponsePost) => {
             const { postId, hashtag } = post.post;
             const latlng = {
