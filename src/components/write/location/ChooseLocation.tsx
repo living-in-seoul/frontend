@@ -96,7 +96,6 @@ const ChooseLocation = ({ onClose }: ChooseLocationProps) => {
     }));
   };
 
-  //커스텀훅으로 배자
   const onMouseUpHandler = async () => {
     const lat = map?.getCenter()?.lat();
     const lng = map?.getCenter()?.lng();
@@ -112,7 +111,7 @@ const ChooseLocation = ({ onClose }: ChooseLocationProps) => {
         <Icons path={back} onClick={onClose} />
         <h1 className="font-semibold">위치 선택</h1>
       </div>
-      <div className="relative flex justify-center items-center mt-5 pb-5">
+      <div className="relative flex justify-center items-center mt-5 pb-5 w-[80%] mx-auto">
         <PlacesAutoComplete />
       </div>
       <GoogleMap

@@ -1,8 +1,9 @@
 'use client';
 import Icons from '@/components/common/Icons';
-import { isBottomSheetState } from '@/recoil/communityStates';
+import { writeBottomSheetState } from '@/recoil/bottomsheet';
 import { HomeWriteIcon, write } from '@/utils/Icon';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 
 interface WriteButtonProp {
@@ -11,13 +12,24 @@ interface WriteButtonProp {
 }
 
 const WriteButton = ({ section = 'map' }: WriteButtonProp) => {
-  const setWritePageModalOpen = useSetRecoilState(isBottomSheetState);
-  const pathname = usePathname();
-  if (pathname !== '/community') {
-    return;
-  }
+  const setWritePageModalOpen = useSetRecoilState(writeBottomSheetState);
+  const [isAuth, setIsAuth] = useState<boolean>(false);
+  // const pathname = usePathname();
+  // if (pathname !== '/community') {
+  //   return;
+  // }
+  useEffect(() => {
+    const verifyUser = async () => {
+      const tokenValidResponse = await fetch('/api/user', {
+        method: 'GET',
+      });
+      if (tokenValidResponse.status === 200) setIsAuth(true);
+    };
+    verifyUser();
+  }, []);
+
   const MapWriteButton = (
-    <div className="p-2 bg-white rounded-full shadow-3xl hover:cursor-pointer">
+    <div className="p-2 bg-white rounded-full shadow-md hover:cursor-pointer">
       <Icons path={write} />
     </div>
   );

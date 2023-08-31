@@ -46,16 +46,18 @@ const PlacesAutoComplete = () => {
 
   return (
     <div className="flex flex-col justify-center items-center w-full text-xs">
-      <Input
-        placeholder="장소 이름을 입력해주세요"
-        value={inputLocation}
-        onChange={onChangeHandler}
-        onSubmit={onSubmit}
-        onFocus={onFocusHandler}
-        formColor="bg-gray-300"
-        inputColor="bg-gray-300"
-        rightElement={<SearchIcon />}
-      />
+      <div className="w-full">
+        <Input
+          placeholder="장소 이름을 입력해주세요"
+          value={inputLocation}
+          onChange={onChangeHandler}
+          onSubmit={onSubmit}
+          onFocus={onFocusHandler}
+          formColor="bg-gray-300"
+          inputColor="bg-gray-300"
+          rightElement={<SearchIcon />}
+        />
+      </div>
       {openUl && (
         <ul className="flex flex-col justify-center bg-white w-full h-full pt-2">
           {data?.predictions.map((location, _) => {
