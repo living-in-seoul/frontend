@@ -14,7 +14,7 @@ const DetailMain = ({ data }: { data: DetailMainProps }) => {
       <DetailMainProfile data={data} />
       <DetailMainContents data={data} />
       <DetailMainTags data={data} />
-      <DetailButtons data={data} />
+      <DetailButtons postId={data.postId} />
     </section>
   );
 };

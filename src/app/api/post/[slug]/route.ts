@@ -1,7 +1,4 @@
 import { getBoard } from '@/service/board';
-import { getRefreshToken } from '@/service/token';
-import { getProfile } from '@/service/user';
-import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
 interface Context {

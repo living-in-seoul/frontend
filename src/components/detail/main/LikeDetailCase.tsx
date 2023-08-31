@@ -7,13 +7,14 @@ import ModalPortal from '../../modal/ModalPortal';
 import ModalOutside from '../../modal/ModalOutside';
 import AuthModal from '@/components/community/AuthModal';
 import useSWR, { useSWRConfig } from 'swr';
+import { useState } from 'react';
 
 export const buttonArray = [{ path: Like }, { path: scrapIcon }];
 
 const LikeDetailCase = ({ postId }: { postId: number }) => {
   const [authOpenModal, setAuthOpenModal] = useRecoilState(AuthOpenModalState);
 
-  const { data, mutate } = useSWR<ResponseDetialButtonsData>(
+  const { data, isLoading, mutate } = useSWR<ResponseDetialButtonsData>(
     `/api/post/${postId}`,
   );
 

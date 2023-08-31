@@ -19,15 +19,26 @@ const CallbackPage = (req: Req) => {
   console.log('aaaaaaaaaaaaaa', code, state);
 
   useEffect(() => {
-    const response = fetch('/api/callback', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ code, state }),
-    }).then((response) => response.json());
-    console.log(response);
-    return router.push('/signup/second');
+    try {
+      console.log('aaaaaaaaaaaaaa');
+      const response = fetch('/api/callback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ code, state }),
+      }).then((response) => {
+        console.log(response.status);
+        if (response.status === 200) {
+          return router.push('/signup/second');
+        } else if (response.status === 415) {
+          return router.push('/signin');
+        }
+      });
+      console.log(response);
+    } catch {
+      throw new Error();
+    }
   }, []);
   return <div></div>;
 };

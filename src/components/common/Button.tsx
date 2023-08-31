@@ -20,6 +20,7 @@ interface Props {
   className?: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   isRounded?: boolean;
+  disabled?: boolean;
 }
 
 const getButtonSizeStyles = (size: string) => {
@@ -66,6 +67,7 @@ const Button = ({
   onClick,
   border,
   isRounded = true,
+  disabled,
 }: Props) => {
   return (
     <button
@@ -76,6 +78,7 @@ const Button = ({
         getButtonSizeStyles(size).button
       } ${select ? hoverColor : 'border-l-zinc-400 hover:bg-neutral-200/70'} `}
       type={type}
+      disabled={disabled}
     >
       <span
         className={` ${getButtonSizeStyles(size).span} ${

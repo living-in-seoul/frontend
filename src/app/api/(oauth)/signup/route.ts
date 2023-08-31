@@ -18,6 +18,7 @@ export const POST = async (request: NextRequest) => {
 
 export const PUT = async (request: NextRequest) => {
   const body: RequestNonessentialRegister = await request.json();
+  console.log('zzzzz', body);
   const data = await putSignup(body);
 
   return NextResponse.json(data);

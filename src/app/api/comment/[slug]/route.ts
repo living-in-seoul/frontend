@@ -2,9 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import {
   deleteComment,
   getComment,
+  getMoreComment,
   postComment,
   putComment,
 } from '@/service/comment';
+import { constSelector } from 'recoil';
 
 interface Context {
   params: { slug: string };
@@ -18,7 +20,15 @@ export const POST = async (request: NextRequest, context: Context) => {
 };
 
 export const GET = async (request: NextRequest, context: Context) => {
+  const { searchParams } = request.nextUrl;
+  const page = searchParams.get('page');
   const postId = context.params.slug;
+  if (page) {
+    const data = await getMoreComment(postId, page);
+    const newData = data?.comments;
+    return NextResponse.json(newData);
+  }
+
   const data = await getComment(postId);
   const newData = data?.comments;
   return NextResponse.json(newData);

@@ -4,10 +4,11 @@ import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import AuthInput from './AuthInput';
 import Button from '@/components/common/Button';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { emailForm, passwordForm } from '@/utils/formregister';
 import { useRecoilState } from 'recoil';
 import { callbackUrlState } from '@/recoil/authStates';
+import toast, { Toaster } from 'react-hot-toast';
 
 const DefaultLogin = () => {
   const callbackUrl = useRecoilState(callbackUrlState);
@@ -24,7 +25,6 @@ const DefaultLogin = () => {
       password: '',
     },
   });
-  console.log(callbackUrl);
   const url = callbackUrl[0] ?? '/home';
   const onSubmitHandler: SubmitHandler<RequestLogin> = async (data) => {
     const response = await fetch('/api/signin', {
@@ -33,10 +33,15 @@ const DefaultLogin = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
-    }).then((response) => response.json());
-    alert(response.msg);
-    reset();
-    router.push(url);
+    }).then((response) => {
+      if (response.status === 401) {
+        toast.error('잘못된 요청입니다');
+      } else {
+        toast.success('로그인 성공');
+        reset();
+        router.push(url);
+      }
+    });
   };
 
   return (
@@ -44,6 +49,7 @@ const DefaultLogin = () => {
       onSubmit={handleSubmit(onSubmitHandler)}
       className="flex flex-col flex-grow justify-between"
     >
+      <Toaster />
       <div className="flex flex-col justify-between gap-6">
         <AuthInput
           errorsMessage={errors.email?.message}

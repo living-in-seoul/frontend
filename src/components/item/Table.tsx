@@ -35,7 +35,7 @@ const Table = ({
         >
           {totalArray.map((cell, index) => (
             <div
-              className={`flex items-center justify-center w-1/${row} h-1/${column} border`}
+              className={`flex items-center justify-center w-1/2 h-1/2 border`}
               key={index}
             >
               <Button
