@@ -3,6 +3,7 @@ import ManySearchToday from './ManySearchToday';
 import SearchInput from './SearchInput';
 import CommunityNavbar from '../community/CommunityNavbar';
 import dynamic from 'next/dynamic';
+import { v4 as uuidv4 } from 'uuid';
 
 const DynamicSearchBoardList = dynamic(() => import('./SearchBoardList'), {
   loading: () => <div>Loading...</div>,
@@ -34,11 +35,13 @@ const SearchComponent = async ({
           ) : (
             <div>
               <CommunityNavbar search />
-              <DynamicSearchBoardList
-                firstList={response.result}
-                totalpage={response.pageable.totalPages}
-                Category={category}
-              />
+              <div key={uuidv4()}>
+                <DynamicSearchBoardList
+                  firstList={response.result}
+                  totalpage={response.pageable.totalPages}
+                  Category={category}
+                />
+              </div>
             </div>
           )}
         </div>

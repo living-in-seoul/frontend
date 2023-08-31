@@ -1,4 +1,4 @@
-import { SVGProps } from 'react';
+import { ReactNode, SVGProps } from 'react';
 
 interface PathProp {
   path: string;
@@ -29,7 +29,14 @@ const Icons = ({
         <path key={index} d={p.path} fill={p.pathFill} {...option} />
       ));
     } else {
-      return <path d={pathData.path} fill={pathData.pathFill} {...option} />;
+      return (
+        <path
+          d={pathData.path}
+          fill={pathData.pathFill}
+          {...option}
+          // className="fill-current"
+        />
+      );
     }
   };
   const width = Array.isArray(path) ? path[0].width : path.width;
@@ -38,7 +45,9 @@ const Icons = ({
   return (
     <>
       {children ? (
-        children
+        <div onClick={onClick} className={className}>
+          {children}
+        </div>
       ) : (
         <svg
           width={width}

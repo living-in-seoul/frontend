@@ -1,5 +1,13 @@
 import Modal from '@/components/layouts/Modal';
 import SearchComponent from '@/components/search/SearchComponent';
+import dynamic from 'next/dynamic';
+
+const DynamicSearchComponent = dynamic(
+  () => import('@/components/search/SearchComponent'),
+  {
+    loading: () => <div>Loading...</div>,
+  },
+);
 interface PageProps {
   searchParams: { [key: string]: string | undefined };
 }
@@ -8,7 +16,10 @@ const SearchPage = ({ searchParams }: PageProps) => {
   const search = searchParams.search || '';
   return (
     <Modal>
-      <SearchComponent category={searchParams.category || ''} search={search} />
+      <DynamicSearchComponent
+        category={searchParams.category || ''}
+        search={search}
+      />
     </Modal>
   );
 };

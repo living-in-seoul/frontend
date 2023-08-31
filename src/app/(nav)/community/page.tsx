@@ -4,8 +4,9 @@ import CommunityBoardList from '@/components/community/CommunityBoardList';
 
 import { fetchCommunity } from '@/actions/fetchCommunity';
 import CommunityHotTag from '@/components/community/CommunityHotTag';
-import Icons from '@/components/common/Icons';
-import { HomeWriteIcon } from '@/utils/Icon';
+import WriteButton from '@/components/map/actions/WriteButton';
+import BottomSheet from '@/components/BottomSheet';
+import SigninButtons from '@/components/auth/signin/SigninButtons';
 
 interface PageProps {
   searchParams: { [key: string]: string | undefined };
@@ -31,7 +32,7 @@ const CommunityPage = async ({ searchParams }: PageProps) => {
   }).then((res) => res);
 
   return (
-    <section className="w-full max-w-2xl flex flex-col relative" key={uuidv4()}>
+    <section className="w-full max-w-md flex flex-col relative" key={uuidv4()}>
       {TagCategory && (
         <CommunityHotTag Hottag={TagCategory} category={category} />
       )}
@@ -42,6 +43,18 @@ const CommunityPage = async ({ searchParams }: PageProps) => {
         totalpage={lists?.pageable.totalPages ?? 1}
         ordertype={ordertype}
       />
+      <WriteButton section="home" />
+      <BottomSheet>
+        <div className="flex flex-col w-full h-full pb-2.5">
+          <div className="text-center text-black text-xl font-semibold leading-normal">
+            로그인 후 서울바이벌을 즐겨보세요!
+          </div>
+          <div className="text-center text-neutral-500 text-base font-normal leading-normal">
+            서울바이벌 회원만이 선택한 기능을 이용할 수 있어요
+          </div>
+        </div>
+        <SigninButtons callbackUrl="" />
+      </BottomSheet>
     </section>
   );
 };

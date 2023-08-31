@@ -18,7 +18,7 @@ const DetailPage = async ({ params }: DetailPageProps) => {
   const detailData = await getBoard(postId);
   const newData = detailData && DetailNewData(detailData);
   return (
-    <section className="w-full max-w-md h-screen relative">
+    <section className="w-full max-w-2md h-screen relative">
       {newData && (
         <>
           <DetailHeader data={newData.headerData} />

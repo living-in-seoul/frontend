@@ -55,3 +55,24 @@ export const profileSecondOpenModalState = atom<boolean>({
   key: 'profileSecondOpenModalState',
   default: false,
 });
+
+export const AleatSectionState = atom<'active' | 'hastag'>({
+  key: 'AleatSectionState',
+  default: 'active',
+});
+export const pushAlertToggleState = atom<boolean>({
+  key: 'pushAlertToggleState',
+  default: false,
+});
+export const commentAlertToggleState = atom<boolean>({
+  key: 'commentAlertToggleState',
+  default: false,
+});
+export const likeAlertToggleState = atom<boolean>({
+  key: 'likeAlertToggleState',
+  default: false,
+});
+export const hashtagAlertToggleState = atom<boolean>({
+  key: 'hashtagAlertToggleState',
+  default: false,
+});
