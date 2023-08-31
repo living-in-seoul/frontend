@@ -16,14 +16,12 @@ interface DetialCommentItemProps {
   commentData: Comment;
   children: React.ReactNode;
   userNickname: string | undefined;
-  postId: string;
 }
 
 const DetialCommentItem = ({
   commentData,
   children,
   userNickname,
-  postId,
 }: DetialCommentItemProps) => {
   const {
     commentLikeSize,

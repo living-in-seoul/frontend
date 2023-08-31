@@ -1,12 +1,10 @@
 import { redirect } from 'next/navigation';
-import { instance } from './instance';
 import { cookies } from 'next/headers';
-import { getRefreshToken } from './token';
 
 /** 회원가입 필수사항 시 */
 export const postSignup = async (data: RequestEssentialRegister) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/auth/signup1`,
+    `${process.env.NEXT_PUBLIC_SERVER}/signup/step1`,
     {
       method: 'POST',
       body: JSON.stringify(data),
@@ -15,26 +13,29 @@ export const postSignup = async (data: RequestEssentialRegister) => {
         Accept: 'application/json',
       },
     },
-  )
-    .then((response) => response.json())
-    .catch((error) => error.response);
-
-  return response;
+  );
+  if (!response.ok) {
+    throw {
+      status: response.status,
+      statusText: response.statusText,
+      message: `Error ${response.status}: ${response.statusText}`,
+    };
+  }
+  return response.json();
 };
-/** 회원가입 선택사항 시 */
-export const putSignup = async (data: RequestNonessentialRegister) => {
-  const { email } = data;
-  delete data.email;
-  console.log(email);
-  console.log(data);
+
+/**회원정보 수정 */
+export const putSignup = async (data: RequestPutProfile) => {
+  const token = cookies().get('accessToken');
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/auth/signup2?email=${email}`,
+    `${process.env.NEXT_PUBLIC_SERVER}/signup/update`,
     {
       method: 'PUT',
       body: JSON.stringify(data),
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
+        authorization: 'Bearer ' + token?.value,
       },
     },
   )
@@ -89,13 +90,10 @@ export const oauthSignin = async (data: RequestOauthLogin) => {
 /** 프로필 정보 가져오기 */
 export const getProfile = async () => {
   const token = cookies().get('accessToken')?.value;
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/auth/profile`,
-    {
-      headers: { authorization: 'Bearer ' + token },
-      next: { revalidate: 0 },
-    },
-  )
+  const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/profile/me`, {
+    headers: { authorization: 'Bearer ' + token },
+    next: { revalidate: 0 },
+  })
     .then<ResponseUserProfileData>((response) => response.json())
     .catch((error) => error.response);
   return response;
@@ -109,30 +107,11 @@ export const verifyUser = async () => {
   }
 };
 
-export const putProfile = async (data: any) => {
-  const token = cookies().get('accessToken');
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/auth/update`,
-    {
-      method: 'PUT',
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        authorization: 'Bearer ' + token?.value,
-      },
-    },
-  )
-    .then((response) => response.json())
-    .catch((error) => error.response);
-
-  return response;
-};
-
+/**프로필이미지 수정 */
 export const putProfileImage = async (data: any) => {
   const token = cookies().get('accessToken');
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/auth/update`,
+    `${process.env.NEXT_PUBLIC_SERVER}/profile/update`,
     {
       method: 'PUT',
       body: data,

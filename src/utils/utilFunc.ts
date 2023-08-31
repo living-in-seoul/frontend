@@ -117,3 +117,7 @@ export function deepEqual(obj1: any, obj2: any) {
 
   return true;
 }
+
+interface FromDataObject {
+  [key: string]: any;
+}

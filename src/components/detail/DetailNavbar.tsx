@@ -10,6 +10,7 @@ import {
   totalCommentState,
 } from '@/recoil/commentState';
 import { useSWRConfig } from 'swr';
+import { toast } from 'react-hot-toast';
 
 const DetailNavbar = ({ postId }: { postId: string }) => {
   const [comment, setComment] = useState<string>('');
@@ -35,7 +36,9 @@ const DetailNavbar = ({ postId }: { postId: string }) => {
   };
   const onSubmitCommentHandler = async (e: any) => {
     e.preventDefault();
-    console.log(',', commentState);
+    if (!comment) {
+      return toast.error('뭐든 적긴해야지');
+    }
     const tokenValidResponse = await fetch('/api/user', {
       method: 'GET',
     });

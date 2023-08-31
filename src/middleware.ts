@@ -6,37 +6,25 @@ export const middleware = async (request: NextRequest) => {
   const refreshToken = request.cookies.get('refreshToken');
   const { pathname, search, origin, basePath } = request.nextUrl;
   const signInUrl = new URL(`${basePath}/signin`, origin);
-
-  // if (!accessToken) {
-
-  //   const nesSearch = search.split('=')[1] ?? 'home';
-  //   const signInUrl = new URL(`${basePath}/signin`, origin);
-  //   signInUrl.searchParams.append(
-  //     'callbackUrl',
-  //     `${basePath}${pathname}${search}`,
-  //   );
-  //   console.log(signInUrl);
-  //   return NextResponse.redirect(signInUrl);
-  // }
-  //   if (refreshToken) {
-  //     const verify = await verifyAndRefreshToken(accessToken, refreshToken);
-  //     if (verify.status === 403) {
-  //       return NextResponse.redirect(signInUrl);
-  //     }
-  //     if (verify.status === 201) {
-  //       return NextResponse.redirect(signInUrl);
-  //     }
-  //   }
-  //   if (request.nextUrl.pathname.startsWith('/api')) {
-  //     const requestHeaders = new Headers(request.headers);
-  //     accessToken &&
-  //       requestHeaders.set('Authorization', `Bearer ${accessToken.value}`);
-  //     const response = NextResponse.next({
-  //       request: { headers: requestHeaders },
-  //     });
-  //     return response;
-  //   }
-  //   return NextResponse.next();
+  if (refreshToken) {
+    const signInUrl = new URL(`${basePath}/home`, origin);
+    signInUrl.searchParams.append(
+      'callbackUrl',
+      `${basePath}${pathname}${search}`,
+    );
+    console.log(signInUrl);
+    return NextResponse.redirect(signInUrl);
+  }
+  if (request.nextUrl.pathname.startsWith('/api')) {
+    const requestHeaders = new Headers(request.headers);
+    accessToken &&
+      requestHeaders.set('Authorization', `Bearer ${accessToken.value}`);
+    const response = NextResponse.next({
+      request: { headers: requestHeaders },
+    });
+    return response;
+  }
+  return NextResponse.next();
 };
 
 export const config = {
@@ -45,7 +33,7 @@ export const config = {
     // '/api/write',
     // '/api/liked',
     '/signin/:path*',
-    // '/signup/first',
+    '/signup/first',
     // '/editprofile',
     '/mypage',
   ],
