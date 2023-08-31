@@ -13,34 +13,19 @@ export const postSignup = async (data: RequestEssentialRegister) => {
         Accept: 'application/json',
       },
     },
-  )
-    .then((response) => response.json())
-    .catch((error) => error.response);
-
-  return response;
+  );
+  if (!response.ok) {
+    throw {
+      status: response.status,
+      statusText: response.statusText,
+      message: `Error ${response.status}: ${response.statusText}`,
+    };
+  }
+  return response.json();
 };
-/** 회원가입 선택사항 시 */
-export const putSignup = async (data: RequestNonessentialRegister) => {
-  const { email } = data;
-  delete data.email;
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/signup/step2?email=${email}`,
-    {
-      method: 'PUT',
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    },
-  )
-    .then((response) => response.json())
-    .catch((error) => error.response);
 
-  return response;
-};
 /**회원정보 수정 */
-export const putProfile = async (data: any) => {
+export const putSignup = async (data: RequestPutProfile) => {
   const token = cookies().get('accessToken');
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER}/signup/update`,
@@ -131,7 +116,6 @@ export const putProfileImage = async (data: any) => {
       method: 'PUT',
       body: data,
       headers: {
-        'Content-Type': 'application/json',
         enctype: 'multipart/form-data',
         authorization: 'Bearer ' + token?.value,
       },

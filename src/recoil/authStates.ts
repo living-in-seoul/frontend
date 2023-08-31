@@ -1,16 +1,6 @@
 import { atom } from 'recoil';
-export const signupState = atom<RequestNonessentialRegister>({
-  key: 'signupFistState',
-  default: {
-    email: '',
-    gender: '',
-    hometown: '',
-    movedDate: '',
-    birthDate: '',
-  },
-});
 
-export const userPorfileState = atom<RequestProfilePutData>({
+export const userPorfileState = atom<RequestPutProfile>({
   key: 'userPorfileState',
   default: {
     nickname: '',
@@ -18,7 +8,6 @@ export const userPorfileState = atom<RequestProfilePutData>({
     gender: '',
     hometown: '',
     movedDate: '',
-    거주지역: '',
   },
 });
 

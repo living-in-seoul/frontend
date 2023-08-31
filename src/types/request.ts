@@ -16,21 +16,13 @@ interface RequestEssentialRegister {
   nickname: string;
   password: string;
 }
-interface RequestNonessentialRegister {
-  email?: string;
-  gender: string;
-  birthDate: string;
-  hometown: string;
-  movedDate: string;
-}
 
-interface RequestProfilePutData {
-  nickname: string;
+interface RequestPutProfile {
+  nickname?: string;
   birthDate: string;
   gender: string;
   hometown: string;
   movedDate: string;
-  거주지역: string;
 }
 
 /** 게시물 작성 요청 데이터 */

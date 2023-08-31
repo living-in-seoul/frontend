@@ -9,7 +9,7 @@ import useGetDate from '@/hooks/useGetDate';
 import { useState } from 'react';
 import RadioInput from './RadioInput';
 import { birthDateForm, hometownForm } from '@/utils/formregister';
-import { callbackUrlState, signupState } from '@/recoil/authStates';
+import { callbackUrlState, userPorfileState } from '@/recoil/authStates';
 import Table from '@/components/item/Table';
 import { genderArray } from '@/utils/constants/auth';
 
@@ -20,7 +20,7 @@ interface SignupSecondFormPorps {
 
 const SignupSecond = () => {
   const [gender, setGeder] = useState('');
-  const [signupData, setSignupData] = useRecoilState(signupState);
+  const [signupData, setSignupData] = useRecoilState(userPorfileState);
   const callbackUrl = useRecoilState(callbackUrlState);
   const router = useRouter();
   const nowDate = useGetDate();
@@ -61,8 +61,8 @@ const SignupSecond = () => {
     }).then((response) => response.json());
     console.log(response);
     alert(response.message);
-    router.push(`${callbackUrl[0]}`);
-    reset();
+    // router.push(`${callbackUrl[0]}`);
+    // reset();
   };
   const onSelectHandler = (movedDate: string) => {
     setSignupData((prev) => ({ ...prev, movedDate }));

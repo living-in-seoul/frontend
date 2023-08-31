@@ -12,6 +12,8 @@ import {
 } from '@/utils/formregister';
 import AuthInput from '../signin/AuthInput';
 import Button from '@/components/common/Button';
+import { useState } from 'react';
+import { Toaster, toast } from 'react-hot-toast';
 
 interface SignupFirstFormProps {
   email: string;
@@ -22,6 +24,7 @@ interface SignupFirstFormProps {
 
 const SignupFirst = () => {
   const setFirstData = useSetRecoilState(signupState);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const {
     register,
@@ -51,6 +54,7 @@ const SignupFirst = () => {
   };
 
   const onSubmitHandler: SubmitHandler<SignupFirstFormProps> = async (data) => {
+    setIsLoading(true);
     const newData = {
       email: data.email,
       password: data.password,
@@ -61,22 +65,28 @@ const SignupFirst = () => {
       newData,
     );
     setFirstData((prev) => ({ ...prev, email: data.email }));
-    reset();
-
     const response = await fetch('/api/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(newData),
-    }).then((response) => response.json());
-    console.log('클라이언트에서 나오는 response', response);
-    alert(response.message);
-    response.message === '회원가입에 성공하셨습니다.' &&
-      router.push('/signup/second');
+    })
+      .then((response) => {
+        console.log(response.status);
+        if (response.status === 500) {
+          return toast.error('중복된 아이디나 닉네임입니다');
+        }
+        reset();
+        router.push('/signup/second');
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
   return (
     <section className="h-full relative">
+      <Toaster />
       <form onSubmit={handleSubmit(onSubmitHandler)}>
         <div className="flex flex-col gap-5">
           <AuthInput
@@ -122,11 +132,12 @@ const SignupFirst = () => {
           <Button
             type="submit"
             size="w-full"
-            title="다음"
+            title={isLoading ? '가입중' : '다음'}
             bgColor="bg-zinc-300"
             border="none"
             color="text-white"
             hoverColor="bg-teal-400"
+            disabled={isLoading}
           />
         </div>
       </form>

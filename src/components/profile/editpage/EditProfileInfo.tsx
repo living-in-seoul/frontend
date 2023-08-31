@@ -71,28 +71,31 @@ const EditProfileInfo = ({ profile }: { profile: ResponseUserProfileData }) => {
       gender: genderState,
       movedDate: signupData.movedDate,
     };
-    console.log(user, '유저랍니당');
     if (deepEqual(user, newProfile) === true) {
       setIsLoading(false);
       return toast.error('동일한 유저정보입니다');
     } else {
-      newData.append(
-        'user',
-        new Blob([JSON.stringify(user)], { type: 'application/json' }),
-      );
-      profileImage && newData.append('photo', profileImage);
+      profileImage && newData.append('image', profileImage);
       const tokenValidResponse = await fetch('/api/user', {
         method: 'GET',
       });
 
       if (tokenValidResponse.status === 200) {
-        const response = await fetch('/api/profile', {
+        const imageResponse = await fetch('/api/profile/image', {
           method: 'PUT',
           body: newData,
-        })
-          .then((response) => response.json())
-          .catch(() => toast.error('통신 실패'))
-          .finally(() => setIsLoading(false));
+        });
+        const profileResponse = await fetch('/api/profile/profile', {
+          method: 'PUT',
+          body: JSON.stringify(user),
+        });
+        await Promise.all([imageResponse, profileResponse])
+          .then((response) => response.map((element) => element.json()))
+          .then((data) => Promise.all(data))
+          .then((data) => {
+            return {};
+          });
+        // 프라미스 all 검증하기
         if (response.status === 200) {
           toast.success(response.message);
         }
@@ -169,15 +172,4 @@ const EditProfileInfo = ({ profile }: { profile: ResponseUserProfileData }) => {
     </section>
   );
 };
-// const response = await fetch('/api/signup', {
-//   method: 'POST',
-//   headers: {
-//     'Content-Type': 'application/json',
-//   },
-//   body: JSON.stringify(newData),
-// }).then((response) => response.json());
-// console.log('클라이언트에서 나오는 response', response);
-// alert(response.message);
-// response.message === '회원가입에 성공하셨습니다.' &&
-//   router.push('/signup/second');
 export default EditProfileInfo;
