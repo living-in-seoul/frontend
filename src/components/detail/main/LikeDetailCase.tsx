@@ -6,17 +6,11 @@ import { AuthOpenModalState } from '@/recoil/authStates';
 import ModalPortal from '../../modal/ModalPortal';
 import ModalOutside from '../../modal/ModalOutside';
 import AuthModal from '@/components/community/AuthModal';
-import useSWR, { useSWRConfig } from 'swr';
-import { useState } from 'react';
 
 export const buttonArray = [{ path: Like }, { path: scrapIcon }];
 
 const LikeDetailCase = ({ postId }: { postId: number }) => {
   const [authOpenModal, setAuthOpenModal] = useRecoilState(AuthOpenModalState);
-
-  const { data, isLoading, mutate } = useSWR<ResponseDetialButtonsData>(
-    `/api/post/${postId}`,
-  );
 
   // swr mutate로 업데이트를 해보자!!!!
   const onClickLikeHandler = async () => {
@@ -28,7 +22,6 @@ const LikeDetailCase = ({ postId }: { postId: number }) => {
       },
     }).then((res) => {
       if (res.status === 200) {
-        mutate(`/api/post/${postId}`);
         return res.json();
       } else if (res.status === 401) {
         setAuthOpenModal(true);
@@ -48,7 +41,6 @@ const LikeDetailCase = ({ postId }: { postId: number }) => {
       },
     }).then((res) => {
       if (res.status === 200) {
-        mutate(`/api/post/${postId}`);
         return res.json();
       } else if (res.status === 401) {
         setAuthOpenModal(true);
@@ -58,6 +50,7 @@ const LikeDetailCase = ({ postId }: { postId: number }) => {
       }
     });
   };
+
   return (
     <>
       <div className="flex flex-row gap-2 w-full">
@@ -65,8 +58,14 @@ const LikeDetailCase = ({ postId }: { postId: number }) => {
           onClick={onClickLikeHandler}
           className="bg-neutral-500 h-8 w-full text-white rounded-3xl py-1 flex justify-center items-center gap-3"
         >
-          <Icons path={Like} fill="white" />
-          <span>{data?.likeSize}</span>
+          {/* {data?.hasLiked ? (
+            <>
+              <Icons path={Like} fill="white" />
+              <span>{data?.likeSize}</span>
+            </>
+          ) : (
+            <div>이거다잉</div>
+          )} */}
         </div>
         <div
           onClick={onClickScrapHandler}
@@ -74,7 +73,7 @@ const LikeDetailCase = ({ postId }: { postId: number }) => {
         >
           {' '}
           <Icons path={scrapIcon} fill="none" />
-          <span>{data?.scrapSize}</span>
+          {/* <span>{data?.scrapSize}</span> */}
         </div>
       </div>
       {authOpenModal && (

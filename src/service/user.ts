@@ -28,13 +28,12 @@ export const postSignup = async (data: RequestEssentialRegister) => {
 export const putSignup = async (data: RequestPutProfile) => {
   const token = cookies().get('accessToken');
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/signup/update`,
+    `${process.env.NEXT_PUBLIC_SERVER}/user/update`,
     {
       method: 'PUT',
       body: JSON.stringify(data),
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json',
         authorization: 'Bearer ' + token?.value,
       },
     },
@@ -66,20 +65,21 @@ export async function oauthHandler(url: string) {
 /** 소셜로그인 시 */
 export const oauthSignin = async (data: RequestOauthLogin) => {
   const { code, state } = data;
+  console.log(code, state, 'asdfasdf');
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER}/auth/login/${state}`,
+      `${process.env.NEXT_PUBLIC_SERVER}/social/login/${state}`,
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
-        body: JSON.stringify({ code }),
+        body: JSON.stringify({ authCode: code }),
       },
-    )
-      .then((response) => response.json())
-      .catch((error) => error.response);
+    ).then((response) => response.json());
+
+    console.log(response, 'aaaaaa');
     return response;
   } catch (error) {
     console.error(error);
@@ -108,7 +108,7 @@ export const verifyUser = async () => {
 };
 
 /**프로필이미지 수정 */
-export const putProfileImage = async (data: any) => {
+export const putProfileImage = async (data: FormData) => {
   const token = cookies().get('accessToken');
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER}/profile/update`,
@@ -122,6 +122,33 @@ export const putProfileImage = async (data: any) => {
     },
   )
     .then((response) => response.json())
+    .catch((error) => error.response);
+
+  return response;
+};
+
+/**회원탈퇴 */
+export const deleteUser = async () => {
+  const token = cookies().get('accessToken');
+  const refreshToken = cookies().get('refreshToken');
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER}/user/delete`,
+    {
+      method: 'DELETE',
+      headers: {
+        authorization: 'Bearer ' + token?.value,
+      },
+    },
+  )
+    .then((response) => response.json())
+    .then((response) => {
+      if (token || refreshToken) {
+        cookies().delete('accessToken');
+        cookies().delete('refreshToken');
+        return response;
+      }
+    })
     .catch((error) => error.response);
 
   return response;

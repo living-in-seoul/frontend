@@ -1,9 +1,7 @@
 'use client';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useSetRecoilState } from 'recoil';
 import { useRouter } from 'next/navigation';
-import { signupState } from '@/recoil/authStates';
 import {
   checkPasswordForm,
   emailForm,
@@ -14,6 +12,7 @@ import AuthInput from '../signin/AuthInput';
 import Button from '@/components/common/Button';
 import { useState } from 'react';
 import { Toaster, toast } from 'react-hot-toast';
+import BeatLoader from '@/components/common/Spinner';
 
 interface SignupFirstFormProps {
   email: string;
@@ -23,7 +22,6 @@ interface SignupFirstFormProps {
 }
 
 const SignupFirst = () => {
-  const setFirstData = useSetRecoilState(signupState);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const {
@@ -64,7 +62,6 @@ const SignupFirst = () => {
       '회원가입 필수사항 기입 시 데이터 in signup/SignupFirst',
       newData,
     );
-    setFirstData((prev) => ({ ...prev, email: data.email }));
     const response = await fetch('/api/signup', {
       method: 'POST',
       headers: {
@@ -132,12 +129,14 @@ const SignupFirst = () => {
           <Button
             type="submit"
             size="w-full"
-            title={isLoading ? '가입중' : '다음'}
+            title={
+              isLoading ? <BeatLoader size={10} color="#2DDAB0" /> : '수정하기'
+            }
+            disabled={isLoading}
             bgColor="bg-zinc-300"
             border="none"
             color="text-white"
             hoverColor="bg-teal-400"
-            disabled={isLoading}
           />
         </div>
       </form>

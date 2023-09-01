@@ -6,13 +6,15 @@ import useSWR from 'swr';
 import { useSetRecoilState } from 'recoil';
 import { commentKeyState } from '@/recoil/commentState';
 
-const DetailComment = ({ postId }: { postId: string }) => {
+const DetailComment = () => {
   const setCommentKey = useSetRecoilState(commentKeyState);
-  const { data: comments } = useSWR<Comment[]>(`/api/comment/${postId}`);
   const [list, setList] = useState<Comment[] | undefined>([]);
   const [page, setPage] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { data: userNickname } = useSWR<string>(`/api/profile`);
+  const userNickname = localStorage.getItem('nickname');
+  const postId = localStorage.getItem('postId');
+  const { data: comments } = useSWR<Comment[]>(`/api/comment/${postId}`);
+
   useEffect(() => {
     setCommentKey(`/api/comment/${postId}`);
     setList(comments);
@@ -28,14 +30,14 @@ const DetailComment = ({ postId }: { postId: string }) => {
   return (
     <div className="py-6 px-4 flex flex-col gap-4 border-b-2">
       <span className="font-semibold">댓글 {}</span>
-      {list?.map((comment, index) => (
+      {list?.map((data, index) => (
         <DetialCommentItem
-          key={comment.nickname + index}
-          commentData={comment}
+          key={data.nickname + index}
+          data={data}
           userNickname={userNickname ?? ''}
         >
           <>
-            {comment.reComments?.map((reComment, index) => (
+            {data.reComments?.map((reComment, index) => (
               <DetailReCommentItem
                 key={index}
                 reCommentData={reComment}

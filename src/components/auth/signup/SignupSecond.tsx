@@ -9,9 +9,11 @@ import useGetDate from '@/hooks/useGetDate';
 import { useState } from 'react';
 import RadioInput from './RadioInput';
 import { birthDateForm, hometownForm } from '@/utils/formregister';
-import { callbackUrlState, userPorfileState } from '@/recoil/authStates';
+import { callbackUrlState } from '@/recoil/authStates';
 import Table from '@/components/item/Table';
 import { genderArray } from '@/utils/constants/auth';
+import BeatLoader from '@/components/common/Spinner';
+import { Toaster, toast } from 'react-hot-toast';
 
 interface SignupSecondFormPorps {
   hometown: string;
@@ -20,8 +22,9 @@ interface SignupSecondFormPorps {
 
 const SignupSecond = () => {
   const [gender, setGeder] = useState('');
-  const [signupData, setSignupData] = useRecoilState(userPorfileState);
+  const [movedDate, setmovedDate] = useState('');
   const callbackUrl = useRecoilState(callbackUrlState);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const nowDate = useGetDate();
   const {
@@ -49,26 +52,36 @@ const SignupSecond = () => {
   const onSubmitHandler: SubmitHandler<SignupSecondFormPorps> = async (
     data,
   ) => {
-    const newData = { ...signupData, ...data, gender };
-    setSignupData((prev) => ({ ...prev, ...data, gender }));
-    console.log('뉴데이터', newData);
-    const response = await fetch('/api/signup', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newData),
-    }).then((response) => response.json());
-    console.log(response);
-    alert(response.message);
-    // router.push(`${callbackUrl[0]}`);
-    // reset();
-  };
-  const onSelectHandler = (movedDate: string) => {
-    setSignupData((prev) => ({ ...prev, movedDate }));
+    setIsLoading(true);
+    try {
+      const newData = { ...data, gender, movedDate };
+      const response = await fetch('/api/signup', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newData),
+      })
+        .then((response) => response.json())
+        .then(() => {
+          console.log('왜 안가냐', callbackUrl);
+          router.push(callbackUrl[0] ? callbackUrl[0] : '/home');
+        });
+    } catch (error) {
+      toast.error('선택사항을 다시 확인해주세요');
+      toast((t) => (
+        <span>
+          Custom and <b>bold</b>
+          <button onClick={() => toast.dismiss(t.id)}>Dismiss</button>
+        </span>
+      ));
+    } finally {
+      setIsLoading(false);
+    }
   };
   return (
     <section className="h-full">
+      <Toaster />
       <form
         onSubmit={handleSubmit(onSubmitHandler)}
         className="flex flex-col gap-5 h-full justify-between"
@@ -110,8 +123,8 @@ const SignupSecond = () => {
           />
           <Table
             categories={['~6개월', '1~2년', '3~4년', '5년 이상']}
-            onSelectHandler={onSelectHandler}
-            selectedCategory={signupData.movedDate}
+            onSelectHandler={setmovedDate}
+            selectedCategory={movedDate}
             row={2}
             column={2}
             width="w-full"
@@ -122,7 +135,10 @@ const SignupSecond = () => {
         <Button
           type="submit"
           size="w-full"
-          title="다음"
+          title={
+            isLoading ? <BeatLoader size={10} color="#2DDAB0" /> : '수정하기'
+          }
+          disabled={isLoading}
           bgColor="bg-zinc-300"
           border="none"
           color="text-white"
