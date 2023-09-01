@@ -1,6 +1,4 @@
 import { AuthOpenModalState } from '@/recoil/authStates';
-import { communityKeyState } from '@/recoil/communityStates';
-import { usePathname, useSearchParams } from 'next/navigation';
 import { RecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import useSWR, { useSWRConfig } from 'swr';
 
@@ -13,7 +11,6 @@ const usePosts = (state: RecoilState<string>) => {
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
     onSuccess: (data, key, config) => {
-      console.log(data);
       setPostKey(key);
     },
   });

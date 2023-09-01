@@ -29,19 +29,23 @@ const Navbar = () => {
   const MainPathName = '/' + pathname.split('/')[1];
   return (
     <nav className="fixed bottom-0 right-auto max-w-md w-full border-t bg-white">
-      <div className="flex-row h-[60px] flex w-full justify-center px-4 pt-2">
+      <div className="flex-row h-[76px] flex w-full justify-center px-4 pt-2">
         {NavBarArray.map((item) => (
           <Link
             key={item.name}
             href={item.path}
-            className="group scale-100 transition-all active:scale-110 basis-1/5 justify-center items-center flex flex-col gap-1"
+            className="group scale-100 transition-all active:scale-110 basis-1/5 justify-center items-center flex flex-col gap-[5px]"
           >
             <Icons
               path={item.iconPath}
               fill={MainPathName === item.path ? '#000' : '#636363'}
               className=""
             />
-            <div className="text-center text-black text-xs font-normal leading-3">
+            <div
+              className={`text-center ${
+                MainPathName === item.path ? 'text-black' : 'text-zinc-400'
+              } text-xs font-normal leading-3`}
+            >
               {item.name}
             </div>
           </Link>

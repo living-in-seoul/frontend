@@ -92,7 +92,7 @@ const EditProfileInfo = ({ profile }: { profile: ResponseUserProfileData }) => {
           body: JSON.stringify(user),
         });
       } else {
-        console.log('로그인모달 나와주세요');
+        // console.log('로그인모달 나와주세요');
       }
       setIsLoading(false);
       router.push('/mypage');

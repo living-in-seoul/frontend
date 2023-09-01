@@ -33,6 +33,7 @@ module.exports = {
         mediumGray: '#D9D9D9',
         lightGray: '',
         customYellows: '#FEE500',
+        backgroundColor: '#2DDAB0',
       },
     },
   },

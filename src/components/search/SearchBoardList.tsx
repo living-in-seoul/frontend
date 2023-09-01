@@ -57,7 +57,6 @@ const SearchBoardList = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inview]);
-  console.log(list);
   return (
     <article className="flex flex-col border-b-4" key={uuidv4()}>
       {list.length !== 0 ? (

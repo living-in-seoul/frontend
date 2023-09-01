@@ -1,6 +1,6 @@
 'use client';
 import { Children, ReactNode, useEffect, useState } from 'react';
-import Carousel from 'react-multi-carousel';
+import Carousel, { ResponsiveType } from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 const responsive = {
   superLargeDesktop: {
@@ -21,8 +21,29 @@ const responsive = {
   },
 };
 
+const responsivelist: ResponsiveType = {
+  superLargeDesktop: {
+    breakpoint: { max: 4000, min: 3000 },
+    items: 1,
+  },
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 1,
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 2,
+    slidesToSlide: 2,
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 2,
+  },
+};
+
 interface CaroucelProp {
   children: ReactNode;
+  type?: 'carousel' | 'list';
 }
 const Dots = ({ totalItems, activeSlide }: any) => {
   return (
@@ -41,20 +62,20 @@ const Dots = ({ totalItems, activeSlide }: any) => {
     </div>
   );
 };
-const CarouselProvider = ({ children }: CaroucelProp) => {
+const CarouselProvider = ({ children, type = 'carousel' }: CaroucelProp) => {
   const [activeSlide, setActiveSlide] = useState(0);
 
   return (
     <div>
       <Carousel
-        arrows={false}
-        customButtonGroup={<></>}
-        responsive={responsive}
+        arrows={true}
+        removeArrowOnDeviceType={'mobile'}
+        responsive={type === 'list' ? responsivelist : responsive}
         beforeChange={(currentSlide) => setActiveSlide(currentSlide)}
       >
         {children}
       </Carousel>
-      <Dots totalItems={4} activeSlide={activeSlide} />
+      {type === 'carousel' && <Dots totalItems={4} activeSlide={activeSlide} />}
     </div>
   );
 };

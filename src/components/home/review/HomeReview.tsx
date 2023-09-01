@@ -28,8 +28,14 @@ const HomeReviewSection = async () => {
         title="이웃이 남긴 후기를 살펴보세요"
         link="/community/review"
       />
-      <HomeTagSections HotTagReview={HotTagReview} hashtags={hashtags} />
-      <DynamicReviewLists hashtags={hashtags} />
+      {HotTagReview ? (
+        <>
+          <HomeTagSections HotTagReview={HotTagReview} hashtags={hashtags} />
+          <DynamicReviewLists hashtags={hashtags} />
+        </>
+      ) : (
+        <>게시물이 없습니다.</>
+      )}
     </article>
   );
 };

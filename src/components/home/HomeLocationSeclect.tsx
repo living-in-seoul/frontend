@@ -6,7 +6,14 @@ import { polygon } from '@/utils/Icon';
 import { useRecoilState } from 'recoil';
 import BottomSheet from '../BottomSheet';
 import LocationSelect from './location/LocationSelect';
+import dynamic from 'next/dynamic';
 
+const DynamicLocationSelect = dynamic(
+  () => import('./location/LocationSelect'),
+  {
+    ssr: false,
+  },
+);
 const HomeLocationSeclect = () => {
   const [isBottomSheetOpen, setisBottomSheetState] = useRecoilState(
     locationBottomSheetState,
@@ -26,13 +33,13 @@ const HomeLocationSeclect = () => {
             path={polygon}
             fill="none"
             option={{
-              fill: '#404040',
+              fill: 'white',
             }}
           />
         </div>
       </div>
       <BottomSheet state={locationBottomSheetState}>
-        <LocationSelect />
+        <DynamicLocationSelect />
       </BottomSheet>
     </>
   );

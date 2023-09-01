@@ -1,38 +1,44 @@
 import Icons from '@/components/common/Icons';
-import { Alert, polygon } from '@/utils/Icon';
+import { Alert } from '@/utils/Icon';
 import HomeLocationSeclect from './HomeLocationSeclect';
+import ProfileComponent from './ProfileComponent';
+import dynamic from 'next/dynamic';
+import BeatLoader from '../common/Spinner';
+
+const DynamicWeatherComponent = dynamic(
+  () => import('./weather/WeatherComponent'),
+  {
+    // ssr: false,
+    loading: () => (
+      <div className="flex w-full justify-center h-16 bg-white rounded-[30px] px-9 py-3">
+        <BeatLoader />
+      </div>
+    ),
+  },
+);
 
 const HomeTopSection = () => {
   return (
-    <article className="relative">
-      <div className="flex flex-col gap-3 w-full h-64 bg-zinc-300">
-        <div className="flex justify-between py-4 px-1.5">
+    <article className="relative overflow-hidden h-[320px]">
+      <div className="absolute top-0 left-1/2 right-0 bottom-0 -translate-x-1/2 bg-backgroundColor rounded-bl-[150px] rounded-br-[150px] w-[132%] h-[267px]"></div>
+      <div className="relative z-10 flex flex-col w-full h-64">
+        <div className="flex justify-between pt-[54px] pb-4 px-1.5">
           <HomeLocationSeclect />
           <div className="flex pr-3.5 items-center justify-center">
             <Icons
               path={Alert}
               fill="none"
               option={{
-                stroke: 'black',
+                stroke: 'white',
                 strokeWidth: '1.5',
                 strokeLinecap: 'round',
               }}
             />
           </div>
         </div>
-        <div className="flex justify-between px-4">
-          <div>
-            <span className="text-black text-xl font-semibold leading-loose">
-              예진님,
-              <br />
-            </span>
-            <span className="text-black text-xl font-normal leading-loose">
-              오늘도 저와 함께
-              <br />
-              즐거운 서울생활 시작해 봐요!
-            </span>
-          </div>
-          <div>날씨컴포넌트</div>
+        <div className="flex flex-col px-4 gap-6">
+          <DynamicWeatherComponent />
+          <ProfileComponent />
         </div>
       </div>
     </article>

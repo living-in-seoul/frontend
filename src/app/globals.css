@@ -66,6 +66,12 @@ body.modal-open {
   background-color: rgb(63, 63, 70) !important;
   box-shadow: none !important;
 }
+.gm-style .gm-style-iw-d,
+.gm-style .gm-style-iw-d::before,
+.gm-style .gm-style-iw-d::after {
+  background-color: rgb(63, 63, 70) !important;
+  box-shadow: none !important;
+}
 
 .gm-style .gm-style-iw-c {
   background-color: rgb(63, 63, 70) !important;

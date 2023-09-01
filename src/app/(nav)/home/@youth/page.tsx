@@ -1,6 +1,5 @@
 import BeatLoader from '@/components/common/Spinner';
 import HomeSectionTitle from '@/components/home/HomeSectionTitle';
-import Youth from '@/components/youth/Youth';
 import dynamic from 'next/dynamic';
 
 const DynamicYouth = dynamic(() => import('@/components/youth/Youth'), {
