@@ -30,16 +30,15 @@ const UserProfile = ({
             />
           </div>
         )}
-
         <div
           className={`flex ${
             onMap ? ' px-0' : 'flex-col  gap-1 justify-center px-[10px]'
           }`}
         >
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 mb-0.5">
             {/* 닉네임 */}
             <h3
-              className={`text-xs truncate  ${
+              className={`text-sm truncate  ${
                 onMap
                   ? 'text-neutral-500 max-w-full'
                   : 'font-semibold text-black'
@@ -49,13 +48,13 @@ const UserProfile = ({
             </h3>
             {/* 레벨 */}
             {!onMap && (
-              <p className="text-neutral-600 text-xs font-medium leading-3">
+              <p className="text-neutral-600 text-sm font-medium leading-3">
                 Lv.1
               </p>
             )}
           </div>
-          <div className="text-neutral-500 text-xs font-normal leading-3">
-            {getTimeAgo(createdAt)}
+          <div className="text-neutral-500 text-sm font-normal leading-3">
+            {getTimeAgo(createdAt)} {`· 조회수 ${postViewCount ?? 0}`}
           </div>
         </div>
       </div>

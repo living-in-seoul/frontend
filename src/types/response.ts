@@ -340,3 +340,39 @@ interface AlarmItem {
   isRead: boolean;
   registeredAt: string;
 }
+
+interface YouthInfo {
+  accrRqisCn?: string[];
+  aditRscn?: string[];
+  ageInfo?: string[];
+  bizId: string[];
+  bizPrdCn?: string[];
+  cherCtpcCn?: string[];
+  cnsgNmor?: string[];
+  empmSttsCn?: string[];
+  etct?: string[];
+  jdgnPresCn?: string[];
+  majrRqisCn?: string[];
+  mngtMrofCherCn?: string[];
+  mngtMson?: string[];
+  polyBizSecd?: string[];
+  polyBizSjnm?: string[];
+  polyBizTy?: string[];
+  polyItcnCn?: string[];
+  polyRlmCd?: string[];
+  prcpCn?: string[];
+  prcpLmttTrgtCn?: string[];
+  prdRpttSecd?: string[];
+  pstnPaprCn?: string[];
+  rfcSiteUrla1: string[];
+  rfcSiteUrla2?: string[];
+  rnum?: string[];
+  rqutPrdCn?: string[];
+  rqutProcCn?: string[];
+  rqutUrla?: string[];
+  splzRlmRqisCn?: string[];
+  sporCn?: string[];
+  sporScvl?: string[];
+  tintCherCn?: string[];
+  tintCherCtpcCn?: string[];
+}

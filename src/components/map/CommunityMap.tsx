@@ -56,16 +56,23 @@ const CommunityMap = () => {
       `/api/map/category?category=${filterOption}&gu=${encodeURIComponent(gu)}`,
     );
     localStorage.setItem('lastVisited', polygonValue.gu);
+  }, [boardList, filterOption, polygonValue.gu, setCommunityKey]);
+
+  useEffect(() => {
+    const gu = polygonValue.gu;
+    const length = boardList?.pageable.totalElements ?? 0;
 
     boardList &&
+      gu &&
       toast(`${gu} ${length}건`, {
         icon: '📍',
       });
 
+    //서울 갈 때 까지 고정시키고 버튼 (서울로 이동하는 버튼)
     if (!gu) {
       toast.error('서울 지역으로 이동해주세요.');
     }
-  }, [boardList, filterOption, polygonValue.gu, setCommunityKey]);
+  }, [boardList]);
 
   useEffect(() => {
     if (boardList) setBoardListState(boardList);
@@ -121,7 +128,7 @@ const CommunityMap = () => {
               <div className="z-100 cursor-pointer" key={postId}>
                 <CustomOverlayMarker
                   position={latlng}
-                  text={`# ${hashtag?.split('#')[1]}`}
+                  text={`#${hashtag?.split('#')[1]}`}
                   onClick={(e: google.maps.event) => {
                     onClickMarker(e, postId, latlng);
                   }}
