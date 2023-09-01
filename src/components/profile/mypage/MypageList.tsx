@@ -4,18 +4,31 @@ import { cookies } from 'next/headers';
 const MypageList = async ({ category }: { category: string }) => {
   console.log(category);
   const token = cookies().get('accessToken')?.value;
-  const url = category
-    ? category[0] === 'writed'
-      ? `${process.env.NEXT_PUBLIC_SERVER}/posts/mypost?page=3&size=2`
-      : `${process.env.NEXT_PUBLIC_SERVER}/posts/myscrap?page=3&size=2`
-    : `${process.env.NEXT_PUBLIC_SERVER}/posts/mypost?page=3&size=2`;
+  const url =
+    category === 'writed'
+      ? `${process.env.NEXT_PUBLIC_SERVER}/posts/mypost?page=1&size=3`
+      : `${process.env.NEXT_PUBLIC_SERVER}/posts/myscrap?page=1&size=3`;
+
+  // const tokenValidResponse = await fetch('/api/user', {
+  //   method: 'GET',
+  // });
+
+  // if (tokenValidResponse.status === 200) {
+  //   try {
+  //   } catch (e) {
+  //     alert('게시물 작성 실패!');
+  //   }
+  // } else {
+  //   alert('로그인 모달 나와주세요');
+  // }
+
   const myPageData = await fetch(url, {
+    method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       authorization: 'Bearer ' + token,
     },
-    next: { revalidate: 0 },
-    cache: 'no-store',
+    next: { revalidate: 10 },
   }).then<ResponseMyPostData>((res) => res.json());
   console.log(myPageData);
   return (

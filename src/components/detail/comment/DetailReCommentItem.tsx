@@ -1,6 +1,4 @@
 'use client';
-import { detailColThreeDotIcon } from '@/utils/Icon';
-import Icons from '../../common/Icons';
 import UserProfile from '../../item/UserProfile';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -9,6 +7,7 @@ import {
   inputTextRefState,
   totalCommentState,
 } from '@/recoil/commentState';
+import EditProfileThreeDot from '@/components/profile/editpage/EditProfileThreeDot';
 
 const DetailReCommentItem = ({
   reCommentData,
@@ -97,12 +96,7 @@ const DetailReCommentItem = ({
     >
       <div className="flex flex-row justify-between">
         <UserProfile createdAt={createdAt} nickname={nickname} />
-        {userNickname === nickname && (
-          <Icons
-            path={detailColThreeDotIcon}
-            onClick={() => setOnModal(true)}
-          />
-        )}
+        <EditProfileThreeDot nickname={nickname} type="comment" />
         {onModal && (
           <div
             className="flex flex-col absolute right-0 bg-white rounded-2xl"

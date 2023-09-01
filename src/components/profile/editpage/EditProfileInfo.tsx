@@ -2,7 +2,7 @@
 
 import { useForm } from 'react-hook-form';
 import Button from '@/components/common/Button';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { useRouter } from 'next/navigation';
 import useGetDate from '@/hooks/useGetDate';
 import {
@@ -10,26 +10,35 @@ import {
   hometownForm,
   nicknameForm,
 } from '@/utils/formregister';
-import {
-  profileImageState,
-  signupGenderState,
-  signupState,
-} from '@/recoil/authStates';
+import { signupGenderState } from '@/recoil/authStates';
 import Table from '@/components/item/Table';
 import AuthInput from '@/components/auth/signin/AuthInput';
 import EditProfileRadioBtn from './EditProfileRadioBtn';
 import { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { deepEqual } from '@/utils/utilFunc';
+import { Router } from 'next/router';
+import BeatLoader from '@/components/common/Spinner';
 const EditProfileInfo = ({ profile }: { profile: ResponseUserProfileData }) => {
-  const { birthDate, gender, hometown, nickname, movedDate } = profile;
-  const newProfile = { birthDate, gender, hometown, nickname, movedDate };
+  const {
+    birthDate,
+    gender,
+    hometown,
+    nickname,
+    movedDate: defaultMovedDate,
+  } = profile;
   const [isLoading, setIsLoading] = useState(false);
-  const [myProfile, setMyProfile] = useState(newProfile);
-  const [signupData, setSignupData] = useRecoilState(signupState);
+  const [movedDate, setmovedDate] = useState(defaultMovedDate);
   const [genderState, setGenderState] = useRecoilState(signupGenderState);
-  const profileImage = useRecoilValue(profileImageState);
   const nowDate = useGetDate();
+  const router = useRouter();
+  const newProfile = {
+    birthDate,
+    gender,
+    hometown,
+    nickname,
+    movedDate: defaultMovedDate,
+  };
   const {
     register,
     handleSubmit,
@@ -63,52 +72,33 @@ const EditProfileInfo = ({ profile }: { profile: ResponseUserProfileData }) => {
     nickname: string;
   }) => {
     setIsLoading(true);
-    const newData = new FormData();
     const user = {
       nickname: data.nickname,
       birthDate: data.birthDate,
       hometown: data.hometown,
       gender: genderState,
-      movedDate: signupData.movedDate,
+      movedDate: movedDate,
     };
-    if (deepEqual(user, newProfile) === true) {
+    if (user.nickname === nickname) {
       setIsLoading(false);
-      return toast.error('동일한 유저정보입니다');
+      return toast.error('닉네임이 동일합니다');
     } else {
-      profileImage && newData.append('image', profileImage);
       const tokenValidResponse = await fetch('/api/user', {
         method: 'GET',
       });
-
       if (tokenValidResponse.status === 200) {
-        const imageResponse = await fetch('/api/profile/image', {
-          method: 'PUT',
-          body: newData,
-        });
-        const profileResponse = await fetch('/api/profile/profile', {
+        await fetch('/api/profile/profile', {
           method: 'PUT',
           body: JSON.stringify(user),
         });
-        await Promise.all([imageResponse, profileResponse])
-          .then((response) => response.map((element) => element.json()))
-          .then((data) => Promise.all(data))
-          .then((data) => {
-            return {};
-          });
-        // 프라미스 all 검증하기
-        if (response.status === 200) {
-          toast.success(response.message);
-        }
       } else {
         console.log('로그인모달 나와주세요');
       }
-      // router.push('/mypage');
+      setIsLoading(false);
+      router.push('/mypage');
     }
   };
 
-  const onSelectHandler = (movedDate: string) => {
-    setSignupData((prev) => ({ ...prev, movedDate }));
-  };
   return (
     <section>
       <Toaster />
@@ -147,8 +137,8 @@ const EditProfileInfo = ({ profile }: { profile: ResponseUserProfileData }) => {
           />
           <Table
             categories={['~6개월', '1~2년', '3~4년', '5년 이상']}
-            onSelectHandler={onSelectHandler}
-            selectedCategory={signupData.movedDate}
+            onSelectHandler={setmovedDate}
+            selectedCategory={movedDate}
             row={2}
             column={2}
             width="w-full"
@@ -160,12 +150,14 @@ const EditProfileInfo = ({ profile }: { profile: ResponseUserProfileData }) => {
           <Button
             type="submit"
             size="w-full"
-            title={isLoading ? '수정 중' : '수정하기'}
+            title={
+              isLoading ? <BeatLoader size={10} color="#2DDAB0" /> : '수정하기'
+            }
+            disabled={isLoading}
             bgColor="bg-zinc-300"
             border="none"
             color="text-white"
             hoverColor="bg-teal-400"
-            disabled={isLoading}
           />
         </div>
       </form>

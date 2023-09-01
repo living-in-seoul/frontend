@@ -1,4 +1,4 @@
-import { getProfile, putProfile, putProfileImage } from '@/service/user';
+import { getProfile, putProfileImage, putSignup } from '@/service/user';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const GET = async (req: NextRequest) => {
@@ -14,13 +14,15 @@ interface Context {
 export const PUT = async (request: NextRequest, context: Context) => {
   const slug = context.params.slug;
   try {
-    if (slug === 'image') {
+    if (slug[0] === 'image') {
       const body = await request.formData();
+      console.log(body.get('image'));
       const imageData = await putProfileImage(body);
       return NextResponse.json(imageData);
-    } else if (slug === 'profile') {
+    } else if (slug[0] === 'profile') {
       const body = await request.json();
-      const userData = await putProfile(body);
+      console.log(body, 'zzzz');
+      const userData = await putSignup(body);
       return NextResponse.json(userData);
     }
   } catch (err) {

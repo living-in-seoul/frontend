@@ -1,7 +1,6 @@
 'use client';
 
 import Icons from '@/components/common/Icons';
-import Input from '@/components/common/Input';
 import PlacesAutoComplete from '@/components/map/search/PlacesAutoComplete';
 import { LocationSelectIcon } from '@/components/profile/editpage/EditImageIcon';
 import { polygonState } from '@/recoil/mapStates';

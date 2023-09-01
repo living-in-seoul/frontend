@@ -1,5 +1,5 @@
 'use client';
-import { Comment, detailColThreeDotIcon } from '@/utils/Icon';
+import { Comment } from '@/utils/Icon';
 import Icons from '../../common/Icons';
 import UserProfile from '../../item/UserProfile';
 import { useEffect, useRef, useState } from 'react';
@@ -12,29 +12,30 @@ import {
   totalCommentStateProps,
 } from '@/recoil/commentState';
 import { useSWRConfig } from 'swr';
+import EditProfileThreeDot from '@/components/profile/editpage/EditProfileThreeDot';
 interface DetialCommentItemProps {
-  commentData: Comment;
+  data: Comment;
   children: React.ReactNode;
   userNickname: string | undefined;
 }
 
 const DetialCommentItem = ({
-  commentData,
+  data,
   children,
   userNickname,
 }: DetialCommentItemProps) => {
   const {
     commentLikeSize,
+    commentHasLiked,
     createdAt,
     nickname,
     comment,
     commentId,
-    commentHasLiked,
-  } = commentData;
+  } = data;
   const inputRef = useRecoilValue(inputTextRefState);
   const buttonRef = useRecoilValue(buttonRefState);
-  const [onModal, setOnModal] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
+  const [onModal, setOnModal] = useState<boolean>(false);
   const [recoilCommentState, setRecoilCommentState] =
     useRecoilState(totalCommentState);
   const defaultValue = {
@@ -49,6 +50,7 @@ const DetialCommentItem = ({
     useState<totalCommentStateProps>(defaultValue);
   const commentColor = totalComment.isReComment ? 'blue' : '#404040';
   const mutate = useSWRConfig();
+
   const handleClickOutside = (e: any) => {
     if (modalRef.current && !modalRef.current.contains(e.target)) {
       setOnModal(false);
@@ -139,6 +141,13 @@ const DetialCommentItem = ({
           },
           body: JSON.stringify(commentId),
         }).then((respnse) => respnse.json());
+        // mutate(`/api/comment/${commentId}`, {
+        //   ...data,
+        //   commentHasLiked: !data.commentHasLiked,
+        //   commentLikeSize: data.commentHasLiked
+        //     ? data.commentLikeSize + 1
+        //     : data.commentLikeSize - 1,
+        // });
       }
     } catch (error) {
     } finally {
@@ -149,25 +158,7 @@ const DetialCommentItem = ({
     <div className="flex flex-col gap-2">
       <div className="flex flex-row justify-between relative">
         <UserProfile createdAt={createdAt} nickname={nickname} />
-        {userNickname === nickname && (
-          <Icons
-            path={detailColThreeDotIcon}
-            onClick={() => setOnModal(true)}
-          />
-        )}
-        {onModal && (
-          <div
-            className="flex flex-col absolute right-0 bg-white rounded-2xl"
-            ref={modalRef}
-          >
-            <span className="text-blue-500" onClick={onClickChagneHandler}>
-              {totalComment.isCommentChange ? '수정취소' : '수정하기'}
-            </span>
-            <span className="text-red-500" onClick={onClickDeleteHandler}>
-              삭제하기
-            </span>
-          </div>
-        )}
+        <EditProfileThreeDot nickname={nickname} type="comment" />
       </div>
       <div className="flex flex-col gap-2 w-5/6 ml-auto">
         <span className="bg-neutral-100 p-2 rounded-lg text-xs">{comment}</span>
@@ -178,7 +169,6 @@ const DetialCommentItem = ({
               likeHandler={likeHandler}
               likeSize={commentLikeSize}
             />
-            <span className="text-xs text-neutral-600">좋아요</span>
           </div>
           <div
             onClick={onFocusHandler}

@@ -24,13 +24,33 @@ export const writeBoard = async (form: any) => {
 };
 
 /**postData 가져오기 */
+export const getUserBoard = async (postId: string) => {
+  try {
+    const token = cookies().get('accessToken');
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER}/posts/auth/${postId}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: 'Bearer ' + token?.value,
+        },
+      },
+    ).then<ResponseDetailData>((res) => res.json());
+    return response;
+  } catch (error: any) {
+    console.log('getBoard error', error.message);
+  }
+};
+
+/**postData 비회원 가져오기 */
 export const getBoard = async (postId: string) => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER}/posts/get/${postId}`,
       {
-        next: { tags: ['like'] },
-        cache: 'no-store',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       },
     ).then<ResponseDetailData>((res) => res.json());
     return response;
@@ -69,5 +89,18 @@ export const getMypagePost = async (url: string) => {
     },
     next: { revalidate: 0 },
   }).then<ResponseMyPostData>((res) => res.json());
+  return response;
+};
+
+export const getHotBoard = async (category: string, hashtag: string) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER}/tags/post/category?size=2&page=1&hashtagName=%23${hashtag}&category=${category}&type=popular`,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      next: { revalidate: 0 },
+    },
+  ).then<ResponsePopularCategoryHashtag>((res) => res.json());
   return response;
 };
