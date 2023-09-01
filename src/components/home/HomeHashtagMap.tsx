@@ -7,7 +7,6 @@ interface HomeHashtagMap {
 }
 
 const HomeHashtagMap = ({ location }: HomeHashtagMap) => {
-  console.log(location);
   return (
     <section className="relative w-full h-[260px] border overflow-hidden rounded-xl">
       <GoogleMap
