@@ -1,3 +1,4 @@
+import { cpSync } from 'fs';
 import { cookies } from 'next/headers';
 
 /**CommentData 가져오기 */

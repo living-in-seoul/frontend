@@ -1,17 +1,11 @@
 import UserProfile from '../../item/UserProfile';
-import { DetailMainProps } from './DetailMain';
-
-const DetailMainProfile = async ({ data }: { data: DetailMainProps }) => {
-  // const likeState = await fetch(
-  //   `https://seoulvival.com:8080/posts/${data.postId}/like`
-  // ).then<ResponseDetailData>((res) => res.json());
-
+const DetailMainProfile = ({ data }: { data: ResponseDetailData }) => {
   return (
     <div className="flex flex-row justify-between ">
       <UserProfile
-        createdAt={data.createdAt}
-        nickname={data.nickname}
-        postViewCount={data.postViewCount}
+        createdAt={data.result.post.createdAt}
+        nickname={data.result.user.nickname}
+        postViewCount={data.result.post.postViewCount}
       />
     </div>
   );

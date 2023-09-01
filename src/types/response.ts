@@ -250,6 +250,7 @@ interface ResponseDetailData {
     post: Post;
     location: PostLocation;
     hasLiked: boolean;
+    hasScrapped: boolean;
   };
 }
 

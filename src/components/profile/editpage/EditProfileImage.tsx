@@ -3,17 +3,22 @@ import Image from 'next/image';
 
 import { useEffect, useRef, useState } from 'react';
 import { profile as baseProfile } from '../../../../public/';
-import { useSetRecoilState } from 'recoil';
-import { profileImageState } from '@/recoil/authStates';
 import { EditImageIcon } from './EditImageIcon';
 const EditProfileImage = ({ profileImageUrl }: { profileImageUrl: any }) => {
-  const setProfileImage = useSetRecoilState(profileImageState);
-  const [profile, setProfile] = useState<File | null>(null);
+  const [profile, setProfile] = useState<null | File>(null);
   const fileInput = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    setProfileImage(profile);
-  }, [profile, setProfileImage]);
+    const fetchImage = async () => {
+      const newData = new FormData();
+      profile && newData.append('image', profile);
+      await fetch('/api/profile/image', {
+        method: 'PUT',
+        body: newData,
+      });
+    };
+    fetchImage();
+  }, [profile]);
 
   const onsetProfileHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -29,6 +34,7 @@ const EditProfileImage = ({ profileImageUrl }: { profileImageUrl: any }) => {
             className="rounded-full"
             alt="profile"
             src={profileImageUrl ?? URL.createObjectURL(profile)}
+            // 이부분 어떻게 해결할 지 한번 물어보기
             onLoad={() => URL.revokeObjectURL(String(profile))}
             width={72}
             height={72}

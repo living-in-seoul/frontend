@@ -62,22 +62,6 @@ export const categoryKO = (category: string) => {
   }
 };
 
-export const DetailNewData = (data: ResponseDetailData) => {
-  const headerData = { category: data.result.post.category };
-  const maintag = data.result.post.hashtag.split('#').filter((tag) => tag)[0];
-  const mainData = {
-    nickname: data.result.user.nickname,
-    hasLiked: data.result.hasLiked,
-    ...data.result.post,
-  };
-  const hotTagData = {
-    tag: maintag,
-    category: data.result.post.category,
-  };
-  const newData = { headerData, mainData, hotTagData };
-  return newData;
-};
-
 // 쿠키 와 와이어샤크 : 구글 브라우저의 네트워크 탭에 보이는 여러 응답값이 있는데
 // 이 프로그램을 사용하면 더 자세하게 그에 대해서 알 수 있다
 //

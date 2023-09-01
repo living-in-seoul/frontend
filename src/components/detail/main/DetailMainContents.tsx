@@ -1,18 +1,15 @@
 import Image from 'next/image';
-import Icons from '../../common/Icons';
-import { hashtagIcon } from '@/utils/Icon';
-import { DetailMainProps } from './DetailMain';
 
-const DetailMainContents = ({ data }: { data: DetailMainProps }) => {
+const DetailMainContents = ({ data }: { data: ResponseDetailData }) => {
   return (
     <div>
       <div className=" flex flex-col gap-4  ">
         <div className="overflow-auto">
-          {data.content}
+          {data.result.post.content}
           {/* 영어 길게 썼을 때 한문자 취급 되는데 그거 고쳐야지 */}
         </div>
-        {data.postImg &&
-          data.postImg.map((img, index) => (
+        {data.result.post.postImg &&
+          data.result.post.postImg.map((img, index) => (
             <Image
               key={index}
               src={img.postImg}
@@ -20,7 +17,7 @@ const DetailMainContents = ({ data }: { data: DetailMainProps }) => {
               width={400}
               height={200}
               className="rounded-lg"
-              property="none"
+              priority={true}
             />
           ))}
       </div>

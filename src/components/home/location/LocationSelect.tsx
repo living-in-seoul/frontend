@@ -1,7 +1,6 @@
 'use client';
 
 import Icons from '@/components/common/Icons';
-import Input from '@/components/common/Input';
 import PlacesAutoComplete from '@/components/map/search/PlacesAutoComplete';
 import { LocationSelectIcon } from '@/components/profile/editpage/EditImageIcon';
 import { polygonState } from '@/recoil/mapStates';
@@ -22,7 +21,6 @@ const LocationSelect = () => {
       <h1 className="font-bold">주소 설정</h1>
       <div className="w-full">
         <PlacesAutoComplete />
-        <Input />
       </div>
       <div
         className="flex justify-center items-center border border-neutral-300 w-full py-1.5 rounded-lg gap-1"
@@ -35,9 +33,9 @@ const LocationSelect = () => {
         <div className="flex items-center h-1/2 px-2 gap-3">
           <Icons path={filledLocation} option={{ fill: '#2DDAB0' }} />
           <div className="flex flex-col">
-            <p className="relative text-sm font-bold">
+            <div className="relative text-sm font-bold">
               나의 동네 <div className="absolute top-0 right-[-25%]">지정</div>
-            </p>
+            </div>
             {/* 현위치로 변경 */}
             <p className="text-xs text-neutral-500">서초구 서초동</p>
           </div>

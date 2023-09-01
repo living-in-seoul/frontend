@@ -32,10 +32,10 @@ export const config = {
     // '/write',
     // '/api/write',
     // '/api/liked',
-    '/signin/:path*',
-    '/signup/first',
+    // '/signin/:path*',
+    // '/signup/first',
     // '/editprofile',
-    '/mypage',
+    // '/mypage',
   ],
 };
 

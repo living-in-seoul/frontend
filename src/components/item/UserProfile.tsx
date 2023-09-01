@@ -55,7 +55,7 @@ const UserProfile = ({
             )}
           </div>
           <div className="text-neutral-500 text-xs font-normal leading-3">
-            {getTimeAgo(createdAt)} {`· 조회수 ${postViewCount ?? 0}`}
+            {getTimeAgo(createdAt)}
           </div>
         </div>
       </div>

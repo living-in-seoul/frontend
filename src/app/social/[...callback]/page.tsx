@@ -1,9 +1,7 @@
 'use client';
 
-import { signupState } from '@/recoil/authStates';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { useSetRecoilState } from 'recoil';
 interface Req {
   searchParams: {
     state: string;
@@ -12,15 +10,12 @@ interface Req {
   };
 }
 const CallbackPage = (req: Req) => {
-  const setSignupData = useSetRecoilState(signupState);
   const router = useRouter();
   const { searchParams } = req;
   const { code, state } = searchParams;
-  console.log('aaaaaaaaaaaaaa', code, state);
-
+  console.log(code);
   useEffect(() => {
     try {
-      console.log('aaaaaaaaaaaaaa');
       const response = fetch('/api/callback', {
         method: 'POST',
         headers: {
@@ -31,7 +26,7 @@ const CallbackPage = (req: Req) => {
         console.log(response.status);
         if (response.status === 200) {
           return router.push('/signup/second');
-        } else if (response.status === 415) {
+        } else {
           return router.push('/signin');
         }
       });
@@ -39,7 +34,7 @@ const CallbackPage = (req: Req) => {
     } catch {
       throw new Error();
     }
-  }, []);
+  }, [code, router, state]);
   return <div></div>;
 };
 
@@ -53,3 +48,9 @@ export default CallbackPage;
 // use client로 될 것같아서 req.cookie xx api로 넘어가서 bff
 // response email 2차인증때 토큰하는게 아니라 email parmas 가입하고있는 유저를 식별할
 // 미들웨어에서 넘어기지않는다 signup token이 있으면
+
+// https://www.seoulvival.com:8080/social/callback
+// https://frontend-lilac-mu.vercel.app/social/callback
+
+// 소셜로그인했을때 정보기입을 했다면 콜백을 해야하는데 어떻게 해야할지 고민해야함
+// 토큰이 이상한 토큰인가 정보가 안불러와짐

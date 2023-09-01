@@ -12,15 +12,22 @@ import {
 import { useSWRConfig } from 'swr';
 import { toast } from 'react-hot-toast';
 
-const DetailNavbar = ({ postId }: { postId: string }) => {
+const DetailNavbar = () => {
   const [comment, setComment] = useState<string>('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const [postId, setPostId] = useState<string>('');
   const setInputRef = useSetRecoilState(inputTextRefState);
   const setButtonRef = useSetRecoilState(buttonRefState);
   const [commentState, setCommentState] = useRecoilState(totalCommentState);
   const commentUrlKey = useRecoilValue(commentKeyState);
   const { mutate } = useSWRConfig();
+  useEffect(() => {
+    const postId = localStorage.getItem('postId');
+    if (postId) {
+      setPostId(postId);
+    }
+  }, []);
   useEffect(() => {
     setInputRef(textareaRef);
     setButtonRef(buttonRef);
@@ -80,7 +87,6 @@ const DetailNavbar = ({ postId }: { postId: string }) => {
     } else {
       console.log('로그인모달 나와주세요');
     }
-    console.log('실행되니');
     setComment('');
   };
   return (
@@ -94,7 +100,7 @@ const DetailNavbar = ({ postId }: { postId: string }) => {
             path={imageIcon}
             fill="none"
             option={{
-              stroke: '#404040',
+              stroke: '#00C092',
               strokeWidth: '1.5',
               strokeLinecap: 'round',
               strokeLinejoin: 'round',
@@ -103,7 +109,7 @@ const DetailNavbar = ({ postId }: { postId: string }) => {
           <Icons
             path={smallMarkerIcon}
             fill="none"
-            option={{ stroke: '#404040', strokeWidth: '1.3' }}
+            option={{ stroke: '#00C092', strokeWidth: '1.3' }}
           />
           <textarea
             ref={textareaRef}

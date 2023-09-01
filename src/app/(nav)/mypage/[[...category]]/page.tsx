@@ -10,7 +10,7 @@ interface MypagePageProps {
   };
 }
 const MypagePage = ({ params }: MypagePageProps) => {
-  const { category } = params;
+  const { category = 'writed' } = params;
   return (
     <section className="flex flex-col gap-7 px-4 pt-4">
       <MypageHeader />

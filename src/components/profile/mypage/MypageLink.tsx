@@ -23,7 +23,7 @@ export default function MypageLink({
       href={link}
       style={{ fontWeight: isActive ? 'bold' : 'normal' }}
       className={`grow flex items-center justify-center py-4 ${
-        isActive && 'border-b-4 border-neutral-500'
+        isActive && 'border-b-4 border-teal-400 text-teal-400'
       }`}
     >
       {children}

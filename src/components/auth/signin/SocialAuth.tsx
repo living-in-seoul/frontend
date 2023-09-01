@@ -8,7 +8,6 @@ interface SocialAuthProps {
   bgColor: string;
   color?: string;
 }
-
 const SocialAuth = ({ text, url, bgColor, color }: SocialAuthProps) => {
   const router = useRouter();
 

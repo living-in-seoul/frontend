@@ -14,7 +14,7 @@ const LikeCommentCase = ({
   likeHandler,
 }: LikeCommentCaseProps) => {
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-1 items-center">
       {hasLiked ? (
         <div onClick={likeHandler}>
           <Icons
@@ -22,7 +22,7 @@ const LikeCommentCase = ({
             className={'cursor-pointer'}
             path={Like}
             option={{
-              fill: '##404040',
+              fill: '#787878',
             }}
           />
         </div>
@@ -32,13 +32,13 @@ const LikeCommentCase = ({
             path={Like}
             className={'cursor-pointer'}
             option={{
-              fill: '##404040',
+              fill: '#787878',
             }}
           />
         </div>
       )}
-      <div className="text-neutral-700 text-xs font-normal leading-3">
-        {likeSize}
+      <div className="text-neutral-500 text-xs font-normal leading-3">
+        좋아요 {likeSize}
       </div>
     </div>
   );

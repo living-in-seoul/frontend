@@ -11,7 +11,7 @@ const Slider = ({ range, setRange }: RangeSliderProps) => {
   return (
     <div>
       <h1 className="text-gray-600">거리</h1>
-      <p>{range}</p>
+      {/* <p>{range}</p> */}
       <input
         type="range"
         min={100}
