@@ -20,7 +20,6 @@ const EditProfileImage = ({ profileImageUrl }: { profileImageUrl: any }) => {
       setProfile(e.target.files[0]);
     }
   };
-  console.log(profileImageUrl);
   return (
     <section className="flex justify-center items-center">
       <div className="flex relative h-[72px] w-[72px]">

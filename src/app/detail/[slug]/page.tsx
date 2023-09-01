@@ -25,7 +25,7 @@ const DetailPage = async ({ params }: DetailPageProps) => {
           <DetailMain data={newData.mainData} />
           <DetailComment
             postId={postId}
-            nickname={detailData.result.user.nickname}
+            // nickname={detailData.result.user.nickname}
           />
           <DetailHotHashtag
             mainPostId={Number(postId)}

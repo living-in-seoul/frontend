@@ -2,7 +2,6 @@ import PostItem from '@/components/community/PostItem';
 import { cookies } from 'next/headers';
 
 const MypageList = async ({ category }: { category: string }) => {
-  console.log(category);
   const token = cookies().get('accessToken')?.value;
   const url = category
     ? category[0] === 'writed'
@@ -17,7 +16,6 @@ const MypageList = async ({ category }: { category: string }) => {
     next: { revalidate: 0 },
     cache: 'no-store',
   }).then<ResponseMyPostData>((res) => res.json());
-  console.log(myPageData);
   return (
     <div>
       {myPageData &&

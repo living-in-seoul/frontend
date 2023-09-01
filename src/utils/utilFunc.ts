@@ -118,6 +118,165 @@ export function deepEqual(obj1: any, obj2: any) {
   return true;
 }
 
+const CONSTANTS = {
+  RE: 6371.00877,
+  GRID: 5.0,
+  SLAT1: 30.0,
+  SLAT2: 60.0,
+  OLON: 126.0,
+  OLAT: 38.0,
+  XO: 43,
+  YO: 136,
+};
+
+/**
+ *
+ * @param code "toXY" 를쓰면 XY를 경도위도로 바꿔줌
+ * @param v1 경도
+ * @param v2 위도
+ * @returns 경도위도가 튀어나옴
+ */
+export const convertToXY = (
+  code: ConversionType,
+  v1: number,
+  v2: number,
+): ConversionResult => {
+  const DEGRAD = Math.PI / 180.0;
+  const RADDEG = 180.0 / Math.PI;
+
+  const { RE, GRID, SLAT1, SLAT2, OLON, OLAT, XO, YO } = CONSTANTS;
+
+  const re = RE / GRID;
+  const slat1 = SLAT1 * DEGRAD;
+  const slat2 = SLAT2 * DEGRAD;
+  const olon = OLON * DEGRAD;
+  const olat = OLAT * DEGRAD;
+
+  const sn =
+    Math.tan(Math.PI * 0.25 + slat2 * 0.5) /
+    Math.tan(Math.PI * 0.25 + slat1 * 0.5);
+  const sf =
+    (Math.pow(Math.tan(Math.PI * 0.25 + slat1 * 0.5), sn) * Math.cos(slat1)) /
+    sn;
+  const ro = (re * sf) / Math.pow(Math.tan(Math.PI * 0.25 + olat * 0.5), sn);
+
+  let result: ConversionResult = {};
+
+  if (code === 'toXY') {
+    const ra =
+      (re * sf) / Math.pow(Math.tan(Math.PI * 0.25 + v1 * DEGRAD * 0.5), sn);
+    let theta = v2 * DEGRAD - olon;
+    theta *= sn;
+
+    result.x = Math.floor(ra * Math.sin(theta) + XO + 0.5);
+    result.y = Math.floor(ro - ra * Math.cos(theta) + YO + 0.5);
+  } else {
+    const xn = v1 - XO;
+    const yn = ro - v2 + YO;
+    const ra = Math.sqrt(xn * xn + yn * yn);
+
+    let alat =
+      2.0 * Math.atan(Math.pow((re * sf) / ra, 1.0 / sn)) - Math.PI * 0.5;
+    let theta =
+      Math.abs(yn) <= 0.0
+        ? xn < 0.0
+          ? -Math.PI * 0.5
+          : Math.PI * 0.5
+        : Math.atan2(xn, yn);
+
+    result.lat = alat * RADDEG;
+    result.lng = theta / sn + OLON * DEGRAD;
+  }
+
+  return result;
+};
+
+/** 년도월일 */
+export const getCurrentDateAndTime = () => {
+  let now = new Date();
+  now.setHours(now.getHours() - 1); // 1시간을 뺍니다.
+
+  const year = now.getFullYear();
+  const month = (now.getMonth() + 1).toString().padStart(2, '0');
+  const day = now.getDate().toString().padStart(2, '0');
+  const hour = now.getHours().toString().padStart(2, '0');
+
+  return {
+    getCurrentTime: `${hour}00`, // 정시로 설정합니다.
+    getCurrentDate: `${year}${month}${day}`,
+  };
+};
+
+export const getCurrentWeather = (filteredItems: ForecastItem[]) => {
+  const ptyValue =
+    filteredItems
+      .find((item) => item.category === 'PTY')
+      ?.fcstValue?.toString() || '0';
+  const rn1Value =
+    filteredItems
+      .find((item) => item.category === 'RN1')
+      ?.fcstValue?.toString() || '0';
+  const wsdValue = parseFloat(
+    filteredItems
+      .find((item) => item.category === 'WSD')
+      ?.fcstValue?.toString() || '0',
+  );
+  const skyValue =
+    filteredItems
+      .find((item) => item.category === 'SKY')
+      ?.fcstValue?.toString() || '1'; // 맑음을 기본값으로 설정
+  const lgtValue =
+    filteredItems.find((item) => item.category === 'LGT')?.fcstValue || false; // 낙뢰 없음을 기본값으로 설정
+
+  const baseTime = parseInt(filteredItems[0].baseTime);
+
+  let icon = '';
+
+  if (ptyValue === '3') {
+    icon = 'Snowing';
+  } else if (lgtValue !== false && lgtValue > 0) {
+    icon = 'Thunder';
+  } else if (skyValue === '3') {
+    if (baseTime >= 1800 || baseTime < 600) {
+      icon = 'PartlyCloudyNight';
+    } else {
+      icon = 'PartlyCloudyDay';
+    }
+  } else if (skyValue === '4') {
+    icon = 'Cloudy';
+  } else if (ptyValue === '1' || ptyValue === '5' /* RainDrop */) {
+    icon = 'Raining';
+  } else if (ptyValue === '2' || ptyValue === '6' /* RainDropSnow */) {
+    icon = 'RainingSnow';
+  } else if (ptyValue === '4') {
+    icon = 'Shower';
+  } else if (wsdValue > 3) {
+    icon = 'Windy';
+  } else {
+    if (baseTime >= 1800 || baseTime < 600) {
+      icon = 'ClearNight';
+    } else {
+      icon = 'ClearDay';
+    }
+  }
+
+  return icon;
+};
+
+export const parseMM = (value: string): string => {
+  if (value === '1.0mm 미만') {
+    return '1.0mm';
+  } else if (value.includes('실수값+mm')) {
+    // 실수 값만을 추출합니다.
+    const matched = value.match(/(\d+\.\d+)mm/);
+    return matched ? matched[0] : 'Unknown'; // 만약 정규식이 매치하지 않는 경우 Unknown 반환
+  } else if (value === '50.0mm 이상') {
+    return '50.0mm';
+  } else {
+    return value; // 이미 mm 형식인 "30.0~50.0mm" 같은 경우에는 그대로 반환
+  }
+};
+
 interface FromDataObject {
   [key: string]: any;
 }

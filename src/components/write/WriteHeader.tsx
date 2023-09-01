@@ -37,7 +37,6 @@ const WriteHeader = () => {
       address: formData.address,
       lname: formData.lname,
     };
-    console.log(post);
 
     data.append(
       'post',

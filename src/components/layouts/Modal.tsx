@@ -28,7 +28,7 @@ const Modal = ({ children }: Props) => {
   return (
     <section
       ref={ref}
-      className="fixed top-0 flex flex-col justify-center items-center max-w-md w-screen h-full z-50 bg-neutral-900/70 transition-transform scale-0"
+      className="fixed top-0 flex flex-col justify-center items-center max-w-md w-screen h-full z-50 bg-neutral-900/70 transition-transform"
     >
       {/* <div className="">모달적용</div> */}
       <div className="overflow-y-auto bg-white max-w-7xl w-full ">

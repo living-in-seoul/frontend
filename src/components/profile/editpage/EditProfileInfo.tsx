@@ -100,7 +100,7 @@ const EditProfileInfo = ({ profile }: { profile: ResponseUserProfileData }) => {
           toast.success(response.message);
         }
       } else {
-        console.log('로그인모달 나와주세요');
+        // console.log('로그인모달 나와주세요');
       }
       // router.push('/mypage');
     }

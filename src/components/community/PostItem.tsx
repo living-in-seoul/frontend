@@ -31,19 +31,23 @@ const PostItem = ({ post, user, onMap, hasLiked }: PostItemProps) => {
   const userName = user.nickname.slice(0, 10);
 
   const HastagsContent = (hashtag: string) => {
-    // const HashTags = hashtag.split('#').filter((tag) => tag !== '');
+    const HashTags = hashtag.split('#').slice(0);
+
     return (
       <ul className="flex gap-2">
-        {/* {HashTags.map((tag, index) => (
-          <div key={tag + index} className="flex items-center">
-            <span className="text-neutral-600 text-xs font-normal leading-3">
-              {'#'}
-            </span>
-            <span className="text-black text-xs font-medium leading-3">
-              {tag}
-            </span>
-          </div>
-        ))} */}
+        {HashTags.map((tag, index) => {
+          if (index === 0) return;
+          return (
+            <div key={tag + index} className="flex items-center">
+              <span className="text-neutral-600 text-xs font-normal leading-3">
+                {'#'}
+              </span>
+              <span className="text-black text-xs font-medium leading-3">
+                {tag}
+              </span>
+            </div>
+          );
+        })}
       </ul>
     );
   };
@@ -58,7 +62,7 @@ const PostItem = ({ post, user, onMap, hasLiked }: PostItemProps) => {
     </>
   );
   return (
-    <article className="flex flex-col border-b last:border-[0] px-4 pt-[25px]">
+    <article className="flex flex-col border-b border-zinc-300 px-4 pt-[25px]">
       <UserProfile
         createdAt={createdAt}
         nickname={nickname}
@@ -94,8 +98,8 @@ const PostItem = ({ post, user, onMap, hasLiked }: PostItemProps) => {
             size="small"
           />
           <div className="flex justify-center items-center">
-            {/* {HastagsContent(hashtag)} */}
-            {hashtag}
+            {HastagsContent(hashtag)}
+            {/* {hashtag} */}
           </div>
         </div>
         <div className="flex gap-2">

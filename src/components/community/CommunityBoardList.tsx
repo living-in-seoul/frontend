@@ -1,12 +1,10 @@
 'use client';
-import { fetchCommunity } from '@/actions/fetchCommunity';
 import PostItem from './PostItem';
-import { v4 as uuidv4 } from 'uuid';
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import useObserver from '@/hooks/useObserver';
 import PostItemSkeleton from './PostItemSkeleton';
 import Select from '../common/Select';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next-nprogress-bar';
 import CommunityPostItem from './CommunityPostItem';
 
 interface CommunityBoardProps {
@@ -64,7 +62,7 @@ const CommunityBoardList = ({
   }, [inview]);
 
   return (
-    <article className="flex flex-col border-b-4">
+    <article className="flex flex-col">
       <div className="w-full justify-between flex px-4 py-6 ">
         <div className="flex gap-2.5">
           <Select
@@ -94,18 +92,30 @@ const CommunityBoardList = ({
       {/* {isLoading && <Loading></Loading>} */}
 
       {list?.map((post) => (
-        <CommunityPostItem
-          category={Category}
-          tags={tags}
-          // isPop={isPop}
-          {...post}
+        <div
           key={post.post.postId}
-        />
+          onClick={() =>
+            router.push(
+              `/detail/${post.post.postId}`,
+              {},
+              { showProgressBar: true },
+            )
+          }
+          className="cursor-pointer hover:bg-slate-100 active:bg-sky-200 transition-all duration-300 rounded-md "
+        >
+          <CommunityPostItem
+            category={Category}
+            tags={tags}
+            // isPop={isPop}
+            {...post}
+            key={post.post.postId}
+          />
+        </div>
       ))}
       {/* <PostItemSkeleton /> */}
 
       {lastItem ? (
-        <div>마지막 아이템입니다</div>
+        <div></div>
       ) : (
         <div ref={ref} className="flex flex-col sm:col-span-2 ">
           <PostItemSkeleton />
