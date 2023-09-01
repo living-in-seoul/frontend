@@ -13,7 +13,7 @@ const getButtonSizeStyles = (size: string) => {
   switch (size) {
     case 'small':
       return {
-        div: 'py-1 px-[8px] border border-zinc-400',
+        div: 'py-1 px-[10px] border border-zinc-400',
         span: 'text-neutral-600 text-xs font-medium leading-3',
       };
     case 'medium':
