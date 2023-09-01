@@ -7,6 +7,7 @@ import useObserver from '@/hooks/useObserver';
 import PostItemSkeleton from './PostItemSkeleton';
 import Select from '../common/Select';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import CommunityPostItem from './CommunityPostItem';
 
 interface CommunityBoardProps {
   title?: string;
@@ -93,7 +94,7 @@ const CommunityBoardList = ({
       {/* {isLoading && <Loading></Loading>} */}
 
       {list?.map((post) => (
-        <PostItem
+        <CommunityPostItem
           category={Category}
           tags={tags}
           // isPop={isPop}

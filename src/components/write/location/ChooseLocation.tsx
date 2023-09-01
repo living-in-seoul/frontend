@@ -83,7 +83,6 @@ const ChooseLocation = ({ onClose }: ChooseLocationProps) => {
         address: `${polygonValue.gu} ${polygonValue.dong}`,
       }));
     }
-
     onClose();
   };
 
@@ -130,11 +129,14 @@ const ChooseLocation = ({ onClose }: ChooseLocationProps) => {
         )}
         {currentValue && <MarkerF position={currentValue} />}
       </GoogleMap>
-      <img
-        src="/marker/base.png"
-        className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2"
-        alt="Center Marker"
-      />
+      {/* 검색 후에 찍히는 마커가 생겨서 -> 마커 두개 겹칠거같아서 검색 이후에는 센터마커 없앰 */}
+      {!placeId && (
+        <img
+          src="/marker/mainMarker.png"
+          className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2"
+          alt="Center Marker"
+        />
+      )}
       <div className="flex justify-between items-center px-6 pt-5 ">
         <div className="w-4/6">
           <SelectedLocation />
