@@ -60,3 +60,21 @@ export const initialForm = {
   address: '',
   gu: '',
 };
+
+export const CODES_TYPE = [
+  { name: '일자리', code: '023010', bg: 'bg-[#EEF9FF]', color: 'bg-[#7AD0FF]' },
+  { name: '주거', code: '023020', bg: 'bg-[#EFFFF5]', color: 'bg-[#52DE8B]' },
+  { name: '교육', code: '023030', bg: 'bg-[#FFFEF4]', color: 'bg-[#F6CA73]' },
+  {
+    name: '복지.문화',
+    code: '023040',
+    bg: 'bg-[#F7F0FF]',
+    color: 'bg-[#C08EFF]',
+  },
+  {
+    name: '참여.권리',
+    code: '023050',
+    bg: 'bg-[#FFF4F9]',
+    color: 'bg-[#FF9BC3]',
+  },
+];

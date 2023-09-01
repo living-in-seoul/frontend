@@ -11,7 +11,7 @@ interface WarningProps {
 
 const Warning = ({ mainText, subText, onCancel, onConfirm }: WarningProps) => {
   return (
-    <div className="flex flex-col justify-center items-center gap-4 ">
+    <div className="flex flex-col justify-center items-center gap-4">
       <div className="px-2 py-2 bg-neutral-200 rounded-full">
         <Icons
           path={warning}

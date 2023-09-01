@@ -11,7 +11,7 @@ const MypageProfile = () => {
         <Image alt="example" src={profile} priority />
         <div className="flex flex-col">
           <span className="font-semibold">닉네임</span>
-          <p>Lv.1</p>
+          <p className="text-mediumGray">Lv.1</p>
         </div>
       </div>
       <Link href={'/editprofile'}>

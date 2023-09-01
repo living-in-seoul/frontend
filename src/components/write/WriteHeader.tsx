@@ -96,7 +96,7 @@ const WriteHeader = () => {
         <ModalPortal nodeName="confirmPortal">
           <ModalOutside
             onClose={() => setOpenConfirm(false)}
-            className=" overflow-hidden p-2 bg-white w-4/5 py-6 rounded-xl max-w-7xl"
+            className="  max-w-sm overflow-hidden p-2 bg-white w-4/5 py-6 rounded-xl "
           >
             <Warning
               mainText="작성 중인 글을 취소하시겠습니까?"
