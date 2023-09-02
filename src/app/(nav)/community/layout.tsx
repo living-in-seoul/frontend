@@ -5,11 +5,9 @@ import CommunityNavbar from '@/components/community/CommunityNavbar';
 export default function CommunityLayout({
   children,
   modal,
-  alert,
 }: {
   children: React.ReactNode;
   modal: React.ReactNode;
-  alert: React.ReactNode;
 }) {
   return (
     <section className="relative">
@@ -22,7 +20,6 @@ export default function CommunityLayout({
       </div>
       <div id="searchModal" />
       <div>
-        {alert}
         {children}
         {modal}
       </div>

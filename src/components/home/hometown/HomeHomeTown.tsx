@@ -24,7 +24,7 @@ const HomeHomeTownSection = async () => {
   const hashtags = HotTagHomeTown[0];
 
   return (
-    <article className="relative w-full border-b-[5px] border-zinc-300 ">
+    <article className="relative w-full border-t-[5px] pt-2.5 border-zinc-300 pb-5">
       <HomeSectionTitle
         title="동향 사람들과 소통해 보세요"
         link="/community/communication"

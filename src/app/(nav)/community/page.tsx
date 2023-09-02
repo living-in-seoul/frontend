@@ -44,17 +44,6 @@ const CommunityPage = async ({ searchParams }: PageProps) => {
         ordertype={ordertype}
       />
       <WriteButton section="home" />
-      {/* <BottomSheet state={loginBottomSheetState}> */}
-      {/* <div className="flex flex-col w-full h-full pb-2.5">
-        <div className="text-center text-black text-xl font-semibold leading-normal">
-          로그인 후 서울바이벌을 즐겨보세요!
-        </div>
-        <div className="text-center text-neutral-500 text-base font-normal leading-normal">
-          서울바이벌 회원만이 선택한 기능을 이용할 수 있어요
-        </div>
-      </div>
-      <SigninButtons callbackUrl="" /> */}
-      {/* </BottomSheet> */}
     </section>
   );
 };

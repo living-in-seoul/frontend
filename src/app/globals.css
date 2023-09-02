@@ -15,6 +15,11 @@ body {
   -ms-user-select: none;
   user-select: none;
 }
+
+img,
+a {
+  -webkit-user-drag: none;
+}
 @keyframes loading {
   0% {
     background-position: 100% 50%;

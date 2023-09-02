@@ -30,9 +30,9 @@ export default function RootLayout({
       <body className="flex flex-col min-h-screen items-center">
         <RecoilProvider>
           <SWRConfigContext>
-            {/* <ProgressBarProviders> */}
-            <div className="w-full max-w-md">{children}</div>
-            {/* </ProgressBarProviders> */}
+            <ProgressBarProviders>
+              <div className="w-full max-w-md">{children}</div>
+            </ProgressBarProviders>
           </SWRConfigContext>
         </RecoilProvider>
         <div id="portalSignin" />

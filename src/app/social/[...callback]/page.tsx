@@ -9,6 +9,7 @@ interface Req {
     scope: string;
   };
 }
+
 const CallbackPage = (req: Req) => {
   const router = useRouter();
   const { searchParams } = req;

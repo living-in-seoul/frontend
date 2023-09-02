@@ -50,9 +50,9 @@ const Dots = ({ totalItems, activeSlide }: any) => {
     <div className="flex w-full p-5 pt-[30px] justify-center">
       <div className="relative flex bg-zinc-100 w-[100px] rounded-3xl overflow-hidden">
         <div // 검은색 dot
-          className={`w-[25px] h-[7px] rounded-3xl bg-zinc-300`}
+          className={`w-[33.3px] h-[7px] rounded-3xl bg-emerald-200`}
           style={{
-            left: `${activeSlide === 0 ? 0 : activeSlide * 25}px`,
+            left: `${activeSlide === 0 ? 0 : activeSlide * 33}px`,
             transition: 'left 0.2s ease-in-out',
             position: 'relative',
             top: '0',
@@ -75,7 +75,7 @@ const CarouselProvider = ({ children, type = 'carousel' }: CaroucelProp) => {
       >
         {children}
       </Carousel>
-      {type === 'carousel' && <Dots totalItems={4} activeSlide={activeSlide} />}
+      {type === 'carousel' && <Dots totalItems={3} activeSlide={activeSlide} />}
     </div>
   );
 };

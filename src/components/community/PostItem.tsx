@@ -1,9 +1,7 @@
 import Image from 'next/image';
-import Icons from '../common/Icons';
-import { getTimeAgo } from '@/utils/utilFunc';
-import { profile } from '../../../public';
+
 import Select from '../common/Select';
-import { Comment, Like } from '@/utils/Icon';
+
 import UserProfile from '../item/UserProfile';
 
 interface PostItemProps extends ResponsePost {
@@ -11,9 +9,10 @@ interface PostItemProps extends ResponsePost {
   tags?: string | never[] | null | string[];
   isPop?: SelectPopType;
   onMap?: boolean;
+  border?: boolean;
 }
 
-const PostItem = ({ post, user, onMap, hasLiked }: PostItemProps) => {
+const PostItem = ({ post, user, onMap, hasLiked, border }: PostItemProps) => {
   const {
     content,
     postImg,
@@ -62,7 +61,11 @@ const PostItem = ({ post, user, onMap, hasLiked }: PostItemProps) => {
     </>
   );
   return (
-    <article className="flex flex-col border-b border-zinc-300 px-4 pt-[25px]">
+    <article
+      className={`flex flex-col ${
+        border && 'border-b border-zinc-300'
+      } px-4 pt-[25px]`}
+    >
       <UserProfile
         createdAt={createdAt}
         nickname={nickname}
@@ -82,8 +85,7 @@ const PostItem = ({ post, user, onMap, hasLiked }: PostItemProps) => {
               src={postImg[0]?.postImg}
               alt={`postImg`}
               fill
-              className="w-full h-full "
-              sizes={'100%'}
+              sizes={'33vh'}
             />
           </div>
         )}

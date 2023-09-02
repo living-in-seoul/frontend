@@ -30,7 +30,7 @@ const HomeHomeTownLists = ({ hashtags }: ReviewListProps) => {
               key={item.post.postId}
               onMouseDown={(e) => e.preventDefault()}
               href={`/detail/${item.post.postId}`}
-              className="w-full cursor-pointer hover:bg-zinc-200 transition-all duration-200 active:bg-zinc-200"
+              className="py-2 w-full cursor-pointer hover:bg-zinc-200 transition-all duration-200 active:bg-zinc-200"
             >
               <PostItem key={item.post.postId} {...item} />
             </Link>

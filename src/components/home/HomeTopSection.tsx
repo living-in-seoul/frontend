@@ -8,10 +8,10 @@ import BeatLoader from '../common/Spinner';
 const DynamicWeatherComponent = dynamic(
   () => import('./weather/WeatherComponent'),
   {
-    // ssr: false,
+    ssr: false,
     loading: () => (
-      <div className="flex w-full justify-center h-16 bg-white rounded-[30px] px-9 py-3">
-        <BeatLoader />
+      <div className="flex w-full justify-center items-center h-16 bg-white rounded-[30px] px-9 py-3">
+        <BeatLoader size={10} color="#2DDAB0" />
       </div>
     ),
   },
