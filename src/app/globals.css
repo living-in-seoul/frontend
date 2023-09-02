@@ -19,7 +19,11 @@ body {
 img,
 a {
   -webkit-user-drag: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
+
 @keyframes loading {
   0% {
     background-position: 100% 50%;

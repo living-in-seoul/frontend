@@ -1,5 +1,6 @@
 import { formDataState } from '@/recoil/BoardStates';
 import { KeyboardEvent, MouseEvent, useCallback } from 'react';
+import toast from 'react-hot-toast';
 import { useRecoilValue } from 'recoil';
 
 interface HandleTagsTypes {
@@ -25,6 +26,20 @@ export const useHandleTags = ({
     //타입 바꿔라
     (e) => {
       e.preventDefault();
+
+      if (formData.hashTag.length >= 5) {
+        toast(' 태그는 최대 5개까지만 입력 가능합니다.', {
+          icon: '❕',
+          style: {
+            borderRadius: '5px',
+            background: '#333',
+            color: '#fff',
+            fontSize: '15px',
+          },
+        });
+        return;
+      }
+
       if (!formData.hashTag.includes(tagText)) {
         setFormData((prev: { hashTag: string[] }) => ({
           ...prev,
