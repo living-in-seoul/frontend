@@ -26,7 +26,6 @@ export const GET = async (req: NextRequest, context: Context) => {
       Token,
     ).then((data) => NextResponse.json(data));
   }
-  console.log('zzzz');
   return await getCommunityList(category, postType, hashtagName).then((data) =>
     NextResponse.json(data),
   );

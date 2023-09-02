@@ -24,7 +24,7 @@ export const fetchCommunity = async ({
   if (category === 'All') {
     const Allapi = `${
       process.env.NEXT_PUBLIC_SERVER
-    }/tags/post/All?hashtagName=${UrlEncodigTag}&size=${limit}&page=${page}&type=${'newer'}`;
+    }/tags/posts?category=&hashtagName=${UrlEncodigTag}&size=${limit}&page=${page}&type=${'newer'}`;
     try {
       const respoense = await fetch(Allapi, {
         next: { revalidate: 0 },
@@ -40,7 +40,7 @@ export const fetchCommunity = async ({
 
   const CategoryApi = `${
     process.env.NEXT_PUBLIC_SERVER
-  }/tags/post/category?category=${categoryKO(
+  }/tags/posts?category=${categoryKO(
     category,
   )}&hashtagName=${tag}&size=${limit}&page=${page}&type=${ordertype}`;
 

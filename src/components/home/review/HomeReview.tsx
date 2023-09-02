@@ -18,7 +18,7 @@ const DynamicReviewLists = dynamic(() => import('./HomeReviewLists'), {
 
 const HomeReviewSection = async () => {
   const HotTagReview = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/tags/category?category=후기`,
+    `${process.env.NEXT_PUBLIC_SERVER}/tags/rank?category=후기`,
   ).then<string[]>((res) => res.json());
   const hashtags = HotTagReview[0];
 

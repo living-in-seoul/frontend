@@ -18,15 +18,15 @@ const WriteButton = ({ section = 'map' }: WriteButtonProp) => {
   // if (pathname !== '/community') {
   //   return;
   // }
-  useEffect(() => {
-    const verifyUser = async () => {
-      const tokenValidResponse = await fetch('/api/user', {
-        method: 'GET',
-      });
-      if (tokenValidResponse.status === 200) setIsAuth(true);
-    };
-    verifyUser();
-  }, []);
+  // useEffect(() => {
+  //   const verifyUser = async () => {
+  //     const tokenValidResponse = await fetch('/api/user', {
+  //       method: 'GET',
+  //     });
+  //     if (tokenValidResponse.status === 200) setIsAuth(true);
+  //   };
+  //   verifyUser();
+  // }, []);
 
   const MapWriteButton = (
     <div className="p-2 bg-white rounded-full shadow-md hover:cursor-pointer">

@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import RecoilProvider from '@/context/RecoilProvider';
 import ProgressBarProviders from '@/context/ProgressbarProvider';
+import SSEProvider from '@/context/SSEProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -28,13 +29,18 @@ export default function RootLayout({
         />
       </head>
       <body className="flex flex-col min-h-screen items-center">
-        <RecoilProvider>
-          <SWRConfigContext>
-            <ProgressBarProviders>
-              <div className="w-full max-w-md">{children}</div>
-            </ProgressBarProviders>
-          </SWRConfigContext>
-        </RecoilProvider>
+        <SSEProvider
+          eventTypes={['LIKE']}
+          url={'https://seoulvival.com:8080/notice'}
+        >
+          <RecoilProvider>
+            <SWRConfigContext>
+              <ProgressBarProviders>
+                <div className="w-full max-w-md">{children}</div>
+              </ProgressBarProviders>
+            </SWRConfigContext>
+          </RecoilProvider>
+        </SSEProvider>
         <div id="portalSignin" />
       </body>
     </html>
