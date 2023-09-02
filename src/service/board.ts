@@ -94,7 +94,7 @@ export const getMypagePost = async (url: string) => {
 
 export const getHotBoard = async (category: string, hashtag: string) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/tags/post/category?size=2&page=1&hashtagName=%23${hashtag}&category=${category}&type=popular`,
+    `${process.env.NEXT_PUBLIC_SERVER}/tags/posts?size=2&page=1&hashtagName=%23${hashtag}&category=${category}&type=popular`,
     {
       headers: {
         'Content-Type': 'application/json',

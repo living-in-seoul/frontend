@@ -16,14 +16,14 @@ interface HomeReviewSectionProps {
 }
 const HomeHasTagMapSection = async ({ hashtag }: HomeReviewSectionProps) => {
   const HotTagReview = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/tags/All`,
+    `${process.env.NEXT_PUBLIC_SERVER}/tags/rank?category=`,
     { next: { revalidate: 0 } },
   ).then<string[]>((res) => res.json());
 
   const hashtags = hashtag ?? HotTagReview[0];
 
   const PostList = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/tags/post/All?page=1&size=1&hashtagName=${hashtags}&type=popular`,
+    `${process.env.NEXT_PUBLIC_SERVER}/tags/posts?category=&page=1&size=1&hashtagName=${hashtags}&type=popular`,
   )
     .then<ResponseRegister>((res) => res.json())
     .then<ResponsePost[]>((res) => res.result);
