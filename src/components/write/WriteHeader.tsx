@@ -4,80 +4,109 @@ import Icons from '../common/Icons';
 import { useRouter } from 'next/navigation';
 import Button from '../common/Button';
 import { MouseEvent, useCallback, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { ImageState, formDataState } from '@/recoil/BoardStates';
+import ModalOutside from '../modal/ModalOutside';
+import Warning from './modal/Warning';
+import ModalPortal from '../modal/ModalPortal';
+import BeatLoader from '../common/Spinner';
 
 const WriteHeader = () => {
-  const formData = useRecoilValue(formDataState);
-  const imageState = useRecoilValue(ImageState);
   const [openConfirm, setOpenConfirm] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useRecoilState(formDataState);
+  const [imageState, setImageState] = useRecoilState(ImageState);
   const router = useRouter();
-  const onClickToBack = () => {
-    router.back();
+
+  const onClickToBack = useCallback(() => {
+    setOpenConfirm(true);
+  }, []);
+
+  const onSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    const data = new FormData();
+    const post = {
+      category: formData.category,
+      content: formData.content,
+      hashtag: '#' + formData.hashTag.join('#'),
+      lat: formData.lat,
+      lng: formData.lng,
+      gu: formData.gu,
+      address: formData.address,
+      lname: formData.lname,
+    };
+
+    data.append(
+      'post',
+      new Blob([JSON.stringify(post)], { type: 'application/json' }),
+    );
+    if (imageState) {
+      imageState.forEach((file) => {
+        data.append('photos', file);
+      });
+    }
+
+    const tokenValidResponse = await fetch('/api/user', {
+      method: 'GET',
+    });
+
+    if (tokenValidResponse.status === 200) {
+      try {
+        const res = await fetch('/api/write', {
+          method: 'POST',
+          body: data,
+        });
+        const message = await res.json();
+        alert(message);
+        setImageState(null);
+        router.back();
+      } catch (e) {
+        alert('게시물 작성 실패!');
+      }
+    } else {
+      alert('로그인 모달 나와주세요');
+    }
+    setIsLoading(false);
   };
 
-  const onSubmit = useCallback(
-    async (e: MouseEvent<HTMLButtonElement>) => {
-      e.preventDefault();
-      const data = new FormData();
-      const post = {
-        category: formData.category,
-        content: formData.content,
-        hashtag: '#' + formData.hashTag.join('#'),
-        lat: formData.lat,
-        lng: formData.lng,
-        gu: '강남구',
-        dong: '신사동',
-      };
-      // const post = {
-      //   "category" : "동향소통",
-      //   "hashtag" : "#태그1",
-      //   "content" : "내용입니다.",
-      //   "lat": 12,
-      //   "lng": 13,
-      //   "gu": "강남구",
-      //   "dong" : "신사동"
-      //   }
-
-      data.append(
-        'post',
-        new Blob([JSON.stringify(post)], { type: 'application/json' }),
-      );
-      if (imageState) {
-        imageState.forEach((file) => {
-          data.append('photos', file);
-        });
-      }
-
-      for (let [key, value] of data.entries()) {
-        console.log(key, value);
-      }
-
-      const response = await fetch('/api/write', {
-        method: 'POST',
-        body: data,
-      }).then((response) => response.json());
-      alert(response);
-    },
-    [formData, imageState],
-  );
-
   return (
-    <div className="h-16 mt-4 w-full flex justify-between items-center px-6">
-      <div className="flex items-center gap-5">
-        {<Icons path={back} onClick={onClickToBack} />}
-        <span className="text-[1.1rem] font-semibold">글 작성하기</span>
+    <>
+      <div className="h-16 mt-4 w-full flex justify-between items-center px-6">
+        <div className="flex items-center gap-5">
+          {<Icons path={back} onClick={onClickToBack} />}
+          <span className="text-[1.1rem] font-semibold">글 작성하기</span>
+        </div>
+        <div className="w-20 h-8 text-white">
+          <Button
+            title={
+              isLoading ? <BeatLoader size={10} color="#2DDAB0" /> : '등록하기'
+            }
+            size="full"
+            bgColor="bg-neutral-200"
+            className="text-white"
+            onClick={(e) => onSubmit(e)}
+            disable={isLoading}
+          />
+        </div>
       </div>
-      <div className="w-20 h-8 text-white">
-        <Button
-          title="등록하기"
-          size="full"
-          bgColor="bg-neutral-200"
-          className="text-white"
-          onClick={(e) => onSubmit(e)}
-        />
-      </div>
-    </div>
+      {openConfirm && (
+        <ModalPortal nodeName="confirmPortal">
+          <ModalOutside
+            onClose={() => setOpenConfirm(false)}
+            className="  max-w-sm overflow-hidden p-2 bg-white w-4/5 py-6 rounded-xl "
+          >
+            <Warning
+              mainText="작성 중인 글을 취소하시겠습니까?"
+              subText="작성 취소된 글은 저장되지 않습니다."
+              onConfirm={() => router.back()}
+              onCancel={() => setOpenConfirm(false)}
+            />
+          </ModalOutside>
+        </ModalPortal>
+      )}
+    </>
   );
 };
 

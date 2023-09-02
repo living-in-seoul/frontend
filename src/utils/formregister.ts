@@ -38,10 +38,6 @@ export const nicknameForm = {
 
 export const hometownForm = {
   required: '고향을 알려주세요',
-  pattern: {
-    value: /([가-힣]+도)\s([가-힣]+시)/,
-    message: '띄어쓰기를 확인해주세요',
-  },
   validate: {
     check: (val: string) => {
       if (!hometownData.includes(val)) {

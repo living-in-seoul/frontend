@@ -7,6 +7,7 @@ interface RequestLogin {
 /** 소셜 로그인 요청 데이터*/
 interface RequestOauthLogin {
   code: string;
+  state: string;
 }
 
 /** 회원가입 요청 데이터 */
@@ -15,10 +16,11 @@ interface RequestEssentialRegister {
   nickname: string;
   password: string;
 }
-interface RequestNonessentialRegister {
-  email?: string;
-  gender: string;
+
+interface RequestPutProfile {
+  nickname?: string;
   birthDate: string;
+  gender: string;
   hometown: string;
   movedDate: string;
 }
@@ -30,15 +32,9 @@ interface RequestBoardWrite {
   content: string;
   lat: number;
   lng: number;
-}
-
-/** 게시물 작성 (임시!!!!!!! 절대 쓰지 말것!!!) */
-interface RequestBoardWriteTemp {
-  title: string;
-  locationTag: string[];
-  purposeTag: string[];
-  content: string;
-  postImg: File;
+  gu: string;
+  address: string;
+  lname: string;
 }
 
 /** 게시물 수정 요청 데이터 */

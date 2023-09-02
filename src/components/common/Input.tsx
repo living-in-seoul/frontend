@@ -27,9 +27,9 @@ const Input = ({
   inputColor,
 }: SearchInputProps) => {
   return (
-    <section className="w-full flex justify-center items-center ">
+    <section className="flex justify-center items-center ">
       <form
-        className={`ml-4 w-4/5 rounded-[1.875rem]  h-[38px] flex items-center justify-between shadow-sm border border-neutral-300 px-4 ${
+        className={`rounded-3xl w-full h-9 flex items-center justify-between shadow-sm border border-neutral-300 px-4 ${
           formColor ? formColor : 'bg-white'
         }`}
         onSubmit={onSubmit}

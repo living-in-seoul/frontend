@@ -1,13 +1,19 @@
 import { atom } from 'recoil';
-export const signupState = atom<RequestNonessentialRegister>({
-  key: 'signupFistState',
+
+export const userPorfileState = atom<RequestPutProfile>({
+  key: 'userPorfileState',
   default: {
-    email: '',
+    nickname: '',
+    birthDate: '',
     gender: '',
     hometown: '',
     movedDate: '',
-    birthDate: '',
   },
+});
+
+export const profileImageState = atom<File | null>({
+  key: 'profileImageState',
+  default: null,
 });
 
 export const signupEssentialState = atom<boolean>({
@@ -21,5 +27,41 @@ export const callbackUrlState = atom<string>({
 });
 export const AuthOpenModalState = atom<boolean>({
   key: 'AuthopenModalState',
+  default: false,
+});
+
+export const signupGenderState = atom<string>({
+  key: 'signupGenderState',
+  default: '',
+});
+
+export const profileOpenModalState = atom<boolean>({
+  key: 'profileOpenModalState',
+  default: false,
+});
+
+export const profileSecondOpenModalState = atom<boolean>({
+  key: 'profileSecondOpenModalState',
+  default: false,
+});
+
+export const AleatSectionState = atom<'active' | 'hastag'>({
+  key: 'AleatSectionState',
+  default: 'active',
+});
+export const pushAlertToggleState = atom<boolean>({
+  key: 'pushAlertToggleState',
+  default: false,
+});
+export const commentAlertToggleState = atom<boolean>({
+  key: 'commentAlertToggleState',
+  default: false,
+});
+export const likeAlertToggleState = atom<boolean>({
+  key: 'likeAlertToggleState',
+  default: false,
+});
+export const hashtagAlertToggleState = atom<boolean>({
+  key: 'hashtagAlertToggleState',
   default: false,
 });

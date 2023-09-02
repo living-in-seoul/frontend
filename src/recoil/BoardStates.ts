@@ -1,3 +1,4 @@
+import { initialForm } from '@/utils/constants/constants';
 import { atom } from 'recoil';
 
 export const ImageState = atom<File[] | null>({
@@ -17,11 +18,5 @@ export const MapPortalState = atom<boolean>({
 
 export const formDataState = atom<RequestBoardWrite>({
   key: 'FormDataState',
-  default: {
-    category: '',
-    hashTag: [],
-    content: '',
-    lat: 0,
-    lng: 0,
-  },
+  default: initialForm,
 });

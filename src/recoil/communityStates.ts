@@ -8,3 +8,8 @@ export const HomeKeyState = atom<string>({
   key: 'HomeKeyState',
   default: '',
 });
+
+export const recentlySearchedState = atom<string[]>({
+  key: 'recentlySearchedState',
+  default: [],
+});

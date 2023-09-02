@@ -1,28 +1,40 @@
+'use client';
+import { useEffect, useState } from 'react';
 import PostItem from '../community/PostItem';
 
-interface DetailHotHashtagProps {
-  tag: string;
-  category: string;
-}
-const DetailHotHashtag = async ({ data }: { data: DetailHotHashtagProps }) => {
-  const { category, tag } = data;
-  const hotTagData = await fetch(
-    `https://seoulvival.com:8080/tags/post/category?size=2&page=1&hashtagName=%23${tag}&category=${category}&type=popular`,
-    { next: { revalidate: 2000 } },
-  ).then<ResponsePopularCategoryHashtag>((res) => res.json());
+const DetailHotHashtag = ({ data }: { data: ResponseDetailData }) => {
+  const [tagData, setTagData] = useState<ResponsePopularCategoryHashtag | null>(
+    null,
+  );
+  const postId = localStorage.getItem('postId');
+  const maintag = data.result.post.hashtag.split('#').filter((tag) => tag)[0];
+  useEffect(() => {
+    const response = async () => {
+      await fetch(`/api/post/${data.result.post.category}/${maintag}`)
+        .then((response) => response.json())
+        .then((response) => {
+          setTagData(response);
+        });
+    };
+    response();
+  }, [data.result.post.category, maintag]);
   return (
     <div>
       <span className="flex pt-6 font-semibold px-4">관련 해시태그 인기글</span>
-      {hotTagData &&
-        hotTagData.result.map((data, index) => (
-          <PostItem
-            key={index}
-            location={data.location}
-            post={data.post}
-            user={data.user}
-            hasLiked
-          />
-        ))}
+      {tagData &&
+        tagData.result
+          .filter((data) => data.post.postId !== Number(postId))
+          .map((data) => (
+            <>
+              <PostItem
+                key={data.post.postId}
+                location={data.location}
+                post={data.post}
+                user={data.user}
+                hasLiked
+              />
+            </>
+          ))}
     </div>
   );
 };

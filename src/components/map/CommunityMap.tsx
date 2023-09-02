@@ -1,49 +1,82 @@
 'use client';
-import { useEffect } from 'react';
+
+import { useCallback, useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import useMapInstance from '@/hooks/useMapInstance';
-import { MapStyleVersionTwo } from '@/utils/styles';
-import { GoogleMap, MarkerF } from '@react-google-maps/api';
+import { GoogleMap } from '@react-google-maps/api';
+import toast, { Toaster } from 'react-hot-toast';
 import {
   boardListState,
-  centerState,
   currentState,
   filterOptionState,
-  gudongState,
   markerIdState,
+  polygonState,
 } from '@/recoil/mapStates';
 import { communityKeyState } from '@/recoil/communityStates';
 import usePosts from '@/hooks/usePosts';
 import CustomOverlayMarker from './marker/CustomOverlayMarker';
-import { CommContainerStyle, mapOptions } from '@/utils/constants/constants';
-
-const sample = [
-  { gu: '강남구', dong: '신사동' },
-  { gu: '강남구', dong: '역삼동' },
-];
+import {
+  CommContainerStyle,
+  mapOptions,
+  seoulCenterCoords,
+} from '@/utils/constants/constants';
+import { mapBottomSheetState } from '@/recoil/bottomsheet';
 
 const CommunityMap = () => {
   const { map, onLoad, onUnmount } = useMapInstance();
-  // const [zoom, setZoom] = useState(16);
-  const [markerId, setMarkerId] = useRecoilState(markerIdState);
-  const [center, setCenter] = useRecoilState(centerState);
+  const [isBottomSheetOpen, setisBottomSheetState] =
+    useRecoilState(mapBottomSheetState);
+  const [center, setCenter] = useState<LatLng | null | undefined>(null);
+  const { posts: boardList } = usePosts(communityKeyState);
+  const [polygonValue, setPolygonState] = useRecoilState(polygonState);
   const filterOption = useRecoilValue(filterOptionState);
-  const gudong = useRecoilValue(gudongState);
   const currentValue = useRecoilValue(currentState);
+  const setMarkerId = useSetRecoilState(markerIdState);
   const setBoardListState = useSetRecoilState(boardListState);
   const setCommunityKey = useSetRecoilState(communityKeyState);
-  const { posts: boardList } = usePosts(communityKeyState);
+
+  //로컬스토리지 여기서 잠깐 저장좀
+  localStorage.setItem('location', '강남구');
 
   useEffect(() => {
+    const getCenter = () => {
+      const gu =
+        (localStorage.getItem('location') as guchung) ?? polygonValue.gu;
+      if (gu && seoulCenterCoords.hasOwnProperty(gu)) {
+        setCenter(seoulCenterCoords[gu]);
+      }
+    };
+    getCenter();
+  }, []);
+
+  useEffect(() => {
+    const gu = polygonValue.gu;
+    const length = boardList?.pageable.totalElements ?? 0;
     setCommunityKey(
-      `/api/map/category?category=${filterOption}&gu=${sample[0].gu}&dong=${sample[0].dong}`,
+      `/api/map/category?category=${filterOption}&gu=${encodeURIComponent(gu)}`,
     );
-    console.log(filterOption);
-  }, [filterOption, setCommunityKey]);
+    localStorage.setItem('lastVisited', polygonValue.gu);
+  }, [boardList, filterOption, polygonValue.gu, setCommunityKey]);
+
+  useEffect(() => {
+    const gu = polygonValue.gu;
+    const length = boardList?.pageable.totalElements ?? 0;
+
+    boardList &&
+      gu &&
+      toast(`${gu} ${length}건`, {
+        icon: '📍',
+      });
+
+    //서울 갈 때 까지 고정시키고 버튼 (서울로 이동하는 버튼)
+    if (!gu) {
+      toast.error('서울 지역으로 이동해주세요.');
+    }
+  }, [boardList]);
 
   useEffect(() => {
     if (boardList) setBoardListState(boardList);
-    if (currentValue) setCenter(currentValue);
+    if (currentValue.lat !== 0) setCenter(currentValue);
   }, [boardList, currentValue, filterOption, setBoardListState, setCenter]);
 
   useEffect(() => {
@@ -52,49 +85,60 @@ const CommunityMap = () => {
     }
   }, [map, center]);
 
-  const onClickMarker = (
-    _: google.maps.event,
-    postId: number,
-    latlng: LatLng,
-  ) => {
-    setMarkerId(postId);
-    setCenter(latlng);
+  const onClickMarker = useCallback(
+    (_: google.maps.event, postId: number, latlng: LatLng) => {
+      setMarkerId(postId);
+      setCenter(latlng);
+      setisBottomSheetState(true);
+    },
+    [setMarkerId, setisBottomSheetState],
+  );
+
+  const onMouseUpHandler = async () => {
+    const lat = map?.getCenter()?.lat();
+    const lng = map?.getCenter()?.lng();
+    const res = await fetch(`/api/map/geo?lat=${lat}&lng=${lng}`, {
+      method: 'GET',
+    }).then((data) => data.json());
+    setPolygonState(res);
   };
 
   return (
     <section className="w-full h-full relative z-100">
       <GoogleMap
         mapContainerStyle={CommContainerStyle}
-        center={center}
-        zoom={10}
+        center={center ?? undefined}
         onLoad={onLoad}
         onUnmount={onUnmount}
         options={mapOptions}
+        onMouseUp={onMouseUpHandler}
+        onClick={(e) => {
+          e.stop();
+        }}
       >
         <>
-          {/* 현위치 */}
           {/* <MarkerF position={currentValue} /> */}
-          {/* boardlist */}
-          {boardList &&
-            boardList.result.map((post) => {
-              const { postId, hashtag } = post.post;
-              const latlng: LatLng = {
-                lat: Number(post.location.lat),
-                lng: Number(post.location.lng),
-              };
-              return (
+          {boardList?.result.map((post: ResponsePost) => {
+            const { postId, hashtag } = post.post;
+            const latlng = {
+              lat: post.location.lat,
+              lng: post.location.lng,
+            };
+            return (
+              <div className="z-100 cursor-pointer" key={postId}>
                 <CustomOverlayMarker
-                  key={postId}
                   position={latlng}
-                  text={`# ${hashtag.split('#')[1]}`}
+                  text={`#${hashtag?.split('#')[1]}`}
                   onClick={(e: google.maps.event) => {
                     onClickMarker(e, postId, latlng);
                   }}
                 />
-              );
-            })}
+              </div>
+            );
+          })}
         </>
       </GoogleMap>
+      <Toaster position="bottom-center" />
     </section>
   );
 };

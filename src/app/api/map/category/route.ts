@@ -1,28 +1,21 @@
-import {
-  getCommunityList,
-  getCommunityListWithToken,
-} from '@/service/comunity';
+import { getCommunityList } from '@/service/comunity';
+import { getBoardListByGu } from '@/service/map';
 import { NextRequest, NextResponse } from 'next/server';
 
 interface Context {
-  //동도 타입 있으면 바꾸기
-  params: { slug: [string, guchung, string] };
+  params: { slug: [string, guchung] };
 }
-
 export const GET = async (req: NextRequest, context: Context) => {
   const { searchParams } = req.nextUrl;
   const category = searchParams.get('category') ?? 'All';
   const gu = searchParams.get('gu');
-  const dong = searchParams.get('dong');
-  const Token = req.cookies.get('accessToken')?.value;
+  console.log(category, gu);
 
-  if (Token) {
-    return await getCommunityListWithToken(category, 'newer', '', Token).then(
-      (data) => NextResponse.json(data),
-    );
+  if (gu === 'null') {
+    const list = await getCommunityList(category, 'newer', '');
+    return NextResponse.json(list);
+  } else {
+    const list = await getBoardListByGu(category, gu);
+    return NextResponse.json(list);
   }
-
-  return await getCommunityList(category, 'newer', '').then((data) =>
-    NextResponse.json(data),
-  );
 };

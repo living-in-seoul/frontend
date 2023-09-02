@@ -25,15 +25,6 @@ interface ResponseAccessToken {
   accessToken: string;
 }
 
-/** 전체 맵 조회 - 유저 위치 구,동 받기*/
-interface ResponseLocation {
-  msg: string;
-  result: {
-    gu: string;
-    dong: string;
-  };
-}
-
 /** 게시물 상세 페이지 데이터 (게시물+유저정보) */
 interface ResponseBoardDetail {
   msg: string;
@@ -60,8 +51,9 @@ interface UserProfile {
 
 /** 위치 정보 데이터  */
 interface PostLocation {
-  dong: string;
+  address: string;
   gu: string;
+  lname: string;
   lat: number;
   lng: number;
 }
@@ -77,6 +69,7 @@ interface BoardInfo {
   lng: number;
   category: string;
   likeSize: number;
+  commentSize: number;
   postViewCount: number;
 
   title?: string;
@@ -122,7 +115,7 @@ interface CityData {
   /** 실시간 인구현황 */
   AREA_NM: string;
   /** 장소 혼잡도 지표 */
-  AREA_CONGEST_LVL: string;
+  AREA_CONGEST_LVL: '붐빔' | '약간 붐빔' | '보통' | '여유';
   /** 장소 혼잡도 지표 관련 메세지 */
   AREA_CONGEST_MSG: string;
   /** 실시간 인구 지표 최소값 */
@@ -193,51 +186,16 @@ interface PostImage {
   postImg: string;
 }
 
-/**포스트 정보 데이터 */
-interface Post {
-  postId: number;
-  hashtag: string;
-  content: string;
-  postImg: PostImage[];
-  createdAt: string;
-  modifiedAt: string;
-  lat: number;
-  lng: number;
-  category: string;
-  likeSize: number;
-  postViewCount: number;
-  comments: Comment[];
-  commentSize: number;
-}
-
-/**디테일 포스트 정보 데이터   */
-interface ResponseDetailData {
-  msg: string;
-  result: {
-    user: User;
-    post: Post;
-    location: PostLocation;
-  };
-  hasLiked: boolean;
-}
-
 /**포스트 댓글 데이터   */
 interface Comment {
-  createdAt: string;
-  modifiedAt: string;
   nickname: string;
-  commentId: number;
   comment: string;
-  reCommentList: ReComment[];
-}
-
-interface ReComment {
   createdAt: string;
-  modifiedAt: string;
-  nickname: string;
-  id: number;
-  reComment: string;
-  userImg: null;
+  userImg: string | null;
+  commentHasLiked: boolean;
+  commentLikeSize: number;
+  reComments: ReComment[] | null;
+  hasReported: boolean;
 }
 
 interface ResultItem {
@@ -255,4 +213,166 @@ interface ResponsePopularCategoryHashtag {
     size: number;
   };
   result: ResultItem[];
+}
+/** 대댓글 데이터 */
+interface ReComment {
+  reCommentId: number;
+  nickname: string;
+  reComment: string;
+  createdAt: string;
+  reCommentHasLiked: boolean;
+  userImg: string | null;
+}
+
+/**포스트 정보 데이터 */
+interface Post {
+  postId: number;
+  hashtag: string;
+  content: string;
+  postImg: PostImage[];
+  createdAt: string;
+  modifiedAt: string;
+  lat: number;
+  lng: number;
+  category: string;
+  likeSize: number;
+  postViewCount: number;
+  comments: Comment[];
+  commentSize: number;
+  scrapSize: number;
+}
+
+/**디테일 포스트 정보 데이터   */
+interface ResponseDetailData {
+  msg: string;
+  result: {
+    user: User;
+    post: Post;
+    location: PostLocation;
+    hasLiked: boolean;
+    hasScrapped: boolean;
+  };
+}
+
+interface PostResult {
+  user: User;
+  post: Post;
+  location: PostLocation;
+  hasLiked: boolean;
+}
+
+interface ResponseMyPostData {
+  msg: string;
+  pageable: {
+    totalPages: number;
+    totalElements: number;
+    size: number;
+  };
+
+  result: PostResult[];
+}
+
+/**포스트 댓글 데이터   */
+interface Comment {
+  userImg: string | null;
+  createdAt: string;
+  nickname: string;
+  commentId: number;
+  comment: string;
+  commentSize: number;
+  commentHasLiked: boolean;
+  reCommentList: ReComment[];
+}
+interface ResponseCommentData {
+  pageable: {
+    totalPages: number;
+    totalElements: number;
+    size: number;
+  };
+  comments: Comment[];
+}
+interface ResultItem {
+  user: User;
+  post: Post;
+  location: PostLocation;
+  hasLiked: boolean;
+}
+
+interface ResponsePopularCategoryHashtag {
+  msg: string;
+  pageable: {
+    totalPages: number;
+    totalElements: number;
+    size: number;
+  };
+}
+/**유저 프로필 정보 데이터   */
+interface ResponseUserProfileData {
+  nickname: string;
+  birthDate: string;
+  movedDate: string;
+  gender: string;
+  hometown: string;
+  porfileImageUrl: string;
+}
+
+/**좋아요 데이터   */
+interface ResponseDetialButtonsData {
+  hasLiked: boolean;
+  likeSize: number;
+  scrapSize: number;
+  /** 알람액티브 목록 */
+}
+interface ResponseAlarm {
+  msg: string;
+  pageable: {
+    totalPages: number;
+    totalElements: number;
+    size: number;
+  };
+  alarmList: AlarmItem[];
+}
+
+interface AlarmItem {
+  id: number;
+  alarmEventType: string;
+  text: string;
+  isRead: boolean;
+  registeredAt: string;
+}
+
+interface YouthInfo {
+  accrRqisCn?: string[];
+  aditRscn?: string[];
+  ageInfo?: string[];
+  bizId: string[];
+  bizPrdCn?: string[];
+  cherCtpcCn?: string[];
+  cnsgNmor?: string[];
+  empmSttsCn?: string[];
+  etct?: string[];
+  jdgnPresCn?: string[];
+  majrRqisCn?: string[];
+  mngtMrofCherCn?: string[];
+  mngtMson?: string[];
+  polyBizSecd?: string[];
+  polyBizSjnm?: string[];
+  polyBizTy?: string[];
+  polyItcnCn?: string[];
+  polyRlmCd?: string[];
+  prcpCn?: string[];
+  prcpLmttTrgtCn?: string[];
+  prdRpttSecd?: string[];
+  pstnPaprCn?: string[];
+  rfcSiteUrla1: string[];
+  rfcSiteUrla2?: string[];
+  rnum?: string[];
+  rqutPrdCn?: string[];
+  rqutProcCn?: string[];
+  rqutUrla?: string[];
+  splzRlmRqisCn?: string[];
+  sporCn?: string[];
+  sporScvl?: string[];
+  tintCherCn?: string[];
+  tintCherCtpcCn?: string[];
 }

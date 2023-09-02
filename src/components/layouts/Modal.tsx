@@ -1,25 +1,39 @@
+'use client';
+
+import { useEffect, useRef } from 'react';
+
 interface Props {
   children: React.ReactNode;
-  onClose: () => void;
 }
 
-const Modal = ({ onClose, children }: Props) => {
+const Modal = ({ children }: Props) => {
+  const ref = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const modalElement = ref.current;
+    if (modalElement) {
+      // 애니메이션 시작 전 초기 상태를 설정합니다.
+      modalElement.classList.add('modal-entering');
+
+      // 애니메이션 시작을 트리거 합니다.
+      setTimeout(() => {
+        modalElement.classList.remove('modal-entering');
+        modalElement.classList.add('modal-opened');
+      }, 50); // 약간의 딜레이가 필요합니다.
+    }
+    document.body.classList.add('modal-open');
+    return () => {
+      document.body.classList.remove('modal-open');
+    };
+  }, []);
   return (
     <section
-      className="fixed top-0 left-0 flex flex-col justify-center items-center w-full h-full z-50 bg-neutral-900/70 "
-      onClick={(event) => {
-        if (event.target === event.currentTarget) {
-          onClose();
-        }
-      }}
+      ref={ref}
+      className="fixed top-0 flex flex-col justify-center items-center max-w-md w-screen h-full z-50 bg-neutral-900/70 transition-transform"
     >
-      <button
-        className="fixed top-0 right-0 p-8 text-white"
-        onClick={() => onClose()}
-      >
-        close
-      </button>
-      <div className="bg-white w-4/5 h-3/5 max-w-7xl">{children}</div>
+      {/* <div className="">모달적용</div> */}
+      <div className="overflow-y-auto bg-white max-w-7xl w-full ">
+        {children}
+      </div>
     </section>
   );
 };

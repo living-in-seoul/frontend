@@ -4,13 +4,17 @@ import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import AuthInput from './AuthInput';
 import Button from '@/components/common/Button';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { emailForm, passwordForm } from '@/utils/formregister';
 import { useRecoilState } from 'recoil';
 import { callbackUrlState } from '@/recoil/authStates';
+import toast, { Toaster } from 'react-hot-toast';
+import { useState } from 'react';
+import BeatLoader from '@/components/common/Spinner';
 
 const DefaultLogin = () => {
   const callbackUrl = useRecoilState(callbackUrlState);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
   const {
     register,
@@ -24,26 +28,44 @@ const DefaultLogin = () => {
       password: '',
     },
   });
-  const url = callbackUrl[0] ?? 'home';
+  const url = callbackUrl[0] ?? '/home';
   const onSubmitHandler: SubmitHandler<RequestLogin> = async (data) => {
+    setIsLoading(true);
     const response = await fetch('/api/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
-    }).then((response) => response.json());
-    alert(response.msg);
-    reset();
-    router.push(`/${url}`);
+    })
+      .then((response) => {
+        if (response.status === 401) {
+          throw new Error('에러입니다');
+        } else {
+          toast.success('로그인 성공');
+          return response.json();
+        }
+      })
+      .then((response) => {
+        localStorage.setItem('nickname', response.nickname);
+        router.push(url);
+      })
+      .catch((error) => {
+        toast.error('잘못된 요청입니다');
+      })
+      .finally(() => {
+        reset();
+        setIsLoading(false);
+      });
   };
 
   return (
     <form
       onSubmit={handleSubmit(onSubmitHandler)}
-      className="flex flex-col flex-grow justify-between "
+      className="flex flex-col flex-grow justify-between"
     >
-      <div className="flex flex-col justify-between">
+      <Toaster />
+      <div className="flex flex-col justify-between gap-6">
         <AuthInput
           errorsMessage={errors.email?.message}
           id="signinEmail"
@@ -81,7 +103,10 @@ const DefaultLogin = () => {
       <div className="absolute w-full bottom-0">
         <Button
           size="w-full"
-          title="로그인하기"
+          title={
+            isLoading ? <BeatLoader size={10} color="#2DDAB0" /> : '로그인하기'
+          }
+          disabled={isLoading}
           bgColor="bg-teal-400"
           border="none"
           color="text-white"

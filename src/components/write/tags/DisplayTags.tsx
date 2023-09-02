@@ -11,7 +11,7 @@ const DisplayTags = ({ tags, onDeleteTag }: DisplayTags) => {
     <div className="flex gap-1 w-full pl-3 overflow-x-auto scrollbar-hide">
       {tags.map((tag, _) => (
         <div
-          className=" flex justify-center items-center rounded-md px-1.5 py-1 gap-1.5 text-xs text-neutral-700 border border-stone-300"
+          className=" flex justify-center items-center rounded-md px-1.5 py-1 gap-1.5 text-xs text-neutral-600 border border-stone-300 whitespace-nowrap"
           key={tag}
           onClick={() => onDeleteTag && onDeleteTag(tag)}
         >

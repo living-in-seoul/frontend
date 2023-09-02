@@ -1,5 +1,5 @@
 import { ImagePortalState, ImageState } from '@/recoil/BoardStates';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import Button from '../../common/Button';
 
@@ -13,7 +13,11 @@ const UploadImageModal = ({ onClose }: UploadImageModalProps) => {
 
   const onChangePostImg = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const filesArray = Array.from(e.target.files); // FileList를 File[]로 변환
+      const filesArray = Array.from(e.target.files);
+      if ((imageState ? imageState.length : 0) + filesArray.length > 5) {
+        alert('5개 이하로 넣어주세영');
+        return;
+      }
       setImageState(filesArray);
       setOpenImagePortal(false);
     }

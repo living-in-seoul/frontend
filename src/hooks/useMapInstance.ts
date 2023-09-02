@@ -2,14 +2,13 @@
 
 import { useCallback, useState } from 'react';
 
-const ZOOM = 16;
-
 const useMapInstance = () => {
   const [map, setMap] = useState<google.maps.Map | null>(null);
 
+  const ZOOM = 14;
   const onLoad = useCallback((map: google.maps.Map) => {
     map.setZoom(ZOOM);
-    map.setCenter(new google.maps.LatLng(37.5665, 126.977));
+
     setMap(map);
   }, []);
 
@@ -22,3 +21,8 @@ const useMapInstance = () => {
 };
 
 export default useMapInstance;
+
+/*
+1. 로컬스토리지에 저장된 구가 있으면 거기로 센터 줌 후 데이터 가져오기
+2. 없다면 서울시 강남구 가져오기
+*/

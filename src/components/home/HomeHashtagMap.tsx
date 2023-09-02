@@ -1,4 +1,5 @@
 'use client';
+import { mapOptions } from '@/utils/constants/constants';
 import { GoogleMap, MarkerF } from '@react-google-maps/api';
 import { memo } from 'react';
 
@@ -7,7 +8,6 @@ interface HomeHashtagMap {
 }
 
 const HomeHashtagMap = ({ location }: HomeHashtagMap) => {
-  console.log(location);
   return (
     <section className="relative w-full h-[260px] border overflow-hidden rounded-xl">
       <GoogleMap
@@ -18,11 +18,12 @@ const HomeHashtagMap = ({ location }: HomeHashtagMap) => {
         zoom={14}
         center={new google.maps.LatLng(location.lat, location.lng)}
         options={{
-          mapTypeControl: false,
-          disableDefaultUI: true,
+          ...mapOptions,
         }}
+        onMouseDown={(e) => e.stop()}
       >
         <MarkerF
+          icon={{ url: '/marker/HomeMarkers.png' }}
           position={new google.maps.LatLng(location.lat, location.lng)}
         />
       </GoogleMap>

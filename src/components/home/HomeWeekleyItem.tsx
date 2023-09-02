@@ -1,46 +1,48 @@
-import Icons from '@/components/common/Icons';
-import { TopFiveHeart } from '@/utils/Icon';
 import Image from 'next/image';
-import { seole } from '../../../public';
+import { imageNone } from '../../../public';
+import Link from 'next/link';
 
 const HomeWeekleyItem = ({ post, user }: ResponsePost) => {
-  const postImage = post.postImg[0] ? post.postImg[0].postImg : seole;
+  const hasImage = !!post.postImg[0];
+  const postImage = hasImage ? post.postImg[0].postImg : imageNone;
   const userName = user.nickname.slice(0, 8);
   return (
     <li>
       <div key={post.postId} className="flex flex-col">
-        <div className="relative w-32 h-44 bg-white rounded-2xl shadow overflow-hidden">
-          <Image
-            src={postImage}
-            alt={`${userName} 의 이미지`}
-            fill
-            sizes="250px"
-          />
-          <div className="absolute bottom-2.5 right-2.5 w-14 h-5 bg-zinc-300 rounded-3xl">
-            <div className="w-full h-full gap-1 px-[9px] flex justify-center items-center">
-              <Icons
-                fill="none"
-                path={TopFiveHeart}
-                option={{ fill: '#787878' }}
-              />
-
-              <div className="text-black text-xs font-normal">
-                {post.likeSize}
+        <Link
+          href={`/detail/${post.postId}`}
+          className="cursor-pointer select-none"
+        >
+          <div className="relative w-32 h-44 bg-white rounded-2xl shadow overflow-hidden">
+            <Image
+              src={postImage}
+              alt={`${userName} 의 이미지`}
+              fill
+              sizes={'33vw'}
+              className={`relative ${!hasImage && 'px-8 py-9'} select-auto`}
+            />
+            <div className="absolute bottom-2.5 right-2.5 w-14 h-5 bg-white rounded-3xl">
+              <div className="w-full h-full gap-1 flex justify-center items-center">
+                <span className="text-white text-xs font-normal">👀 </span>
+                <span className="text-neutral-500 text-xs font-normal">
+                  {post.postViewCount}
+                </span>
               </div>
             </div>
           </div>
-        </div>
+        </Link>
+
         <div className="flex flex-col w-full py-5 gap-2">
           <div className="w-full flex gap-2">
-            <span className="text-black text-sm font-semibold leading-3">
+            <div className="w-16 text-neutral-700 text-xs font-normal leading-3">
               {userName}
-            </span>
+            </div>
             <span className="text-neutral-600 text-sm font-medium leading-3">
-              Lv.1
+              {/* Lv.1 */}
             </span>
           </div>
-          <div className="text-black text-base font-normal leading-3">
-            {post.category} {'#' + post.hashtag.split('#')[1]}
+          <div className="text-neutral-700 text-base font-semibold leading-3">
+            {'#' + post.hashtag.split('#')[1]}
           </div>
         </div>
       </div>

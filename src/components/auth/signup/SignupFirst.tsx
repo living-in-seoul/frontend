@@ -1,9 +1,7 @@
 'use client';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useSetRecoilState } from 'recoil';
 import { useRouter } from 'next/navigation';
-import { signupState } from '@/recoil/authStates';
 import {
   checkPasswordForm,
   emailForm,
@@ -12,6 +10,9 @@ import {
 } from '@/utils/formregister';
 import AuthInput from '../signin/AuthInput';
 import Button from '@/components/common/Button';
+import { useState } from 'react';
+import { Toaster, toast } from 'react-hot-toast';
+import BeatLoader from '@/components/common/Spinner';
 
 interface SignupFirstFormProps {
   email: string;
@@ -21,7 +22,7 @@ interface SignupFirstFormProps {
 }
 
 const SignupFirst = () => {
-  const setFirstData = useSetRecoilState(signupState);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const {
     register,
@@ -51,6 +52,7 @@ const SignupFirst = () => {
   };
 
   const onSubmitHandler: SubmitHandler<SignupFirstFormProps> = async (data) => {
+    setIsLoading(true);
     const newData = {
       email: data.email,
       password: data.password,
@@ -60,28 +62,30 @@ const SignupFirst = () => {
       '회원가입 필수사항 기입 시 데이터 in signup/SignupFirst',
       newData,
     );
-    setFirstData((prev) => ({ ...prev, email: data.email }));
-    reset();
-
     const response = await fetch('/api/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(newData),
-    }).then((response) => response.json());
-    console.log('클라이언트에서 나오는 response', response);
-    alert(response.message);
-    response.message === '회원가입에 성공하셨습니다.' &&
-      router.push('/signup/second');
+    })
+      .then((response) => {
+        console.log(response.status);
+        if (response.status === 500) {
+          return toast.error('중복된 아이디나 닉네임입니다');
+        }
+        reset();
+        router.push('/signup/second');
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
   return (
     <section className="h-full relative">
-      <form
-        onSubmit={handleSubmit(onSubmitHandler)}
-        className="flex flex-col gap-5"
-      >
-        <div className="">
+      <Toaster />
+      <form onSubmit={handleSubmit(onSubmitHandler)}>
+        <div className="flex flex-col gap-5">
           <AuthInput
             id="signupEmail"
             placeholder="ex) seuol123@vival.com"
@@ -125,7 +129,10 @@ const SignupFirst = () => {
           <Button
             type="submit"
             size="w-full"
-            title="다음"
+            title={
+              isLoading ? <BeatLoader size={10} color="#2DDAB0" /> : '수정하기'
+            }
+            disabled={isLoading}
             bgColor="bg-zinc-300"
             border="none"
             color="text-white"

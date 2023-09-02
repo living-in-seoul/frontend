@@ -1,15 +1,9 @@
 /** 맵 토글 (커뮤니티 or 교통정보)  */
-type MapToggle = 'community' | 'transport';
 
 /** 경도 위도 */
 interface LatLng {
   lat: number;
   lng: number;
-}
-
-interface Gudong {
-  gu: guchung;
-  dong: string;
 }
 
 /**바텀시트 이벤트 메트릭스 */
@@ -57,7 +51,11 @@ interface Term {
   value: string;
 }
 
-/** LatLng 함수일 경우 */
+/** 맵 센터 구/동 */
+interface Gudong {
+  gu: string;
+  dong: string;
+}
 
 /** 주변 장소 추천 request types */
 interface RequestPlaces {
@@ -103,7 +101,7 @@ interface Properties {
 }
 
 type guchung =
-  | ''
+  | '전체'
   | '강남구'
   | '강동구'
   | '강북구'
@@ -215,4 +213,62 @@ interface CloseOpen {
   date: string;
   day: number;
   time: string;
+}
+interface ResponseImageGoogle {
+  results: GooglePlacePickedResult[];
+}
+type GooglePlacePickedResult = Pick<
+  PlaceResult,
+  | 'business_status'
+  | 'formatted_address'
+  | 'geometry'
+  | 'icon'
+  | 'icon_background_color'
+  | 'icon_mask_base_uri'
+  | 'name'
+  | 'photos'
+  | 'place_id'
+  | 'plus_code'
+  | 'rating'
+  | 'reference'
+  | 'types'
+  | 'user_ratings_total'
+>;
+
+interface PlaceResult {
+  address_components: AddressComponent[];
+  adr_address: string;
+  business_status?: string;
+  delivery: boolean;
+  dine_in: boolean;
+  formatted_address?: string;
+  formatted_phone_number: string;
+  geometry: Geometry;
+  icon: string;
+  icon_background_color: string;
+  icon_mask_base_uri: string;
+  international_phone_number: string;
+  name: string;
+  photos: Photo[];
+  place_id: string;
+  plus_code: PlusCode;
+  price_level: number;
+  rating: number;
+  reference: string;
+  reservable: boolean;
+  reviews: Review[];
+  serves_beer: boolean;
+  serves_breakfast: boolean;
+  serves_brunch: boolean;
+  serves_dinner: boolean;
+  serves_lunch: boolean;
+  serves_wine: boolean;
+  takeout: boolean;
+  types: string[];
+  url: string;
+  user_ratings_total: number;
+  utc_offset: number;
+  vicinity: string;
+  website: string;
+  wheelchair_accessible_entrance: boolean;
 }

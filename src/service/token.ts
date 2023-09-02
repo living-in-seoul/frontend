@@ -1,57 +1,59 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
+import { NextResponse } from 'next/server';
 
 /** 토큰 재발급 */
-export const refreshToken = async (request: NextRequest) => {
-  const accessToken = request.cookies.get('accessToken');
-  const refreshToken = request.cookies.get('refreshToken');
-  console.log(refreshToken?.value);
-  if (!accessToken) {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER}/auth/refresh`,
-      {
-        method: 'GET',
-        headers: {
-          Authorization: 'Bearer ' + refreshToken?.value,
-        },
+export const getRefreshToken = async () => {
+  const refreshToken = cookies().get('refreshToken')?.value;
+  const data = JSON.stringify({ refreshToken: refreshToken });
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER}/token/refresh`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
-    )
-      .then((response) => response.json())
-      .catch((error) => error.response);
-    console.log('토큰 재발급 결과는 알아야지', response);
-    if (response.status === 200) {
-      console.log('리프레쉬토큰인데 한번 찍어보자', response);
-      // 여기서 response의 accessToken을 setCookies 해주면 됨
-      // cookies().set({
-      //   name: 'accessToken',
-      //   value: response.accessToken,
-      //   httpOnly: true,
-      //   path: '/',
-      //   maxAge: 60,
-      // })
-    }
-    if (response.status === 403) {
-      console.log('여긴 403자리', response);
-      const { pathname, search, origin, basePath } = request.nextUrl;
-      const signInUrl = new URL(`${basePath}/signin`, origin);
-      signInUrl.searchParams.append(
-        'callbackUrl',
-        `${basePath}${pathname}${search}`,
-      );
+      body: data,
+    },
+  ).then((response) => response.json());
+  return response;
+};
 
-      // 리다이렉트 시킬 수 있는 로직이 필요함
-      // 통신구조를 이해할 필요가 있음
+/** 모든 토큰 검증 이걸로쓰세요!!
+ * @return 성공시 200
+ * @return 실��시 403 니깐 리다이렉트 403이면 리다이렉트 /signin으로 !
+ */
+export async function verifyAndRefreshToken() {
+  const accessToken = cookies().get('accessToken')?.value;
+  const refreshToken = cookies().get('refreshToken')?.value;
+
+  if (accessToken) {
+    return new Response('토큰 있음!', {
+      status: 200,
+    });
+  } else {
+    if (refreshToken) {
+      try {
+        const res = await getRefreshToken();
+        const newAT = res.accessToken;
+        cookies().set({
+          name: 'accessToken',
+          value: newAT,
+          httpOnly: true,
+          path: '/',
+          maxAge: 60 * 60 * 2,
+        });
+        return new Response('갱신 완료!', {
+          status: 201,
+        });
+      } catch (error) {
+        return new Response('rt 만료, 다시 로그인해주세요', {
+          status: 403,
+        });
+      }
+    } else {
+      return new Response('rt 만료, 다시 로그인해주세요 ', {
+        status: 403,
+      });
     }
   }
-};
-
-export const setAuthorization = (request: NextRequest) => {
-  const token = request.cookies.get('accessToken');
-  console.log('토큰 자체로 안나오던거 같은데', token);
-
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set('Authorization', `Bearer ${token?.value}`);
-  console.log('헤더에 어썰러가 들어가는 건 맞니?', requestHeaders);
-  return NextResponse.next({
-    request: { headers: requestHeaders },
-  });
-};
+}

@@ -8,7 +8,6 @@ interface SocialAuthProps {
   bgColor: string;
   color?: string;
 }
-
 const SocialAuth = ({ text, url, bgColor, color }: SocialAuthProps) => {
   const router = useRouter();
 
@@ -21,7 +20,7 @@ const SocialAuth = ({ text, url, bgColor, color }: SocialAuthProps) => {
       {text === '이메일' ? (
         <div
           className={`relative rounded-xl h-12 flex flex-row justify-center items-center border p-3 ${bgColor} ${color}`}
-          onClick={() => router.push('/signin/user?callbackUrl=')}
+          onClick={() => router.push('/signin/user')}
         >
           <div className="absolute left-4">
             <SocialIcons text={text} />

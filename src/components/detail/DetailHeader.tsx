@@ -1,14 +1,11 @@
 'use client';
 
 import Icons from '@/components/common/Icons';
-import { back, detailColThreeDotIcon, detailLinkIcon } from '@/utils/Icon';
+import { back, detailLinkIcon } from '@/utils/Icon';
 import { useRouter } from 'next/navigation';
-interface DetailHeaderProps {
-  data: {
-    category: string;
-  };
-}
-const DetailHeader = ({ data }: DetailHeaderProps) => {
+import EditProfileThreeDot from '../profile/editpage/EditProfileThreeDot';
+
+const DetailHeader = ({ data }: { data: ResponseDetailData }) => {
   const route = useRouter();
   return (
     <div className="flex flex-row justify-between  px-4 py-4">
@@ -16,7 +13,7 @@ const DetailHeader = ({ data }: DetailHeaderProps) => {
         <div>
           <Icons path={back} fill="#404040" onClick={() => route.back()} />
         </div>
-        <span className="font-bold">{data.category}</span>
+        <span className="font-bold">{data.result.post.category}</span>
       </div>
       <div className="flex flex-row gap-4">
         <div>
@@ -27,10 +24,9 @@ const DetailHeader = ({ data }: DetailHeaderProps) => {
           />
         </div>
         <div>
-          <Icons
-            path={detailColThreeDotIcon}
-            fill="#404040"
-            onClick={() => console.log('기타등등모달을 띄워야할듯')}
+          <EditProfileThreeDot
+            nickname={data.result.user.nickname}
+            type="detail"
           />
         </div>
       </div>

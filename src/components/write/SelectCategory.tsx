@@ -12,7 +12,7 @@ const SelectCategory = ({
   onSelectOptionHandler,
 }: SelectCategoryProp) => {
   return (
-    <div className="flex flex-col gap-1.5 px-4 h-full">
+    <div className="flex flex-col px-4 h-full">
       <span className="w-full text-[1.15rem] font-semibold mb-2.5">
         주제 선택
       </span>
@@ -21,7 +21,7 @@ const SelectCategory = ({
           const selected = selectedOption === name;
           return (
             <div
-              className="flex justify-around items-center w-full h-full "
+              className="flex justify-around items-center w-full h-full py-1.5 "
               key={idx}
             >
               <span

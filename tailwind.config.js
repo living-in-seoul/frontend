@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  mode: 'jit',
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -8,6 +9,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      transitionProperty: {
+        left: 'left',
+      },
       animation: {
         skeleton: 'loading 1.5s infinite',
       },
@@ -22,7 +26,14 @@ module.exports = {
         },
       },
       colors: {
+        primary: '#2DDAB0',
+        primaryText: '#00C092',
+        secondary: '#DEFFF7',
+        darkGray: '',
+        mediumGray: '#D9D9D9',
+        lightGray: '',
         customYellows: '#FEE500',
+        backgroundColor: '#2DDAB0',
       },
     },
   },
