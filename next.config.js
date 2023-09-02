@@ -4,6 +4,7 @@ const nextConfig = {
     serverActions: true,
     serverComponentsExternalPackages: ['@turf/*'],
   },
+
   images: {
     remotePatterns: [
       {
@@ -17,16 +18,6 @@ const nextConfig = {
         hostname: 'maps.googleapis.com',
         port: '',
         pathname: '/maps/api/place/js/PhotoService.GetPhoto',
-      },
-      {
-        protocol: 'http',
-        hostname: 'imgnews.naver.net',
-        port: '',
-      },
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-        port: '',
       },
       {
         protocol: 'https',

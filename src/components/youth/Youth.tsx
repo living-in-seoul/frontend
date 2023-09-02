@@ -25,7 +25,7 @@ const Youth = () => {
 
   return (
     <section
-      className=" ml-5 overflow-x-auto  whitespace-nowrap flex gap-2 scrollbar-hide"
+      className="overflow-x-auto whitespace-nowrap flex gap-2 scrollbar-hide"
       ref={sliderRef}
       onMouseDown={onMouseDown}
       onMouseLeave={onMouseLeave}
