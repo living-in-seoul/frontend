@@ -11,12 +11,6 @@ import { useRecoilValue } from 'recoil';
 const MapHeader = () => {
   const router = useRouter();
   const polygonValue = useRecoilValue(polygonState);
-  // const [gu, setGu] = useState<string>('');
-
-  // useEffect(() => {
-  //   const gu = localStorage.getItem('location');
-  //   gu ? setGu(gu) : setGu('전체');
-  // }, []);
 
   const onClickToBack = () => {
     router.back();

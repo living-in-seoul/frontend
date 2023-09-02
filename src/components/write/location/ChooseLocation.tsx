@@ -106,11 +106,11 @@ const ChooseLocation = ({ onClose }: ChooseLocationProps) => {
 
   return (
     <div className="flex flex-col justify-center  absolute top-0 w-full h-full bg-white">
-      <div className="w-full flex justify-start items-center px-6 gap-5">
+      <div className="w-full flex justify-start items-center px-6 py-4 gap-4">
         <Icons path={back} onClick={onClose} />
         <h1 className="font-semibold">위치 선택</h1>
       </div>
-      <div className="relative flex justify-center items-center mt-5 pb-5 w-[80%] mx-auto">
+      <div className="relative flex justify-center items-center mt-5 w-full mx-auto">
         <PlacesAutoComplete />
       </div>
       <GoogleMap
