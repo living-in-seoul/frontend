@@ -47,5 +47,5 @@ const PreviewImg = () => {
 export default PreviewImg;
 
 export const baseClassName = () => {
-  return 'flex justify-center items-center min-w-[80px] h-20 w-20 border border-neutral-400 bg-neutral-100 rounded-2xl gap-1';
+  return 'flex justify-center items-center min-w-[80px] h-20 w-20 border border-neutral-400 bg-[#F5F5F5] rounded-2xl gap-1';
 };

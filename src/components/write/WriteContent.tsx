@@ -19,6 +19,7 @@ import SelectedLocation from './location/SelectedLocation';
 import DisplayTags from './tags/DisplayTags';
 import BottomSheet from '../BottomSheet';
 import { writeBottomSheetState } from '@/recoil/bottomsheet';
+import { Toaster } from 'react-hot-toast';
 
 const WriteContent = () => {
   const [formData, setFormData] = useRecoilState(formDataState);
@@ -58,7 +59,7 @@ const WriteContent = () => {
     <>
       <form className="flex flex-col w-full h-[85vh] justify-between items-center">
         <div
-          className="flex justify-center text-sm text-center text-zinc-700 w-[90%] border border-zinc-300 h-8 mt-4 items-center gap-3 rounded-3xl"
+          className="flex justify-center text-sm text-center text-zinc-700 w-[90%] border border-zinc-400 h-8 mt-4 items-center gap-3 rounded-3xl cursor-pointer"
           onClick={() => setisBottomSheetState(true)}
         >
           {selectedOption ? selectedOption : '주제를 선택해 주세요.'}
@@ -72,33 +73,27 @@ const WriteContent = () => {
           value={formData.content}
           onChange={(e) => onChangeInputHandler(e)}
         />
-        <div className="flex flex-col w-full h-[16%]">
-          <div className="flex justify-center items-center h-full border-t border-stone-300 px-4 w-full text-sm ">
+        <div className="flex flex-col w-full h-[16%] ">
+          <div className="flex justify-center items-center h-full border-t border-stone-300 px-5 w-full text-sm ">
             <div>
-              <Icons path={hashtagIcon} fill="#B8B8B8" />
+              <Icons path={hashtagIcon} fill="#2DDAB0" />
             </div>
-            <input
-              className="w-full outline-none ml-2.5"
-              value={tagText}
-              onChange={(e) => onChangeTag(e)}
-              onKeyPress={(e) => handleKeyPress(e)}
-              placeholder="#해시태그를 입력해주세요"
-            />
-            <DisplayTags tags={formData.hashTag} onDeleteTag={onDeleteTag} />
+            <div className="w-full flex text-xs">
+              <DisplayTags tags={formData.hashTag} onDeleteTag={onDeleteTag} />
+              <input
+                className=" outline-none "
+                value={tagText}
+                onChange={(e) => onChangeTag(e)}
+                onKeyPress={(e) => handleKeyPress(e)}
+                placeholder="#태그 입력(최대 5개)"
+              />
+            </div>
           </div>
           <div
-            className="flex justify-start gap-2 items-center h-full border-t border-b border-stone-300 text-xs text-gray-400 px-4 w-full hover:cursor-pointer"
+            className="flex px-2 justify-start gap-2 items-center h-full border-t border-b border-stone-300 text-xs text-gray-400 w-full hover:cursor-pointer"
             onClick={() => setImagePortalState(true)}
           >
-            <SelectedLocation />
-            <Icons
-              path={closeX}
-              option={{
-                stroke: '#787878',
-                strokeLinecap: 'round',
-                strokeLinejoin: 'round',
-              }}
-            />
+            <SelectedLocation onWrite={true} />
           </div>
         </div>
         <div className="w-full px-5">
@@ -114,7 +109,7 @@ const WriteContent = () => {
       {openImagePortal && (
         <ModalPortal nodeName="imagePortal">
           <ModalOutside
-            className="overflow-hidden p-2 bg-white w-4/5 h-1/4 rounded-2xl max-w-7xl"
+            className="overflow-hidden p-2 bg-white w-4/5 h-1/4 rounded-2xl max-w-md"
             onClose={() => setOpenImagePortal(false)}
           >
             <UploadImageModal onClose={() => setOpenImagePortal(false)} />
@@ -126,6 +121,7 @@ const WriteContent = () => {
           <ChooseLocation onClose={() => setOpenMapPortal(false)} />
         </ModalPortal>
       )}
+      <Toaster />
     </>
   );
 };
