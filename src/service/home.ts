@@ -62,7 +62,7 @@ export const getHomeListWithToken = async (
 
 export const getHomeReviewPostList = async (hashtags: string) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/tags/post/category?page=1&size=8&hashtagName=${hashtags}&category=후기&type=popular`,
+    `${process.env.NEXT_PUBLIC_SERVER}/tags/post/category?page=1&size=6&hashtagName=${hashtags}&category=후기&type=popular`,
   )
     .then<ResponseRegister>((res) => res.json())
     .then<ResponsePost[]>((res) => res.result);
@@ -71,7 +71,7 @@ export const getHomeReviewPostList = async (hashtags: string) => {
 };
 export const getHomeHomeTownPostList = async (hashtags: string) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/tags/post/category?page=1&size=8&hashtagName=${hashtags}&category=동향소통&type=popular`,
+    `${process.env.NEXT_PUBLIC_SERVER}/tags/post/category?page=1&size=6&hashtagName=${hashtags}&category=동향소통&type=popular`,
   )
     .then<ResponseRegister>((res) => res.json())
     .then<ResponsePost[]>((res) => res.result);

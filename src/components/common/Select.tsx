@@ -58,7 +58,7 @@ const Select = ({
       } transition-all rounded-3xl border font-normal justify-center items-center gap-2.5 inline-flex ${
         select ? 'bg-neutral-400' : 'border-zinc-400'
       }
-      ${selectTag ? 'bg-neutral-700' : 'white'}`}
+      ${selectTag ? 'bg-emerald-500' : 'white'}`}
     >
       <span
         className={`${getButtonSizeStyles(size).span} ${

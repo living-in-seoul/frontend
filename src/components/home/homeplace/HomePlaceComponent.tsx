@@ -3,14 +3,11 @@ import useSWR from 'swr';
 import HomePlaceCard from './HomePlaceCard';
 import useDrag from '@/hooks/useDrag';
 
-const HomePlaceComponent = () => {
-  const {
-    data,
-    isLoading: loading,
-    error,
-  } = useSWR<ResponseCityImageData[]>('/api/home/place');
+interface HomePlaceComponentProps {
+  data: CityData[];
+}
 
-  console.log(data);
+const HomePlaceComponent = ({ data }: HomePlaceComponentProps) => {
   const {
     sliderRef,
     onMouseDown,

@@ -5,9 +5,10 @@ import PostItem from '@/components/community/PostItem';
 import MapProvider from '@/context/MapProvider';
 import { memo } from 'react';
 import dynamic from 'next/dynamic';
+import SelectedLocation from '../write/location/SelectedLocation';
 
 const DynamicMap = dynamic(() => import('./HomeHashtagMap'), {
-  ssr: true,
+  ssr: false,
 });
 
 interface HomeReviewSectionProps {
@@ -29,7 +30,7 @@ const HomeHasTagMapSection = async ({ hashtag }: HomeReviewSectionProps) => {
   console.log(PostList);
   const { post, location } = PostList[0];
   return (
-    <article className="relative w-full border-b-[5px] border-zinc-300 pb-2">
+    <article className="relative w-full border-t-[5px] pt-2.5 border-zinc-300">
       <HomeSectionTitle title="해시태그 언급이 잦은 장소에요" link="/map" />
       {HotTagReview ? (
         <>
@@ -61,10 +62,16 @@ const HomeHasTagMapSection = async ({ hashtag }: HomeReviewSectionProps) => {
                 href={`/detail/${post.postId}`}
                 className="cursor-pointer hover:bg-zinc-200 transition-all duration-200 active:bg-zinc-200"
               >
-                <PostItem {...PostList[0]} />
+                <PostItem {...PostList[0]} border />
               </Link>
             </div>
-          </div>{' '}
+            <div className="py-7 px-3">
+              <SelectedLocation
+                lname={location.lname}
+                address={location.address}
+              />
+            </div>
+          </div>
         </>
       ) : (
         <>게시물이 없습니다</>

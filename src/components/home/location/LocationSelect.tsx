@@ -1,11 +1,11 @@
 'use client';
 
 import Icons from '@/components/common/Icons';
-import PlacesAutoComplete from '@/components/map/search/PlacesAutoComplete';
+import Input from '@/components/common/Input';
 import { LocationSelectIcon } from '@/components/profile/editpage/EditImageIcon';
 import { polygonState } from '@/recoil/mapStates';
 import { filledLocation } from '@/utils/Icon';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 
 // dynamic?

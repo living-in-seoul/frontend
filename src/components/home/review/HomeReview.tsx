@@ -23,7 +23,7 @@ const HomeReviewSection = async () => {
   const hashtags = HotTagReview[0];
 
   return (
-    <article className="relative w-full border-b-[5px] border-zinc-300 ">
+    <article className="relative w-full border-t-[5px] pt-2.5 border-zinc-300 pb-5">
       <HomeSectionTitle
         title="이웃이 남긴 후기를 살펴보세요"
         link="/community/review"

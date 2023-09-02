@@ -115,7 +115,7 @@ interface CityData {
   /** 실시간 인구현황 */
   AREA_NM: string;
   /** 장소 혼잡도 지표 */
-  AREA_CONGEST_LVL: string;
+  AREA_CONGEST_LVL: '붐빔' | '약간 붐빔' | '보통' | '여유';
   /** 장소 혼잡도 지표 관련 메세지 */
   AREA_CONGEST_MSG: string;
   /** 실시간 인구 지표 최소값 */

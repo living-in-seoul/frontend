@@ -27,6 +27,7 @@ const BoardList = ({ markerIdValue }: BoardListProps) => {
                 user={data.result.user}
                 hasLiked
                 onMap={true}
+                border
               />
               <div className="w-full pl-2 ">
                 <SelectedLocation
