@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 export default function NavLink({
   category,
@@ -12,20 +12,24 @@ export default function NavLink({
   };
   children: React.ReactNode;
 }) {
+  const params = useSearchParams();
   const pathname = usePathname();
   const link = category.link
     ? `/community?category=${category.link}`
     : '/community';
 
   const isActive = category.link
-    ? `${category.link}` === pathname.split('/')[2]
-    : pathname.split('/')[2] === 'All' || pathname === '/community';
+    ? `${category.link}` === params.get('category')
+    : params.get('category') === null || pathname === '/';
 
   return (
     <Link
       href={link}
-      style={{ fontWeight: isActive ? 'bold' : 'normal' }}
-      className={`relative w-1/4 flex items-center justify-center py-4`}
+      style={{
+        fontWeight: isActive ? 'bold' : 'normal',
+        color: isActive ? '#2DDAB0' : '#787878',
+      }}
+      className={`isrelative w-1/4 flex items-center justify-center py-4`}
     >
       {children}
     </Link>

@@ -1,4 +1,4 @@
-import Image from 'next/image';
+/* eslint-disable @next/next/no-img-element */
 import UserProfile from '../item/UserProfile';
 import PostItemBottom from './PostItemBottom';
 
@@ -48,13 +48,10 @@ const CommunityPostItem = ({
       </div>
       {postImg[0] && /\.(jpg|jpeg|png)$/i.test(postImg[0].postImg) && (
         <div className="relative w-full h-36 bg-white rounded-xl shadow overflow-hidden mb-2">
-          {/* 사진 가로로 늘어나는거 말고 잘리는게 낫겠죠..? */}
-          <Image
+          <img
             src={postImg[0]?.postImg}
             alt={`postImg`}
-            fill
-            className="w-full h-full "
-            sizes={'100%'}
+            className="w-full h-full object-cover absolute top-0 object-center"
           />
         </div>
       )}
