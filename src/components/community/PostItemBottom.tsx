@@ -19,16 +19,17 @@ const PostItemBottom = ({
         <Select
           disable
           title={category}
-          className="rounded-3xl py-2"
+          className="rounded-3xl py-1.5"
           size="small"
         />
         <div className="flex justify-center items-center text-[0.85rem] font-semibold">
-          {hashtag
-            ?.split('#')
-            ?.slice(1)
-            .map((tag, i) => (
-              <p key={i} className="mr-2.5">{`#${tag}`}</p>
-            ))}
+          {hashtag && hashtag?.length === 1
+            ? ''
+            : hashtag &&
+              hashtag
+                .split('#')
+                .slice(1)
+                .map((tag, i) => <p key={i} className="mr-2.5">{`#${tag}`}</p>)}
         </div>
       </div>
       <div className="flex gap-2">

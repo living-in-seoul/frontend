@@ -11,9 +11,9 @@ export default function CommunityLayout({
 }) {
   return (
     <section className="relative">
-      <div className="relative flex flex-col justify-between w-full pt-14 h-40 bg-neutral-200">
+      <div className="relative flex flex-col justify-between w-full pt-14 h-40 bg-white">
         <div className="flex justify-between">
-          <HomeLocationSeclect />
+          <HomeLocationSeclect onCommunity={true} />
           <CommunitySearch />
         </div>
         <CommunityNavbar />

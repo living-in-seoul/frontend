@@ -16,8 +16,11 @@ const UploadImage = () => {
         onClick={() => setImagePortalState(true)}
       >
         <UploadIcon />
-        <span className="text-[0.8rem] font-neutral-300">
-          {imageState?.length ?? 0}/5
+        <span className="text-[0.68rem] ">
+          <span className="font-semibold text-neutral-600">
+            {imageState?.length ?? 0}
+          </span>
+          <span className="text-neutral-500">/5</span>
         </span>
       </div>
       <PreviewImg />

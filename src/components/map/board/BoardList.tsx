@@ -6,7 +6,6 @@ import useSWR from 'swr';
 
 interface BoardListProps {
   markerIdValue: number | null;
-  // boardList: ResponseRegister | null;
 }
 
 const BoardList = ({ markerIdValue }: BoardListProps) => {
@@ -16,7 +15,7 @@ const BoardList = ({ markerIdValue }: BoardListProps) => {
 
   return (
     <article className="flex flex-col ">
-      <div className="w-full justify-between flex "></div>
+      <div className="w-full h-full justify-between flex "></div>
       {markerIdValue && (
         <>
           {data?.result && (
@@ -29,7 +28,7 @@ const BoardList = ({ markerIdValue }: BoardListProps) => {
                 onMap={true}
                 border
               />
-              <div className="w-full pl-2 ">
+              <div className="w-full pl-2 h-16 border-t border-gray5 ">
                 <SelectedLocation
                   lname={data.result.location.lname}
                   address={data.result.location.address}

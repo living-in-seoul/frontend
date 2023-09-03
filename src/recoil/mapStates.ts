@@ -13,7 +13,7 @@ export const locationTypeState = atom<string>({
 /** 맵 센터 !! */
 export const centerState = atom<LatLng | google.maps.LatLng>({
   key: 'centerState',
-  default: { lat: 37.5519, lng: 126.9918 },
+  default: { lat: 37.495985, lng: 127.066409 },
 });
 
 /** 유저의 현재 위치 위도경도 */
