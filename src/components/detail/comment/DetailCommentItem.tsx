@@ -6,29 +6,30 @@ import { useCallback, useEffect, useState } from 'react';
 import LikeCommentCase from './LikeCommentCase';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
-  buttonRefState,
+  formRefState,
   commentKeyState,
   inputTextRefState,
   onReCommentState,
   totalCommentState,
   totalCommentStateProps,
+  inoutTextFocusState,
 } from '@/recoil/commentState';
 import { useSWRConfig } from 'swr';
 import ModalPortal from '@/components/modal/ModalPortal';
 import ModalOutside from '@/components/modal/ModalOutside';
 import { commentModalArray, reportModalArray } from '@/utils/constants/modal';
 import { Toaster, toast } from 'react-hot-toast';
-interface DetialCommentItemProps {
+interface DetailCommentItemProps {
   data: Comment;
   postId: string;
   children: React.ReactNode;
 }
 
-const DetialCommentItem = ({
+const DetailCommentItem = ({
   data,
   children,
   postId,
-}: DetialCommentItemProps) => {
+}: DetailCommentItemProps) => {
   const {
     commentLikeSize,
     commentHasLiked,
@@ -39,13 +40,14 @@ const DetialCommentItem = ({
     reComments,
   } = data;
   const commentKey = useRecoilValue(commentKeyState);
-  const buttonRef = useRecoilValue(buttonRefState);
+  const formRef = useRecoilValue(formRefState);
   const inputRef = useRecoilValue(inputTextRefState);
   const setOnReComment = useSetRecoilState(onReCommentState);
   const [commentIconColor, setCommentIconColor] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('');
   const [totalComment, setTotalComment] = useRecoilState(totalCommentState);
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const setInputTextFocus = useSetRecoilState(inoutTextFocusState);
   const { mutate } = useSWRConfig();
   const modalArray =
     username === nickname ? commentModalArray : reportModalArray;
@@ -54,8 +56,8 @@ const DetialCommentItem = ({
       if (
         inputRef?.current &&
         !inputRef.current.contains(e.target) &&
-        buttonRef?.current &&
-        !buttonRef.current.contains(e.target)
+        formRef?.current &&
+        !formRef.current.contains(e.target)
       ) {
         setTotalComment((prev) => ({
           ...prev,
@@ -64,7 +66,7 @@ const DetialCommentItem = ({
         setCommentIconColor(false);
       }
     },
-    [buttonRef, inputRef, setTotalComment],
+    [formRef, inputRef, setTotalComment],
   );
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
@@ -146,7 +148,9 @@ const DetialCommentItem = ({
         }).then((respnse) => respnse.json());
         mutate(commentKey);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log('사망 5초전');
+    }
   };
   return (
     <section className="flex flex-col gap-2">
@@ -193,7 +197,10 @@ const DetialCommentItem = ({
                 strokeLinejoin: 'round',
               }}
             />
-            <span className="text-xs text-neutral-600">
+            <span
+              onClick={() => setInputTextFocus(commentId)}
+              className="text-xs text-neutral-600"
+            >
               답글쓰기 {reComments?.length}
             </span>
           </div>
@@ -230,4 +237,4 @@ const DetialCommentItem = ({
   );
 };
 
-export default DetialCommentItem;
+export default DetailCommentItem;
