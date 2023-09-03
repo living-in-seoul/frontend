@@ -59,7 +59,7 @@ const PlacesAutoComplete = () => {
         />
       </div>
       {openUl && (
-        <ul className="flex flex-col justify-center bg-white w-full h-full pt-2">
+        <ul className="flex flex-col justify-center bg-white w-full h-full pt-2 mx-2">
           {data?.predictions.map((location, _) => {
             const { place_id, structured_formatting } = location;
             const parts = structured_formatting.main_text.split(
@@ -67,7 +67,7 @@ const PlacesAutoComplete = () => {
             );
             return (
               <li
-                className=" py-3.5 flex justify-start items-center border-b border-neutral-400 last:border-[0] cursor-pointer"
+                className=" py-3.5 flex justify-start items-center border-b border-gray5 last:border-[0] cursor-pointer"
                 key={place_id}
                 onClick={() => onClickHandler(place_id)}
               >
@@ -80,7 +80,9 @@ const PlacesAutoComplete = () => {
                       {part}
                     </span>
                   ) : (
-                    <span key={index}>{part}</span>
+                    <span key={index} className="text-gray3">
+                      {part}
+                    </span>
                   ),
                 )}
               </li>
