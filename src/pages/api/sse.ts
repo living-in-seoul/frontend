@@ -6,7 +6,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   res.setHeader('Cache-Control', 'no-cache');
   res.setHeader('Connection', 'keep-alive');
   const Token = req.cookies['accessToken'];
-  console.log(Token);
   const backendUrl = 'https://seoulvival.com:8080/notice';
   const backendHeaders = {
     Authorization: `Bearer ${Token}`,

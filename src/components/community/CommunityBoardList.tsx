@@ -1,5 +1,4 @@
 'use client';
-import PostItem from './PostItem';
 import { useEffect, useState } from 'react';
 import useObserver from '@/hooks/useObserver';
 import PostItemSkeleton from './PostItemSkeleton';

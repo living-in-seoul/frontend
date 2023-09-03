@@ -15,25 +15,28 @@ const CallbackPage = (req: Req) => {
   const { searchParams } = req;
   const { code, state } = searchParams;
   useEffect(() => {
-    try {
-      const response = fetch('/api/callback', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ code, state }),
-      })
-        .then((response) => response.json())
-        .then((response) => {
-          localStorage.setItem('nickname', response.nickname);
-          if (response.hasSignup) {
-            return router.push('/home');
-          }
-          return router.push('/signup/second');
-        });
-    } catch {
-      throw new Error();
-    }
+    const fetchs = async () => {
+      try {
+        await fetch('/api/callback', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ code, state }),
+        })
+          .then((response) => response.json())
+          .then((response) => {
+            localStorage.setItem('nickname', response.nickname);
+            if (response.hasSignup) {
+              return router.push('/home');
+            }
+            return router.push('/signup/second');
+          });
+      } catch {
+        throw new Error();
+      }
+    };
+    fetchs();
   }, [code, router, state]);
   return <div></div>;
 };

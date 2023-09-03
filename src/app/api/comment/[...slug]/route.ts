@@ -40,7 +40,7 @@ export const GET = async (request: NextRequest, context: Context) => {
   return NextResponse.json(data);
 };
 
-export const DELETE = async (request: NextRequest, context: Context) => {
+export const DELETE = async (_: NextRequest, context: Context) => {
   const postId = context.params.slug[0];
   const data = await deleteComment(postId);
   return NextResponse.json(data);

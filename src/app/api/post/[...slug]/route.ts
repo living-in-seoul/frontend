@@ -6,7 +6,7 @@ interface Context {
   params: { slug: string[] };
 }
 
-export const GET = async (request: NextRequest, context: Context) => {
+export const GET = async (_: NextRequest, context: Context) => {
   const slugLength = context.params.slug.length;
   const token = cookies().get('accessToken');
   if (slugLength === 1) {

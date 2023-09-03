@@ -17,7 +17,7 @@ const SSEProvider: React.FC<SSEProviderProps> = ({
   children,
 }) => {
   useEffect(() => {
-    const eventSource = new EventSource('/api/sse');
+    const eventSource = new EventSource(url);
 
     eventSource.onopen = () => console.log('SSE 연결 완료');
     eventSource.onerror = (error) => {
@@ -36,6 +36,7 @@ const SSEProvider: React.FC<SSEProviderProps> = ({
     return () => {
       eventSource.close();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

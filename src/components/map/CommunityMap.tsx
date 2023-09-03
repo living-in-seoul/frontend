@@ -25,8 +25,7 @@ import Button from '../common/Button';
 
 const CommunityMap = () => {
   const { map, onLoad, onUnmount } = useMapInstance();
-  const [isBottomSheetOpen, setisBottomSheetState] =
-    useRecoilState(mapBottomSheetState);
+  const setisBottomSheetState = useSetRecoilState(mapBottomSheetState);
   const [center, setCenter] = useState<LatLng | null | undefined>(null);
   const { posts: boardList } = usePosts(communityKeyState);
   const [polygonValue, setPolygonState] = useRecoilState(polygonState);
@@ -48,11 +47,10 @@ const CommunityMap = () => {
       }
     };
     getCenter();
-  }, []);
+  }, [polygonValue.gu]);
 
   useEffect(() => {
     const gu = polygonValue.gu;
-    const length = boardList?.pageable.totalElements ?? 0;
     setCommunityKey(
       `/api/map/category?category=${filterOption}&gu=${encodeURIComponent(gu)}`,
     );
@@ -89,7 +87,7 @@ const CommunityMap = () => {
         </div>
       ));
     }
-  }, [boardList]);
+  }, [boardList, polygonValue.gu]);
 
   useEffect(() => {
     if (boardList) setBoardListState(boardList);

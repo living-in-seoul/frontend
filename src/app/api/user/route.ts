@@ -1,43 +1,17 @@
-import { getRefreshToken } from '@/service/token';
+import { verifyAndRefreshToken } from '@/service/token';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
 /** 유저 토큰 검증 */
-export const GET = async (req: NextRequest) => {
-  const accessToken = cookies().get('accessToken')?.value;
-  const refreshToken = cookies().get('refreshToken')?.value;
-
-  if (accessToken) {
-    return new Response('토큰 있음!', {
-      status: 200,
-    });
-  } else {
-    if (refreshToken) {
-      try {
-        const res = await getRefreshToken();
-        const newAT = res.accessToken;
-        cookies().set({
-          name: 'accessToken',
-          value: newAT,
-          httpOnly: true,
-          path: '/',
-          maxAge: 60 * 60 * 2,
-        });
-        return NextResponse.json(res);
-      } catch (error) {
-        new Response('rt 만료, 다시 로그인해주세요', {
-          status: 403,
-        });
-      }
-    } else {
-      return new Response('rt 만료, 다시 로그인해주세요 ', {
-        status: 403,
-      });
-    }
+export const GET = async (_: NextRequest) => {
+  const verify = await verifyAndRefreshToken();
+  if (verify.status === 200 || verify.status === 201) {
+    new Response('OK', { status: 200 });
   }
+  return new Response('Unauthorized', { status: 401 });
 };
 
-export const DELETE = (req: NextRequest) => {
+export const DELETE = (_: NextRequest) => {
   const accessToken = cookies().get('accessToken');
   const refreshToken = cookies().get('refreshToken');
   if (accessToken || refreshToken) {

@@ -6,10 +6,10 @@ interface Context {
   params: { location: string };
 }
 
-export const GET = async (req: NextRequest, context: Context) => {
-  const { location } = context.params;
-  // const currentDate = getCurrentDateInFormat();
-  // const currentTime = getCurrentTimeInFormat();
+export const GET = async (_: NextRequest, context: Context) => {
+  const location = context.params.location;
+
+  console.log(location);
   const { getCurrentDate: currentDate, getCurrentTime: currentTime } =
     getCurrentDateAndTime();
   const { lat, lng } = seoulCenterCoords['영등포구']!;

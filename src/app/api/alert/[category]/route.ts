@@ -5,7 +5,7 @@ interface Context {
   params: { category: 'activity' | 'hashtag' };
 }
 
-export const GET = async (request: NextRequest, context: Context) => {
+export const GET = async (_: NextRequest, context: Context) => {
   const { category } = context.params;
 
   const Token = cookies().get('accessToken');
@@ -34,7 +34,7 @@ export const GET = async (request: NextRequest, context: Context) => {
   }
 };
 
-export const POST = async (request: NextRequest, context: Context) => {
+export const POST = async (_: NextRequest, context: Context) => {
   const { category } = context.params;
 
   const Token = cookies().get('accessToken');

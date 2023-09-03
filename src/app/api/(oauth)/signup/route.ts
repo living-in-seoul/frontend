@@ -32,7 +32,7 @@ export const PUT = async (request: NextRequest) => {
 // method를 보고 post인지 put인지 구별이 가능함
 
 /** 회원탈퇴 */
-export const DELETE = async (request: NextRequest) => {
+export const DELETE = async () => {
   const data = await deleteUser();
   return NextResponse.json(data);
 };

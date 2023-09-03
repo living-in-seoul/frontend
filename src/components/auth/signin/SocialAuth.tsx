@@ -1,5 +1,4 @@
 'use client';
-import Link from 'next/link';
 import SocialIcons from './SocialIcon';
 import { useRouter } from 'next/navigation';
 interface SocialAuthProps {
