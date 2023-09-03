@@ -40,15 +40,15 @@ export default async function RootLayout({
         />
       </head>
       <body className="flex flex-col min-h-screen items-center">
-        <SSEProvider eventTypes={['LIKE']} url={'/example'}>
-          <RecoilProvider>
-            <SWRConfigContext>
-              <ProgressBarProviders>
-                <div className="w-full max-w-md">{children}</div>
-              </ProgressBarProviders>
-            </SWRConfigContext>
-          </RecoilProvider>
-        </SSEProvider>
+        {/* <SSEProvider eventTypes={['LIKE']} url={'/example'}> */}
+        <RecoilProvider>
+          <SWRConfigContext>
+            <ProgressBarProviders>
+              <div className="w-full max-w-md">{children}</div>
+            </ProgressBarProviders>
+          </SWRConfigContext>
+        </RecoilProvider>
+        {/* </SSEProvider> */}
         <div id="portalSignin" />
       </body>
     </html>

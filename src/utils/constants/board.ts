@@ -16,6 +16,7 @@ export const LINK_NAME = [
     name: '생활정보',
   },
 ];
+
 export const SEARCH_LINK_NAME = [
   {
     link: null,

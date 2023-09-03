@@ -17,6 +17,7 @@ export const writeBoard = async (form: any) => {
       },
       body: form,
     }).then((response) => response.json());
+    console.log(response);
     return response;
   } catch (error: any) {
     console.log('ehlsmsdfasdfa', error.message);

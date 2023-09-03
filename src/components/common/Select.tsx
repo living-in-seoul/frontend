@@ -14,7 +14,7 @@ const getButtonSizeStyles = (size: string) => {
     case 'small':
       return {
         div: 'py-1 px-[10px] border border-zinc-400',
-        span: 'text-neutral-600 text-xs font-medium leading-3',
+        span: 'text-xs font-medium leading-3',
       };
     case 'medium':
       return { div: 'py-[5px] px-2.5', span: 'text-[10px]' };
@@ -55,15 +55,17 @@ const Select = ({
       onClick={disable ? undefined : onClick}
       className={`${className} ${
         getButtonSizeStyles(size).div
-      } transition-all rounded-3xl border font-normal justify-center items-center gap-2.5 inline-flex ${
-        select ? 'bg-neutral-400' : 'border-zinc-400'
+      } transition-all rounded-3xl  font-normal justify-center items-center gap-2.5 inline-flex cursor-pointer ${
+        select
+          ? 'bg-lightestMint border-2 border-primary'
+          : 'border-[1.125px] border-gray5'
       }
-      ${selectTag ? 'bg-emerald-500' : 'white'}`}
+      ${selectTag ? 'bg-lightestMint border-primary ' : 'white'}`}
     >
       <span
-        className={`${getButtonSizeStyles(size).span} ${
-          select ? 'text-black' : 'text-neutral-500'
-        } ${selectTag ? 'text-white' : 'text-black'}`}
+        className={`${getButtonSizeStyles(size).span} text-[14px] ${
+          select ? 'text-primary ' : ' border-gray4'
+        } ${selectTag ? 'text-primary ' : 'text-gray4'}`}
       >
         {title}
       </span>

@@ -10,7 +10,7 @@ const CustomOverlayMarker = ({ position, text, onClick }: any) => {
       <div className="relative hover:scale-105 transition-all active:scale-105">
         <div className="absolute z-10 bottom-[-15%] left-1/2 w-1.5 h-2 -translate-x-1/2 bg-primary transform rotate-45"></div>
         <div
-          className="relative z-20 top-0 cursor-pointer flex justify-center items-center px-3 py-1 overflow-hidden rounded-3xl border-2 border-primaryText bg-white text-primaryText text-sm font-semibold"
+          className="relative z-20 top-0 cursor-pointer flex justify-center items-center px-3 py-1 overflow-hidden rounded-3xl border-2 border-darkMint bg-white text-darkMint text-sm font-semibold"
           onClick={onClick}
         >
           {text}

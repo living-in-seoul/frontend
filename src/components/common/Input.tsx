@@ -29,7 +29,7 @@ const Input = ({
   return (
     <section className="flex justify-center items-center ">
       <form
-        className={`rounded-3xl w-full h-9 flex items-center justify-between shadow-sm border border-neutral-300 px-4 ${
+        className={`rounded-3xl w-full h-9 flex items-center justify-between shadow-sm px-4 ${
           formColor ? formColor : 'bg-white'
         }`}
         onSubmit={onSubmit}

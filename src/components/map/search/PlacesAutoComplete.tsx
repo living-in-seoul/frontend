@@ -45,7 +45,7 @@ const PlacesAutoComplete = () => {
   );
 
   return (
-    <div className="flex flex-col justify-center items-center w-full text-xs">
+    <div className="flex flex-col justify-center items-center w-full text-xs mb-4">
       <div className="w-full">
         <Input
           placeholder="장소 이름을 입력해주세요"
@@ -65,15 +65,24 @@ const PlacesAutoComplete = () => {
             const parts = structured_formatting.main_text.split(
               new RegExp(`(${debounceKeyword})`, 'gi'),
             );
-
             return (
               <li
-                className="px-5 py-3.5 flex justify-start items-center gap-5 "
+                className=" py-3.5 flex justify-start items-center border-b border-neutral-400 last:border-[0] cursor-pointer"
                 key={place_id}
                 onClick={() => onClickHandler(place_id)}
               >
-                <SearchIcon />
-                {structured_formatting.main_text}
+                <div className="mr-2">
+                  <SearchIcon />
+                </div>
+                {parts.map((part, index) =>
+                  part === debounceKeyword ? (
+                    <span key={index} className="font-bold text-darkMint">
+                      {part}
+                    </span>
+                  ) : (
+                    <span key={index}>{part}</span>
+                  ),
+                )}
               </li>
             );
           })}

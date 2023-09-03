@@ -11,6 +11,7 @@ interface Props {
     | 'w-full'
     | 'default';
   bgColor?: string;
+  textColor?: string;
   hoverColor?: string;
   color?: string;
   border?: string;
@@ -59,6 +60,7 @@ const Button = ({
   title,
   color,
   bgColor,
+  textColor,
   hoverColor = 'bg-teal-400',
   type,
   select = false,
@@ -82,7 +84,7 @@ const Button = ({
     >
       <span
         className={` ${getButtonSizeStyles(size).span} ${
-          select ? 'text-white' : 'text-black'
+          select ? 'text-white' : `${textColor ? textColor : 'text-black'}`
         }`}
       >
         {title}

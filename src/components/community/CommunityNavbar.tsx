@@ -41,7 +41,7 @@ const CommunityNavbar = ({ search = false }: { search?: boolean }) => {
   return (
     <nav className="relative w-full flex px-4 box-border">
       <div
-        className={`w-[calc(25%-8px)] absolute ${leftPosition} bottom-0 border-b-4 h-1 border-neutral-500 transition-all ease-out`}
+        className={`w-[calc(25%-8px)] absolute ${leftPosition} bottom-0 border-b-4 h-1 border-primary transition-all ease-out`}
       />
       {search
         ? SEARCH_LINK_NAME.map((item) => (
