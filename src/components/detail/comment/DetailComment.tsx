@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import DetailReCommentItem from './DetailReCommentItem';
-import DetialCommentItem from './DetialCommentItem';
+import DetailCommentItem from './DetailCommentItem';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { commentKeyState, onReCommentState } from '@/recoil/commentState';
 import { postIdstate } from '@/recoil/BoardStates';
@@ -35,7 +35,7 @@ const DetailComment = ({ postId }: { postId: string }) => {
       <span className="font-semibold">댓글 {data?.pageable.totalElements}</span>
       {data &&
         list?.map((data, index) => (
-          <DetialCommentItem
+          <DetailCommentItem
             key={data.nickname + index}
             data={data}
             postId={postId}
@@ -50,7 +50,7 @@ const DetailComment = ({ postId }: { postId: string }) => {
                 ))}
               </>
             )}
-          </DetialCommentItem>
+          </DetailCommentItem>
         ))}
       <button className="border rounded-2xl" onClick={loadMoreList}>
         더 보기

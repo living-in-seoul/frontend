@@ -3,7 +3,7 @@ import UserProfile from '../../item/UserProfile';
 import { useCallback, useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
-  buttonRefState,
+  formRefState,
   commentKeyState,
   inputTextRefState,
   totalCommentState,
@@ -24,7 +24,7 @@ const DetailReCommentItem = ({
   const commentKey = useRecoilValue(commentKeyState);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('');
-  const buttonRef = useRecoilValue(buttonRefState);
+  const formRef = useRecoilValue(formRefState);
   const inputRef = useRecoilValue(inputTextRefState);
   const [totalComment, setTotalComment] = useRecoilState(totalCommentState);
   const [isReCommentChange, setIsReCommentChange] = useState<boolean>(false);
@@ -49,8 +49,8 @@ const DetailReCommentItem = ({
       if (
         inputRef?.current &&
         !inputRef.current.contains(e.target) &&
-        buttonRef?.current &&
-        !buttonRef.current.contains(e.target)
+        formRef?.current &&
+        !formRef.current.contains(e.target)
       ) {
         setTotalComment((prev) => ({
           ...prev,
@@ -60,7 +60,7 @@ const DetailReCommentItem = ({
         }));
       }
     },
-    [buttonRef, inputRef, setTotalComment],
+    [formRef, inputRef, setTotalComment],
   );
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);

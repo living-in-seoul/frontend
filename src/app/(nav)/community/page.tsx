@@ -15,7 +15,6 @@ const CommunityPage = async ({ searchParams }: PageProps) => {
   const FetchUrl =
     category === 'All' ? 'category=' : `category=${categoryKO(category)}`;
   const FETCH_API = `${process.env.NEXT_PUBLIC_SERVER}/tags/rank?${FetchUrl}`;
-
   const TagCategory = await fetch(FETCH_API, {
     next: { revalidate: 2000 },
   }).then<string[]>((res) => res.json());
