@@ -81,7 +81,6 @@ const DetailNavbar = ({ postId }: { postId: string }) => {
             }).then(() => mutate(commentUrlKey));
       }
     } else {
-      console.log('로그인모달 나와주세요');
     }
     setComment('');
     setIsLoading(false);

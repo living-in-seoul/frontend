@@ -42,7 +42,6 @@ const SearchBoardList = ({
 
   const loadMoreList = async () => {
     setIsLoading(true);
-    console.log(totalpage, page, lastItem, listTotalPage);
 
     if (listTotalPage === page || listTotalPage === null) {
       setIsLoading(false);

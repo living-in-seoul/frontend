@@ -21,7 +21,7 @@ const HomeBoardList = ({ Category, tags }: CommunityBoardProps) => {
     );
   }, [Category, setHomeKeyState, tags]);
   const { posts: lists, isLoading } = usePosts(HomeKeyState);
-  console.log(lists);
+
   return (
     <article className="flex flex-col">
       {isLoading && <div className="w-full h-[360px]">loading...</div>}

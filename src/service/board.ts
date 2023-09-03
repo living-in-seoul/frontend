@@ -18,11 +18,8 @@ export const writeBoard = async (form: any) => {
       },
       body: form,
     }).then((response) => response.json());
-    console.log(response);
     return response;
-  } catch (error: any) {
-    console.log('ehlsmsdfasdfa', error.message);
-  }
+  } catch (error: any) {}
 };
 
 /**postData 가져오기 */
@@ -106,7 +103,6 @@ export const getHotBoard = async (category: string, hashtag: string) => {
       next: { revalidate: 0 },
     },
   ).then<ResponsePopularCategoryHashtag>((res) => res.json());
-  console.log(response, '뭐가 뜰까???');
   return response;
 };
 
@@ -116,7 +112,6 @@ export const getMypostScrapPost = async (
   page: string | null,
 ) => {
   const token = cookies().get('accessToken')?.value;
-  console.log(category, 'zzzzzzzzzzzz');
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER}/posts/${category}?page=${page}&size=1`,
     {

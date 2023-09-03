@@ -27,7 +27,7 @@ const HomeHasTagMapSection = async ({ hashtag }: HomeReviewSectionProps) => {
   )
     .then<ResponseRegister>((res) => res.json())
     .then<ResponsePost[]>((res) => res.result);
-  console.log(PostList);
+
   const { post, location } = PostList[0];
   return (
     <article className="relative w-full border-t-[5px] pt-2.5 border-zinc-300">

@@ -12,9 +12,9 @@ export default function MypageLink({
   };
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? '';
   const param = useSearchParams();
-  const categoryParam = param.get('category');
+  const categoryParam = param?.get('category');
   const link = category.params
     ? `/mypage?category=${category.params}`
     : '/mypage';

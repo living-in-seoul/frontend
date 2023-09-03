@@ -17,11 +17,7 @@ const DetailHeader = ({ data }: { data: ResponseDetailData }) => {
       </div>
       <div className="flex flex-row gap-4">
         <div>
-          <Icons
-            path={detailLinkIcon}
-            fill="#404040"
-            onClick={() => console.log('링크인데 이건 뭘 연결하지?')}
-          />
+          <Icons path={detailLinkIcon} fill="#404040" />
         </div>
         <div>
           <Icons

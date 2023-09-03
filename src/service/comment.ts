@@ -158,7 +158,6 @@ export const putReComment = async (body: string, reCommentId: string) => {
 /**대댓글 삭제 DELETE */
 export const deleteReComment = async (reCommentId: string) => {
   const token = cookies().get('accessToken');
-  console.log('첫번째', reCommentId);
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER}/comment/re/${reCommentId}`,
     {

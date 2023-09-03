@@ -35,9 +35,8 @@ const SSEProvider: React.FC<SSEProviderProps> = ({
 
     return () => {
       eventSource.close();
-      console.log('서버 닫힘');
     };
-  }, [url, eventTypes]);
+  }, []);
 
   return (
     <SSEContext.Provider value={null /* 이 부분에 실제 SSE 데이터를 전달 */}>

@@ -45,18 +45,18 @@ export default async function RootLayout({
       </head>
 
       <body className="flex flex-col min-h-screen items-center">
-        {/* <SSEProvider
+        <SSEProvider
           eventTypes={['LIKE', 'COMMENT', 'HASHTAG']}
           url={'https://seoulvival.com:8080/notice'}
-        > */}
-        <RecoilProvider>
-          <SWRConfigContext>
-            <ProgressBarProviders>
-              <div className="w-full max-w-md">{children}</div>
-            </ProgressBarProviders>
-          </SWRConfigContext>
-        </RecoilProvider>
-        {/* </SSEProvider> */}
+        >
+          <RecoilProvider>
+            <SWRConfigContext>
+              <ProgressBarProviders>
+                <div className="w-full max-w-md">{children}</div>
+              </ProgressBarProviders>
+            </SWRConfigContext>
+          </RecoilProvider>
+        </SSEProvider>
         <div id="portalSignin" />
       </body>
     </html>

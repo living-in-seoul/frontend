@@ -64,7 +64,6 @@ const SignupSecond = () => {
       })
         .then((response) => response.json())
         .then(() => {
-          console.log('왜 안가냐', callbackUrl);
           router.push(callbackUrl[0] ? callbackUrl[0] : '/home');
         });
     } catch (error) {

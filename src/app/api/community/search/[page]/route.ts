@@ -10,7 +10,6 @@ export const GET = async (req: NextRequest, context: Context) => {
   const search = searchParams.get('search') ?? '';
   const category = searchParams.get('category') ?? '';
 
-  console.log('categorycategorycategorycategorycategorycategory', category);
   const Keyword = encodeURIComponent(search);
 
   try {
@@ -25,7 +24,6 @@ export const GET = async (req: NextRequest, context: Context) => {
     )
       .then<ResponseRegister>((res) => res.json())
       .then((res) => res.result);
-    console.log(res);
     if (res.length === 0) {
       return NextResponse.json([]);
     }

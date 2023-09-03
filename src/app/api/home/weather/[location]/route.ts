@@ -35,7 +35,6 @@ export const GET = async (req: NextRequest, context: Context) => {
     },
     next: { revalidate: 60 * 60 * 3 },
   }).then<ForecastResponse>((res) => res.json());
-  console.log(response);
   const forecastItems = response.response.body.items.item;
   const currentsTime = parseInt(
     `${new Date().getHours()}${new Date().getMinutes()}`,

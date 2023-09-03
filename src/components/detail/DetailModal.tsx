@@ -19,7 +19,6 @@ const DetailModal = ({
   onSecondHandler,
 }: DetailModalProps) => {
   const route = useRouter();
-  console.log(modalArray);
 
   return (
     <article>

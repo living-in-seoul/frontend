@@ -18,7 +18,6 @@ export const fetchCommunity = async ({
   tags,
   ordertype = 'newer',
 }: fetchCommunityProps) => {
-  console.log(page, limit, category, tags, ordertype);
   const tag = tags ?? '';
   const UrlEncodigTag = typeof tag === 'string' && encodeURIComponent(tag);
   if (category === 'All') {

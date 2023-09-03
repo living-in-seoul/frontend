@@ -29,7 +29,6 @@ const CommunityBoardList = ({
   const [listTotalPage, setlistTotalPage] = useState(totalpage);
   const [lastItem, setLastItem] = useState(false);
   const router = useRouter();
-  // console.log(pathname , searchParams.getAll());
 
   const loadMoreList = async () => {
     const EncodeTag =

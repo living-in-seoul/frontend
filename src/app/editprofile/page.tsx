@@ -5,7 +5,6 @@ import { getProfile } from '@/service/user';
 
 const EditProfilePage = async () => {
   const userProfile = await getProfile();
-  console.log(userProfile);
   return (
     <section className="flex flex-col relative w-full h-full gap-6">
       <EditProfileHeader />

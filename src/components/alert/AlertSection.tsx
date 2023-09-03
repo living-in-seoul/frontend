@@ -8,25 +8,18 @@ import AlertActiveItem from './AlertActiveItem';
 import AlertHashTagItem from './AlertHashTagItem';
 import Icons from '../common/Icons';
 import { Alert } from '@/utils/Icon';
-import Select from '../common/Select';
 import useSWR from 'swr';
 import Button from '../common/Button';
 import NoneItem from '../NoneItem';
+import { useRouter } from 'next/navigation';
 const AlertSection = () => {
   const currentAlertSection = useRecoilValue(AleatSectionState);
-
+  const router = useRouter();
   const ActiveSection: FC = () => {
-    const { data: ActiveData, error } = useSWR<ResponseAlarm>(
-      `/api/alert/activity`,
-      {
-        revalidateOnFocus: false,
-        revalidateOnReconnect: false,
-        onError: (error) => {},
-        onSuccess: (data) => {
-          console.log(data);
-        },
-      },
-    );
+    const { data: ActiveData } = useSWR<ResponseAlarm>(`/api/alert/activity`, {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    });
     return (
       <article key={uuidv4()} className="flex flex-col w-full h-full">
         {ActiveData?.alarmList.map((item, i) => (
@@ -37,10 +30,9 @@ const AlertSection = () => {
   };
   const HashTagSection: FC = () => {
     const { data: HashtagData } = useSWR<ResponseAlarm>(`/api/alert/hashtag`);
-    console.log(HashtagData);
     return (
       <article key={uuidv4()}>
-        <div className="w-full px-3.5 py-5 flex justify-between gap-2.5">
+        <div className="w-full px-3.5 py-5 flex justify-between gap-2.5 items-center">
           <Icons
             path={Alert}
             fill="none"
@@ -58,7 +50,14 @@ const AlertSection = () => {
               {HashtagData && HashtagData?.pageable.totalElements - 1}개
             </span>
           </div>
-          <Button title="설정" size="small" />
+          <Button
+            title="설정"
+            size="xsmall"
+            bgColor="bg-primary"
+            textColor="white"
+            select
+            onClick={() => router.push('/alert/hashtag')}
+          />
         </div>
         {HashtagData?.alarmList.length !== 0 ? (
           HashtagData?.alarmList.map((item, i) => (

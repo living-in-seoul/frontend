@@ -10,7 +10,7 @@ export const middleware = async (request: NextRequest) => {
   if (signupPage || signinPage) {
     if (refreshToken) {
       const signInUrl = new URL(`${basePath}/home`, origin);
-      console.log(signInUrl);
+
       return NextResponse.redirect(signInUrl);
     }
     return NextResponse.next();
@@ -22,7 +22,6 @@ export const middleware = async (request: NextRequest) => {
       'callbackUrl',
       `${basePath}${pathname}${search}`,
     );
-    console.log(signInUrl);
     return NextResponse.redirect(signInUrl);
   }
   // if (request.nextUrl.pathname.startsWith('/api')) {
