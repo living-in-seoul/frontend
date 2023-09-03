@@ -35,7 +35,6 @@ export const GET = async (request: NextRequest, context: Context) => {
     const {
       slug: [category, hashtag],
     } = context.params;
-    console.log(category, hashtag, 'ddddddddddddddd');
     const data = await getHotBoard(category, hashtag);
     return NextResponse.json(data);
   }

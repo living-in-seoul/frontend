@@ -80,7 +80,7 @@ export const addRecentlySearched = (newSearch: string) => {
     localStorage.getItem('recentlySearched') || '[]',
   );
 
-  if (!storedSearch.includes(newSearch)) {
+  if (!storedSearch.includes(newSearch) && newSearch === '#') {
     const updatedSearch = [...storedSearch, newSearch];
     localStorage.setItem('recentlySearched', JSON.stringify(updatedSearch));
   }

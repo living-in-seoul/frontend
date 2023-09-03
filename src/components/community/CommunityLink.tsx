@@ -19,8 +19,8 @@ export default function NavLink({
     : '/community';
 
   const isActive = category.link
-    ? `${category.link}` === params.get('category')
-    : params.get('category') === null || pathname === '/';
+    ? `${category.link}` === params?.get('category')
+    : params?.get('category') === null || pathname === '/';
 
   return (
     <Link

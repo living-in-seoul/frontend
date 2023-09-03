@@ -8,6 +8,7 @@ import SSEProvider from '@/context/SSEProvider';
 import { getProfile } from '@/service/user';
 import localFont from 'next/font/local';
 import { cookies } from 'next/headers';
+import Head from 'next/head';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -15,6 +16,9 @@ export const metadata: Metadata = {
   title: '서울에서 살아남기',
   description: '서울에서 살아남자 다모여~',
   keywords: '서울, 살아남자, 살아남기, 커뮤니티',
+  viewport: { width: 'device-width', initialScale: 1.0 },
+  appleWebApp: { statusBarStyle: 'black-translucent', capable: true },
+  themeColor: { color: '#317EFB' },
 };
 const myFont = localFont({
   src: './fonts/Pretendard-Medium.woff2',
@@ -37,17 +41,22 @@ export default async function RootLayout({
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
         />
+        <meta name="msapplication-tap-highlight" content="no" />
       </head>
+
       <body className="flex flex-col min-h-screen items-center">
-        {/* <SSEProvider eventTypes={['LIKE']} url={'/example'}> */}
-        <RecoilProvider>
-          <SWRConfigContext>
-            <ProgressBarProviders>
-              <div className="w-full max-w-md">{children}</div>
-            </ProgressBarProviders>
-          </SWRConfigContext>
-        </RecoilProvider>
-        {/* </SSEProvider> */}
+        <SSEProvider
+          eventTypes={['LIKE', 'COMMENT', 'HASHTAG']}
+          url={'https://seoulvival.com:8080/notice'}
+        >
+          <RecoilProvider>
+            <SWRConfigContext>
+              <ProgressBarProviders>
+                <div className="w-full max-w-md">{children}</div>
+              </ProgressBarProviders>
+            </SWRConfigContext>
+          </RecoilProvider>
+        </SSEProvider>
         <div id="portalSignin" />
       </body>
     </html>

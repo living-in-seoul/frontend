@@ -10,7 +10,6 @@ export const GET = async (request: NextRequest, context: Context) => {
 
   const Token = cookies().get('accessToken');
   const verify = await verifyAndRefreshToken();
-  console.log(category, Token);
   if (verify.status === 403 || !Token) {
     return new Response('토큰 없음', { status: 403 });
   } else if (verify.status === 200) {
@@ -58,7 +57,7 @@ export const POST = async (request: NextRequest, context: Context) => {
       // console.log(data);
       return NextResponse.json(data);
     } catch (error) {
-      console.log('asdfsafasdf', error);
+      console.log('에러발생', error);
     }
   }
 };

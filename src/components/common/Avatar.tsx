@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { mrchoi } from '../../../public';
 
 interface AvatarProps {
   image?: string | null;
@@ -47,15 +46,17 @@ const getImageSizeStyle = (size: string): ImageSizeStyle => {
 const Avatar = ({ image, size = 'large' }: AvatarProps) => {
   return (
     <div className={getContainerStyle(size)}>
-      <Image
-        className={`bg-white object-cover rounded-full ${
-          getImageSizeStyle(size).image
-        }`}
-        src={image ?? mrchoi}
-        width={100}
-        height={100}
-        alt="user profile"
-      />
+      {image && (
+        <Image
+          className={`bg-white object-cover rounded-full ${
+            getImageSizeStyle(size).image
+          }`}
+          src={image}
+          width={100}
+          height={100}
+          alt="user profile"
+        />
+      )}
     </div>
   );
 };

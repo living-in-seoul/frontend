@@ -16,7 +16,7 @@ const MypageList = () => {
   const params = useSearchParams();
   const [myPageData, setMyPageData] = useState<ResponseMyPostData>();
   const [ref, inview] = useObserver();
-  const category = params.get('category');
+  const category = params?.get('category');
   useEffect(() => {
     setIsLoading(true);
     const fetchData = async () => {

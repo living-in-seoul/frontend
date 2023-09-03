@@ -16,7 +16,7 @@ export const PUT = async (request: NextRequest, context: Context) => {
   try {
     if (slug[0] === 'image') {
       const body = await request.formData();
-      console.log(body.get('image'));
+
       const imageData = await putProfileImage(body);
       return NextResponse.json(imageData);
     } else if (slug[0] === 'profile') {

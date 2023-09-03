@@ -5,10 +5,11 @@ export const GET = async (req: NextRequest) => {
   const search = searchParams.get('search') ?? '';
   const Keyword = encodeURIComponent(search);
   const list = searchParams.has('list');
+
   try {
     const res = await fetch(
       // `${process.env.NEXT_PUBLIC_SERVER}/search?page=1&size=10&keword=${search}`,
-      `${process.env.NEXT_PUBLIC_SERVER}/search?page=1&size=10&keyword=${Keyword}`,
+      `${process.env.NEXT_PUBLIC_SERVER}/search?page=1&size=10&category=&keyword=${Keyword}`,
       { next: { revalidate: 0 } },
     )
       .then<ResponseRegister>((res) => res.json())

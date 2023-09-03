@@ -77,7 +77,6 @@ export const oauthSignin = async (data: RequestOauthLogin) => {
         body: JSON.stringify({ authCode: code }),
       },
     ).then<ResponseOauthLogin>((response) => response.json());
-    console.log(response, 'zzz');
     return response;
   } catch (error) {
     throw new Error();

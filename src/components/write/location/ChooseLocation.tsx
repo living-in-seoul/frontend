@@ -47,7 +47,6 @@ const ChooseLocation = ({ onClose }: ChooseLocationProps) => {
   const { data } = useSWR<PlaceByPlaceIdResponse>(
     placeId && `/api/map/place/${placeId}`,
   );
-  console.log(polygonValue);
 
   useEffect(() => {
     if (data && data.result.geometry?.location) {

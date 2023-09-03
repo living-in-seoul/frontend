@@ -11,14 +11,12 @@ const Modal = ({ children }: Props) => {
   useEffect(() => {
     const modalElement = ref.current;
     if (modalElement) {
-      // 애니메이션 시작 전 초기 상태를 설정합니다.
       modalElement.classList.add('modal-entering');
 
-      // 애니메이션 시작을 트리거 합니다.
       setTimeout(() => {
         modalElement.classList.remove('modal-entering');
         modalElement.classList.add('modal-opened');
-      }, 50); // 약간의 딜레이가 필요합니다.
+      }, 50);
     }
     document.body.classList.add('modal-open');
     return () => {

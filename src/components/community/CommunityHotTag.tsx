@@ -10,7 +10,7 @@ interface CommunityHotTag {
 
 const CommunityHotTag = ({ Hottag, category }: CommunityHotTag) => {
   const searchParams = useSearchParams();
-  const tagActive = searchParams.get('tag');
+  const tagActive = searchParams?.get('tag');
 
   return (
     <section className="w-full border-b py-6">

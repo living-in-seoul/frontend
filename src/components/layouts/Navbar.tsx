@@ -32,7 +32,7 @@ const NavBarArray = [
 
 const Navbar = () => {
   const pathname = usePathname();
-  const MainPathName = '/' + pathname.split('/')[1];
+  const MainPathName = '/' + pathname?.split('/')[1];
   return (
     <nav className="fixed bottom-0 right-auto max-w-md w-full border-t bg-white">
       <div className="flex-row h-[76px] flex w-full justify-center px-4 pt-2">

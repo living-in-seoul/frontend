@@ -14,7 +14,6 @@ const CallbackPage = (req: Req) => {
   const router = useRouter();
   const { searchParams } = req;
   const { code, state } = searchParams;
-  console.log(code);
   useEffect(() => {
     try {
       const response = fetch('/api/callback', {

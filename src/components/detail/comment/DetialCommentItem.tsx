@@ -146,9 +146,7 @@ const DetialCommentItem = ({
         }).then((respnse) => respnse.json());
         mutate(commentKey);
       }
-    } catch (error) {
-      console.log('사망 5초전');
-    }
+    } catch (error) {}
   };
   return (
     <section className="flex flex-col gap-2">

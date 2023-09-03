@@ -12,6 +12,8 @@ import useDebounce from '@/hooks/useDebounce';
 import { SearchBack, SearchIcon } from '@/utils/Icon';
 import { useRouter } from 'next/navigation';
 import { addRecentlySearched } from '@/utils/utilFunc';
+import { useRecoilState } from 'recoil';
+import { searchState } from '@/recoil/communityStates';
 
 interface responseInterface {
   PostId: number;
@@ -20,18 +22,27 @@ interface responseInterface {
 }
 
 const SearchInput = () => {
-  const [search, setSearch] = useState<string>('');
+  const [search, setSearch] = useRecoilState(searchState);
   const [data, setData] = useState<responseInterface[]>([]);
+  const [showlist, setShowList] = useState(false);
   const ref = useRef<HTMLInputElement>(null);
   const debounceKeyword = useDebounce(search, 100);
   const router = useRouter();
 
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
-  };
-
+  const onChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setSearch(event.target.value);
+    },
+    [setSearch],
+  );
   useEffect(() => {
     ref.current?.focus();
+    return () => {
+      setSearch('');
+    };
+  }, []);
+
+  useEffect(() => {
     const searchFetch = async () => {
       if (!debounceKeyword) return;
       const Keyword = encodeURIComponent(debounceKeyword);
@@ -41,10 +52,12 @@ const SearchInput = () => {
     };
 
     searchFetch();
+    setShowList(false);
   }, [debounceKeyword]);
 
   const onClickHandler = (search: string) => {
     addRecentlySearched(search);
+    setSearch(search);
     router.replace(`/search?search=${encodeURIComponent(search)}`);
     setData([]);
   };
@@ -69,7 +82,7 @@ const SearchInput = () => {
 
       <form onSubmit={onSubmit} className="grow">
         <input
-          className="w-full h-9 bg-zinc-300 rounded-3xl px-[18px] py-2.5 placeholder:text-neutral-500 text-base font-normal leading-none"
+          className="w-full h-9 bg-zinc-100 rounded-3xl px-[18px] py-2.5 placeholder:text-zinc-400 text-base font-normal leading-none"
           placeholder="#해시태그 혹은 내용을 입력해 주세요"
           ref={ref}
           value={search}
@@ -77,17 +90,17 @@ const SearchInput = () => {
         />
         <ul
           className="absolute top-28 left-0 right-0 overflow-y-scroll z-50 bg-white"
-          hidden={debounceKeyword.length === 0 || data.length === 0}
+          hidden={debounceKeyword.length === 0 || showlist}
           role="listbox"
         >
-          {data &&
+          {data.length ? (
             data.map((item) => (
               <li
-                className="w-full border-b border-zinc-300 cursor-pointer hover:bg-sky-100 active:bg-sky-100"
+                className="w-full border-b border-zinc-300 cursor-pointer pl-[13px] py-[19px] hover:bg-sky-100 active:bg-sky-100"
                 key={item.PostId}
                 onClick={() => onClickHandler(item.PostTag)}
               >
-                <div className="w-full flex justify-between items-center py-[22px] gap-3.5 px-[17px]">
+                <div className="w-full flex justify-between items-center gap-2.5">
                   <Icons
                     path={SearchIcon}
                     fill="none"
@@ -104,7 +117,12 @@ const SearchInput = () => {
                   ></div>
                 </div>
               </li>
-            ))}
+            ))
+          ) : (
+            <li className="w-full border-b border-zinc-300 cursor-pointer pl-[13px] py-[19px]">
+              검색 결과가 없습니다.
+            </li>
+          )}
         </ul>
       </form>
     </div>
