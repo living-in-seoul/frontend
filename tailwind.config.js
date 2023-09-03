@@ -30,6 +30,7 @@ module.exports = {
         darkMint: '#00C092',
         lightMint: '#ACECDC',
         lightestMint: '#DEFFF7',
+        secondary: '#2752C2',
         gray1: '#1F1F1F',
         gray2: '#404040',
         gray3: '#555555',

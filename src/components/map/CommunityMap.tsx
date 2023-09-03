@@ -21,6 +21,7 @@ import {
   seoulCenterCoords,
 } from '@/utils/constants/constants';
 import { mapBottomSheetState } from '@/recoil/bottomsheet';
+import Button from '../common/Button';
 
 const CommunityMap = () => {
   const { map, onLoad, onUnmount } = useMapInstance();
@@ -68,9 +69,25 @@ const CommunityMap = () => {
         icon: '📍',
       });
 
-    //서울 갈 때 까지 고정시키고 버튼 (서울로 이동하는 버튼)
     if (!gu) {
-      toast.error('서울 지역으로 이동해주세요.');
+      toast((t) => (
+        <div className="flex justify-center items-center gap-2">
+          <span className="text-xs">서울 지역으로 이동해주세요.</span>
+          <div className=" w-10">
+            <Button
+              size="full"
+              onClick={() => {
+                setCenter({ lat: 37.495985, lng: 127.066409 });
+                toast.dismiss(t.id);
+              }}
+              bgColor="bg-primary"
+              textColor="text-white"
+              title="이동"
+              className="text-sm"
+            />
+          </div>
+        </div>
+      ));
     }
   }, [boardList]);
 

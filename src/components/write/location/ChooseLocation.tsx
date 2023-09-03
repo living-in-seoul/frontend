@@ -17,10 +17,13 @@ import {
 } from '@/recoil/mapStates';
 import useMapInstance from '@/hooks/useMapInstance';
 import { MapStyleVersionTwo } from '@/utils/styles';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import Button from '../../common/Button';
 import SelectedLocation from './SelectedLocation';
+import toast, { Toaster } from 'react-hot-toast';
+import { PinIcon } from '@/components/profile/editpage/EditImageIcon';
+import CustomOverlayMarker from '@/components/map/marker/CustomOverlayMarker';
 
 interface ChooseLocationProps {
   onClose: () => void;
@@ -37,12 +40,14 @@ const mapOptions: google.maps.MapOptions = {
 const containerStyleForMap = { width: '100%', height: '100%' };
 
 const ChooseLocation = ({ onClose }: ChooseLocationProps) => {
-  const placeId = useRecoilValue(placeIdState);
+  const [placeId, setPlaceId] = useRecoilState(placeIdState);
   const [detail, setDetail] = useRecoilState(detailState);
   const { map, onLoad, onUnmount } = useMapInstance();
   const [polygonValue, setPolygonState] = useRecoilState(polygonState);
   const [formData, setFormData] = useRecoilState(formDataState);
+  const [disable, setDisable] = useState(false);
   const [center, setCenter] = useRecoilState(centerState);
+  const [showMarker, setShowMarker] = useState(false);
   const currentValue = useRecoilValue(currentState);
   const { data } = useSWR<PlaceByPlaceIdResponse>(
     placeId && `/api/map/place/${placeId}`,
@@ -54,11 +59,22 @@ const ChooseLocation = ({ onClose }: ChooseLocationProps) => {
       setCenter(data.result.geometry.location);
     }
   }, [data, detail, setCenter, setDetail]);
+
   useEffect(() => {
     if (map && center) {
       map.panTo(center);
     }
   }, [map, center]);
+
+  useEffect(() => {
+    const gu = polygonValue.gu;
+    if (!gu) {
+      toast.error('서울 지역으로 선택해주세요.');
+      setDisable(true);
+    } else {
+      setDisable(false);
+    }
+  }, [polygonValue.gu]);
 
   const onClickToSelect = () => {
     if (data?.result) {
@@ -82,6 +98,7 @@ const ChooseLocation = ({ onClose }: ChooseLocationProps) => {
         address: `${polygonValue.gu} ${polygonValue.dong}`,
       }));
     }
+    setShowMarker(false);
     onClose();
   };
 
@@ -92,6 +109,12 @@ const ChooseLocation = ({ onClose }: ChooseLocationProps) => {
       lat: Number(center.lat),
       lng: Number(center.lng),
     }));
+  };
+
+  const onClickToToggle = () => {
+    setPlaceId('');
+    setDetail(null);
+    setShowMarker(!showMarker);
   };
 
   const onMouseUpHandler = async () => {
@@ -109,7 +132,7 @@ const ChooseLocation = ({ onClose }: ChooseLocationProps) => {
         <Icons path={back} onClick={onClose} />
         <h1 className="font-semibold">위치 선택</h1>
       </div>
-      <div className="relative flex justify-center items-center mt-5 w-full mx-auto">
+      <div className="relative flex justify-center items-center mt-5 w-full px-2">
         <PlacesAutoComplete />
       </div>
       <GoogleMap
@@ -124,15 +147,35 @@ const ChooseLocation = ({ onClose }: ChooseLocationProps) => {
         }}
       >
         {placeId && (
-          <MarkerF icon={{ url: '/marker/base.png' }} position={center} />
+          <>
+            <MarkerF
+              icon={{
+                url: '/marker/marker.webp',
+                scaledSize: new window.google.maps.Size(40, 50),
+              }}
+              position={center}
+            />
+            <CustomOverlayMarker
+              position={center}
+              text={detail?.name ?? '선택'}
+              onWrite={true}
+            />
+          </>
         )}
-        {currentValue && <MarkerF position={currentValue} />}
+        {currentValue && (
+          <MarkerF
+            icon={{
+              url: '/marker/current.webp',
+              scaledSize: new window.google.maps.Size(40, 50),
+            }}
+            position={currentValue}
+          />
+        )}
       </GoogleMap>
-      {/* 검색 후에 찍히는 마커가 생겨서 -> 마커 두개 겹칠거같아서 검색 이후에는 센터마커 없앰 */}
-      {!placeId && (
+      {!placeId && showMarker && (
         <img
-          src="/marker/mainMarker.png"
-          className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2"
+          src="/marker/marker.webp"
+          className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 w-[34px] h-[43px]"
           alt="Center Marker"
         />
       )}
@@ -144,16 +187,25 @@ const ChooseLocation = ({ onClose }: ChooseLocationProps) => {
           <Button
             size="full"
             title="선택"
-            bgColor="bg-neutral-600"
+            bgColor="bg-primary"
+            textColor="text-white"
             onClick={onClickToSelect}
+            disable={disable}
           />
         </div>
       </div>
       <div className="absolute bottom-24 right-5 z-10">
+        <div
+          className="w-12 h-12 flex justify-center items-center bg-white rounded-full shadow-md hover:cursor-pointer mb-5"
+          onClick={onClickToToggle}
+        >
+          {PinIcon()}
+        </div>
         <div onClick={onClickCurrent}>
           <CurrentLocation />
         </div>
       </div>
+      <Toaster />
     </div>
   );
 };

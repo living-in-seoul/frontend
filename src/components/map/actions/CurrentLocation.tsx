@@ -29,7 +29,7 @@ const CurrentLocation = () => {
       },
       () => {
         setIsLoading(false);
-      }, //동의하라고 모달 띄우기
+      },
     );
   };
 
