@@ -11,7 +11,7 @@ interface PageProps {
 const CommunityPage = async ({ searchParams }: PageProps) => {
   const category = searchParams.category ? searchParams.category : 'All';
   const tags = searchParams.tag ? searchParams.tag || [] : null;
-  const ordertype = (searchParams.ordertype || 'newer') as 'newer' | 'popular';
+  const ordertype = (searchParams.ordertype || 'newer') as SelectPopType;
   const FetchUrl =
     category === 'All' ? 'category=' : `category=${categoryKO(category)}`;
   const FETCH_API = `${process.env.NEXT_PUBLIC_SERVER}/tags/rank?${FetchUrl}`;

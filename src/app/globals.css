@@ -38,10 +38,10 @@ a {
   animation: loading 1.5s infinite;
 }
 b {
-  color: #000;
+  color: #00c092;
   font-size: 14px;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 16px; /* 114.286% */
 }
 

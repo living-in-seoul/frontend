@@ -8,7 +8,7 @@ interface fetchCommunityProps {
   type?: 'All' | 'Category';
   category: string;
   tags?: string | never[] | null;
-  ordertype: 'newer' | 'popular';
+  ordertype: SelectPopType;
 }
 
 export const fetchCommunity = async ({
@@ -61,7 +61,7 @@ export const fetchTodaySearch = async () => {
   const TodaySearchApi = `${process.env.NEXT_PUBLIC_SERVER}/search/today`;
 
   try {
-    const respoense = await fetch(TodaySearchApi, {});
+    const respoense = await fetch(TodaySearchApi, { next: { revalidate: 0 } });
     const data = await respoense.json();
     return data as string[];
   } catch (error) {

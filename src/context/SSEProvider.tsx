@@ -17,9 +17,7 @@ const SSEProvider: React.FC<SSEProviderProps> = ({
   children,
 }) => {
   useEffect(() => {
-    const eventSource = new EventSource('https://seoulvival.com:8080/notice', {
-      withCredentials: true,
-    });
+    const eventSource = new EventSource('/api/sse');
 
     eventSource.onopen = () => console.log('SSE 연결 완료');
     eventSource.onerror = (error) => {

@@ -13,8 +13,6 @@ export const POST = async (request: NextRequest) => {
       httpOnly: true,
       path: '/',
       maxAge: 60 * 60 * 2,
-      sameSite: 'none',
-      secure: true,
     });
     cookies().set({
       name: 'refreshToken',
@@ -22,8 +20,6 @@ export const POST = async (request: NextRequest) => {
       httpOnly: true,
       path: '/',
       maxAge: 60 * 60 * 24,
-      sameSite: 'none',
-      secure: true,
     });
     return NextResponse.json(data);
   } catch (err) {

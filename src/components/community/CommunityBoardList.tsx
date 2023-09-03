@@ -13,7 +13,7 @@ interface CommunityBoardProps {
   tags?: string | never[] | null;
   firstList: ResponsePost[] | [];
   totalpage: number | never[];
-  ordertype?: 'newer' | 'popular';
+  ordertype?: SelectPopType;
 }
 const CommunityBoardList = ({
   Category,

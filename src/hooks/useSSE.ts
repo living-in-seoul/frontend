@@ -4,7 +4,9 @@ type EventType = string;
 
 function useSSE(url: string, eventTypes: EventType[]) {
   useEffect(() => {
-    const eventSource = new EventSource(url, { withCredentials: true });
+    const eventSource = new EventSource('/api/alert', {
+      withCredentials: true,
+    });
 
     eventSource.onopen = (event) => console.log('SSE 연결 완료');
     eventSource.onerror = (error) => {

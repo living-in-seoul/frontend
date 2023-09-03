@@ -3,10 +3,12 @@ import { useEffect, useState } from 'react';
 import useObserver from '@/hooks/useObserver';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
-import { seole } from '../../../public';
+import { imageNone, seole } from '../../../public';
 import PostItem from '../community/PostItem';
 import PostItemSkeleton from '../community/PostItemSkeleton';
 import { v4 as uuidv4 } from 'uuid';
+import NoneItem from '../NoneItem';
+import SearchHashTagAlert from './SearchHashTagAlert';
 
 interface CommunityBoardProps {
   title?: string;
@@ -25,13 +27,24 @@ const SearchBoardList = ({
   const [list, setList] = useState<ResponsePost[]>(firstList);
   const [page, setPage] = useState(1);
   const [ref, inview] = useObserver();
-  const [listTotalPage, setlistTotalPage] = useState(totalpage);
+  const [listTotalPage, setlistTotalPage] = useState<number>(
+    totalpage as number,
+  );
   const [lastItem, setLastItem] = useState(false);
   const searchParams = useSearchParams();
-  const searchValue = searchParams.get('search') ?? '';
+  const searchValue = searchParams?.get('search') ?? '';
+
+  useEffect(() => {
+    if (listTotalPage === page || totalpage === 0) {
+      setLastItem(true);
+    }
+  }, [listTotalPage, page, totalpage]);
+
   const loadMoreList = async () => {
     setIsLoading(true);
-    if (listTotalPage === page) {
+    console.log(totalpage, page, lastItem, listTotalPage);
+
+    if (listTotalPage === page || listTotalPage === null) {
       setIsLoading(false);
       setLastItem(true);
       return;
@@ -51,6 +64,7 @@ const SearchBoardList = ({
       setList((prev) => [...(prev?.length ? prev : []), ...lists]);
     }
   };
+
   useEffect(() => {
     if (inview && !isLoading) {
       loadMoreList();
@@ -58,20 +72,24 @@ const SearchBoardList = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inview]);
   return (
-    <article className="flex flex-col border-b-4" key={uuidv4()}>
-      {list.length !== 0 ? (
+    <article className="relative flex flex-col" key={uuidv4()}>
+      {totalpage !== 0 ? (
         list?.map((post) => (
-          <PostItem category={Category} {...post} key={post.post.postId} />
+          <PostItem
+            category={Category}
+            {...post}
+            key={post.post.postId + uuidv4()}
+          />
         ))
       ) : (
-        <div className="w-full h-[50vh] flex items-center justify-center flex-col">
-          <Image src={seole} width={300} height={300} alt="서울이" />
-          <span className="font-medium">게시물이 존재하지 않습니다.</span>
-        </div>
+        <NoneItem
+          description="새로운 소식이 없습니다"
+          // title="서울바이벌에서의 모든 활동내역을 알려드립니다"
+        />
       )}
 
       {lastItem ? (
-        <div>마지막 아이템입니다 지울것</div>
+        <div></div>
       ) : (
         <div ref={ref} className="flex flex-col sm:col-span-2 ">
           <PostItemSkeleton />
@@ -79,7 +97,6 @@ const SearchBoardList = ({
           <PostItemSkeleton />
         </div>
       )}
-      {/* <CategoryPostList /> */}
     </article>
   );
 };

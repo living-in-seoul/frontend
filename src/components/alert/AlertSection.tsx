@@ -10,6 +10,8 @@ import Icons from '../common/Icons';
 import { Alert } from '@/utils/Icon';
 import Select from '../common/Select';
 import useSWR from 'swr';
+import Button from '../common/Button';
+import NoneItem from '../NoneItem';
 const AlertSection = () => {
   const currentAlertSection = useRecoilValue(AleatSectionState);
 
@@ -35,6 +37,7 @@ const AlertSection = () => {
   };
   const HashTagSection: FC = () => {
     const { data: HashtagData } = useSWR<ResponseAlarm>(`/api/alert/hashtag`);
+    console.log(HashtagData);
     return (
       <article key={uuidv4()}>
         <div className="w-full px-3.5 py-5 flex justify-between gap-2.5">
@@ -42,24 +45,31 @@ const AlertSection = () => {
             path={Alert}
             fill="none"
             option={{
-              stroke: 'black',
+              stroke: '#404040',
               strokeWidth: '1.5',
               strokeLinecap: 'round',
             }}
           />
           <div className="grow">
-            <span className="text-black text-sm font-normal leading-none">
+            <span className="text-gray4 text-sm font-normal leading-none">
               알림 받는 해시태그{' '}
             </span>
-            <span className="text-black text-sm font-medium leading-none">
-              3개
+            <span className="text-gray4 text-sm font-medium leading-none">
+              {HashtagData && HashtagData?.pageable.totalElements - 1}개
             </span>
           </div>
-          <Select title="설정" selectTag size="alert" className="rounded-md" />
+          <Button title="설정" size="small" />
         </div>
-        {HashtagData?.alarmList.map((_, i) => (
-          <AlertHashTagItem key={uuidv4()} />
-        ))}
+        {HashtagData?.alarmList.length !== 0 ? (
+          HashtagData?.alarmList.map((item, i) => (
+            <AlertHashTagItem key={uuidv4()} item={item} />
+          ))
+        ) : (
+          <NoneItem
+            title="새로운 알림이 없습니다"
+            description="서울바이벌에서의 모든 활동내역을 알려드립니다"
+          />
+        )}
       </article>
     );
   };

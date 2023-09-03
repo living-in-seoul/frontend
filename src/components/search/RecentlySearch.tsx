@@ -1,9 +1,10 @@
 'use client';
 import { useCallback, useEffect, useState } from 'react';
-import Icons from '../common/Icons';
 import Select from '../common/Select';
-import { useRecoilState } from 'recoil';
-import { recentlySearchedState } from '@/recoil/communityStates';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { recentlySearchedState, searchState } from '@/recoil/communityStates';
+import { useRouter } from 'next/navigation';
+
 interface CloseProps {
   onClick: () => void;
 }
@@ -40,7 +41,8 @@ const RecentlySearch = () => {
   const [recentlySearched, setRecentlySearched] = useRecoilState(
     recentlySearchedState,
   );
-
+  const router = useRouter();
+  const setSearchState = useSetRecoilState(searchState);
   useEffect(() => {
     const storedSearch = localStorage.getItem('recentlySearched');
     if (storedSearch) {
@@ -65,11 +67,14 @@ const RecentlySearch = () => {
       <ul className="flex gap-2.5 py-5 whitespace-nowrap scrollbar-hide overflow-x-auto">
         {recentlySearched.map((item) => (
           <Select
-            title={`${item}`}
+            title={`${item.substring(1)}`}
             key={item}
-            className="rounded-md"
+            onClick={() => {
+              router.replace(`/search?search=${encodeURIComponent(item)}`);
+              setSearchState(item);
+            }}
+            className="rounded-md cursor-pointer"
             size="large"
-            disable
             Icon={<Close onClick={() => removeSearchTerm(item)} />}
           />
         ))}
