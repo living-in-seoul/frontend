@@ -6,6 +6,17 @@ export const getComment = async (postId: string) => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER}/comment/get/${postId}?page=1&size=3`,
+    ).then<ResponseCommentData>((res) => res.json());
+    return response;
+  } catch (error: any) {
+    console.log('getBoard error', error.message);
+  }
+};
+/**비회원 추가 CommentData 가져오기 */
+export const getMoreComment = async (postId: string, page: string) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER}/comment/get/${postId}?page=${page}&size=3`,
       {
         next: { tags: ['like'] },
         cache: 'no-store',
@@ -16,12 +27,14 @@ export const getComment = async (postId: string) => {
     console.log('getBoard error', error.message);
   }
 };
-/**추가 CommentData 가져오기 */
-export const getMoreComment = async (postId: string, page: string) => {
+/**회원 추가 CommentData 가져오기 */
+export const getUserMoreComment = async (postId: string, page: string) => {
+  const token = cookies().get('accessToken');
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER}/comment/get/${postId}?page=${page}&size=3`,
+      `${process.env.NEXT_PUBLIC_SERVER}/comment/auth/${postId}?page=${page}&size=3`,
       {
+        headers: { authorization: 'Bearer ' + token?.value },
         next: { tags: ['like'] },
         cache: 'no-store',
       },

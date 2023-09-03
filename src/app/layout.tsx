@@ -29,7 +29,6 @@ export default async function RootLayout({
 }) {
   const token = cookies().get('accessToken');
   const user = await getProfile();
-  console.log('asdfasdfsfsafsadfsadfasfd', token);
 
   return (
     <html lang="en" className={myFont.className}>

@@ -31,8 +31,8 @@ export const checkPasswordForm = {
 export const nicknameForm = {
   required: '닉네임은 필수 입력입니다',
   pattern: {
-    value: /^[^\d\s]{1,10}$/,
-    message: '닉네임은 10자 이내 숫자와 공백을 허용하지 않습니다',
+    value: /^[a-zA-Z0-9가-힣]{1,10}$/,
+    message: '닉네임은 10자 이내 공백과 특수문자를 허용하지 않습니다',
   },
 };
 

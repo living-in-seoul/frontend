@@ -11,23 +11,18 @@ import {
 } from '@/recoil/commentState';
 import { useSWRConfig } from 'swr';
 import { toast } from 'react-hot-toast';
+import BeatLoader from 'react-spinners/BeatLoader';
 
-const DetailNavbar = () => {
+const DetailNavbar = ({ postId }: { postId: string }) => {
   const [comment, setComment] = useState<string>('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const [postId, setPostId] = useState<string>('');
   const setInputRef = useSetRecoilState(inputTextRefState);
   const setButtonRef = useSetRecoilState(buttonRefState);
-  const [commentState, setCommentState] = useRecoilState(totalCommentState);
+  const commentState = useRecoilValue(totalCommentState);
   const commentUrlKey = useRecoilValue(commentKeyState);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { mutate } = useSWRConfig();
-  useEffect(() => {
-    const postId = localStorage.getItem('postId');
-    if (postId) {
-      setPostId(postId);
-    }
-  }, []);
   useEffect(() => {
     setInputRef(textareaRef);
     setButtonRef(buttonRef);
@@ -43,6 +38,7 @@ const DetailNavbar = () => {
   };
   const onSubmitCommentHandler = async (e: any) => {
     e.preventDefault();
+    setIsLoading(true);
     if (!comment) {
       return toast.error('뭐든 적긴해야지');
     }
@@ -88,6 +84,7 @@ const DetailNavbar = () => {
       console.log('로그인모달 나와주세요');
     }
     setComment('');
+    setIsLoading(false);
   };
   return (
     <div className="fixed bottom-0">
@@ -121,9 +118,16 @@ const DetailNavbar = () => {
             rows={1}
             wrap="hard"
           />
-          <button type="submit" ref={buttonRef}>
-            <Icons path={paperAirplaneIcon} fill="none" />
-          </button>
+
+          {isLoading ? (
+            <div className="w-[24px] h-[24px]">
+              <BeatLoader size={3} color="#2DDAB0" />
+            </div>
+          ) : (
+            <button type="submit" ref={buttonRef}>
+              <Icons path={paperAirplaneIcon} fill="none" />
+            </button>
+          )}
         </form>
       </nav>
     </div>

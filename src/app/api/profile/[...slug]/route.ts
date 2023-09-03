@@ -21,7 +21,6 @@ export const PUT = async (request: NextRequest, context: Context) => {
       return NextResponse.json(imageData);
     } else if (slug[0] === 'profile') {
       const body = await request.json();
-      console.log(body, 'zzzz');
       const userData = await putSignup(body);
       return NextResponse.json(userData);
     }

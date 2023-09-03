@@ -1,4 +1,5 @@
 import { cookies } from 'next/headers';
+import { constSelector } from 'recoil';
 
 interface ResponsenewDataDataType {
   message: string;
@@ -28,6 +29,8 @@ export const writeBoard = async (form: any) => {
 export const getUserBoard = async (postId: string) => {
   try {
     const token = cookies().get('accessToken');
+    if (!token) {
+    }
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER}/posts/auth/${postId}`,
       {
@@ -103,5 +106,26 @@ export const getHotBoard = async (category: string, hashtag: string) => {
       next: { revalidate: 0 },
     },
   ).then<ResponsePopularCategoryHashtag>((res) => res.json());
+  console.log(response, '뭐가 뜰까???');
+  return response;
+};
+
+/**내가 쓴 글 조회 또는 내가 스크랩한 글 조회 */
+export const getMypostScrapPost = async (
+  category: string,
+  page: string | null,
+) => {
+  const token = cookies().get('accessToken')?.value;
+  console.log(category, 'zzzzzzzzzzzz');
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER}/posts/${category}?page=${page}&size=1`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'Bearer ' + token,
+      },
+    },
+  ).then<ResponseMyPostData>((res) => res.json());
   return response;
 };

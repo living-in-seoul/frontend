@@ -43,3 +43,13 @@ export const commentKeyState = atom<string>({
   key: 'commentState',
   default: '',
 });
+
+export const onReCommentState = atom<boolean>({
+  key: 'onReCommentState',
+  default: false,
+});
+
+export const commentIdState = atom<number | null>({
+  key: 'commentIdState',
+  default: null,
+});

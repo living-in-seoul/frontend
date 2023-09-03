@@ -20,9 +20,19 @@ const nextConfig = {
         pathname: '/maps/api/place/js/PhotoService.GetPhoto',
       },
       {
+        protocol: 'http',
+        hostname: 'imgnews.naver.net',
+        port: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+      },
+      {
         protocol: 'https',
         hostname: 'living-in-seoul.s3.ap-northeast-2.amazonaws.com',
-        port: '',
+        port: '', 
       },
     ],
   },

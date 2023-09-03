@@ -43,8 +43,7 @@ export const GET = async (request: NextRequest, context: Context) => {
 export const DELETE = async (request: NextRequest, context: Context) => {
   const postId = context.params.slug[0];
   const data = await deleteComment(postId);
-  const newData = data?.comments;
-  return NextResponse.json(newData);
+  return NextResponse.json(data);
 };
 
 export const PUT = async (request: NextRequest, context: Context) => {

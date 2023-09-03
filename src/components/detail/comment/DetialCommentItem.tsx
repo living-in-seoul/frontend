@@ -1,28 +1,33 @@
 'use client';
-import { Comment } from '@/utils/Icon';
+import { Comment, detailColThreeDotIcon } from '@/utils/Icon';
 import Icons from '../../common/Icons';
 import UserProfile from '../../item/UserProfile';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import LikeCommentCase from './LikeCommentCase';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   buttonRefState,
+  commentKeyState,
   inputTextRefState,
+  onReCommentState,
   totalCommentState,
   totalCommentStateProps,
 } from '@/recoil/commentState';
 import { useSWRConfig } from 'swr';
-import EditProfileThreeDot from '@/components/profile/editpage/EditProfileThreeDot';
+import ModalPortal from '@/components/modal/ModalPortal';
+import ModalOutside from '@/components/modal/ModalOutside';
+import { commentModalArray, reportModalArray } from '@/utils/constants/modal';
+import { Toaster, toast } from 'react-hot-toast';
 interface DetialCommentItemProps {
   data: Comment;
+  postId: string;
   children: React.ReactNode;
-  userNickname: string | undefined;
 }
 
 const DetialCommentItem = ({
   data,
   children,
-  userNickname,
+  postId,
 }: DetialCommentItemProps) => {
   const {
     commentLikeSize,
@@ -31,70 +36,77 @@ const DetialCommentItem = ({
     nickname,
     comment,
     commentId,
+    reComments,
   } = data;
-  const inputRef = useRecoilValue(inputTextRefState);
+  const commentKey = useRecoilValue(commentKeyState);
   const buttonRef = useRecoilValue(buttonRefState);
-  const modalRef = useRef<HTMLDivElement | null>(null);
-  const [onModal, setOnModal] = useState<boolean>(false);
-  const [recoilCommentState, setRecoilCommentState] =
-    useRecoilState(totalCommentState);
-  const defaultValue = {
-    isReComment: false,
-    isComment: true,
-    commentId: null,
-    isCommentChange: false,
-    reCommentChange: false,
-    reCommentId: null,
-  };
-  const [totalComment, setTotalComment] =
-    useState<totalCommentStateProps>(defaultValue);
-  const commentColor = totalComment.isReComment ? 'blue' : '#404040';
-  const mutate = useSWRConfig();
-
-  const handleClickOutside = (e: any) => {
-    if (modalRef.current && !modalRef.current.contains(e.target)) {
-      setOnModal(false);
-    }
-    if (
-      inputRef?.current &&
-      !inputRef.current.contains(e.target) &&
-      buttonRef?.current &&
-      !buttonRef.current.contains(e.target)
-    ) {
-      setTotalComment((prev) => ({ ...prev, isReComment: false }));
-    }
-  };
+  const inputRef = useRecoilValue(inputTextRefState);
+  const setOnReComment = useSetRecoilState(onReCommentState);
+  const [commentIconColor, setCommentIconColor] = useState<boolean>(false);
+  const [username, setUsername] = useState<string>('');
+  const [totalComment, setTotalComment] = useRecoilState(totalCommentState);
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const { mutate } = useSWRConfig();
+  const modalArray =
+    username === nickname ? commentModalArray : reportModalArray;
+  const handleClickOutside = useCallback(
+    (e: any) => {
+      if (
+        inputRef?.current &&
+        !inputRef.current.contains(e.target) &&
+        buttonRef?.current &&
+        !buttonRef.current.contains(e.target)
+      ) {
+        setTotalComment((prev) => ({
+          ...prev,
+          commentId: null,
+        }));
+        setCommentIconColor(false);
+      }
+    },
+    [buttonRef, inputRef, setTotalComment],
+  );
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []);
+  }, [handleClickOutside]);
 
   useEffect(() => {
-    if (totalComment.isCommentChange !== recoilCommentState.isCommentChange) {
-      setRecoilCommentState((prev) => ({
-        ...prev,
-        isReComment: false,
-        isCommentChange: totalComment.isCommentChange,
-        commentId,
-        isComment: true,
-      }));
-    }
-    if (totalComment.isReComment !== recoilCommentState.isReComment) {
-      setRecoilCommentState((prev) => ({
-        ...prev,
-        isComment: false,
-        isReComment: totalComment.isReComment,
-        commentId,
-        isCommentChange: false,
-      }));
-    }
-  }, [totalComment]);
+    const username = localStorage.getItem('nickname');
+    username && setUsername(username);
+    return setOnReComment(false);
+  }, [setOnReComment]);
 
-  const onClickDeleteHandler = async (
-    e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
-  ) => {
+  const onFocusHandler = () => {
+    if (inputRef?.current) {
+      inputRef.current?.focus();
+      setTotalComment((prev) => ({
+        ...prev,
+        isReComment: !prev.isReComment,
+        isComment: !prev.isComment,
+        commentId,
+      }));
+      setCommentIconColor(true);
+    }
+  };
+  useEffect(() => {
+    return setOpenModal(false);
+  }, []);
+  const onClickChagneHandler = () => {
+    if (inputRef?.current) {
+      inputRef.current?.focus();
+      setTotalComment((prev) => ({
+        ...prev,
+        isCommentChange: !prev.isCommentChange,
+        commentId,
+      }));
+    }
+    setOpenModal(false);
+  };
+
+  const onClickDeleteHandler = async () => {
     try {
       const tokenValidResponse = await fetch('/api/user', {
         method: 'GET',
@@ -105,26 +117,17 @@ const DetialCommentItem = ({
           headers: {
             'Content-Type': 'application/json',
           },
-        }).then((response) => response.json());
+        })
+          .then((response) => response.json())
+          .then(() => {
+            toast.success('삭제하기 완료');
+            mutate(commentKey);
+          });
       }
     } catch (error) {
+      toast.error('삭제하기 실패');
     } finally {
-      setOnModal(false);
-    }
-  };
-  const onClickChagneHandler = () => {
-    if (inputRef?.current) {
-      inputRef.current?.focus();
-      setTotalComment((prev) => ({
-        ...prev,
-        isCommentChange: !prev.isCommentChange,
-      }));
-    }
-  };
-  const onFocusHandler = () => {
-    if (inputRef?.current) {
-      inputRef.current?.focus();
-      setTotalComment((prev) => ({ ...prev, isReComment: !prev.isReComment }));
+      setOpenModal(false);
     }
   };
 
@@ -141,33 +144,42 @@ const DetialCommentItem = ({
           },
           body: JSON.stringify(commentId),
         }).then((respnse) => respnse.json());
-        // mutate(`/api/comment/${commentId}`, {
-        //   ...data,
-        //   commentHasLiked: !data.commentHasLiked,
-        //   commentLikeSize: data.commentHasLiked
-        //     ? data.commentLikeSize + 1
-        //     : data.commentLikeSize - 1,
-        // });
+        mutate(commentKey);
       }
     } catch (error) {
-    } finally {
-      setOnModal(false);
+      console.log('사망 5초전');
     }
   };
   return (
-    <div className="flex flex-col gap-2">
+    <section className="flex flex-col gap-2">
+      <Toaster />
       <div className="flex flex-row justify-between relative">
-        <UserProfile createdAt={createdAt} nickname={nickname} />
-        <EditProfileThreeDot nickname={nickname} type="comment" />
+        <UserProfile
+          createdAt={createdAt}
+          nickname={nickname}
+          ondetail={true}
+        />
+        <Icons
+          path={detailColThreeDotIcon}
+          fill="#404040"
+          onClick={() => {
+            setOpenModal(true);
+          }}
+        />
       </div>
       <div className="flex flex-col gap-2 w-5/6 ml-auto">
-        <span className="bg-neutral-100 p-2 rounded-lg text-xs">{comment}</span>
+        <span
+          onClick={() => setOnReComment((prev) => !prev)}
+          className="bg-neutral-100 p-2 rounded-lg text-xs"
+        >
+          {comment}
+        </span>
         <div className="flex flex-row gap-3">
           <div className="flex flex-row gap-1 items-center">
             <LikeCommentCase
               hasLiked={commentHasLiked}
-              likeHandler={likeHandler}
               likeSize={commentLikeSize}
+              likeHandler={likeHandler}
             />
           </div>
           <div
@@ -178,17 +190,45 @@ const DetialCommentItem = ({
               path={Comment}
               option={{
                 fill: 'none',
-                stroke: commentColor,
+                stroke: commentIconColor ? '#2DDAB0' : '#404040',
                 strokeLinecap: 'round',
                 strokeLinejoin: 'round',
               }}
             />
-            <span className="text-xs text-neutral-600">답글쓰기</span>
+            <span className="text-xs text-neutral-600">
+              답글쓰기 {reComments?.length}
+            </span>
           </div>
         </div>
         <div>{children}</div>
       </div>
-    </div>
+      {openModal && (
+        <ModalPortal nodeName="detailPortal">
+          <ModalOutside
+            className=" bg-white shadow-sm bottom-0 w-full"
+            onClose={() => {
+              setOpenModal(false);
+              document.body.style.overflow = 'auto';
+            }}
+          >
+            <article>
+              {modalArray.map((modal, index) => (
+                <div key={index}>
+                  <div
+                    className={`border-t-2 py-3 flex justify-center border-collapse ${modal.color}`}
+                    onClick={
+                      modal.first ? onClickChagneHandler : onClickDeleteHandler
+                    }
+                  >
+                    <span>{modal.text}</span>
+                  </div>
+                </div>
+              ))}
+            </article>
+          </ModalOutside>
+        </ModalPortal>
+      )}
+    </section>
   );
 };
 

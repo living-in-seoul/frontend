@@ -11,8 +11,6 @@ const EditProfilePage = async () => {
       <EditProfileHeader />
       <EditProfileImage profileImageUrl={userProfile?.profileImageUrl} />
       <EditProfileInfo profile={userProfile} />
-      <div id="portalSignin" />
-      <div id="portalSignin2" />
     </section>
   );
 };

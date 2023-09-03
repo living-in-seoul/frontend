@@ -1,43 +1,23 @@
+'use client';
+
 import Icons from '@/components/common/Icons';
 import ModalOutside from '@/components/modal/ModalOutside';
 import ModalPortal from '@/components/modal/ModalPortal';
 import { detailColThreeDotIcon } from '@/utils/Icon';
 import EditFirstModal from './EditFirstModal';
-import { useEffect, useState } from 'react';
-import {
-  commentModalArray,
-  detailModalArray,
-  profileModalArray,
-  reportModalArray,
-} from '@/utils/constants/modal';
+import { useState } from 'react';
+import { profileModalArray } from '@/utils/constants/modal';
+import { useSetRecoilState } from 'recoil';
+import { commentIdState } from '@/recoil/commentState';
 
 interface EditProfileThreeDotProps {
-  nickname: string;
-  type: 'detail' | 'comment' | 'editProfile';
+  commentId: number;
 }
 
-const EditProfileThreeDot = ({ nickname, type }: EditProfileThreeDotProps) => {
-  const [OpenModal, setOpenModal] = useState(false);
-  const userNickname = localStorage.getItem('nickname');
-  useEffect(() => {
-    return setOpenModal(false);
-  }, []);
-  const modalArray = () => {
-    switch (type) {
-      case 'editProfile':
-        return profileModalArray;
-      case 'comment':
-        if (nickname === userNickname) {
-          return commentModalArray;
-        }
-        return reportModalArray;
-      case 'detail':
-        if (nickname === userNickname) {
-          return detailModalArray;
-        }
-        return reportModalArray;
-    }
-  };
+const EditProfileThreeDot = ({ commentId }: EditProfileThreeDotProps) => {
+  const [OpenModal, setOpenModal] = useState<boolean>(false);
+
+  const setCommentId = useSetRecoilState(commentIdState);
 
   return (
     <div className="flex flex-row gap-4">
@@ -45,11 +25,14 @@ const EditProfileThreeDot = ({ nickname, type }: EditProfileThreeDotProps) => {
         <Icons
           path={detailColThreeDotIcon}
           fill="#404040"
-          onClick={() => setOpenModal(true)}
+          onClick={() => {
+            setCommentId(commentId);
+            setOpenModal(true);
+          }}
         />
       </div>
       {OpenModal && (
-        <ModalPortal nodeName="portalSignin">
+        <ModalPortal nodeName="editPortal">
           <ModalOutside
             className=" bg-white shadow-sm bottom-0 w-full"
             onClose={() => {
@@ -58,8 +41,8 @@ const EditProfileThreeDot = ({ nickname, type }: EditProfileThreeDotProps) => {
             }}
           >
             <EditFirstModal
-              modalArray={modalArray()}
-              setOpenModal={setOpenModal}
+              modalArray={profileModalArray}
+              portalId="editPortal"
             />
           </ModalOutside>
         </ModalPortal>
