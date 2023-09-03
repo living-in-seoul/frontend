@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 const SigninHeader = () => {
   const route = useRouter();
   return (
-    <div className="pt-5">
+    <div className="pt-5 cursor-pointer">
       <Icons path={close} fill="#404040" onClick={() => route.back()} />
     </div>
   );

@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 /** 회원가입 필수사항 시 */
 export const postSignup = async (data: RequestEssentialRegister) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/signup/step1`,
+    `${process.env.NEXT_PUBLIC_SERVER}/auth/signup`,
     {
       method: 'POST',
       body: JSON.stringify(data),
@@ -65,7 +65,6 @@ export async function oauthHandler(url: string) {
 /** 소셜로그인 시 */
 export const oauthSignin = async (data: RequestOauthLogin) => {
   const { code, state } = data;
-  console.log(code, state, 'asdfasdf');
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER}/social/login/${state}`,
@@ -77,12 +76,10 @@ export const oauthSignin = async (data: RequestOauthLogin) => {
         },
         body: JSON.stringify({ authCode: code }),
       },
-    ).then((response) => response.json());
-
-    console.log(response, 'aaaaaa');
+    ).then<ResponseOauthLogin>((response) => response.json());
+    console.log(response, 'zzz');
     return response;
   } catch (error) {
-    console.error(error);
     throw new Error();
   }
 };
@@ -131,7 +128,6 @@ export const putProfileImage = async (data: FormData) => {
 export const deleteUser = async () => {
   const token = cookies().get('accessToken');
   const refreshToken = cookies().get('refreshToken');
-
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER}/user/delete`,
     {

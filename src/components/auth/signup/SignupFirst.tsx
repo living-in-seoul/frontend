@@ -58,10 +58,6 @@ const SignupFirst = () => {
       password: data.password,
       nickname: data.nickname,
     };
-    console.log(
-      '회원가입 필수사항 기입 시 데이터 in signup/SignupFirst',
-      newData,
-    );
     const response = await fetch('/api/signup', {
       method: 'POST',
       headers: {
@@ -70,14 +66,22 @@ const SignupFirst = () => {
       body: JSON.stringify(newData),
     })
       .then((response) => {
-        console.log(response.status);
         if (response.status === 500) {
-          return toast.error('중복된 아이디나 닉네임입니다');
+          throw new Error('에러입니다');
+        } else {
+          toast.success('로그인 성공');
+          return response.json();
         }
-        reset();
+      })
+      .then((response) => {
+        localStorage.setItem('nickname', response.nickname);
         router.push('/signup/second');
       })
+      .catch((error) => {
+        toast.error('중복된 아이디나 닉네임입니다');
+      })
       .finally(() => {
+        reset();
         setIsLoading(false);
       });
   };

@@ -4,7 +4,7 @@ import ModalOutside from '@/components/modal/ModalOutside';
 import ModalPortal from '@/components/modal/ModalPortal';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
-import { Dispatch, SetStateAction, useState, useTransition } from 'react';
+import { useState } from 'react';
 const DynamicWarning = dynamic(
   () => import('@/components/write/modal/Warning'),
   {
@@ -19,14 +19,13 @@ export interface ModalArrayProps {
 
 const EditFirstModal = ({
   modalArray,
+  portalId,
 }: {
   modalArray: ModalArrayProps[];
-  setOpenModal: Dispatch<SetStateAction<boolean>>;
+  portalId: string;
 }) => {
   const [DeleteModal, setDeleteOnModal] = useState<boolean>(false);
   const [SignoutModal, setSignoutOnModal] = useState<boolean>(false);
-  const [aaaa, setaaaa] = useState<'signout' | 'delete' | null>(null);
-  const [isPending, startTransition] = useTransition();
   const route = useRouter();
 
   const logOutHandler = async () => {
@@ -53,16 +52,12 @@ const EditFirstModal = ({
       <div>
         <div
           className={`border-t-2 py-3 flex justify-center border-collapse text-blue-600`}
-          onClick={() => {
-            startTransition(() => {
-              setSignoutOnModal(true);
-            });
-          }}
+          onClick={() => setSignoutOnModal(true)}
         >
           <span>{modalArray[0].text}</span>
         </div>
         {SignoutModal && (
-          <ModalPortal nodeName="portalSignin2">
+          <ModalPortal nodeName={portalId}>
             <ModalOutside
               className="max-w-md scroll overflow-hidden bg-white w-4/5 px-10 rounded-lg shadow-sm py-10"
               onClose={() => {
@@ -83,16 +78,12 @@ const EditFirstModal = ({
       <div>
         <div
           className={`border-t-2 py-3 flex justify-center border-collapse text-red-600`}
-          onClick={() => {
-            startTransition(() => {
-              setDeleteOnModal(true);
-            });
-          }}
+          onClick={() => setDeleteOnModal(true)}
         >
           <span>{modalArray[1].text}</span>
         </div>
         {DeleteModal && (
-          <ModalPortal nodeName="portalSignin2">
+          <ModalPortal nodeName={portalId}>
             <ModalOutside
               className="max-w-md scroll overflow-hidden bg-white w-4/5 px-10 rounded-lg shadow-sm py-10"
               onClose={() => {

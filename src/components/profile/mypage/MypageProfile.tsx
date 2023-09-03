@@ -17,7 +17,7 @@ const MypageProfile = () => {
   return (
     <section className="flex flex-col gap-7">
       <div className="flex flex-row items-center gap-3">
-        <Image alt="example" src={profile} priority />
+        <Image alt="example" src={profile} priority={true} />
         <div className="flex flex-col">
           <span className="font-semibold">{nickname}</span>
           <p>Lv.1</p>

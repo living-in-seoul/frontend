@@ -87,10 +87,15 @@ const EditProfileInfo = ({ profile }: { profile: ResponseUserProfileData }) => {
         method: 'GET',
       });
       if (tokenValidResponse.status === 200) {
-        await fetch('/api/profile/profile', {
-          method: 'PUT',
-          body: JSON.stringify(user),
-        });
+        try {
+          await fetch('/api/profile/profile', {
+            method: 'PUT',
+            body: JSON.stringify(user),
+          });
+          localStorage.setItem('nickname', data.nickname);
+        } catch (err) {
+          toast.error('정보를 잘못입력한듯');
+        }
       } else {
         // console.log('로그인모달 나와주세요');
       }

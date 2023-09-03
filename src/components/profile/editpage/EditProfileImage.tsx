@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { profile as baseProfile } from '../../../../public/';
 import { EditImageIcon } from './EditImageIcon';
-const EditProfileImage = ({ profileImageUrl }: { profileImageUrl: any }) => {
+const EditProfileImage = ({ profileImageUrl }: { profileImageUrl: string }) => {
   const [profile, setProfile] = useState<null | File>(null);
   const fileInput = useRef<HTMLInputElement | null>(null);
 
@@ -28,7 +28,7 @@ const EditProfileImage = ({ profileImageUrl }: { profileImageUrl: any }) => {
   return (
     <section className="flex justify-center items-center">
       <div className="flex relative h-[72px] w-[72px]">
-        {profile ? (
+        {profileImageUrl && profile ? (
           <Image
             className="rounded-full"
             alt="profile"
@@ -37,10 +37,16 @@ const EditProfileImage = ({ profileImageUrl }: { profileImageUrl: any }) => {
             onLoad={() => URL.revokeObjectURL(String(profile))}
             width={72}
             height={72}
-            priority
+            priority={false}
           />
         ) : (
-          <Image alt="nonProfile" src={baseProfile} priority={false} />
+          <Image
+            alt="nonProfile"
+            src={baseProfile}
+            priority={false}
+            width={72}
+            height={72}
+          />
         )}
         <input
           onChange={(e) => onsetProfileHandler(e)}

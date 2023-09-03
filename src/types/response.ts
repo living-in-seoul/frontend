@@ -7,16 +7,12 @@ interface ResponseLogin {
 
 /**소셜 로그인시 받아오는 데이터 */
 interface ResponseOauthLogin {
-  msg: string;
-  result: {
-    email: string;
-    nickname: string;
-    AccessToken: string;
-    AccessTokenExpired: string;
-    refreshToken?: string;
-    RefreshTokenExpired?: string;
-    profileImg: string;
-  };
+  nickname: string;
+  accessToken: string;
+  refreshToken: string;
+  expirationDate: string;
+  profileImg?: string;
+  hasSignup: boolean;
 }
 
 /** 토큰재발급 */
@@ -375,4 +371,11 @@ interface YouthInfo {
   sporScvl?: string[];
   tintCherCn?: string[];
   tintCherCtpcCn?: string[];
+}
+
+interface RessponseLikeandScrap {
+  hasLiked: boolean;
+  hasScrapped: boolean;
+  likeSize: number;
+  scrapSize: number;
 }

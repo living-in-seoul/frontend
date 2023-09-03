@@ -5,9 +5,15 @@ export default function Loading() {
   // Or a custom loading skeleton component
   return (
     <section className="relative w-full h-screen flex items-center justify-center flex-col bg-teal-400">
-      <Image src={logo} alt="logo" width={288} height={36} />
+      <Image src={logo} alt="logo" width={288} height={36} priority={false} />
       <div className="absolute bottom-0">
-        <Image src={seole} alt="logo" width={300} height={400} />
+        <Image
+          src={seole}
+          alt="logo"
+          width={300}
+          height={400}
+          priority={false}
+        />
       </div>
     </section>
   );

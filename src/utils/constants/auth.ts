@@ -7,24 +7,29 @@ export const socialUrls = [
     url: kakakoUrl,
     text: '카카오',
     bgColor: 'bg-customYellows',
+    active: 'active:bg-yellow-400',
     color: 'text-neutral-700',
   },
+
   {
     url: naverUrl,
     text: '네이버',
     bgColor: 'bg-green-500',
+    active: 'active:bg-green-600',
     color: 'text-white',
   },
   {
     url: googleUrl,
     text: '구글',
     bgColor: 'bg-white',
+    active: 'active:bg-neutral-100',
     color: 'text-neutral-700',
   },
   {
     url: '',
     text: '이메일',
     bgColor: 'bg-zinc-300',
+    active: 'active:bg-neutral-400',
     color: 'text-neutral-700',
   },
 ];

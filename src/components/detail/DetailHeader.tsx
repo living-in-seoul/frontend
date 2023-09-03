@@ -1,7 +1,7 @@
 'use client';
 
 import Icons from '@/components/common/Icons';
-import { back, detailLinkIcon } from '@/utils/Icon';
+import { back, detailColThreeDotIcon, detailLinkIcon } from '@/utils/Icon';
 import { useRouter } from 'next/navigation';
 import EditProfileThreeDot from '../profile/editpage/EditProfileThreeDot';
 
@@ -24,9 +24,10 @@ const DetailHeader = ({ data }: { data: ResponseDetailData }) => {
           />
         </div>
         <div>
-          <EditProfileThreeDot
-            nickname={data.result.user.nickname}
-            type="detail"
+          <Icons
+            path={detailColThreeDotIcon}
+            fill="#404040"
+            onClick={() => {}}
           />
         </div>
       </div>

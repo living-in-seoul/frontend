@@ -1,19 +1,23 @@
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import { profile } from '../../../public';
 import { getTimeAgo } from '@/utils/utilFunc';
 
 interface DetailMainProps {
   nickname: string;
   createdAt: string;
+  userImg?: string | StaticImageData | null;
   postViewCount?: number;
   onMap?: boolean;
+  ondetail?: boolean;
 }
 
 const UserProfile = ({
   nickname,
   createdAt,
+  userImg = profile,
   postViewCount,
   onMap = false,
+  ondetail = false,
 }: DetailMainProps) => {
   return (
     <>
@@ -27,6 +31,7 @@ const UserProfile = ({
               fill
               className="absolute top-0"
               sizes={'36px'}
+              priority={false}
             />
           </div>
         )}
