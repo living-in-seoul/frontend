@@ -6,7 +6,7 @@ import ChooseLocation from '@/components/write/location/ChooseLocation';
 import UploadImageModal from '@/components/write/Image/UploadImageModal';
 import { ChangeEvent, useState } from 'react';
 import Icons from '../common/Icons';
-import { closeX, downdrop, hashtagIcon } from '@/utils/Icon';
+import { downdrop, hashtagIcon } from '@/utils/Icon';
 import UploadImage from './Image/UploadImage';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
@@ -24,11 +24,7 @@ import { Toaster } from 'react-hot-toast';
 const WriteContent = () => {
   const [formData, setFormData] = useRecoilState(formDataState);
   const [tagText, setTagText] = useState<string>('');
-  const [isBottomSheetOpen, setisBottomSheetState] = useRecoilState(
-    writeBottomSheetState,
-  );
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const setImagePortalState = useSetRecoilState(MapPortalState);
   const [openImagePortal, setOpenImagePortal] =
     useRecoilState(ImagePortalState);
   const [openMapPortal, setOpenMapPortal] = useRecoilState(MapPortalState);
@@ -37,6 +33,8 @@ const WriteContent = () => {
     setFormData,
     setTagText,
   });
+  const setisBottomSheetState = useSetRecoilState(writeBottomSheetState);
+  const setImagePortalState = useSetRecoilState(MapPortalState);
 
   const onSelectOptionHandler = (name: string) => {
     name === '전체' ? setSelectedOption('') : setSelectedOption(name);
@@ -109,7 +107,7 @@ const WriteContent = () => {
       {openImagePortal && (
         <ModalPortal nodeName="imagePortal">
           <ModalOutside
-            className="overflow-hidden p-2 bg-white w-4/5 h-1/4 rounded-2xl max-w-md"
+            className=" w-full bottom-0 max-w-md h-[120px] "
             onClose={() => setOpenImagePortal(false)}
           >
             <UploadImageModal onClose={() => setOpenImagePortal(false)} />

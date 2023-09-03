@@ -90,7 +90,7 @@ const WriteHeader = () => {
         const message = await res.json();
         alert(message);
         setImageState(null);
-        resetStates(); //되는지 확인
+        resetStates();
         router.back();
       } catch (e) {
         toast('모든 필드를 입력해주세요.', {

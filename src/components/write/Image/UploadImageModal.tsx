@@ -34,12 +34,9 @@ const UploadImageModal = ({ onClose }: UploadImageModalProps) => {
 
   return (
     <div className=" h-full w-full">
-      <div className=" items-center flex justify-center w-full h-10 text-center text-sm">
-        사진 업로드
-      </div>
       <div className="relative w-full h-16">
         <label className="absolute w-full h-full flex items-center justify-center cursor-pointer">
-          갤러리에서 가져오기
+          사진 업로드
           <input
             className="opacity-0 absolute w-full h-full"
             name="postImg"
