@@ -178,7 +178,7 @@ export const convertToXY = (
 /** 년도월일 */
 export const getCurrentDateAndTime = () => {
   let now = new Date();
-  now.setHours(now.getHours() - 1); // 1시간을 뺍니다.
+  now.setHours(now.getHours() - 3); // 3시간을 뺍니다.
 
   const year = now.getFullYear();
   const month = (now.getMonth() + 1).toString().padStart(2, '0');

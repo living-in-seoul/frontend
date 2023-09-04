@@ -7,9 +7,9 @@ import { getCurrentWeather } from '@/utils/utilFunc';
 const WeatherComponent = () => {
   const { data: weather } = useSWR<ResponseWeather>(
     `/api/home/weather/location`,
-    { suspense: true },
+    { suspense: true, revalidateOnFocus: false, revalidateOnReconnect: false },
   );
-
+  console.log(weather);
   const icon = weather
     ? getCurrentWeather(weather?.items.filteredItems)
     : '맑음';
