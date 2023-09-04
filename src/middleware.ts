@@ -29,6 +29,7 @@ export const middleware = async (request: NextRequest) => {
     );
     return NextResponse.redirect(signInUrl);
   }
+
   // if (request.nextUrl.pathname.startsWith('/api')) {
   //   const requestHeaders = new Headers(request.headers);
   //   accessToken &&
@@ -48,11 +49,12 @@ export const config = {
     // '/api/write',
     // '/api/liked',
     // '/signin/:path*',
-    // '/mypage',
+    '/mypage',
+    // '/alert',
     '/write',
     '/editprofile/:path*',
     // '/signup/first',
-    // '/signin',
+    '/signin',
     '/',
   ],
 };
