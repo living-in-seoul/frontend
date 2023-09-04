@@ -5,35 +5,75 @@ import {
   LocationSelectIcon,
   SearchIcon,
 } from '@/components/profile/editpage/EditImageIcon';
-import { polygonState } from '@/recoil/mapStates';
+import { centerState, currentState, polygonState } from '@/recoil/mapStates';
 import { filledLocation } from '@/utils/Icon';
 import { useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import Link from 'next/link';
 import Input from '@/components/common/Input';
+import { OpenSearchState } from '@/recoil/homeState';
+import { locationBottomSheetState } from '@/recoil/bottomsheet';
 
 const LocationSelect = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [polygon, setPolygon] = useRecoilState(polygonState);
   const [selected, setSelected] = useState<'lastVisited' | 'myhome'>('myhome');
+  const [openSearchModal, setOpenSearchModal] = useRecoilState(OpenSearchState);
+  const [isBottomSheetOpen, setisBottomSheetState] = useRecoilState(
+    locationBottomSheetState,
+  );
+  const setCurrentState = useSetRecoilState(currentState);
+  const setCenterState = useSetRecoilState(centerState);
   const lastVisited = localStorage.getItem('lastVisited');
+
+  const onClickForCurrent = () => {
+    setIsLoading(true);
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const latitude = pos.coords.latitude;
+        const longitude = pos.coords.longitude;
+        setCenterState({
+          lat: latitude,
+          lng: longitude,
+        });
+        setCurrentState({
+          lat: latitude,
+          lng: longitude,
+        });
+        setIsLoading(false);
+      },
+      () => {
+        setIsLoading(false);
+      },
+    );
+  };
+
+  const onClickToSearch = () => {
+    setisBottomSheetState(false);
+    setOpenSearchModal(true);
+  };
 
   return (
     <section className="flex flex-col justify-center items-center gap-5">
       <h1 className="font-bold">주소 설정</h1>
-      <div className="w-full h-9  rounded-3xl">
-        <Input
-          placeholder="구, 동으로 검색"
-          formColor="bg-gray7"
-          inputColor="bg-gray7"
-          rightElement={<SearchIcon />}
-          // onClick={}
-        />
+      <div className="w-full  rounded-3xl">
+        <div className="mx-4 flex flex-col gap-4 ">
+          <Input
+            placeholder="구, 동으로 검색"
+            formColor="bg-gray7"
+            inputColor="bg-gray7"
+            rightElement={<SearchIcon />}
+            onClick={onClickToSearch}
+          />
+          <div className="flex justify-center items-center w-full border border-neutral-300 py-1.5 rounded-lg gap-1.5 cursor-pointer ">
+            {LocationSelectIcon()}
+            <div className="text-sm" onClick={onClickForCurrent}>
+              현재 위치로 설정하기
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="flex justify-center items-center border border-neutral-300 w-full py-1.5 rounded-lg gap-1 cursor-pointer">
-        {LocationSelectIcon()}
-        <div className="text-sm ">현재 위치로 설정하기</div>
-      </div>
       <div className="w-full h-28 border-t-4 border-neutral-300">
         <div className="flex items-center h-1/2 px-2 gap-3 cursor-pointer">
           <Icons path={filledLocation} option={{ fill: '' }} />

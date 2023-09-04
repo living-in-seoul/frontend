@@ -1,4 +1,4 @@
-import { getBoard, getHotBoard, getUserBoard } from '@/service/board';
+import { getHotBoard, getUserBoard } from '@/service/board';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -10,19 +10,8 @@ export const GET = async (_: NextRequest, context: Context) => {
   const slugLength = context.params.slug.length;
   const token = cookies().get('accessToken');
   if (slugLength === 1) {
-    if (token) {
-      const postId = context.params.slug[0];
-      const data = await getUserBoard(postId).then((data) => data?.result);
-      const response = {
-        hasLiked: data?.hasLiked,
-        hasScrapped: data?.hasScrapped,
-        likeSize: data?.post.likeSize,
-        scrapSize: data?.post.scrapSize,
-      };
-      return NextResponse.json(response);
-    }
     const postId = context.params.slug[0];
-    const data = await getBoard(postId).then((data) => data?.result);
+    const data = await getUserBoard(postId).then((data) => data?.result);
     const response = {
       hasLiked: data?.hasLiked,
       hasScrapped: data?.hasScrapped,

@@ -28,7 +28,8 @@ const DefaultLogin = () => {
       password: '',
     },
   });
-  const url = callbackUrl[0] ?? '/home';
+
+  const url = callbackUrl[0] === '' ? '/home' : callbackUrl[0];
   const onSubmitHandler: SubmitHandler<RequestLogin> = async (data) => {
     setIsLoading(true);
     const response = await fetch('/api/signin', {
@@ -86,12 +87,12 @@ const DefaultLogin = () => {
           isText={false}
         />
         <div className="flex flex-row justify-center gap-6 ">
-          <Link
+          <div
             className="border-b text-[10px] text-zinc-400"
-            href={'/signup/first'}
+            onClick={() => toast.error('서비스 준비중입니다')}
           >
             비밀번호 찾기
-          </Link>
+          </div>
           <div
             className="border-b text-[10px] text-zinc-400"
             onClick={() => router.replace('/signup/first')}

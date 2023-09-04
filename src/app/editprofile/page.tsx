@@ -1,15 +1,27 @@
 import EditProfileHeader from '@/components/profile/editpage/EditProfileHeader';
 import EditProfileImage from '@/components/profile/editpage/EditProfileImage';
 import EditProfileInfo from '@/components/profile/editpage/EditProfileInfo';
+import { verifyAndRefreshToken } from '@/service/token';
 import { getProfile } from '@/service/user';
+import { cookies } from 'next/headers';
 
 const EditProfilePage = async () => {
+  const token = cookies().get('accessToken')?.value;
+  if (!token) {
+    await verifyAndRefreshToken();
+  }
+
   const userProfile = await getProfile();
   return (
     <section className="flex flex-col relative w-full h-full gap-6">
       <EditProfileHeader />
-      <EditProfileImage profileImageUrl={userProfile?.profileImageUrl} />
-      <EditProfileInfo profile={userProfile} />
+
+      {userProfile && (
+        <>
+          <EditProfileImage profileImageUrl={userProfile?.profileImageUrl} />
+          <EditProfileInfo profile={userProfile} />
+        </>
+      )}
     </section>
   );
 };

@@ -17,7 +17,7 @@ const UserProfile = ({
   userImg = profile,
   postViewCount,
   onMap = false,
-  ondetail = false,
+  ondetail = true,
 }: DetailMainProps) => {
   return (
     <>
@@ -59,7 +59,8 @@ const UserProfile = ({
               !onMap && 'leading-3'
             } `}
           >
-            {getTimeAgo(createdAt)} {`· 조회수 ${postViewCount ?? 0}`}
+            {getTimeAgo(createdAt)}{' '}
+            {ondetail && `· 조회수 ${postViewCount ?? 0}`}
           </div>
         </div>
       </div>

@@ -1,5 +1,4 @@
 import ActionButtons from '@/components/map/actions/ActionButtons';
-import BottomSheetOption from '@/components/map/BottomSheetOption';
 import MapHeader from '@/components/map/header/MapHeader';
 import MapProvider from '@/context/MapProvider';
 
@@ -8,7 +7,7 @@ export default function MapLayout({ children }: { children: React.ReactNode }) {
     <section className="w-full max-w-2md h-screen relative">
       <MapHeader />
       <MapProvider>{children}</MapProvider>
-      <BottomSheetOption />
+      {/* <BottomSheetOption /> */}
       <ActionButtons />
     </section>
   );

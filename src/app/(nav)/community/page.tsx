@@ -38,6 +38,7 @@ const CommunityPage = async ({ searchParams }: PageProps) => {
         totalpage={lists?.pageable.totalPages ?? 1}
         ordertype={ordertype}
       />
+
       <WriteButton section="home" />
     </section>
   );

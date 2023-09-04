@@ -5,6 +5,12 @@ import PostItemSkeleton from './PostItemSkeleton';
 import Select from '../common/Select';
 import { useRouter } from 'next-nprogress-bar';
 import CommunityPostItem from './CommunityPostItem';
+import AuthModal from './AuthModal';
+import BottomSheet from '../BottomSheet';
+import {
+  loginBottomSheetState,
+  writeBottomSheetState,
+} from '@/recoil/bottomsheet';
 
 interface CommunityBoardProps {
   title?: string;
@@ -122,6 +128,9 @@ const CommunityBoardList = ({
         </div>
       )}
       {/* <CategoryPostList /> */}
+      {/* <BottomSheet state={loginBottomSheetState}>
+        <AuthModal />
+      </BottomSheet> */}
     </article>
   );
 };

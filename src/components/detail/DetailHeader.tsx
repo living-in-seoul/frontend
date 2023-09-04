@@ -3,12 +3,25 @@
 import Icons from '@/components/common/Icons';
 import { back, detailColThreeDotIcon, detailLinkIcon } from '@/utils/Icon';
 import { useRouter } from 'next/navigation';
-import EditProfileThreeDot from '../profile/editpage/EditProfileThreeDot';
+import DetailModal from './DetailModal';
+import { useEffect, useState } from 'react';
+import { detailModalArray, reportModalArray } from '@/utils/constants/modal';
 
 const DetailHeader = ({ data }: { data: ResponseDetailData }) => {
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [username, setUsername] = useState<string>('');
   const route = useRouter();
+  useEffect(() => {
+    const username = localStorage.getItem('nickname');
+    username && setUsername(username);
+  }, []);
+
+  const modalArray =
+    username === data.result.user.nickname
+      ? detailModalArray
+      : reportModalArray;
   return (
-    <div className="flex flex-row justify-between  px-4 py-4">
+    <section className="flex flex-row justify-between  px-4 py-4">
       <div className="flex flex-row gap-4">
         <div>
           <Icons path={back} fill="#404040" onClick={() => route.back()} />
@@ -23,11 +36,19 @@ const DetailHeader = ({ data }: { data: ResponseDetailData }) => {
           <Icons
             path={detailColThreeDotIcon}
             fill="#404040"
-            onClick={() => {}}
+            onClick={() => setOpenModal(true)}
           />
         </div>
       </div>
-    </div>
+      {openModal && (
+        <DetailModal
+          modalArray={modalArray}
+          onClickUpperHandler={() => {}}
+          onClickLowerHandler={() => {}}
+          setOpenModal={setOpenModal}
+        />
+      )}
+    </section>
   );
 };
 

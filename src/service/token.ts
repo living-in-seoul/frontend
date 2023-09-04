@@ -5,6 +5,7 @@ import { NextResponse } from 'next/server';
 export const getRefreshToken = async () => {
   const refreshToken = cookies().get('refreshToken')?.value;
   const data = JSON.stringify({ refreshToken: refreshToken });
+
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER}/token/refresh`,
     {
@@ -15,7 +16,6 @@ export const getRefreshToken = async () => {
       body: data,
     },
   ).then((response) => response.json());
-
   return response;
 };
 
@@ -30,12 +30,18 @@ export async function verifyAndRefreshToken() {
   if (accessToken) {
     return new Response('토큰 있음!', {
       status: 200,
+      statusText: 'OK',
     });
   } else {
     if (refreshToken) {
       try {
         const res = await getRefreshToken();
+
         const newAT = res.accessToken;
+        console.log('newAT', newAT);
+        // console.log(cookies().get('accessToken')?.value);
+        // console.log(cookies().get('refreshToken')?.value);
+
         cookies().set({
           name: 'accessToken',
           value: newAT,
@@ -43,17 +49,21 @@ export async function verifyAndRefreshToken() {
           path: '/',
           maxAge: 60 * 60 * 2,
         });
+
         return new Response('갱신 완료!', {
           status: 201,
+          statusText: 'OK',
         });
       } catch (error) {
         return new Response('rt 만료, 다시 로그인해주세요', {
           status: 403,
+          statusText: 'rt expired',
         });
       }
     } else {
       return new Response('rt 만료, 다시 로그인해주세요 ', {
         status: 403,
+        statusText: 'rt expired',
       });
     }
   }

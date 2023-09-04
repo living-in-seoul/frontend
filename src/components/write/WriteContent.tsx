@@ -18,13 +18,13 @@ import SelectCategory from './SelectCategory';
 import SelectedLocation from './location/SelectedLocation';
 import DisplayTags from './tags/DisplayTags';
 import BottomSheet from '../BottomSheet';
-import { writeBottomSheetState } from '@/recoil/bottomsheet';
+import { bottomSheetState, writeBottomSheetState } from '@/recoil/bottomsheet';
 import { Toaster } from 'react-hot-toast';
 
 const WriteContent = () => {
   const [formData, setFormData] = useRecoilState(formDataState);
   const [tagText, setTagText] = useState<string>('');
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  // const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [openImagePortal, setOpenImagePortal] =
     useRecoilState(ImagePortalState);
   const [openMapPortal, setOpenMapPortal] = useRecoilState(MapPortalState);
@@ -33,14 +33,36 @@ const WriteContent = () => {
     setFormData,
     setTagText,
   });
-  const setisBottomSheetState = useSetRecoilState(writeBottomSheetState);
+
+  const [bottomSheet, setBottomSheetState] = useRecoilState(bottomSheetState);
+
+  const { isActive, type, selectedOption } = bottomSheet;
+
+  // const onSelectOptionHandler = (name: string) => {
+  //   setBottomSheetState((prevState) => ({
+  //     ...prevState,
+  //     isActive: false,
+  //     selectedOption: name === '전체' ? null : name,
+  //   }));
+
+  //   setFormData((prev) => ({ ...prev, category: name }));
+  // };
+  const onBottomSheetOnHandler = () => {
+    setBottomSheetState((prevState) => ({
+      type: 'write',
+      link: null,
+      isActive: true,
+      selectedOption: null,
+    }));
+  };
+
   const setImagePortalState = useSetRecoilState(MapPortalState);
 
-  const onSelectOptionHandler = (name: string) => {
-    name === '전체' ? setSelectedOption('') : setSelectedOption(name);
-    setisBottomSheetState(false);
-    setFormData((prev) => ({ ...prev, category: name }));
-  };
+  // const onSelectOptionHandler = (name: string) => {
+  //   name === '전체' ? setSelectedOption('') : setSelectedOption(name);
+  //   setisBottomSheetState(false);
+  //   setFormData((prev) => ({ ...prev, category: name }));
+  // };
 
   const onChangeInputHandler = (
     e: ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement>,
@@ -58,7 +80,7 @@ const WriteContent = () => {
       <form className="flex flex-col w-full h-[85vh] justify-between items-center">
         <div
           className="flex justify-center text-sm text-center text-zinc-700 w-[90%] border border-zinc-400 h-8 mt-4 items-center gap-3 rounded-3xl cursor-pointer"
-          onClick={() => setisBottomSheetState(true)}
+          onClick={onBottomSheetOnHandler}
         >
           {selectedOption ? selectedOption : '주제를 선택해 주세요.'}
           <Icons path={downdrop} />
@@ -98,12 +120,13 @@ const WriteContent = () => {
           <UploadImage />
         </div>
       </form>
-      <BottomSheet state={writeBottomSheetState}>
+      {/* <BottomSheet /> */}
+      {/* <BottomSheet state={writeBottomSheetState}>
         <SelectCategory
           selectedOption={selectedOption}
           onSelectOptionHandler={onSelectOptionHandler}
         />
-      </BottomSheet>
+      </BottomSheet> */}
       {openImagePortal && (
         <ModalPortal nodeName="imagePortal">
           <ModalOutside

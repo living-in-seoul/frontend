@@ -7,6 +7,11 @@ export const middleware = async (request: NextRequest) => {
   const { pathname, search, origin, basePath } = request.nextUrl;
   const signinPage = request.nextUrl.pathname.startsWith('/signin');
   const signupPage = request.nextUrl.pathname.startsWith('/signup');
+  if (pathname === '/') {
+    const signInUrl = new URL(`${basePath}/home`, origin);
+    return NextResponse.redirect(signInUrl);
+  }
+
   if (signupPage || signinPage) {
     if (refreshToken) {
       const signInUrl = new URL(`${basePath}/home`, origin);
@@ -24,6 +29,7 @@ export const middleware = async (request: NextRequest) => {
     );
     return NextResponse.redirect(signInUrl);
   }
+
   // if (request.nextUrl.pathname.startsWith('/api')) {
   //   const requestHeaders = new Headers(request.headers);
   //   accessToken &&
@@ -44,10 +50,12 @@ export const config = {
     // '/api/liked',
     // '/signin/:path*',
     '/mypage',
+    // '/alert',
     '/write',
     '/editprofile/:path*',
     // '/signup/first',
-    // '/signin',
+    '/signin',
+    '/',
   ],
 };
 

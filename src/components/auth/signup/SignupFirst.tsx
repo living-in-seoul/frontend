@@ -134,7 +134,7 @@ const SignupFirst = () => {
             type="submit"
             size="w-full"
             title={
-              isLoading ? <BeatLoader size={10} color="#2DDAB0" /> : '수정하기'
+              isLoading ? <BeatLoader size={10} color="#2DDAB0" /> : '가입하기'
             }
             disabled={isLoading}
             bgColor="bg-zinc-300"

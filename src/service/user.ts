@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
+import { verifyAndRefreshToken } from './token';
 
 /** 회원가입 필수사항 시 */
 export const postSignup = async (data: RequestEssentialRegister) => {
@@ -86,6 +87,7 @@ export const oauthSignin = async (data: RequestOauthLogin) => {
 /** 프로필 정보 가져오기 */
 export const getProfile = async () => {
   const token = cookies().get('accessToken')?.value;
+  // console.log('token', token);
   const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/profile/me`, {
     headers: { authorization: 'Bearer ' + token },
     next: { revalidate: 0 },

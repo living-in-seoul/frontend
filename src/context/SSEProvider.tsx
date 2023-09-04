@@ -1,5 +1,13 @@
 'use client';
-import React, { createContext, useEffect, ReactNode, useContext } from 'react';
+import React, {
+  createContext,
+  useEffect,
+  ReactNode,
+  useContext,
+  useState,
+} from 'react';
+import { toast } from 'react-hot-toast';
+import { UserContext } from './UserProvider';
 
 type SSEData = any;
 
@@ -16,7 +24,11 @@ const SSEProvider: React.FC<SSEProviderProps> = ({
   eventTypes,
   children,
 }) => {
+  const user = useContext(UserContext);
   useEffect(() => {
+    if (!user) {
+      return;
+    }
     const eventSource = new EventSource(url);
 
     eventSource.onopen = () => console.log('SSE 연결 완료');
@@ -29,20 +41,31 @@ const SSEProvider: React.FC<SSEProviderProps> = ({
 
     eventTypes.forEach((type) => {
       eventSource.addEventListener(type, (event) => {
+        console.log(type, event);
         console.log(`${type} from server`, event.data);
+        toast(`새 이벤트: ${type}`, {
+          icon: '📍',
+        });
       });
     });
 
     return () => {
       eventSource.close();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [eventTypes, url, user]);
 
   return (
-    <SSEContext.Provider value={null /* 이 부분에 실제 SSE 데이터를 전달 */}>
-      {children}
-    </SSEContext.Provider>
+    <>
+      {user ? (
+        <SSEContext.Provider
+          value={null /* 이 부분에 실제 SSE 데이터를 전달 */}
+        >
+          {children}
+        </SSEContext.Provider>
+      ) : (
+        <>{children}</>
+      )}
+    </>
   );
 };
 

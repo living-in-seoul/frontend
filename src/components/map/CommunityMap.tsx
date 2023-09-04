@@ -20,7 +20,7 @@ import {
   mapOptions,
   seoulCenterCoords,
 } from '@/utils/constants/constants';
-import { mapBottomSheetState } from '@/recoil/bottomsheet';
+import { bottomSheetState, mapBottomSheetState } from '@/recoil/bottomsheet';
 import Button from '../common/Button';
 
 const CommunityMap = () => {
@@ -34,14 +34,18 @@ const CommunityMap = () => {
   const setMarkerId = useSetRecoilState(markerIdState);
   const setBoardListState = useSetRecoilState(boardListState);
   const setCommunityKey = useSetRecoilState(communityKeyState);
-
+  const setBottomSheetState = useSetRecoilState(bottomSheetState);
+  /** 모달오픈 */
+  const openMapBottomSheet = useCallback(() => {
+    setBottomSheetState({ isActive: true, type: 'map', link: null });
+  }, [setBottomSheetState]);
   //로컬스토리지 여기서 잠깐 저장좀
   localStorage.setItem('location', '강남구');
 
   useEffect(() => {
     const getCenter = () => {
       const gu =
-        (localStorage.getItem('location') as guchung) ?? polygonValue.gu;
+        (localStorage.getItem('location_gu') as guchung) ?? polygonValue.gu;
       if (gu && seoulCenterCoords.hasOwnProperty(gu)) {
         setCenter(seoulCenterCoords[gu]);
       }
@@ -87,7 +91,8 @@ const CommunityMap = () => {
         </div>
       ));
     }
-  }, [boardList, polygonValue.gu]);
+    console.log(boardList);
+  }, [polygonValue.gu]);
 
   useEffect(() => {
     if (boardList) setBoardListState(boardList);
@@ -104,9 +109,9 @@ const CommunityMap = () => {
     (_: google.maps.event, postId: number, latlng: LatLng) => {
       setMarkerId(postId);
       setCenter(latlng);
-      setisBottomSheetState(true);
+      openMapBottomSheet();
     },
-    [setMarkerId, setisBottomSheetState],
+    [openMapBottomSheet, setMarkerId],
   );
 
   const onMouseUpHandler = async () => {

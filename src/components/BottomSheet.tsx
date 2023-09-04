@@ -2,25 +2,33 @@
 import useOutsideClick from '@/hooks/useOutsideClick';
 import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import { RecoilState, useRecoilState } from 'recoil';
+import LoginContent from './bottomsheet/LoginContent';
+import MapContent from './bottomsheet/MapContent';
+import DefaultContent from './bottomsheet/DefaultContent';
+import { bottomSheetState } from '@/recoil/bottomsheet';
+import LocationSelect from './home/location/LocationSelect';
+import SelectCategory from './write/SelectCategory';
+import WriteSelect from './bottomsheet/WriteSelect';
+// const DynamicLocationSelect = dynamic(
+//   () => import('./location/LocationSelect'),
+//   {
+//     ssr: false,
+//   },
+// );
 
-interface BottomSheetProps {
-  children: ReactNode;
-  state: RecoilState<boolean>;
-  type?: 'map' | 'default';
-}
+interface BottomSheetProps {}
 
-const BottomSheet = ({
-  children,
-  state,
-  type = 'default',
-}: BottomSheetProps) => {
-  const [isBottomSheetOpen, setisBottomSheetState] = useRecoilState(state);
+const BottomSheet = ({}: BottomSheetProps) => {
+  // const [isBottomSheetOpen, setisBottomSheetState] = useRecoilState(state);
   const scrollY = useRef(0);
   const ref = useRef<HTMLDivElement | null>(null);
-
+  const [bottomSheetInfo, setBottomSheetState] =
+    useRecoilState(bottomSheetState);
+  const isBottomSheetOpen = bottomSheetInfo.isActive;
   useOutsideClick(ref, () => {
-    setisBottomSheetState(false);
+    setBottomSheetState({ ...bottomSheetInfo, isActive: false });
   });
+
   useEffect(() => {
     if (isBottomSheetOpen) {
       scrollY.current = window.scrollY;
@@ -32,12 +40,26 @@ const BottomSheet = ({
     }
   }, [isBottomSheetOpen]);
 
+  const renderContent = () => {
+    switch (bottomSheetInfo.type) {
+      case 'login':
+        return <LoginContent />;
+      case 'write':
+        return <WriteSelect />;
+      case 'map':
+        return <MapContent />;
+      case 'location':
+        return <LocationSelect />;
+      default:
+        return <DefaultContent />;
+    }
+  };
   return (
     <div className="relative w-full h-full">
       <div
         className={`z-50 fixed inset-0 max-w-md w-full left-1/2 -translate-x-1/2 transition-opacity duration-300 ${
           isBottomSheetOpen
-            ? type === 'map'
+            ? bottomSheetInfo.type === 'map'
               ? ''
               : 'bg-black opacity-50'
             : 'opacity-0 pointer-events-none'
@@ -49,7 +71,7 @@ const BottomSheet = ({
           isBottomSheetOpen ? 'translate-y-0' : 'translate-y-full'
         }`}
       >
-        {children}
+        {renderContent()}
       </div>
     </div>
   );
