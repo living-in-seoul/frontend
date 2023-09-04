@@ -9,7 +9,6 @@ const WeatherComponent = () => {
     `/api/home/weather/location`,
     { suspense: true, revalidateOnFocus: false, revalidateOnReconnect: false },
   );
-  console.log(weather);
   const icon = weather
     ? getCurrentWeather(weather?.items.filteredItems)
     : '맑음';

@@ -14,10 +14,7 @@ const HomeSectionTitle = ({ title, link }: HomeSectionTitleProps) => {
         {title}
       </div>
       {link && (
-        <Link
-          href={'/community/review'}
-          className="flex gap-2 items-center justify-center"
-        >
+        <Link href={link} className="flex gap-2 items-center justify-center">
           <span className="text-neutral-500 text-xs font-medium leading-loose">
             더보기
           </span>

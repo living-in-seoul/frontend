@@ -26,7 +26,7 @@ const HomeReviewSection = async () => {
     <article className="relative w-full border-t-[5px] pt-2.5 border-zinc-300 pb-5">
       <HomeSectionTitle
         title="이웃이 남긴 후기를 살펴보세요"
-        link="/community/review"
+        link="/community?category=review"
       />
       {HotTagReview ? (
         <>

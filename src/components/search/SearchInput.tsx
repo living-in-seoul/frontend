@@ -91,7 +91,7 @@ const SearchInput = () => {
         />
         <ul
           className="absolute top-28 left-0 right-0 overflow-y-scroll z-50 bg-white"
-          hidden={debounceKeyword.length === 0 || showlist}
+          hidden={debounceKeyword.length === 0 || data.length === 0}
           role="listbox"
         >
           {data.length ? (
