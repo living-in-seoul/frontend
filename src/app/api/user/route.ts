@@ -6,8 +6,6 @@ import { NextRequest, NextResponse } from 'next/server';
 export const GET = async (req: NextRequest) => {
   const verify = await verifyAndRefreshToken();
 
-  // console.log('verify', verify);
-
   if (verify.status === 200 || verify.status === 201) {
     return new Response('OK', { status: 200 });
   }

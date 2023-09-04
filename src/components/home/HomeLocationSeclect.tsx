@@ -1,7 +1,10 @@
 'use client';
 
 import Icons from '@/components/common/Icons';
-import { locationBottomSheetState } from '@/recoil/bottomsheet';
+import {
+  bottomSheetState,
+  locationBottomSheetState,
+} from '@/recoil/bottomsheet';
 import { polygon } from '@/utils/Icon';
 import { useRecoilState } from 'recoil';
 import BottomSheet from '../BottomSheet';
@@ -15,26 +18,22 @@ interface HomeLocationSeclectProps {
   onCommunity?: boolean;
 }
 
-const DynamicLocationSelect = dynamic(
-  () => import('./location/LocationSelect'),
-  {
-    ssr: false,
-  },
-);
 const HomeLocationSeclect = ({
   onCommunity = false,
 }: HomeLocationSeclectProps) => {
-  const [isBottomSheetOpen, setisBottomSheetState] = useRecoilState(
-    locationBottomSheetState,
-  );
-  const [openSearchModal, setOpenSearchModal] = useRecoilState(OpenSearchState);
+  const [bottomSheetInfo, setBottomSheetState] =
+    useRecoilState(bottomSheetState);
+  const openLocationBottomSheet = () => {
+    setBottomSheetState({ isActive: true, type: 'location', link: null });
+  };
+
   const pathname = usePathname();
 
   return (
     <>
       <div
         className="flex gap-2.5 items-center p-2.5 hover:cursor-pointer w-full "
-        onClick={() => setisBottomSheetState(true)}
+        onClick={openLocationBottomSheet}
       >
         <div
           className={`${
@@ -54,14 +53,13 @@ const HomeLocationSeclect = ({
           />
         </div>
       </div>
-      <BottomSheet state={locationBottomSheetState}>
-        <DynamicLocationSelect />
-      </BottomSheet>
-      {openSearchModal && (
+      {/* <BottomSheet state={locationBottomSheetState}>
+      </BottomSheet> */}
+      {/* {openSearchModal && (
         <div className="absolute top-0 left-0 bg-white flex flex-col gap-4 w-full h-screen">
           <SearchModal />
         </div>
-      )}
+      )} */}
     </>
   );
 };

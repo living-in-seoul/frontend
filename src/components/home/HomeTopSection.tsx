@@ -1,9 +1,8 @@
-import Icons from '@/components/common/Icons';
-import { Alert } from '@/utils/Icon';
 import HomeLocationSeclect from './HomeLocationSeclect';
 import ProfileComponent from './ProfileComponent';
 import dynamic from 'next/dynamic';
 import BeatLoader from '../common/Spinner';
+import AlertButtonComponent from './AlertButtonComponent';
 
 const DynamicWeatherComponent = dynamic(
   () => import('./weather/WeatherComponent'),
@@ -24,16 +23,8 @@ const HomeTopSection = () => {
       <div className="relative z-10 flex flex-col w-full h-64">
         <div className="flex justify-between pt-[54px] pb-4 px-1.5">
           <HomeLocationSeclect />
-          <div className="flex pr-3.5 items-center justify-center">
-            <Icons
-              path={Alert}
-              fill="none"
-              option={{
-                stroke: 'white',
-                strokeWidth: '1.5',
-                strokeLinecap: 'round',
-              }}
-            />
+          <div className="flex pr-3.5 items-center justify-center cursor-pointer">
+            <AlertButtonComponent link="/alert" />
           </div>
         </div>
         <div className="flex flex-col px-4 gap-6">

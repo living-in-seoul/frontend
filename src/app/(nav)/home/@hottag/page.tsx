@@ -4,6 +4,7 @@ import HomeWeekleyTopFiveSection from '@/components/home/HomeWeekleyTopFive';
 const HotTagPage = async () => {
   const weekleyTopFivelist = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER}/tags/posts?category=&page=1&size=5&hashtagName=&type=popular`,
+    { next: { revalidate: 1000 } },
   ).then<ResponseRegister>((res) => res.json());
 
   return (

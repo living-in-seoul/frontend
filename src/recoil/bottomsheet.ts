@@ -20,3 +20,20 @@ export const locationBottomSheetState = atom<boolean>({
   key: 'locationBottomSheetState',
   default: false,
 });
+
+interface BottomSheetStateProps {
+  isActive: boolean;
+  type: 'map' | 'write' | 'login' | 'location' | 'default';
+  link: null | string;
+  selectedOption?: string | null; // Add this line
+}
+
+export const bottomSheetState = atom<BottomSheetStateProps>({
+  key: 'bottomSheetState',
+  default: {
+    isActive: false,
+    type: 'default',
+    link: null,
+    selectedOption: null, // Add this line
+  },
+});

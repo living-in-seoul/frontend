@@ -4,7 +4,6 @@ import { profile } from '../../../public';
 
 const ProfileComponent = async () => {
   const user: ResponseUserProfileData = await getProfile();
-
   const userImage =
     user && user.profileImageUrl ? user.profileImageUrl : profile;
   const useHowday: HowdayType =

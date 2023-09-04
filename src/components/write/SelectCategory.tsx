@@ -1,9 +1,10 @@
+'use client';
 import { checked } from '@/utils/Icon';
 import Icons from '../common/Icons';
 import { LINK_NAME } from '@/utils/constants/board';
 
 interface SelectCategoryProp {
-  selectedOption: string | null;
+  selectedOption: string | null | undefined;
   onSelectOptionHandler: (data: string) => void;
 }
 
