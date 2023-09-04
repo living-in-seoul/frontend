@@ -7,6 +7,7 @@ import { useRecoilState } from 'recoil';
 import BottomSheet from '../BottomSheet';
 import LocationSelect from './location/LocationSelect';
 import dynamic from 'next/dynamic';
+import { usePathname } from 'next/navigation';
 
 interface HomeLocationSeclectProps {
   onCommunity?: boolean;
@@ -24,14 +25,18 @@ const HomeLocationSeclect = ({
   const [isBottomSheetOpen, setisBottomSheetState] = useRecoilState(
     locationBottomSheetState,
   );
-
+  const pathname = usePathname();
   return (
     <>
       <div
         className="flex gap-2.5 items-center p-2.5 hover:cursor-pointer w-full "
         onClick={() => setisBottomSheetState(true)}
       >
-        <div className="text-gray2 text-base font-semibold leading-relaxed">
+        <div
+          className={`${
+            pathname === '/home' ? 'text-white' : 'text-black'
+          } text-base font-semibold leading-relaxed`}
+        >
           서울시 전체
         </div>
         <div className="flex items-center justify-center">

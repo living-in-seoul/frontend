@@ -1,6 +1,6 @@
 'use client';
-import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
+
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export default function NavLink({
   category,
@@ -12,6 +12,7 @@ export default function NavLink({
   };
   children: React.ReactNode;
 }) {
+  const router = useRouter();
   const params = useSearchParams();
   const pathname = usePathname();
   const link = category.link
@@ -23,8 +24,8 @@ export default function NavLink({
     : params?.get('category') === null || pathname === '/';
 
   return (
-    <Link
-      href={link}
+    <div
+      onClick={() => router.replace(link)}
       style={{
         fontWeight: isActive ? 'bold' : 'normal',
         color: isActive ? '#2DDAB0' : '#787878',
@@ -32,6 +33,6 @@ export default function NavLink({
       className={`isrelative w-1/4 flex items-center justify-center py-4`}
     >
       {children}
-    </Link>
+    </div>
   );
 }
