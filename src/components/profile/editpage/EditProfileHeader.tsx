@@ -15,11 +15,7 @@ const EditProfileHeader = () => {
         </div>
         <span className="font-bold">내 정보 수정</span>
       </div>
-      {/* <EditProfileThreeDot
-        portalId="editPortal"
-        nickname="aa"
-        type="editProfile"
-      /> */}
+      <EditProfileThreeDot />
     </div>
   );
 };

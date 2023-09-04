@@ -309,7 +309,7 @@ interface ResponseUserProfileData {
   movedDate: string;
   gender: string;
   hometown: string;
-  porfileImageUrl: string;
+  profileImageUrl: string;
 }
 
 /**좋아요 데이터   */
