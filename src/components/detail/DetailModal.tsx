@@ -1,38 +1,58 @@
-'use client';
+import ModalOutside from '../modal/ModalOutside';
+import ModalPortal from '../modal/ModalPortal';
 
-import { useRouter } from 'next/navigation';
-
-export interface modalArrayProps {
+interface ModalArray {
   text: string;
   color: string;
-  first?: boolean;
-  type?: string;
+  first: boolean;
+  type: string;
 }
+
 interface DetailModalProps {
-  modalArray: modalArrayProps[];
-  onFirstHandler: () => void;
-  onSecondHandler: () => void;
+  modalArray: ModalArray[];
+  onClickUpperHandler: () => void;
+  onClickLowerHandler: () => void;
+  setOpenModal: (boolean: boolean) => void;
 }
+
 const DetailModal = ({
   modalArray,
-  onFirstHandler,
-  onSecondHandler,
+  onClickUpperHandler,
+  onClickLowerHandler,
+  setOpenModal,
 }: DetailModalProps) => {
-  const route = useRouter();
-
   return (
-    <article>
-      {modalArray.map((modal, index) => (
-        <div key={index}>
-          <div
-            className={`border-t-2 py-3 flex justify-center border-collapse ${modal.color}`}
-            onClick={modal.first ? onFirstHandler : onSecondHandler}
-          >
-            <span>{modal.text}</span>
-          </div>
-        </div>
-      ))}
-    </article>
+    <ModalPortal nodeName="detailPortal">
+      <ModalOutside
+        className=" bg-white shadow-sm bottom-0 w-full"
+        onClose={() => {
+          setOpenModal(false);
+          document.body.style.overflow = 'auto';
+        }}
+      >
+        <article>
+          {modalArray.map((modal, index) => (
+            <div key={index}>
+              <div
+                className={`border-t-2 py-3 flex justify-center border-collapse ${modal.color}`}
+                onClick={
+                  modal.type === 'report'
+                    ? modal.first
+                      ? () => console.log('hello')
+                      : () => console.log('bye')
+                    : modal.first
+                    ? onClickUpperHandler
+                    : onClickLowerHandler
+                }
+              >
+                <span>{modal.text}</span>
+              </div>
+            </div>
+          ))}
+        </article>
+      </ModalOutside>
+    </ModalPortal>
   );
 };
+
 export default DetailModal;

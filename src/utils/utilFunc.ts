@@ -62,6 +62,20 @@ export const categoryKO = (category: string) => {
   }
 };
 
+/** 카테고리 영어화 */
+export const categoryEN = (category: string) => {
+  switch (category) {
+    case '동향소통':
+      return 'communication';
+    case '후기':
+      return 'review';
+    case '생활정보':
+      return 'Life';
+    default:
+      return category;
+  }
+};
+
 // 쿠키 와 와이어샤크 : 구글 브라우저의 네트워크 탭에 보이는 여러 응답값이 있는데
 // 이 프로그램을 사용하면 더 자세하게 그에 대해서 알 수 있다
 //

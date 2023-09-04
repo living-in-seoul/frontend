@@ -10,16 +10,16 @@ const DetailHotHashtag = ({ data }: { data: ResponseDetailData }) => {
   );
   const postId = useRecoilValue(postIdstate);
   const maintag = data.result.post.hashtag.split('#').filter((tag) => tag)[0];
-  // useEffect(() => {
-  //   const response = async () => {
-  //     await fetch(`/api/post/${data.result.post.category}/${maintag}`)
-  //       .then((response) => response.json())
-  //       .then((response) => {
-  //         setTagData(response);
-  //       });
-  //   };
-  //   data && response();
-  // }, [data.result.post.category, maintag]);
+  useEffect(() => {
+    const response = async () => {
+      await fetch(`/api/post/${data.result.post.category}/${maintag}`)
+        .then((response) => response.json())
+        .then((response) => {
+          setTagData(response);
+        });
+    };
+    data && response();
+  }, [data, data.result.post.category, maintag]);
   return (
     <div>
       <span className="flex pt-6 font-semibold px-4">관련 해시태그 인기글</span>

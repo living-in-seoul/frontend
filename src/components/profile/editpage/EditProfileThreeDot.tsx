@@ -7,18 +7,9 @@ import { detailColThreeDotIcon } from '@/utils/Icon';
 import EditFirstModal from './EditFirstModal';
 import { useState } from 'react';
 import { profileModalArray } from '@/utils/constants/modal';
-import { useSetRecoilState } from 'recoil';
-import { commentIdState } from '@/recoil/commentState';
 
-interface EditProfileThreeDotProps {
-  commentId: number;
-}
-
-const EditProfileThreeDot = ({ commentId }: EditProfileThreeDotProps) => {
+const EditProfileThreeDot = () => {
   const [OpenModal, setOpenModal] = useState<boolean>(false);
-
-  const setCommentId = useSetRecoilState(commentIdState);
-
   return (
     <div className="flex flex-row gap-4">
       <div>
@@ -26,7 +17,6 @@ const EditProfileThreeDot = ({ commentId }: EditProfileThreeDotProps) => {
           path={detailColThreeDotIcon}
           fill="#404040"
           onClick={() => {
-            setCommentId(commentId);
             setOpenModal(true);
           }}
         />

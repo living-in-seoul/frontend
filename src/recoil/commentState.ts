@@ -5,17 +5,6 @@ export const inoutTextFocusState = atom<number | null>({
   default: null,
 });
 
-export const inputTextRefState =
-  atom<React.RefObject<HTMLTextAreaElement> | null>({
-    key: 'inputTextRefState',
-    default: null,
-  });
-
-export const formRefState = atom<React.RefObject<HTMLFormElement> | null>({
-  key: 'buttonRefState',
-  default: null,
-});
-
 export interface totalCommentStateProps {
   isReComment: boolean;
   isComment: boolean;
@@ -49,12 +38,22 @@ export const commentKeyState = atom<string>({
   default: '',
 });
 
-export const onReCommentState = atom<boolean>({
+export const onReCommentState = atom<number | null>({
   key: 'onReCommentState',
-  default: false,
+  default: null,
 });
-
 export const commentIdState = atom<number | null>({
   key: 'commentIdState',
   default: null,
+});
+interface RefObject<T> {
+  current: T | null;
+}
+export const buttonRefState = atom<RefObject<HTMLButtonElement>>({
+  key: 'buttonRefState',
+  default: { current: null },
+});
+export const textareaRefState = atom<RefObject<HTMLTextAreaElement>>({
+  key: 'textareaRefState',
+  default: { current: null },
 });

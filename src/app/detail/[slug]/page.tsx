@@ -5,7 +5,7 @@ import DetailMain from '@/components/detail/main/DetailMain';
 import DetailNavbar from '@/components/detail/DetailNavbar';
 import BeatLoader from '@/components/common/Spinner';
 import { cookies } from 'next/headers';
-import { getBoard, getUserBoard } from '@/service/board';
+import { getUserBoard } from '@/service/board';
 interface DetailPageProps {
   params: {
     slug: string;
@@ -14,8 +14,7 @@ interface DetailPageProps {
 
 const DetailPage = async ({ params }: DetailPageProps) => {
   const { slug: postId } = params;
-  const token = cookies().get('accessToken');
-  const data = token ? await getUserBoard(postId) : await getBoard(postId);
+  const data = await getUserBoard(postId);
 
   return (
     <section className="w-full max-w-2md h-screen relative">

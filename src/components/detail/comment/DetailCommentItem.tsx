@@ -4,32 +4,26 @@ import Icons from '../../common/Icons';
 import UserProfile from '../../item/UserProfile';
 import { useCallback, useEffect, useState } from 'react';
 import LikeCommentCase from './LikeCommentCase';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import {
-  formRefState,
   commentKeyState,
-  inputTextRefState,
-  onReCommentState,
   totalCommentState,
-  totalCommentStateProps,
   inoutTextFocusState,
+  buttonRefState,
+  textareaRefState,
 } from '@/recoil/commentState';
 import { useSWRConfig } from 'swr';
 import ModalPortal from '@/components/modal/ModalPortal';
 import ModalOutside from '@/components/modal/ModalOutside';
 import { commentModalArray, reportModalArray } from '@/utils/constants/modal';
 import { Toaster, toast } from 'react-hot-toast';
+import DetailModal from '../DetailModal';
 interface DetailCommentItemProps {
   data: Comment;
-  postId: string;
   children: React.ReactNode;
 }
 
-const DetailCommentItem = ({
-  data,
-  children,
-  postId,
-}: DetailCommentItemProps) => {
+const DetailCommentItem = ({ data, children }: DetailCommentItemProps) => {
   const {
     commentLikeSize,
     commentHasLiked,
@@ -40,74 +34,32 @@ const DetailCommentItem = ({
     reComments,
   } = data;
   const commentKey = useRecoilValue(commentKeyState);
-  const formRef = useRecoilValue(formRefState);
-  const inputRef = useRecoilValue(inputTextRefState);
-  const setOnReComment = useSetRecoilState(onReCommentState);
-  const [commentIconColor, setCommentIconColor] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('');
   const [totalComment, setTotalComment] = useRecoilState(totalCommentState);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const setInputTextFocus = useSetRecoilState(inoutTextFocusState);
+  const textareaRef = useRecoilValue(textareaRefState);
+  const [commentInputFocus, setCommentInputFocus] =
+    useRecoilState(inoutTextFocusState);
   const { mutate } = useSWRConfig();
   const modalArray =
     username === nickname ? commentModalArray : reportModalArray;
-  const handleClickOutside = useCallback(
-    (e: any) => {
-      if (
-        inputRef?.current &&
-        !inputRef.current.contains(e.target) &&
-        formRef?.current &&
-        !formRef.current.contains(e.target)
-      ) {
-        setTotalComment((prev) => ({
-          ...prev,
-          commentId: null,
-        }));
-        setCommentIconColor(false);
-      }
-    },
-    [formRef, inputRef, setTotalComment],
-  );
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [handleClickOutside]);
-
   useEffect(() => {
     const username = localStorage.getItem('nickname');
     username && setUsername(username);
-    return setOnReComment(false);
-  }, [setOnReComment]);
-
-  const onFocusHandler = () => {
-    if (inputRef?.current) {
-      inputRef.current?.focus();
-      setTotalComment((prev) => ({
-        ...prev,
-        isReComment: !prev.isReComment,
-        isComment: !prev.isComment,
-        commentId,
-      }));
-      setCommentIconColor(true);
-    }
-  };
+  }, []);
   useEffect(() => {
-    return setOpenModal(false);
+    return () => setOpenModal(false);
   }, []);
   const onClickChagneHandler = () => {
-    if (inputRef?.current) {
-      inputRef.current?.focus();
-      setTotalComment((prev) => ({
-        ...prev,
-        isCommentChange: !prev.isCommentChange,
-        commentId,
-      }));
-    }
+    setTotalComment((prev) => ({
+      ...prev,
+      isCommentChange: true,
+      commentId,
+    }));
+    textareaRef.current?.focus();
     setOpenModal(false);
   };
-
   const onClickDeleteHandler = async () => {
     try {
       const tokenValidResponse = await fetch('/api/user', {
@@ -134,12 +86,13 @@ const DetailCommentItem = ({
   };
 
   const likeHandler = async () => {
+    setIsLoading(true);
     try {
       const tokenValidResponse = await fetch('/api/user', {
         method: 'GET',
       });
       if (tokenValidResponse.status === 200) {
-        const response = await fetch('/api/comment/like', {
+        await fetch('/api/comment/like', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -150,6 +103,27 @@ const DetailCommentItem = ({
       }
     } catch (error) {
       console.log('사망 5초전');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  const onReCommentHandler = () => {
+    if (commentInputFocus) {
+      setCommentInputFocus(null);
+      setTotalComment((prev) => ({
+        ...prev,
+        commentId,
+        isReComment: false,
+        isComment: true,
+      }));
+    } else {
+      setCommentInputFocus(commentId);
+      setTotalComment((prev) => ({
+        ...prev,
+        commentId,
+        isReComment: true,
+        isComment: false,
+      }));
     }
   };
   return (
@@ -159,48 +133,42 @@ const DetailCommentItem = ({
         <UserProfile
           createdAt={createdAt}
           nickname={nickname}
-          ondetail={true}
+          ondetail={false}
         />
-        <Icons
-          path={detailColThreeDotIcon}
-          fill="#404040"
-          onClick={() => {
-            setOpenModal(true);
-          }}
-        />
+        <div className="cursor-pointer">
+          <Icons
+            path={detailColThreeDotIcon}
+            fill="#404040"
+            onClick={() => {
+              setOpenModal(true);
+            }}
+          />
+        </div>
       </div>
       <div className="flex flex-col gap-2 w-5/6 ml-auto">
-        <span
-          onClick={() => setOnReComment((prev) => !prev)}
-          className="bg-neutral-100 p-2 rounded-lg text-xs"
-        >
-          {comment}
-        </span>
+        <span className="bg-neutral-100 p-2 rounded-lg text-xs">{comment}</span>
         <div className="flex flex-row gap-3">
           <div className="flex flex-row gap-1 items-center">
             <LikeCommentCase
               hasLiked={commentHasLiked}
               likeSize={commentLikeSize}
               likeHandler={likeHandler}
+              isLoading={isLoading}
             />
           </div>
-          <div
-            onClick={onFocusHandler}
-            className="flex flex-row gap-1 items-center"
-          >
+          <div className="flex flex-row gap-1 items-center">
             <Icons
+              className="cursor-pointer"
+              onClick={onReCommentHandler}
               path={Comment}
               option={{
                 fill: 'none',
-                stroke: commentIconColor ? '#2DDAB0' : '#404040',
+                stroke: commentInputFocus === commentId ? '#2DDAB0' : '#404040',
                 strokeLinecap: 'round',
                 strokeLinejoin: 'round',
               }}
             />
-            <span
-              onClick={() => setInputTextFocus(commentId)}
-              className="text-xs text-neutral-600"
-            >
+            <span className="text-xs text-neutral-600">
               답글쓰기 {reComments?.length}
             </span>
           </div>
@@ -208,30 +176,12 @@ const DetailCommentItem = ({
         <div>{children}</div>
       </div>
       {openModal && (
-        <ModalPortal nodeName="detailPortal">
-          <ModalOutside
-            className=" bg-white shadow-sm bottom-0 w-full"
-            onClose={() => {
-              setOpenModal(false);
-              document.body.style.overflow = 'auto';
-            }}
-          >
-            <article>
-              {modalArray.map((modal, index) => (
-                <div key={index}>
-                  <div
-                    className={`border-t-2 py-3 flex justify-center border-collapse ${modal.color}`}
-                    onClick={
-                      modal.first ? onClickChagneHandler : onClickDeleteHandler
-                    }
-                  >
-                    <span>{modal.text}</span>
-                  </div>
-                </div>
-              ))}
-            </article>
-          </ModalOutside>
-        </ModalPortal>
+        <DetailModal
+          modalArray={modalArray}
+          onClickUpperHandler={onClickChagneHandler}
+          onClickLowerHandler={onClickDeleteHandler}
+          setOpenModal={setOpenModal}
+        />
       )}
     </section>
   );

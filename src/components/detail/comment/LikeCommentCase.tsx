@@ -5,18 +5,20 @@ import { Like } from '@/utils/Icon';
 interface LikeCommentCaseProps {
   hasLiked: boolean;
   likeSize: number;
+  isLoading: boolean;
   likeHandler: () => void;
 }
 
 const LikeCommentCase = ({
   hasLiked,
   likeSize,
+  isLoading,
   likeHandler,
 }: LikeCommentCaseProps) => {
   return (
     <div className="flex gap-1 items-center">
       {hasLiked ? (
-        <div onClick={likeHandler}>
+        <div onClick={isLoading ? () => {} : likeHandler}>
           <Icons
             fill="red"
             className={'cursor-pointer'}
@@ -27,7 +29,7 @@ const LikeCommentCase = ({
           />
         </div>
       ) : (
-        <div onClick={likeHandler}>
+        <div onClick={isLoading ? () => {} : likeHandler}>
           <Icons
             path={Like}
             className={'cursor-pointer'}

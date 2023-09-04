@@ -1,20 +1,18 @@
 'use client';
 import UserProfile from '../../item/UserProfile';
-import { useCallback, useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useEffect, useState } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
-  formRefState,
   commentKeyState,
-  inputTextRefState,
+  textareaRefState,
   totalCommentState,
 } from '@/recoil/commentState';
-import ModalPortal from '@/components/modal/ModalPortal';
-import ModalOutside from '@/components/modal/ModalOutside';
 import { commentModalArray, reportModalArray } from '@/utils/constants/modal';
 import { toast } from 'react-hot-toast';
 import { useSWRConfig } from 'swr';
 import Icons from '@/components/common/Icons';
 import { detailColThreeDotIcon } from '@/utils/Icon';
+import DetailModal from '../DetailModal';
 
 const DetailReCommentItem = ({
   reCommentData,
@@ -24,19 +22,12 @@ const DetailReCommentItem = ({
   const commentKey = useRecoilValue(commentKeyState);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('');
-  const formRef = useRecoilValue(formRefState);
-  const inputRef = useRecoilValue(inputTextRefState);
-  const [totalComment, setTotalComment] = useRecoilState(totalCommentState);
-  const [isReCommentChange, setIsReCommentChange] = useState<boolean>(false);
+  const setTotalComment = useSetRecoilState(totalCommentState);
+  const textareaRef = useRecoilValue(textareaRefState);
+
   const { mutate } = useSWRConfig();
-  const {
-    createdAt,
-    nickname,
-    reComment,
-    reCommentHasLiked,
-    reCommentId,
-    userImg,
-  } = reCommentData;
+  const { createdAt, nickname, reComment, reCommentId, userImg } =
+    reCommentData;
   const modalArray =
     username === nickname ? commentModalArray : reportModalArray;
   useEffect(() => {
@@ -44,38 +35,13 @@ const DetailReCommentItem = ({
     username && setUsername(username);
   }, []);
 
-  const handleClickOutside = useCallback(
-    (e: any) => {
-      if (
-        inputRef?.current &&
-        !inputRef.current.contains(e.target) &&
-        formRef?.current &&
-        !formRef.current.contains(e.target)
-      ) {
-        setTotalComment((prev) => ({
-          ...prev,
-          reCommentChange: false,
-          isComment: true,
-          isReComment: false,
-        }));
-      }
-    },
-    [formRef, inputRef, setTotalComment],
-  );
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [handleClickOutside]);
-
   const onClickDeleteHandler = async () => {
     try {
       const tokenValidResponse = await fetch('/api/user', {
         method: 'GET',
       });
       if (tokenValidResponse.status === 200) {
-        const response = await fetch(`/api/comment/re/${reCommentId}`, {
+        await fetch(`/api/comment/re/${reCommentId}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
@@ -94,16 +60,14 @@ const DetailReCommentItem = ({
     }
   };
   const onClickChagneHandler = () => {
-    if (inputRef?.current) {
-      inputRef.current?.focus();
-      setTotalComment((prev) => ({
-        ...prev,
-        reCommentChange: !prev.reCommentChange,
-        reCommentId,
-        isComment: false,
-        isReComment: true,
-      }));
-    }
+    setTotalComment((prev) => ({
+      ...prev,
+      reCommentChange: !prev.reCommentChange,
+      reCommentId,
+      isComment: false,
+      isReComment: true,
+    }));
+    textareaRef.current?.focus();
     setOpenModal(false);
   };
   return (
@@ -113,6 +77,7 @@ const DetailReCommentItem = ({
           createdAt={createdAt}
           nickname={nickname}
           userImg={userImg}
+          ondetail={false}
         />
         <Icons
           path={detailColThreeDotIcon}
@@ -132,30 +97,12 @@ const DetailReCommentItem = ({
         </div>
       </div>
       {openModal && (
-        <ModalPortal nodeName="detailPortal">
-          <ModalOutside
-            className=" bg-white shadow-sm bottom-0 w-full"
-            onClose={() => {
-              setOpenModal(false);
-              document.body.style.overflow = 'auto';
-            }}
-          >
-            <article>
-              {modalArray.map((modal, index) => (
-                <div key={index}>
-                  <div
-                    className={`border-t-2 py-3 flex justify-center border-collapse ${modal.color}`}
-                    onClick={
-                      modal.first ? onClickChagneHandler : onClickDeleteHandler
-                    }
-                  >
-                    <span>{modal.text}</span>
-                  </div>
-                </div>
-              ))}
-            </article>
-          </ModalOutside>
-        </ModalPortal>
+        <DetailModal
+          modalArray={modalArray}
+          onClickUpperHandler={onClickChagneHandler}
+          onClickLowerHandler={onClickDeleteHandler}
+          setOpenModal={setOpenModal}
+        />
       )}
     </section>
   );
