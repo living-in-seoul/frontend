@@ -5,6 +5,7 @@ import { NextResponse } from 'next/server';
 export const getRefreshToken = async () => {
   const refreshToken = cookies().get('refreshToken')?.value;
   const data = JSON.stringify({ refreshToken: refreshToken });
+
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER}/token/refresh`,
     {
@@ -15,7 +16,6 @@ export const getRefreshToken = async () => {
       body: data,
     },
   ).then((response) => response.json());
-
   return response;
 };
 

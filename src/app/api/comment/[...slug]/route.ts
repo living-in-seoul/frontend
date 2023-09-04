@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import {
   deleteComment,
   getComment,
-  getMoreComment,
-  getUserMoreComment,
   postComment,
   putComment,
 } from '@/service/comment';
@@ -22,21 +20,9 @@ export const POST = async (request: NextRequest, context: Context) => {
 
 export const GET = async (request: NextRequest, context: Context) => {
   const { searchParams } = request.nextUrl;
-  const page = searchParams.get('page');
-  const token = cookies().get('accessToken');
+  const page = searchParams.get('page') ?? '1';
   const postId = context.params.slug[0];
-  if (page) {
-    if (token) {
-      const data = await getUserMoreComment(postId, page);
-      const newData = data?.comments;
-      return NextResponse.json(newData);
-    }
-    const data = await getMoreComment(postId, page);
-    const newData = data?.comments;
-    return NextResponse.json(newData);
-  }
-
-  const data = await getComment(postId);
+  const data = await getComment(postId, page);
   return NextResponse.json(data);
 };
 

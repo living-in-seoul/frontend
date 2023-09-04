@@ -3,10 +3,11 @@
 import { Like, fillLike, scrapIcon } from '@/utils/Icon';
 import Icons from '../../common/Icons';
 import toast, { Toaster } from 'react-hot-toast';
-import useSWR from 'swr';
+import useSWR, { useSWRConfig } from 'swr';
 
 const DetailButtons = ({ postId }: { postId: string }) => {
-  const { data, mutate } = useSWR<RessponseLikeandScrap>(`/api/post/${postId}`);
+  const { data } = useSWR<RessponseLikeandScrap>(`/api/post/${postId}`);
+  const { mutate } = useSWRConfig();
   const onClickLikeHandler = async () => {
     const tokenValidResponse = await fetch('/api/user', {
       method: 'GET',
@@ -14,6 +15,17 @@ const DetailButtons = ({ postId }: { postId: string }) => {
 
     if (tokenValidResponse.status === 200) {
       try {
+        mutate(
+          `/api/post/${postId}`,
+          {
+            ...data,
+            hasLiked: !data?.hasLiked,
+            likeSize: data?.hasLiked
+              ? data.likeSize - 1
+              : data && data.likeSize + 1,
+          },
+          false,
+        );
         const response = await fetch(`/api/post/like`, {
           method: 'POST',
           body: JSON.stringify(postId),
@@ -29,13 +41,7 @@ const DetailButtons = ({ postId }: { postId: string }) => {
             throw new Error(response.statusText);
           }
         });
-        mutate({
-          ...data,
-          hasLiked: !data?.hasLiked,
-          likeSize: data?.hasLiked
-            ? data.likeSize - 1
-            : data && data.likeSize + 1,
-        });
+        mutate(`/api/post/${postId}`);
         toast.success(response.message);
       } catch (error) {
         toast.error('로그인을 먼저 해주세요');
@@ -51,6 +57,17 @@ const DetailButtons = ({ postId }: { postId: string }) => {
 
     if (tokenValidResponse.status === 200) {
       try {
+        mutate(
+          `/api/post/${postId}`,
+          {
+            ...data,
+            hasScrapped: !data?.hasScrapped,
+            scrapSize: data?.hasScrapped
+              ? data.scrapSize - 1
+              : data && data.scrapSize + 1,
+          },
+          false,
+        );
         const response = await fetch(`/api/post/scrap`, {
           method: 'POST',
           body: JSON.stringify(postId),
@@ -66,13 +83,7 @@ const DetailButtons = ({ postId }: { postId: string }) => {
             throw new Error(response.statusText);
           }
         });
-        mutate({
-          ...data,
-          hasScrapped: !data?.hasScrapped,
-          scrapSize: data?.hasScrapped
-            ? data.scrapSize - 1
-            : data && data.scrapSize + 1,
-        });
+        mutate(`/api/post/${postId}`);
         toast.success(response.message);
       } catch (error) {
         toast.error('로그인을 먼저 해주세요');
