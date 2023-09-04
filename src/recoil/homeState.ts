@@ -8,3 +8,7 @@ export const HomeHomeTownKeyState = atom<string>({
   key: 'HomeHomeTownKeyState',
   default: undefined,
 });
+export const OpenSearchState = atom<boolean>({
+  key: 'OpenSearchState',
+  default: false,
+})

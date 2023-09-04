@@ -2,7 +2,7 @@ import HomeTopSection from '@/components/home/HomeTopSection';
 
 const HomePage = () => {
   return (
-    <section className="h-full">
+    <section className=" relative h-full">
       <HomeTopSection />
     </section>
   );

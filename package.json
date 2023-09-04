@@ -14,7 +14,7 @@
     "@turf/boolean-point-in-polygon": "^7.0.0-alpha.0",
     "@turf/helpers": "^7.0.0-alpha.0",
     "@turf/turf": "^7.0.0-alpha.0",
-    "@types/node": "20.4.8",
+    "@types/node": "^20.5.9",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "@types/turf": "^3.5.32",
