@@ -49,7 +49,7 @@ export default async function RootLayout({
         <RecoilProvider>
           <SWRConfigContext>
             <ProgressBarProviders>
-              <div className="w-full max-w-md">{children}</div>
+              <div className="w-full max-w-md bg-[#fdfdfd]">{children}</div>
             </ProgressBarProviders>
           </SWRConfigContext>
         </RecoilProvider>
