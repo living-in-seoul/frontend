@@ -79,4 +79,4 @@ const HomeHasTagMapSection = async ({ hashtag }: HomeReviewSectionProps) => {
     </article>
   );
 };
-export default memo(HomeHasTagMapSection);
+export default HomeHasTagMapSection;

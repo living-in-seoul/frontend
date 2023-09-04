@@ -5,7 +5,7 @@ import { getTimeAgo } from '@/utils/utilFunc';
 import { useRouter } from 'next/navigation';
 
 const AlertActiveItem = (item: AlarmItem) => {
-  const { alarmEventType, id, isRead, registeredAt, text } = item;
+  const { id, isRead, registeredAt, text } = item;
   const router = useRouter();
   const fetchRead = async () => {
     const res = await fetch(`/api/alert/${id}`, {

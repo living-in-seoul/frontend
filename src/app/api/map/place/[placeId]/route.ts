@@ -1,4 +1,4 @@
-import { getPlaceByPlaceId, getPlacesAutoComplete } from '@/service/map';
+import { getPlaceByPlaceId } from '@/service/map';
 import { NextRequest, NextResponse } from 'next/server';
 
 interface Context {

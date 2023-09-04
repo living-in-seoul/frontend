@@ -8,8 +8,6 @@ interface Context {
 
 export const GET = async (req: NextRequest, context: Context) => {
   const { location } = context.params;
-  // const currentDate = getCurrentDateInFormat();
-  // const currentTime = getCurrentTimeInFormat();
   const { getCurrentDate: currentDate, getCurrentTime: currentTime } =
     getCurrentDateAndTime();
   const { lat, lng } = seoulCenterCoords['영등포구']!;

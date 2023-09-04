@@ -1,10 +1,7 @@
 import { getBoardListByGu } from '@/service/map';
 import { NextRequest, NextResponse } from 'next/server';
 
-interface Context {
-  params: { slug: [string, guchung] };
-}
-export const GET = async (req: NextRequest, context: Context) => {
+export const GET = async (req: NextRequest) => {
   const { searchParams } = req.nextUrl;
   const category = searchParams.get('category') ?? 'All';
   const gu = searchParams.get('gu');

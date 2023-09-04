@@ -1,4 +1,4 @@
-import { Alert, search } from '@/utils/Icon';
+import { Alert } from '@/utils/Icon';
 import Icons from '../common/Icons';
 import Link from 'next/link';
 

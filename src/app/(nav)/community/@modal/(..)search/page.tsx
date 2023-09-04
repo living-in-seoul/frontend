@@ -1,5 +1,4 @@
 import Modal from '@/components/layouts/Modal';
-import SearchComponent from '@/components/search/SearchComponent';
 import SearchHashTagAlert from '@/components/search/SearchHashTagAlert';
 import dynamic from 'next/dynamic';
 
@@ -14,7 +13,6 @@ interface PageProps {
   searchParams: { [key: string]: string | undefined };
 }
 const SearchPage = ({ searchParams }: PageProps) => {
-  console.log(searchParams);
   const search = searchParams.search || '';
   return (
     <>

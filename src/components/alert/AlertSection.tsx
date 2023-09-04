@@ -1,7 +1,7 @@
 'use client';
 
 import { AleatSectionState } from '@/recoil/authStates';
-import { FC, Suspense, useEffect } from 'react';
+import { FC, Suspense } from 'react';
 import { useRecoilValue } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 import AlertActiveItem from './AlertActiveItem';
@@ -22,7 +22,7 @@ const AlertSection = () => {
     });
     return (
       <article key={uuidv4()} className="flex flex-col w-full h-full">
-        {ActiveData?.alarmList.map((item, i) => (
+        {ActiveData?.alarmList.map((item) => (
           <AlertActiveItem key={uuidv4()} {...item} />
         ))}
       </article>
@@ -60,7 +60,7 @@ const AlertSection = () => {
           />
         </div>
         {HashtagData?.alarmList.length !== 0 ? (
-          HashtagData?.alarmList.map((item, i) => (
+          HashtagData?.alarmList.map((item) => (
             <AlertHashTagItem key={uuidv4()} item={item} />
           ))
         ) : (

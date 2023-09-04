@@ -3,7 +3,6 @@ import MypageLink from '@/components/profile/mypage/MypageLink';
 import MypageList from '@/components/profile/mypage/MypageList';
 import MypageProfile from '@/components/profile/mypage/MypageProfile';
 import { MYPAGE_LINK_NAME } from '@/utils/constants/board';
-import { useSearchParams } from 'next/navigation';
 
 const MypagePage = () => {
   return (

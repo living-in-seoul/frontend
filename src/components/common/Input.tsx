@@ -22,7 +22,6 @@ const Input = ({
   onFocus,
   onClick,
   rightElement,
-  leftElement,
   formColor,
   inputColor,
 }: SearchInputProps) => {

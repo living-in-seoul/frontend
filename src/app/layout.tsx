@@ -1,16 +1,11 @@
 import SWRConfigContext from '@/context/SWRConfigContext';
 import './globals.css';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import RecoilProvider from '@/context/RecoilProvider';
 import ProgressBarProviders from '@/context/ProgressbarProvider';
 import SSEProvider from '@/context/SSEProvider';
-import { getProfile } from '@/service/user';
 import localFont from 'next/font/local';
-import { cookies } from 'next/headers';
-import Head from 'next/head';
-
-const inter = Inter({ subsets: ['latin'] });
+import { verifyAndRefreshToken } from '@/service/token';
 
 export const metadata: Metadata = {
   title: '서울에서 살아남기',
@@ -31,8 +26,10 @@ export default async function RootLayout({
   children: React.ReactNode;
   modal: React.ReactNode;
 }) {
-  const token = cookies().get('accessToken');
-  const user = await getProfile();
+  const verify = await verifyAndRefreshToken();
+  if (verify.status === 200 || verify.status === 201) {
+    // await getProfile();
+  }
 
   return (
     <html lang="en" className={myFont.className}>
@@ -45,18 +42,18 @@ export default async function RootLayout({
       </head>
 
       <body className="flex flex-col min-h-screen items-center">
-        <SSEProvider
+        {/* <SSEProvider
           eventTypes={['LIKE', 'COMMENT', 'HASHTAG']}
-          url={'https://seoulvival.com:8080/notice'}
-        >
-          <RecoilProvider>
-            <SWRConfigContext>
-              <ProgressBarProviders>
-                <div className="w-full max-w-md">{children}</div>
-              </ProgressBarProviders>
-            </SWRConfigContext>
-          </RecoilProvider>
-        </SSEProvider>
+          url={'/api/sse'}
+        > */}
+        <RecoilProvider>
+          <SWRConfigContext>
+            <ProgressBarProviders>
+              <div className="w-full max-w-md">{children}</div>
+            </ProgressBarProviders>
+          </SWRConfigContext>
+        </RecoilProvider>
+        {/* </SSEProvider> */}
         <div id="portalSignin" />
       </body>
     </html>

@@ -23,7 +23,7 @@ export const PUT = async (request: NextRequest, context: Context) => {
   return NextResponse.json(data);
 };
 
-export const DELETE = async (request: NextRequest, context: Context) => {
+export const DELETE = async (_: NextRequest, context: Context) => {
   const reCommentId = context.params.slug;
   const data = await deleteReComment(reCommentId);
   return NextResponse.json(data);

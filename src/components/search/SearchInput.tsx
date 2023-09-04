@@ -40,6 +40,7 @@ const SearchInput = () => {
     return () => {
       setSearch('');
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

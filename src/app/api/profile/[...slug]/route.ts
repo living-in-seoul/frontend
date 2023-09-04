@@ -1,7 +1,7 @@
 import { getProfile, putProfileImage, putSignup } from '@/service/user';
 import { NextRequest, NextResponse } from 'next/server';
 
-export const GET = async (req: NextRequest) => {
+export const GET = async (_: NextRequest) => {
   const data = await getProfile();
   const response = data?.nickname;
   return NextResponse.json(response);
