@@ -3,13 +3,19 @@ import DetailMainContents from './DetailMainContents';
 import DetailMainTags from './DetailMainTags';
 import DetailButtons from './DetailButtons';
 
-const DetailMain = ({ data }: { data: ResponseDetailData }) => {
+const DetailMain = ({
+  data,
+  postId,
+}: {
+  data: ResponseDetailData;
+  postId: string;
+}) => {
   return (
     <section className="flex flex-col gap-6 py-6 border-b-2  px-4">
       <DetailMainProfile data={data} />
       <DetailMainContents data={data} />
       <DetailMainTags data={data} />
-      <DetailButtons data={data} />
+      <DetailButtons postId={postId} />
     </section>
   );
 };

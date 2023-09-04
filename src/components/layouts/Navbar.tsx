@@ -22,11 +22,17 @@ const NavBarArray = [
     path: '/map',
     iconPath: map,
   },
+  {
+    name: '마이페이지',
+    path: '/mypage/scrapped',
+    iconElement: <MypageIcon type="none" />,
+    iconfilledElement: <MypageIcon type="fill" />,
+  },
 ];
 
 const Navbar = () => {
   const pathname = usePathname();
-  const MainPathName = '/' + pathname.split('/')[1];
+  const MainPathName = '/' + pathname?.split('/')[1];
   return (
     <nav className="fixed bottom-0 right-auto max-w-md w-full border-t bg-white">
       <div className="flex-row h-[76px] flex w-full justify-center px-4 pt-2">
@@ -36,29 +42,32 @@ const Navbar = () => {
             href={item.path}
             className="group scale-100 transition-all active:scale-110 basis-1/5 justify-center items-center flex flex-col gap-[5px]"
           >
-            <Icons
-              path={item.iconPath}
-              fill={MainPathName === item.path ? '#000' : '#636363'}
-              className=""
-            />
+            {item.iconPath ? (
+              <Icons
+                path={item.iconPath}
+                fill={MainPathName === item.path ? '#2DDAB0' : '#B8B8B8'}
+                className=""
+              />
+            ) : (
+              <Icons
+                path={map}
+                fill={MainPathName === item.path ? '#2DDAB0' : '#B8B8B8'}
+                className=""
+              >
+                {MainPathName === item.path
+                  ? item.iconfilledElement
+                  : item.iconElement}
+              </Icons>
+            )}
             <div
               className={`text-center ${
-                MainPathName === item.path ? 'text-black' : 'text-zinc-400'
+                MainPathName === item.path ? 'text-primary' : 'text-gray5'
               } text-xs font-normal leading-3`}
             >
               {item.name}
             </div>
           </Link>
         ))}
-        <Link
-          href={'/mypage/scrapped'}
-          className="basis-1/5 justify-center items-center flex flex-col gap-1"
-        >
-          <MypageIcon />
-          <div className="text-center text-black text-xs font-normal leading-3">
-            마이페이지
-          </div>
-        </Link>
       </div>
     </nav>
   );

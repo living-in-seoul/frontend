@@ -17,9 +17,7 @@ const SSEProvider: React.FC<SSEProviderProps> = ({
   children,
 }) => {
   useEffect(() => {
-    const eventSource = new EventSource('https://seoulvival.com:8080/notice', {
-      withCredentials: true,
-    });
+    const eventSource = new EventSource(url);
 
     eventSource.onopen = () => console.log('SSE 연결 완료');
     eventSource.onerror = (error) => {
@@ -37,9 +35,9 @@ const SSEProvider: React.FC<SSEProviderProps> = ({
 
     return () => {
       eventSource.close();
-      console.log('서버 닫힘');
     };
-  }, [url, eventTypes]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <SSEContext.Provider value={null /* 이 부분에 실제 SSE 데이터를 전달 */}>

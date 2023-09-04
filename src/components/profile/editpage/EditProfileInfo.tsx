@@ -16,8 +16,6 @@ import AuthInput from '@/components/auth/signin/AuthInput';
 import EditProfileRadioBtn from './EditProfileRadioBtn';
 import { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-import { deepEqual } from '@/utils/utilFunc';
-import { Router } from 'next/router';
 import BeatLoader from '@/components/common/Spinner';
 const EditProfileInfo = ({ profile }: { profile: ResponseUserProfileData }) => {
   const {
@@ -32,13 +30,7 @@ const EditProfileInfo = ({ profile }: { profile: ResponseUserProfileData }) => {
   const [genderState, setGenderState] = useRecoilState(signupGenderState);
   const nowDate = useGetDate();
   const router = useRouter();
-  const newProfile = {
-    birthDate,
-    gender,
-    hometown,
-    nickname,
-    movedDate: defaultMovedDate,
-  };
+
   const {
     register,
     handleSubmit,
@@ -65,7 +57,8 @@ const EditProfileInfo = ({ profile }: { profile: ResponseUserProfileData }) => {
 
   useEffect(() => {
     setGenderState(gender);
-  }, []);
+  }, [gender, setGenderState]);
+
   const onSubmitHandler = async (data: {
     hometown: string;
     birthDate: string;
@@ -87,12 +80,16 @@ const EditProfileInfo = ({ profile }: { profile: ResponseUserProfileData }) => {
         method: 'GET',
       });
       if (tokenValidResponse.status === 200) {
-        await fetch('/api/profile/profile', {
-          method: 'PUT',
-          body: JSON.stringify(user),
-        });
+        try {
+          await fetch('/api/profile/profile', {
+            method: 'PUT',
+            body: JSON.stringify(user),
+          });
+          localStorage.setItem('nickname', data.nickname);
+        } catch (err) {
+          toast.error('정보를 잘못입력한듯');
+        }
       } else {
-        // console.log('로그인모달 나와주세요');
       }
       setIsLoading(false);
       router.push('/mypage');

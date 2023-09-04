@@ -3,6 +3,7 @@ import { MouseEventHandler } from 'react';
 interface Props {
   title: string | JSX.Element;
   size:
+    | 'xsmall'
     | 'small'
     | 'medium'
     | 'large'
@@ -11,6 +12,7 @@ interface Props {
     | 'w-full'
     | 'default';
   bgColor?: string;
+  textColor?: string;
   hoverColor?: string;
   color?: string;
   border?: string;
@@ -34,6 +36,11 @@ const getButtonSizeStyles = (size: string) => {
       return {
         button: 'w-full h-[51px]',
         span: 'w-full h-full',
+      };
+    case 'xsmall':
+      return {
+        button: 'w-12 h-6',
+        span: 'text-xs white',
       };
     case 'small':
       return {
@@ -59,6 +66,7 @@ const Button = ({
   title,
   color,
   bgColor,
+  textColor,
   hoverColor = 'bg-teal-400',
   type,
   select = false,
@@ -76,13 +84,13 @@ const Button = ({
         isRounded ? 'rounded-lg' : null
       } text-base ${color} ${bgColor} ${border} ${className} ${
         getButtonSizeStyles(size).button
-      } ${select ? hoverColor : 'border-l-zinc-400 hover:bg-neutral-200/70'} `}
+      } ${select ? hoverColor : 'border-l-zinc-400 hover:bg-neutral-200/70'}  `}
       type={type}
       disabled={disabled}
     >
       <span
         className={` ${getButtonSizeStyles(size).span} ${
-          select ? 'text-white' : 'text-black'
+          select ? 'text-white' : `${textColor ? textColor : 'text-black'}`
         }`}
       >
         {title}

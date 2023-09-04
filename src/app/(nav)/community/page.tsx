@@ -1,13 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
 import { categoryKO } from '@/utils/utilFunc';
 import CommunityBoardList from '@/components/community/CommunityBoardList';
-
 import { fetchCommunity } from '@/actions/fetchCommunity';
 import CommunityHotTag from '@/components/community/CommunityHotTag';
 import WriteButton from '@/components/map/actions/WriteButton';
-import BottomSheet from '@/components/BottomSheet';
-import SigninButtons from '@/components/auth/signin/SigninButtons';
-import { loginBottomSheetState } from '@/recoil/bottomsheet';
 
 interface PageProps {
   searchParams: { [key: string]: string | undefined };
@@ -15,11 +11,10 @@ interface PageProps {
 const CommunityPage = async ({ searchParams }: PageProps) => {
   const category = searchParams.category ? searchParams.category : 'All';
   const tags = searchParams.tag ? searchParams.tag || [] : null;
-  const ordertype = (searchParams.ordertype || 'newer') as 'newer' | 'popular';
+  const ordertype = (searchParams.ordertype || 'newer') as SelectPopType;
   const FetchUrl =
-    category === 'All' ? 'All' : `category?category=${categoryKO(category)}`;
-  const FETCH_API = `${process.env.NEXT_PUBLIC_SERVER}/tags/${FetchUrl}`;
-
+    category === 'All' ? 'category=' : `category=${categoryKO(category)}`;
+  const FETCH_API = `${process.env.NEXT_PUBLIC_SERVER}/tags/rank?${FetchUrl}`;
   const TagCategory = await fetch(FETCH_API, {
     next: { revalidate: 2000 },
   }).then<string[]>((res) => res.json());

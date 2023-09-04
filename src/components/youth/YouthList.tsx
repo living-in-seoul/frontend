@@ -1,15 +1,13 @@
 'use client';
-import useSWR from 'swr';
-import { CODES_TYPE } from '@/utils/constants/constants';
-import YouthItem from './YouthItem';
-import useDrag from '@/hooks/useDrag';
 
-const Youth = () => {
-  const { data: youthList } = useSWR<YouthInfo[][]>(`/api/youth`, {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-    suspense: true,
-  });
+import useDrag from '@/hooks/useDrag';
+import YouthItem from './YouthItem';
+import { CODES_TYPE } from '@/utils/constants/constants';
+
+interface YouthListProps {
+  youthList: YouthInfo[][];
+}
+const YouthList = ({ youthList }: YouthListProps) => {
   const {
     sliderRef,
     onMouseDown,
@@ -25,7 +23,7 @@ const Youth = () => {
 
   return (
     <section
-      className="overflow-x-auto whitespace-nowrap flex gap-2 scrollbar-hide"
+      className=" ml-5 overflow-x-auto whitespace-nowrap flex gap-2 scrollbar-hide"
       ref={sliderRef}
       onMouseDown={onMouseDown}
       onMouseLeave={onMouseLeave}
@@ -39,7 +37,7 @@ const Youth = () => {
               className="cursor-pointer"
               key={i + idx}
               onClick={(e) => {
-                if (Math.abs(moveX - e.pageX) > 10) return; // 추가: 클릭 이벤트 내에서도 체크
+                if (Math.abs(moveX - e.pageX) > 10) return;
                 onClickToUrl(list.rfcSiteUrla1[0]);
               }}
             >
@@ -54,7 +52,6 @@ const Youth = () => {
         })}
     </section>
   );
-  return;
 };
 
-export default Youth;
+export default YouthList;

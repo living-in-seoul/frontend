@@ -1,5 +1,4 @@
 'use client';
-import PostItem from './PostItem';
 import { useEffect, useState } from 'react';
 import useObserver from '@/hooks/useObserver';
 import PostItemSkeleton from './PostItemSkeleton';
@@ -13,7 +12,7 @@ interface CommunityBoardProps {
   tags?: string | never[] | null;
   firstList: ResponsePost[] | [];
   totalpage: number | never[];
-  ordertype?: 'newer' | 'popular';
+  ordertype?: SelectPopType;
 }
 const CommunityBoardList = ({
   Category,
@@ -29,7 +28,6 @@ const CommunityBoardList = ({
   const [listTotalPage, setlistTotalPage] = useState(totalpage);
   const [lastItem, setLastItem] = useState(false);
   const router = useRouter();
-  // console.log(pathname , searchParams.getAll());
 
   const loadMoreList = async () => {
     const EncodeTag =

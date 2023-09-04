@@ -1,4 +1,4 @@
-import { ReactNode, SVGProps } from 'react';
+import { SVGProps } from 'react';
 
 interface PathProp {
   path: string;

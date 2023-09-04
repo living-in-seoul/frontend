@@ -23,7 +23,10 @@ const HomeHashtagMap = ({ location }: HomeHashtagMap) => {
         onMouseDown={(e) => e.stop()}
       >
         <MarkerF
-          icon={{ url: '/marker/HomeMarkers.png' }}
+          icon={{
+            url: '/marker/marker.webp',
+            scaledSize: new window.google.maps.Size(40, 50),
+          }}
           position={new google.maps.LatLng(location.lat, location.lng)}
         />
       </GoogleMap>

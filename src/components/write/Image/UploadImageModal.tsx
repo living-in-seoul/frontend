@@ -2,6 +2,7 @@ import { ImagePortalState, ImageState } from '@/recoil/BoardStates';
 import { ChangeEvent } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import Button from '../../common/Button';
+import toast, { Toaster } from 'react-hot-toast';
 
 interface UploadImageModalProps {
   onClose: () => void;
@@ -15,7 +16,15 @@ const UploadImageModal = ({ onClose }: UploadImageModalProps) => {
     if (e.target.files) {
       const filesArray = Array.from(e.target.files);
       if ((imageState ? imageState.length : 0) + filesArray.length > 5) {
-        alert('5개 이하로 넣어주세영');
+        toast('사진은 최대 5장까지만 업로드 가능합니다.', {
+          icon: '❕',
+          style: {
+            borderRadius: '5px',
+            background: '#333',
+            color: '#fff',
+            fontSize: '15px',
+          },
+        });
         return;
       }
       setImageState(filesArray);
@@ -25,12 +34,9 @@ const UploadImageModal = ({ onClose }: UploadImageModalProps) => {
 
   return (
     <div className=" h-full w-full">
-      <div className=" items-center flex justify-center w-full h-10 text-center text-sm">
-        사진 업로드
-      </div>
       <div className="relative w-full h-16">
         <label className="absolute w-full h-full flex items-center justify-center cursor-pointer">
-          갤러리에서 가져오기
+          사진 업로드
           <input
             className="opacity-0 absolute w-full h-full"
             name="postImg"
@@ -48,6 +54,7 @@ const UploadImageModal = ({ onClose }: UploadImageModalProps) => {
           onClick={onClose}
         />
       </div>
+      <Toaster />
     </div>
   );
 };

@@ -20,12 +20,16 @@ const AlertNavbar = () => {
   return (
     <nav className="relative w-full flex box-border">
       <div
-        className={`w-[calc(50%)] absolute ${leftPosition} bottom-0 border-b-4 h-1 border-neutral-500 transition-all ease-out`}
+        className={`w-[calc(50%)] absolute ${leftPosition} bottom-0 border-b-4 h-1 border-primary transition-all ease-out`}
       />
       <div className="flex w-full">
         <button
           onClick={() => setAlertSectionState('active')}
-          className={`grow text-center text-black text-sm ${
+          className={`grow text-center ${
+            alertCurrentSectionState === 'active'
+              ? 'text-primaryText'
+              : 'text-gray4'
+          }  text-sm ${
             alertCurrentSectionState === 'active' && 'font-semibold'
           } leading-none relative w-1/4 flex items-center justify-center py-5`}
         >
@@ -33,7 +37,13 @@ const AlertNavbar = () => {
         </button>
         <button
           onClick={() => setAlertSectionState('hastag')}
-          className={`grow text-center text-black text-sm ${
+          className={`
+          ${
+            alertCurrentSectionState === 'hastag'
+              ? 'text-primaryText'
+              : 'text-gray4'
+          }
+          grow text-center text-sm ${
             alertCurrentSectionState === 'hastag' && 'font-semibold'
           } leading-none relative w-1/4 flex items-center justify-center py-5`}
         >

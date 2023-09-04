@@ -1,6 +1,4 @@
 'use client';
-import Link from 'next/link';
-import HomeSectionTitle from './HomeSectionTitle';
 import HomeWeekleyItem from './HomeWeekleyItem';
 import useDrag from '@/hooks/useDrag';
 

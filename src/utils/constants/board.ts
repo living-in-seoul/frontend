@@ -1,3 +1,5 @@
+import { Like, scrapIcon } from '../Icon';
+
 export const LINK_NAME = [
   {
     link: null,
@@ -16,6 +18,7 @@ export const LINK_NAME = [
     name: '생활정보',
   },
 ];
+
 export const SEARCH_LINK_NAME = [
   {
     link: null,
@@ -37,11 +40,13 @@ export const SEARCH_LINK_NAME = [
 
 export const MYPAGE_LINK_NAME = [
   {
-    link: 'scrapped',
+    params: 'myscrap',
     name: '찜한 글',
   },
   {
-    link: 'writed',
+    params: 'mypost',
     name: '작성한 글',
   },
 ];
+
+export const buttonArray = [{ path: Like }, { path: scrapIcon }];

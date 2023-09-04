@@ -1,22 +1,26 @@
 'use client';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 export default function MypageLink({
   category,
   children,
 }: {
   category: {
-    link: string | null;
+    params: string | null;
     name: string;
   };
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
-  const link = category.link ? `/mypage/${category.link}` : '/mypage';
+  const pathname = usePathname() ?? '';
+  const param = useSearchParams();
+  const categoryParam = param?.get('category');
+  const link = category.params
+    ? `/mypage?category=${category.params}`
+    : '/mypage';
 
-  const isActive = category.link
-    ? `${category.link}` === pathname.split('/')[2]
+  const isActive = category.params
+    ? `${category.params}` === categoryParam
     : pathname.split('/')[2] === 'selceted' || pathname === '/mypage';
   return (
     <Link

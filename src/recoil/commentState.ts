@@ -1,12 +1,17 @@
 import { atom } from 'recoil';
 
+export const inoutTextFocusState = atom<number | null>({
+  key: 'inoutTextFocusState',
+  default: null,
+});
+
 export const inputTextRefState =
   atom<React.RefObject<HTMLTextAreaElement> | null>({
     key: 'inputTextRefState',
     default: null,
   });
 
-export const buttonRefState = atom<React.RefObject<HTMLButtonElement> | null>({
+export const formRefState = atom<React.RefObject<HTMLFormElement> | null>({
   key: 'buttonRefState',
   default: null,
 });
@@ -42,4 +47,14 @@ export const reCommentState = atom<{
 export const commentKeyState = atom<string>({
   key: 'commentState',
   default: '',
+});
+
+export const onReCommentState = atom<boolean>({
+  key: 'onReCommentState',
+  default: false,
+});
+
+export const commentIdState = atom<number | null>({
+  key: 'commentIdState',
+  default: null,
 });

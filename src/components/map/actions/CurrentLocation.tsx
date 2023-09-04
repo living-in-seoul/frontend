@@ -28,9 +28,8 @@ const CurrentLocation = () => {
         setIsLoading(false);
       },
       () => {
-        console.log('동의해라');
         setIsLoading(false);
-      }, //동의하라고 모달 띄우기
+      },
     );
   };
 

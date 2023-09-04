@@ -8,8 +8,6 @@ interface Context {
 
 export const GET = async (req: NextRequest, context: Context) => {
   const { location } = context.params;
-  // const currentDate = getCurrentDateInFormat();
-  // const currentTime = getCurrentTimeInFormat();
   const { getCurrentDate: currentDate, getCurrentTime: currentTime } =
     getCurrentDateAndTime();
   const { lat, lng } = seoulCenterCoords['영등포구']!;
@@ -35,7 +33,6 @@ export const GET = async (req: NextRequest, context: Context) => {
     },
     next: { revalidate: 60 * 60 * 3 },
   }).then<ForecastResponse>((res) => res.json());
-  console.log(response);
   const forecastItems = response.response.body.items.item;
   const currentsTime = parseInt(
     `${new Date().getHours()}${new Date().getMinutes()}`,

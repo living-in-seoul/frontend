@@ -20,3 +20,8 @@ export const formDataState = atom<RequestBoardWrite>({
   key: 'FormDataState',
   default: initialForm,
 });
+
+export const postIdstate = atom<string>({
+  key: 'PostIdState',
+  default: '',
+});

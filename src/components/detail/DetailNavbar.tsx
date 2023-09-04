@@ -4,46 +4,58 @@ import Icons from '../common/Icons';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
-  buttonRefState,
+  formRefState,
   commentKeyState,
   inputTextRefState,
   totalCommentState,
+  inoutTextFocusState,
 } from '@/recoil/commentState';
 import { useSWRConfig } from 'swr';
 import { toast } from 'react-hot-toast';
+import BeatLoader from 'react-spinners/BeatLoader';
 
-const DetailNavbar = () => {
+const DetailNavbar = ({ postId }: { postId: string }) => {
   const [comment, setComment] = useState<string>('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  const [postId, setPostId] = useState<string>('');
+  const formRef = useRef<HTMLFormElement>(null);
   const setInputRef = useSetRecoilState(inputTextRefState);
-  const setButtonRef = useSetRecoilState(buttonRefState);
-  const [commentState, setCommentState] = useRecoilState(totalCommentState);
+  const setButtonRef = useSetRecoilState(formRefState);
+  const commentInputFocus = useRecoilValue(inoutTextFocusState);
+  const commentState = useRecoilValue(totalCommentState);
   const commentUrlKey = useRecoilValue(commentKeyState);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { mutate } = useSWRConfig();
+
   useEffect(() => {
-    const postId = localStorage.getItem('postId');
-    if (postId) {
-      setPostId(postId);
+    if (commentInputFocus) {
+      textareaRef.current?.focus();
     }
   }, []);
-  useEffect(() => {
-    setInputRef(textareaRef);
-    setButtonRef(buttonRef);
-  }, [setInputRef, commentState, setButtonRef]);
 
-  const handleResizeHeight = (e: any) => {
+  // useEffect(() => {
+  //   setInputRef(textareaRef);
+  //   setButtonRef(formRef);
+  //   return () => {
+  //     setInputRef(null);
+  //     setButtonRef(null);
+  //   };
+  // }, [setInputRef, commentState, setButtonRef]);
+
+  const handleResizeHeight = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
-    if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto';
-      textareaRef.current.style.height =
-        textareaRef.current.scrollHeight + 'px';
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = textarea.scrollHeight + 'px';
     }
   };
-  const onSubmitCommentHandler = async (e: any) => {
+  const onSubmitCommentHandler = async (
+    e: React.FormEvent<HTMLFormElement>,
+  ) => {
     e.preventDefault();
+    setIsLoading(true);
     if (!comment) {
+      setIsLoading(false);
       return toast.error('뭐든 적긴해야지');
     }
     const tokenValidResponse = await fetch('/api/user', {
@@ -85,14 +97,15 @@ const DetailNavbar = () => {
             }).then(() => mutate(commentUrlKey));
       }
     } else {
-      console.log('로그인모달 나와주세요');
     }
     setComment('');
+    setIsLoading(false);
   };
   return (
     <div className="fixed bottom-0">
       <nav className="fixed bottom-0 right-auto max-w-md w-full border bg-white">
         <form
+          ref={formRef}
           onSubmit={(e) => onSubmitCommentHandler(e)}
           className="flex-row h-fit flex w-full items-end justify-around px-4 py-4 "
         >
@@ -112,6 +125,7 @@ const DetailNavbar = () => {
             option={{ stroke: '#00C092', strokeWidth: '1.3' }}
           />
           <textarea
+            id="inputText"
             ref={textareaRef}
             value={comment}
             onChange={handleResizeHeight}
@@ -121,9 +135,16 @@ const DetailNavbar = () => {
             rows={1}
             wrap="hard"
           />
-          <button type="submit" ref={buttonRef}>
-            <Icons path={paperAirplaneIcon} fill="none" />
-          </button>
+
+          {isLoading ? (
+            <div className="w-[24px] h-[24px]">
+              <BeatLoader size={3} color="#2DDAB0" />
+            </div>
+          ) : (
+            <button type="submit">
+              <Icons path={paperAirplaneIcon} fill="none" />
+            </button>
+          )}
         </form>
       </nav>
     </div>

@@ -1,19 +1,23 @@
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import { profile } from '../../../public';
 import { getTimeAgo } from '@/utils/utilFunc';
 
 interface DetailMainProps {
   nickname: string;
   createdAt: string;
+  userImg?: string | StaticImageData | null;
   postViewCount?: number;
   onMap?: boolean;
+  ondetail?: boolean;
 }
 
 const UserProfile = ({
   nickname,
   createdAt,
+  userImg = profile,
   postViewCount,
   onMap = false,
+  ondetail = false,
 }: DetailMainProps) => {
   return (
     <>
@@ -27,6 +31,7 @@ const UserProfile = ({
               fill
               className="absolute top-0"
               sizes={'36px'}
+              priority={false}
             />
           </div>
         )}
@@ -35,25 +40,25 @@ const UserProfile = ({
             onMap ? ' px-0' : 'flex-col  gap-1 justify-center px-[10px]'
           }`}
         >
-          <div className="flex items-center gap-2 mb-0.5">
+          <div className="flex items-center gap-2 mb-0.5 ">
             {/* 닉네임 */}
             <h3
-              className={`text-sm truncate  ${
-                onMap
-                  ? 'text-neutral-500 max-w-full'
-                  : 'font-semibold text-black'
-              } leading-3 max-w-[80px] `}
+              className={`text-sm truncate ${
+                onMap ? 'text-neutral-500 max-w-full' : 'text-gray1 leading-3 '
+              } max-w-[80px] `}
             >
               {onMap ? `${nickname}님이 등록 ·` : nickname}
             </h3>
             {/* 레벨 */}
             {!onMap && (
-              <p className="text-neutral-600 text-sm font-medium leading-3">
-                Lv.1
-              </p>
+              <p className="text-gray4 text-sm font-medium leading-3 ">Lv.1</p>
             )}
           </div>
-          <div className="text-neutral-500 text-sm font-normal leading-3">
+          <div
+            className={`text-gray4 text-sm font-normal ${
+              !onMap && 'leading-3'
+            } `}
+          >
             {getTimeAgo(createdAt)} {`· 조회수 ${postViewCount ?? 0}`}
           </div>
         </div>

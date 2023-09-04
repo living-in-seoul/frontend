@@ -10,11 +10,11 @@ interface CommunityHotTag {
 
 const CommunityHotTag = ({ Hottag, category }: CommunityHotTag) => {
   const searchParams = useSearchParams();
-  const tagActive = searchParams.get('tag');
+  const tagActive = searchParams?.get('tag');
 
   return (
     <section className="w-full border-b py-6">
-      <h1 className="w-full text-black py-3 px-4 text-lg font-semibold leading-none">
+      <h1 className="w-full text-gray1 py-3 px-4 text-lg font-semibold leading-none">
         현재 HOT한 해시태그
       </h1>
       <ul className="py-3 pl-4 gap-2.5 flex whitespace-nowrap scrollbar-hide overflow-x-auto">

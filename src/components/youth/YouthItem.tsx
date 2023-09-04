@@ -12,12 +12,12 @@ const YouthItem = ({ name, data, bg, color }: YouthItemProps) => {
     >
       <div>
         <span
-          className={`${color} py-1 px-3 w-full h-full rounded-2xl text-white`}
+          className={`${color} py-1 px-3 w-full h-full rounded-2xl text-white `}
         >
           {name}
         </span>
       </div>
-      <h1 className="font-semibold text-[1rem] text-neutral-800">
+      <h1 className="font-semibold text-[1rem] text-neutral-800 overflow-x-hidden">
         {data.polyBizSjnm}
       </h1>
       <div className="w-full flex justify-between min-h-[36px]">

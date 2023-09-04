@@ -1,8 +1,9 @@
 import BeatLoader from '@/components/common/Spinner';
 import HomeSectionTitle from '@/components/home/HomeSectionTitle';
+import { getYouth } from '@/service/youth';
 import dynamic from 'next/dynamic';
 
-const DynamicYouth = dynamic(() => import('@/components/youth/Youth'), {
+const DynamicYouth = dynamic(() => import('@/components/youth/YouthList'), {
   ssr: false,
   loading: () => (
     <div
@@ -13,12 +14,14 @@ const DynamicYouth = dynamic(() => import('@/components/youth/Youth'), {
   ),
 });
 
-const YouthPage = () => {
+const YouthPage = async () => {
+  const youthList = await getYouth();
+
   return (
-    <section>
+    <>
       <HomeSectionTitle title="최신 서울시 정책 NEWS" />
-      <DynamicYouth />
-    </section>
+      <DynamicYouth youthList={youthList} />
+    </>
   );
 };
 

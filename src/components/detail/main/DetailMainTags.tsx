@@ -12,7 +12,11 @@ const DetailMainTags = ({ data }: { data: ResponseDetailData }) => {
     <div className="flex flex-row gap-4">
       <Icons path={hashtagIcon} fill="#2DDAB0" />
       {hashtags.map((hashtag, index) => (
-        <Link key={hashtag} href={`/community/${category}/${hashtag}`}>
+        <Link
+          key={hashtag}
+          href={`/community/${category}/${hashtag}`}
+          prefetch={false}
+        >
           <Select
             title={`#${hashtag}`}
             key={hashtag}

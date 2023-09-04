@@ -6,18 +6,30 @@ interface Context {
   params: { slug: string[] };
 }
 
-export const GET = async (request: NextRequest, context: Context) => {
+export const GET = async (_: NextRequest, context: Context) => {
   const slugLength = context.params.slug.length;
   const token = cookies().get('accessToken');
   if (slugLength === 1) {
     if (token) {
       const postId = context.params.slug[0];
-      const data = await getUserBoard(postId);
-      return NextResponse.json(data);
+      const data = await getUserBoard(postId).then((data) => data?.result);
+      const response = {
+        hasLiked: data?.hasLiked,
+        hasScrapped: data?.hasScrapped,
+        likeSize: data?.post.likeSize,
+        scrapSize: data?.post.scrapSize,
+      };
+      return NextResponse.json(response);
     }
     const postId = context.params.slug[0];
-    const data = await getBoard(postId);
-    return NextResponse.json(data);
+    const data = await getBoard(postId).then((data) => data?.result);
+    const response = {
+      hasLiked: data?.hasLiked,
+      hasScrapped: data?.hasScrapped,
+      likeSize: data?.post.likeSize,
+      scrapSize: data?.post.scrapSize,
+    };
+    return NextResponse.json(response);
   }
   if (slugLength === 2) {
     const {

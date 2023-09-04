@@ -15,6 +15,7 @@ export const getRefreshToken = async () => {
       body: data,
     },
   ).then((response) => response.json());
+
   return response;
 };
 

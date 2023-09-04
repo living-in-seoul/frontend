@@ -13,3 +13,7 @@ export const recentlySearchedState = atom<string[]>({
   key: 'recentlySearchedState',
   default: [],
 });
+export const searchState = atom<string>({
+  key: 'searchState',
+  default: '',
+});

@@ -170,10 +170,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/env@npm:13.4.12":
-  version: 13.4.12
-  resolution: "@next/env@npm:13.4.12"
-  checksum: 2ccb2e271b3c42697c1e807cdf988429fcb563f80fa0ca72512f65f47cbbcc46c44fc53bf055814d4b467f1394de8c1a1ef6aad14d35f9993004faa956466d02
+"@next/env@npm:13.4.20-canary.15":
+  version: 13.4.20-canary.15
+  resolution: "@next/env@npm:13.4.20-canary.15"
+  checksum: a3b7a6839751c9b0ff92a8e333eaec85102011672c596d21c9b9f7c93b58cc1a20a58b68755f78f47a4d517610f3da277674d54f7daedc46d270f227a95ada88
   languageName: node
   linkType: hard
 
@@ -186,65 +186,65 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-arm64@npm:13.4.12":
-  version: 13.4.12
-  resolution: "@next/swc-darwin-arm64@npm:13.4.12"
+"@next/swc-darwin-arm64@npm:13.4.20-canary.15":
+  version: 13.4.20-canary.15
+  resolution: "@next/swc-darwin-arm64@npm:13.4.20-canary.15"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-x64@npm:13.4.12":
-  version: 13.4.12
-  resolution: "@next/swc-darwin-x64@npm:13.4.12"
+"@next/swc-darwin-x64@npm:13.4.20-canary.15":
+  version: 13.4.20-canary.15
+  resolution: "@next/swc-darwin-x64@npm:13.4.20-canary.15"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm64-gnu@npm:13.4.12":
-  version: 13.4.12
-  resolution: "@next/swc-linux-arm64-gnu@npm:13.4.12"
+"@next/swc-linux-arm64-gnu@npm:13.4.20-canary.15":
+  version: 13.4.20-canary.15
+  resolution: "@next/swc-linux-arm64-gnu@npm:13.4.20-canary.15"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm64-musl@npm:13.4.12":
-  version: 13.4.12
-  resolution: "@next/swc-linux-arm64-musl@npm:13.4.12"
+"@next/swc-linux-arm64-musl@npm:13.4.20-canary.15":
+  version: 13.4.20-canary.15
+  resolution: "@next/swc-linux-arm64-musl@npm:13.4.20-canary.15"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-gnu@npm:13.4.12":
-  version: 13.4.12
-  resolution: "@next/swc-linux-x64-gnu@npm:13.4.12"
+"@next/swc-linux-x64-gnu@npm:13.4.20-canary.15":
+  version: 13.4.20-canary.15
+  resolution: "@next/swc-linux-x64-gnu@npm:13.4.20-canary.15"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-musl@npm:13.4.12":
-  version: 13.4.12
-  resolution: "@next/swc-linux-x64-musl@npm:13.4.12"
+"@next/swc-linux-x64-musl@npm:13.4.20-canary.15":
+  version: 13.4.20-canary.15
+  resolution: "@next/swc-linux-x64-musl@npm:13.4.20-canary.15"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@next/swc-win32-arm64-msvc@npm:13.4.12":
-  version: 13.4.12
-  resolution: "@next/swc-win32-arm64-msvc@npm:13.4.12"
+"@next/swc-win32-arm64-msvc@npm:13.4.20-canary.15":
+  version: 13.4.20-canary.15
+  resolution: "@next/swc-win32-arm64-msvc@npm:13.4.20-canary.15"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-win32-ia32-msvc@npm:13.4.12":
-  version: 13.4.12
-  resolution: "@next/swc-win32-ia32-msvc@npm:13.4.12"
+"@next/swc-win32-ia32-msvc@npm:13.4.20-canary.15":
+  version: 13.4.20-canary.15
+  resolution: "@next/swc-win32-ia32-msvc@npm:13.4.20-canary.15"
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"@next/swc-win32-x64-msvc@npm:13.4.12":
-  version: 13.4.12
-  resolution: "@next/swc-win32-x64-msvc@npm:13.4.12"
+"@next/swc-win32-x64-msvc@npm:13.4.20-canary.15":
+  version: 13.4.20-canary.15
+  resolution: "@next/swc-win32-x64-msvc@npm:13.4.20-canary.15"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -1872,9 +1872,9 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 20.5.7
-  resolution: "@types/node@npm:20.5.7"
-  checksum: fc284c8e16ddc04569730d58e87eae349eb1c3dd9020cb79a1862d9d9add6f04e7367a236f3252db8db2572f90278e250f4cd43d27d264972b54394eaba1ed76
+  version: 20.5.9
+  resolution: "@types/node@npm:20.5.9"
+  checksum: 717490e94131722144878b4ca1a963ede1673bb8f2ef78c2f5b50b918df6dc9b35e7f8283e5c2a7a9f137730f7c08dc6228e53d4494a94c9ee16881e6ce6caed
   languageName: node
   linkType: hard
 
@@ -2437,9 +2437,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001406, caniuse-lite@npm:^1.0.30001517, caniuse-lite@npm:^1.0.30001520":
-  version: 1.0.30001524
-  resolution: "caniuse-lite@npm:1.0.30001524"
-  checksum: 35d662a62f5e6be3c2d2141f1f30b3428ec72c5756cbd9fc723e33606846f28a515fd30f1e8b56e506c63fe0755f6eb7e3548dc6eefd53c5591b1a3bd28fee98
+  version: 1.0.30001525
+  resolution: "caniuse-lite@npm:1.0.30001525"
+  checksum: a0d190c185b8e1220dbc72e42f310633059aa175ca3396eb781b249ac3da6c62b30cb8efc5fa24d632cb938f58d90b0c7772d1c9942b6643cf418c27c2cb8632
   languageName: node
   linkType: hard
 
@@ -2760,9 +2760,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.477":
-  version: 1.4.506
-  resolution: "electron-to-chromium@npm:1.4.506"
-  checksum: 449966efca7ab56a308726eec952d0e5a673c12de23921da5336698adb49bfcc1e4e04f3e24c144db9ba8d40023c95bbe8a44a50eb709ddf55984884539eea91
+  version: 1.4.508
+  resolution: "electron-to-chromium@npm:1.4.508"
+  checksum: 4475eb18f5805d43f84d9542364045a39b183a14cd9f4626e0951ea61d0fa4f84a5ed579c2c32189f9af4a27a31041d09fed78f60930ac36b3baa08547dd3aa6
   languageName: node
   linkType: hard
 
@@ -3334,9 +3334,9 @@ __metadata:
   linkType: hard
 
 "fraction.js@npm:^4.2.0":
-  version: 4.3.2
-  resolution: "fraction.js@npm:4.3.2"
-  checksum: 21820632b85240dc638726282fd3fab973a2a90a6e396e57d48d154558b42ba1fb09667480067e1bc87488f7bed69c0a21f2cafe31657e21e6ffdd7fca7d04bf
+  version: 4.3.6
+  resolution: "fraction.js@npm:4.3.6"
+  checksum: e96ae77e64ebfd442d3a5a01a3f0637b0663fc2440bcf2841b3ad9341ba24c81fb2e3e7142e43ef7d088558c6b3f8609df135b201adc7a1c674aea6a71384162
   languageName: node
   linkType: hard
 
@@ -4503,20 +4503,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:13.4.12":
-  version: 13.4.12
-  resolution: "next@npm:13.4.12"
+"next@npm:^13.4.20-canary.15":
+  version: 13.4.20-canary.15
+  resolution: "next@npm:13.4.20-canary.15"
   dependencies:
-    "@next/env": 13.4.12
-    "@next/swc-darwin-arm64": 13.4.12
-    "@next/swc-darwin-x64": 13.4.12
-    "@next/swc-linux-arm64-gnu": 13.4.12
-    "@next/swc-linux-arm64-musl": 13.4.12
-    "@next/swc-linux-x64-gnu": 13.4.12
-    "@next/swc-linux-x64-musl": 13.4.12
-    "@next/swc-win32-arm64-msvc": 13.4.12
-    "@next/swc-win32-ia32-msvc": 13.4.12
-    "@next/swc-win32-x64-msvc": 13.4.12
+    "@next/env": 13.4.20-canary.15
+    "@next/swc-darwin-arm64": 13.4.20-canary.15
+    "@next/swc-darwin-x64": 13.4.20-canary.15
+    "@next/swc-linux-arm64-gnu": 13.4.20-canary.15
+    "@next/swc-linux-arm64-musl": 13.4.20-canary.15
+    "@next/swc-linux-x64-gnu": 13.4.20-canary.15
+    "@next/swc-linux-x64-musl": 13.4.20-canary.15
+    "@next/swc-win32-arm64-msvc": 13.4.20-canary.15
+    "@next/swc-win32-ia32-msvc": 13.4.20-canary.15
+    "@next/swc-win32-x64-msvc": 13.4.20-canary.15
     "@swc/helpers": 0.5.1
     busboy: 1.6.0
     caniuse-lite: ^1.0.30001406
@@ -4526,7 +4526,6 @@ __metadata:
     zod: 3.21.4
   peerDependencies:
     "@opentelemetry/api": ^1.1.0
-    fibers: ">= 3.1.0"
     react: ^18.2.0
     react-dom: ^18.2.0
     sass: ^1.3.0
@@ -4552,13 +4551,11 @@ __metadata:
   peerDependenciesMeta:
     "@opentelemetry/api":
       optional: true
-    fibers:
-      optional: true
     sass:
       optional: true
   bin:
     next: dist/bin/next
-  checksum: 50bd443ffe09424c1a94d6606d41886ccd1d65185e125aa199957ea92c5e4d1c226f1675f3e5ea92e88f43f8355824ba50db52a8aeae225f7a86b6c901d25527
+  checksum: 267322817121b2a7cd1f4287e41429215f3674b88d0faa2fee751c665dcbf7ffac6e6ca7addc33ca57f8ec4fdec2a4f30fabbd00b556feca5dc11bedde1f8ffa
   languageName: node
   linkType: hard
 
@@ -5395,7 +5392,7 @@ __metadata:
     eslint: 8.46.0
     eslint-config-next: 13.4.12
     eslint-config-prettier: ^9.0.0
-    next: 13.4.12
+    next: ^13.4.20-canary.15
     next-nprogress-bar: ^2.1.2
     postcss: ^8.4.27
     react: 18.2.0

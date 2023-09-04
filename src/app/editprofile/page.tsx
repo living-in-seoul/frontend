@@ -5,14 +5,11 @@ import { getProfile } from '@/service/user';
 
 const EditProfilePage = async () => {
   const userProfile = await getProfile();
-  console.log(userProfile);
   return (
     <section className="flex flex-col relative w-full h-full gap-6">
       <EditProfileHeader />
       <EditProfileImage profileImageUrl={userProfile?.profileImageUrl} />
       <EditProfileInfo profile={userProfile} />
-      <div id="portalSignin" />
-      <div id="portalSignin2" />
     </section>
   );
 };
