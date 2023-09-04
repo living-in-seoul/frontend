@@ -29,6 +29,8 @@ export const seoulCenterCoords: Partial<SeoulCoords> = {
   강동구: { lat: 37.549208, lng: 127.146482 },
 };
 
+export const GUARRAY = Object.keys(seoulCenterCoords);
+
 export const outerCoords = [
   { lat: 38.634, lng: 124.5863 },
   { lat: 38.634, lng: 131.8727 },

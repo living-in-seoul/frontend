@@ -12,6 +12,7 @@ interface SearchInputProps {
   leftElement?: JSX.Element;
   formColor?: string;
   inputColor?: string;
+  className?: string;
 }
 
 const Input = ({
@@ -24,6 +25,7 @@ const Input = ({
   rightElement,
   formColor,
   inputColor,
+  className,
 }: SearchInputProps) => {
   return (
     <section className="flex justify-center items-center ">
@@ -34,7 +36,7 @@ const Input = ({
         onSubmit={onSubmit}
       >
         <input
-          className={`outline-none text-sm w-full pl-3 ${inputColor}`}
+          className={`outline-none text-sm w-full pl-3 ${inputColor} ${className}`}
           placeholder={placeholder}
           value={value}
           onFocus={onFocus}

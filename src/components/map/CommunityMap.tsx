@@ -35,13 +35,10 @@ const CommunityMap = () => {
   const setBoardListState = useSetRecoilState(boardListState);
   const setCommunityKey = useSetRecoilState(communityKeyState);
 
-  //로컬스토리지 여기서 잠깐 저장좀
-  localStorage.setItem('location', '강남구');
-
   useEffect(() => {
     const getCenter = () => {
       const gu =
-        (localStorage.getItem('location') as guchung) ?? polygonValue.gu;
+        (localStorage.getItem('location_gu') as guchung) ?? polygonValue.gu;
       if (gu && seoulCenterCoords.hasOwnProperty(gu)) {
         setCenter(seoulCenterCoords[gu]);
       }
@@ -87,7 +84,8 @@ const CommunityMap = () => {
         </div>
       ));
     }
-  }, [boardList, polygonValue.gu]);
+    console.log(boardList);
+  }, [polygonValue.gu]);
 
   useEffect(() => {
     if (boardList) setBoardListState(boardList);
