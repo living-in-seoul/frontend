@@ -16,7 +16,7 @@ export const commentModalArray = [
 
 export const detailModalArray = [
   { text: '게시글 수정', color: 'text-blue-600', first: true, type: 'detail' },
-  { text: '게시글 삭제', color: 'text-red-600', first: true, type: 'detail' },
+  { text: '게시글 삭제', color: 'text-red-600', first: false, type: 'detail' },
 ];
 
 export const reportModalArray = [
@@ -24,7 +24,7 @@ export const reportModalArray = [
   {
     text: '이 사용자 차단하기',
     color: 'text-red-600',
-    first: true,
+    first: false,
     type: 'report',
   },
 ];

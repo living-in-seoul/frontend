@@ -7,6 +7,11 @@ export const middleware = async (request: NextRequest) => {
   const { pathname, search, origin, basePath } = request.nextUrl;
   const signinPage = request.nextUrl.pathname.startsWith('/signin');
   const signupPage = request.nextUrl.pathname.startsWith('/signup');
+  if (pathname === '/') {
+    const signInUrl = new URL(`${basePath}/home`, origin);
+    return NextResponse.redirect(signInUrl);
+  }
+
   if (signupPage || signinPage) {
     if (refreshToken) {
       const signInUrl = new URL(`${basePath}/home`, origin);
@@ -43,11 +48,12 @@ export const config = {
     // '/api/write',
     // '/api/liked',
     // '/signin/:path*',
-    '/mypage',
+    // '/mypage',
     '/write',
     '/editprofile/:path*',
     // '/signup/first',
     // '/signin',
+    '/',
   ],
 };
 

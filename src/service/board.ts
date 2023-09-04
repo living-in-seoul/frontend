@@ -1,5 +1,4 @@
 import { cookies } from 'next/headers';
-import { constSelector } from 'recoil';
 
 interface ResponsenewDataDataType {
   message: string;
@@ -24,27 +23,23 @@ export const writeBoard = async (form: any) => {
 
 /**postData 가져오기 */
 export const getUserBoard = async (postId: string) => {
-  try {
-    const token = cookies().get('accessToken');
-    if (!token) {
-    }
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER}/posts/auth/${postId}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: 'Bearer ' + token?.value,
+  const token = cookies().get('accessToken');
+  if (token) {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER}/posts/get/${postId}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            authorization: 'Bearer ' + token?.value,
+          },
         },
-      },
-    ).then<ResponseDetailData>((res) => res.json());
-    return response;
-  } catch (error: any) {
-    console.log('getBoard error', error.message);
+      ).then<ResponseDetailData>((res) => res.json());
+      return response;
+    } catch (error: any) {
+      console.log('getBoard error', error.message);
+    }
   }
-};
-
-/**postData 비회원 가져오기 */
-export const getBoard = async (postId: string) => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER}/posts/get/${postId}`,
@@ -113,7 +108,7 @@ export const getMypostScrapPost = async (
 ) => {
   const token = cookies().get('accessToken')?.value;
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/posts/${category}?page=${page}&size=1`,
+    `${process.env.NEXT_PUBLIC_SERVER}/posts/${category}?page=${page}&size=3`,
     {
       method: 'GET',
       headers: {
