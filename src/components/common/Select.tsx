@@ -6,7 +6,7 @@ interface Props {
   disable?: boolean;
   size?: 'large' | 'medium' | 'small' | 'full' | 'default' | 'alert';
   selectTag?: boolean;
-  Icon?: JSX.Element;
+  Icon?: JSX.Element | null;
 }
 
 const getButtonSizeStyles = (size: string) => {

@@ -30,6 +30,7 @@ const DetailNavbar = ({ postId }: { postId: string }) => {
     setButtonRef({ current: buttonRef.current });
     setTextareaRef({ current: textareaRef.current });
   }, [setButtonRef, setTextareaRef]);
+
   useEffect(() => {
     if (commentInputFocus) {
       textareaRef.current?.focus();

@@ -1,24 +1,17 @@
 'use client';
 import useOutsideClick from '@/hooks/useOutsideClick';
-import React, { ReactNode, useEffect, useRef, useState } from 'react';
-import { RecoilState, useRecoilState } from 'recoil';
+import React, { useEffect, useRef } from 'react';
+import { useRecoilState } from 'recoil';
 import LoginContent from './bottomsheet/LoginContent';
 import MapContent from './bottomsheet/MapContent';
 import DefaultContent from './bottomsheet/DefaultContent';
 import { bottomSheetState } from '@/recoil/bottomsheet';
 import LocationSelect from './home/location/LocationSelect';
 import WriteSelect from './bottomsheet/WriteSelect';
-// const DynamicLocationSelect = dynamic(
-//   () => import('./location/LocationSelect'),
-//   {
-//     ssr: false,
-//   },
-// );
 
 interface BottomSheetProps {}
 
 const BottomSheet = ({}: BottomSheetProps) => {
-  // const [isBottomSheetOpen, setisBottomSheetState] = useRecoilState(state);
   const scrollY = useRef(0);
   const ref = useRef<HTMLDivElement | null>(null);
   const [bottomSheetInfo, setBottomSheetState] =

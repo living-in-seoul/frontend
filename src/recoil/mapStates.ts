@@ -67,5 +67,5 @@ export const selectDongPlaceState = atom<string>({
 
 export const recentLocationState = atom<string[]>({
   key: 'recentLocationState',
-  default: [],
 });
+import { useHandleTags } from '@/hooks/useHandleTags';
