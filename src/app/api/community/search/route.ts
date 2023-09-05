@@ -41,3 +41,17 @@ export const GET = async (req: NextRequest) => {
     console.log('error', error);
   }
 };
+export const POST = async (req: NextRequest) => {
+  const search = await req.json();
+
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/search/save`, {
+      method: 'POST',
+      body: JSON.stringify(search),
+    }).then((result) => result.json());
+
+    return NextResponse.json(res);
+  } catch (error) {
+    console.log('error', error);
+  }
+};

@@ -1,41 +1,10 @@
 'use client';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import Select from '../common/Select';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { recentlySearchedState, searchState } from '@/recoil/communityStates';
 import { useRouter } from 'next/navigation';
-
-interface CloseProps {
-  onClick: () => void;
-}
-
-const Close = ({ onClick }: CloseProps) => {
-  return (
-    <div onClick={onClick} className="cursor-pointer">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="8"
-        height="8"
-        viewBox="0 0 8 8"
-        fill="none"
-      >
-        <g clipPath="url(#clip0_980_1515)">
-          <path
-            d="M8 0L0 8M0 0L8 8"
-            stroke="#787878"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </g>
-        <defs>
-          <clipPath id="clip0_980_1515">
-            <rect width="8" height="8" fill="white" />
-          </clipPath>
-        </defs>
-      </svg>
-    </div>
-  );
-};
+import { Close } from '../profile/editpage/EditImageIcon';
 
 const RecentlySearch = () => {
   const [recentlySearched, setRecentlySearched] = useRecoilState(
@@ -66,17 +35,18 @@ const RecentlySearch = () => {
       </div>
       <ul className="flex gap-2.5 py-5 whitespace-nowrap scrollbar-hide overflow-x-auto">
         {recentlySearched.map((item) => (
-          <Select
-            title={`${item.substring(1)}`}
-            key={item}
-            onClick={() => {
-              router.replace(`/search?search=${encodeURIComponent(item)}`);
-              setSearchState(item);
-            }}
-            className="rounded-md cursor-pointer"
-            size="large"
-            Icon={<Close onClick={() => removeSearchTerm(item)} />}
-          />
+          <li key={item}>
+            <Select
+              title={`${item.substring(1)}`}
+              onClick={() => {
+                router.replace(`/search?search=${encodeURIComponent(item)}`);
+                setSearchState(item);
+              }}
+              className="rounded-md cursor-pointer"
+              size="large"
+              Icon={<Close onClick={() => removeSearchTerm(item)} />}
+            />
+          </li>
         ))}
       </ul>
     </section>

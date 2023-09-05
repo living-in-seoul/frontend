@@ -65,3 +65,8 @@ export const hashtagAlertToggleState = atom<boolean>({
   key: 'hashtagAlertToggleState',
   default: false,
 });
+
+export const notificationState = atom<any>({
+  key: 'notificationState',
+  default: null,
+});

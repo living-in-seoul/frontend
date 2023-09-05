@@ -23,26 +23,34 @@ import {
 } from '@/utils/constants/constants';
 import { bottomSheetState, mapBottomSheetState } from '@/recoil/bottomsheet';
 import Button from '../common/Button';
-import { useMapCenter } from '@/hooks/useMapCenter';
 
 const CommunityMap = () => {
   const { map, onLoad, onUnmount } = useMapInstance();
-  const setisBottomSheetState = useSetRecoilState(mapBottomSheetState);
   const { posts: boardList } = usePosts(communityKeyState);
   const [polygonValue, setPolygonState] = useRecoilState(polygonState);
-  const [center, setCenter] = useMapCenter(polygonValue, seoulCenterCoords);
   const filterOption = useRecoilValue(filterOptionState);
   const currentValue = useRecoilValue(currentState);
   const setMarkerId = useSetRecoilState(markerIdState);
   const setBoardListState = useSetRecoilState(boardListState);
   const setCommunityKey = useSetRecoilState(communityKeyState);
   const setBottomSheetState = useSetRecoilState(bottomSheetState);
-  /** 모달오픈 */
+  const setisBottomSheetState = useSetRecoilState(mapBottomSheetState);
+  const [center, setCenter] = useState<LatLng | null | undefined>(null);
+
   const openMapBottomSheet = useCallback(() => {
     setBottomSheetState({ isActive: true, type: 'map', link: null });
   }, [setBottomSheetState]);
-  //로컬스토리지 여기서 잠깐 저장좀
-  localStorage.setItem('location', '강남구');
+
+  useEffect(() => {
+    const getCenter = () => {
+      const gu =
+        (localStorage.getItem('location_gu') as guchung) ?? polygonValue.gu;
+      if (gu && seoulCenterCoords.hasOwnProperty(gu)) {
+        setCenter(seoulCenterCoords[gu]);
+      }
+    };
+    getCenter();
+  }, [polygonValue.gu]);
 
   useEffect(() => {
     const gu = polygonValue.gu;
@@ -82,8 +90,18 @@ const CommunityMap = () => {
         </div>
       ));
     }
-    console.log(boardList);
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [boardList]);
+
+  useEffect(() => {
+    const getCenter = () => {
+      const gu =
+        (localStorage.getItem('location_gu') as guchung) ?? polygonValue.gu;
+      if (gu && seoulCenterCoords.hasOwnProperty(gu)) {
+        setCenter(seoulCenterCoords[gu]);
+      }
+    };
+    getCenter();
   }, [polygonValue.gu]);
 
   useEffect(() => {
@@ -119,7 +137,7 @@ const CommunityMap = () => {
     <section className="w-full h-full relative z-100">
       <GoogleMap
         mapContainerStyle={CommContainerStyle}
-        center={center}
+        center={center ?? undefined}
         onLoad={onLoad}
         onUnmount={onUnmount}
         options={mapOptions}

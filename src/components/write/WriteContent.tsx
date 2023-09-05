@@ -14,10 +14,8 @@ import {
   MapPortalState,
   formDataState,
 } from '@/recoil/BoardStates';
-import SelectCategory from './SelectCategory';
 import SelectedLocation from './location/SelectedLocation';
 import DisplayTags from './tags/DisplayTags';
-import BottomSheet from '../BottomSheet';
 import { bottomSheetState, writeBottomSheetState } from '@/recoil/bottomsheet';
 import { Toaster } from 'react-hot-toast';
 

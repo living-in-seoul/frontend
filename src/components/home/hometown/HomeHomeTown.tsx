@@ -1,5 +1,4 @@
 import HomeSectionTitle from '../HomeSectionTitle';
-import HomeTagSections from '../review/HomeTagSections';
 import dynamic from 'next/dynamic';
 import PostItemSkeleton from '../../community/PostItemSkeleton';
 import IndicatorSkeleton from '../../community/IndicatorSkeleton';

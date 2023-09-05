@@ -10,6 +10,5 @@ export const GET = async (req: NextRequest, context: Context) => {
   const { searchParams } = req.nextUrl;
   const page = searchParams.get('page');
   const data = await getMypostScrapPost(category, page);
-  console.log(data);
   return NextResponse.json(data);
 };

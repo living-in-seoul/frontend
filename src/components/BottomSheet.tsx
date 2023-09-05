@@ -1,13 +1,21 @@
 'use client';
 import useOutsideClick from '@/hooks/useOutsideClick';
-import React, { useEffect, useRef } from 'react';
-import { useRecoilState } from 'recoil';
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
+import { RecoilState, useRecoilState, useRecoilValue } from 'recoil';
 import LoginContent from './bottomsheet/LoginContent';
 import MapContent from './bottomsheet/MapContent';
 import DefaultContent from './bottomsheet/DefaultContent';
 import { bottomSheetState } from '@/recoil/bottomsheet';
 import LocationSelect from './home/location/LocationSelect';
 import WriteSelect from './bottomsheet/WriteSelect';
+import { Toaster, toast } from 'react-hot-toast';
+import { notificationState } from '@/recoil/authStates';
+// const DynamicLocationSelect = dynamic(
+//   () => import('./location/LocationSelect'),
+//   {
+//     ssr: false,
+//   },
+// );
 
 interface BottomSheetProps {}
 
@@ -56,6 +64,7 @@ const BottomSheet = ({}: BottomSheetProps) => {
             : 'opacity-0 pointer-events-none'
         }`}
       ></div>
+
       <div
         ref={ref}
         className={`fixed max-w-md bg-white z-50 bottom-0 border-t-2 rounded-tl-2xl rounded-tr-2xl pt-7 pb-5 shadow-2xl border-neutral-200 left-1/2 -translate-x-1/2 w-full transform transition-transform duration-500 ${
