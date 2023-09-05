@@ -7,7 +7,6 @@ import MapContent from './bottomsheet/MapContent';
 import DefaultContent from './bottomsheet/DefaultContent';
 import { bottomSheetState } from '@/recoil/bottomsheet';
 import LocationSelect from './home/location/LocationSelect';
-import SelectCategory from './write/SelectCategory';
 import WriteSelect from './bottomsheet/WriteSelect';
 // const DynamicLocationSelect = dynamic(
 //   () => import('./location/LocationSelect'),
@@ -39,7 +38,6 @@ const BottomSheet = ({}: BottomSheetProps) => {
       window.scrollTo(0, scrollY.current);
     }
   }, [isBottomSheetOpen]);
-
   const renderContent = () => {
     switch (bottomSheetInfo.type) {
       case 'login':
