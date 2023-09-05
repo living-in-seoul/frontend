@@ -4,7 +4,6 @@ export default function NavbarLayout({
   children,
 }: {
   children: React.ReactNode;
-  modal: React.ReactNode;
 }) {
   return (
     <>

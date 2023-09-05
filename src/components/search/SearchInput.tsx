@@ -56,14 +56,26 @@ const SearchInput = () => {
     setShowList(false);
   }, [debounceKeyword]);
 
-  const onClickHandler = (search: string) => {
+  const onClickHandler = async (search: string) => {
     addRecentlySearched(search);
     setSearch(search);
+    await fetch(`/api/community/search`, {
+      method: 'POST',
+      body: JSON.stringify({
+        query: search,
+      }),
+    });
     router.replace(`/search?search=${encodeURIComponent(search)}`);
     setData([]);
   };
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    await fetch(`/api/community/search`, {
+      method: 'POST',
+      body: JSON.stringify({
+        query: search,
+      }),
+    });
     event.preventDefault();
     addRecentlySearched(search);
     setData([]);

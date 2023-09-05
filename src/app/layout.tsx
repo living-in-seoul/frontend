@@ -1,14 +1,17 @@
-import SWRConfigContext from '@/context/SWRConfigContext';
 import './globals.css';
 import type { Metadata } from 'next';
-import RecoilProvider from '@/context/RecoilProvider';
-import ProgressBarProviders from '@/context/ProgressbarProvider';
-import SSEProvider from '@/context/SSEProvider';
 import localFont from 'next/font/local';
-import { UserProvider } from '@/context/UserProvider';
-import BottomSheetManager from '@/components/bottomsheet/BottomSheetManager';
 import { NavigationEvents } from '@/components/map/bottomsheet/BottomSheetRouterEvent';
 import { Suspense } from 'react';
+
+import {
+  RecoilProvider,
+  SWRConfigContext,
+  SSEProvider,
+  ProgressBarProviders,
+  BottomSheetManager,
+} from '@/context';
+import ToastManager from '@/context/ToastManager';
 
 export const metadata: Metadata = {
   title: '서울에서 살아남기',
@@ -40,24 +43,20 @@ export default async function RootLayout({
       </head>
 
       <body className="flex flex-col min-h-screen items-center">
-        <SSEProvider
-          eventTypes={['LIKE', 'COMMENT', 'HASHTAG']}
-          url={'/api/sse'}
-        >
-          <UserProvider>
-            <RecoilProvider>
-              <SWRConfigContext>
-                <ProgressBarProviders>
-                  <div className="w-full max-w-md bg-[#fdfdfd]">{children}</div>
-                  <BottomSheetManager />
-                  <Suspense fallback={null}>
-                    <NavigationEvents />
-                  </Suspense>
-                </ProgressBarProviders>
-              </SWRConfigContext>
-            </RecoilProvider>
-          </UserProvider>
-        </SSEProvider>
+        <RecoilProvider>
+          <SWRConfigContext>
+            <SSEProvider>
+              <ProgressBarProviders>
+                <main className="w-full max-w-md bg-[#fdfdfd]">{children}</main>
+                <BottomSheetManager />
+                <ToastManager />
+                <Suspense fallback={null}>
+                  <NavigationEvents />
+                </Suspense>
+              </ProgressBarProviders>
+            </SSEProvider>
+          </SWRConfigContext>
+        </RecoilProvider>
         <div id="portalSignin" />
       </body>
     </html>

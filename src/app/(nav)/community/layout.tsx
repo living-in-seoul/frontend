@@ -4,10 +4,8 @@ import CommunityNavbar from '@/components/community/CommunityNavbar';
 
 export default function CommunityLayout({
   children,
-  modal,
 }: {
   children: React.ReactNode;
-  modal: React.ReactNode;
 }) {
   return (
     <section className="relative">
@@ -18,11 +16,8 @@ export default function CommunityLayout({
         </div>
         <CommunityNavbar />
       </div>
-      <div id="searchModal" />
-      <div>
-        {children}
-        {modal}
-      </div>
+
+      <div>{children}</div>
     </section>
   );
 }

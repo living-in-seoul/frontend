@@ -21,9 +21,7 @@ export const fetchCommunity = async ({
   const tag = tags ?? '';
   const UrlEncodigTag = typeof tag === 'string' && encodeURIComponent(tag);
   if (category === 'All') {
-    const Allapi = `${
-      process.env.NEXT_PUBLIC_SERVER
-    }/tags/posts?category=&hashtagName=${UrlEncodigTag}&size=${limit}&page=${page}&type=${'newer'}`;
+    const Allapi = `${process.env.NEXT_PUBLIC_SERVER}/tags/posts?category=&hashtagName=${UrlEncodigTag}&size=${limit}&page=${page}&type=${ordertype}`;
     try {
       const respoense = await fetch(Allapi, {
         next: { revalidate: 0 },

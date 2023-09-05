@@ -20,7 +20,7 @@ const CommunityHotTag = ({ Hottag, category }: CommunityHotTag) => {
       <ul className="py-3 pl-4 gap-2.5 flex whitespace-nowrap scrollbar-hide overflow-x-auto">
         {Hottag ? (
           Hottag?.map((tag) => (
-            <div
+            <li
               key={tag}
               onClick={() =>
                 router.replace(`/community?category=${category}&tag=${tag}`)
@@ -33,7 +33,7 @@ const CommunityHotTag = ({ Hottag, category }: CommunityHotTag) => {
                 disable
                 selectTag={tagActive === tag}
               />
-            </div>
+            </li>
           ))
         ) : (
           <>비어있어요</>
