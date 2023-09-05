@@ -1,7 +1,5 @@
 'use client';
-import Select from '@/components/common/Select';
 import DisplayTags from '@/components/write/tags/DisplayTags';
-import { useHandleTags } from '@/hooks/useHandleTags';
 import { recentLocationState } from '@/recoil/mapStates';
 import { useCallback } from 'react';
 import { useRecoilState } from 'recoil';
@@ -18,7 +16,7 @@ const DisplayRecents = () => {
 
   return (
     <div>
-      <DisplayTags tags={placeData} onDeleteTag={onDeleteTag} location={true} />
+      <DisplayTags tags={placeData} onDeleteTag={onDeleteTag} />
     </div>
   );
 };

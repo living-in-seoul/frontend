@@ -8,12 +8,12 @@ interface DisplayLiProps {
 
 const DisplayLi = ({ predictions, keyword, onClick }: DisplayLiProps) => {
   return (
-    <div>
+    <div className="absolute flex flex-col w-full">
       {predictions.map((gu, i) => {
         const parts = gu.split(new RegExp(`(${keyword})`, 'gi'));
         return (
           <li
-            className=" py-3.5 flex justify-start items-center border-b border-gray5 last:border-[0] cursor-pointer"
+            className="bg-white py-3.5 flex justify-start items-center border-b border-gray5 last:border-[0] cursor-pointer"
             key={i}
             onClick={() => onClick(gu)}
           >

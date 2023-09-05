@@ -54,8 +54,7 @@ export const config = {
     '/write',
     '/editprofile/:path*',
     // '/signup/first',
-    '/signin',
-    // '/',
+    // '/signin',
   ],
 };
 

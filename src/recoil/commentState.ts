@@ -53,6 +53,7 @@ export const buttonRefState = atom<RefObject<HTMLButtonElement>>({
   key: 'buttonRefState',
   default: { current: null },
 });
+
 export const textareaRefState = atom<RefObject<HTMLTextAreaElement>>({
   key: 'textareaRefState',
   default: { current: null },

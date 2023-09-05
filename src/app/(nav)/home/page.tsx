@@ -4,6 +4,7 @@ const HomePage = () => {
   return (
     <section className=" relative h-full">
       <HomeTopSection />
+      <div id="searchPortal" />
     </section>
   );
 };

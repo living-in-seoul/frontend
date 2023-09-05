@@ -20,7 +20,6 @@ import { notificationState } from '@/recoil/authStates';
 interface BottomSheetProps {}
 
 const BottomSheet = ({}: BottomSheetProps) => {
-  // const [isBottomSheetOpen, setisBottomSheetState] = useRecoilState(state);
   const scrollY = useRef(0);
   const ref = useRef<HTMLDivElement | null>(null);
   const [bottomSheetInfo, setBottomSheetState] =
