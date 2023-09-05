@@ -7,10 +7,10 @@ export const middleware = async (request: NextRequest) => {
   const { pathname, search, origin, basePath } = request.nextUrl;
   const signinPage = request.nextUrl.pathname.startsWith('/signin');
   const signupPage = request.nextUrl.pathname.startsWith('/signup');
-  if (pathname === '/') {
-    const signInUrl = new URL(`${basePath}/home`, origin);
-    return NextResponse.redirect(signInUrl);
-  }
+  // if (pathname === '/') {
+  //   const signInUrl = new URL(`${basePath}/home`, origin);
+  //   return NextResponse.redirect(signInUrl);
+  // }
 
   if (signupPage || signinPage) {
     if (refreshToken) {
@@ -55,7 +55,7 @@ export const config = {
     '/editprofile/:path*',
     // '/signup/first',
     '/signin',
-    '/',
+    // '/',
   ],
 };
 

@@ -21,7 +21,7 @@ const SocialAuth = ({ text, url, bgColor, color, active }: SocialAuthProps) => {
         className={`relative cursor-pointer rounded-xl h-12 flex flex-row justify-center items-center border p-3 ${active} ${bgColor} ${color}`}
         onClick={
           text === '이메일'
-            ? () => router.push('/signin/user')
+            ? () => router.replace('/signin/user')
             : () => oauthHandler(url)
         }
       >
