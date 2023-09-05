@@ -16,13 +16,16 @@ import {
 import { communityKeyState } from '@/recoil/communityStates';
 import usePosts from '@/hooks/usePosts';
 import CustomOverlayMarker from './marker/CustomOverlayMarker';
-import { CommContainerStyle, mapOptions } from '@/utils/constants/constants';
+import {
+  CommContainerStyle,
+  mapOptions,
+  seoulCenterCoords,
+} from '@/utils/constants/constants';
 import { bottomSheetState, mapBottomSheetState } from '@/recoil/bottomsheet';
 import Button from '../common/Button';
 
 const CommunityMap = () => {
   const { map, onLoad, onUnmount } = useMapInstance();
-  const setisBottomSheetState = useSetRecoilState(mapBottomSheetState);
   const { posts: boardList } = usePosts(communityKeyState);
   const [polygonValue, setPolygonState] = useRecoilState(polygonState);
   const filterOption = useRecoilValue(filterOptionState);
@@ -31,11 +34,23 @@ const CommunityMap = () => {
   const setBoardListState = useSetRecoilState(boardListState);
   const setCommunityKey = useSetRecoilState(communityKeyState);
   const setBottomSheetState = useSetRecoilState(bottomSheetState);
+  const setisBottomSheetState = useSetRecoilState(mapBottomSheetState);
   const [center, setCenter] = useState<LatLng | null | undefined>(null);
 
   const openMapBottomSheet = useCallback(() => {
     setBottomSheetState({ isActive: true, type: 'map', link: null });
   }, [setBottomSheetState]);
+
+  useEffect(() => {
+    const getCenter = () => {
+      const gu =
+        (localStorage.getItem('location_gu') as guchung) ?? polygonValue.gu;
+      if (gu && seoulCenterCoords.hasOwnProperty(gu)) {
+        setCenter(seoulCenterCoords[gu]);
+      }
+    };
+    getCenter();
+  }, [polygonValue.gu]);
 
   useEffect(() => {
     const gu = polygonValue.gu;
@@ -76,6 +91,17 @@ const CommunityMap = () => {
       ));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [boardList]);
+
+  useEffect(() => {
+    const getCenter = () => {
+      const gu =
+        (localStorage.getItem('location_gu') as guchung) ?? polygonValue.gu;
+      if (gu && seoulCenterCoords.hasOwnProperty(gu)) {
+        setCenter(seoulCenterCoords[gu]);
+      }
+    };
+    getCenter();
   }, [polygonValue.gu]);
 
   useEffect(() => {
