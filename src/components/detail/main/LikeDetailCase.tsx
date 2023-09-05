@@ -14,7 +14,7 @@ const LikeDetailCase = ({ postId }: { postId: number }) => {
 
   // swr mutate로 업데이트를 해보자!!!!
   const onClickLikeHandler = async () => {
-    fetch(`/api/post/like`, {
+    await fetch(`/api/post/like`, {
       method: 'POST',
       body: JSON.stringify(postId),
       headers: {

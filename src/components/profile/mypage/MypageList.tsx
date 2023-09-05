@@ -67,16 +67,3 @@ const MypageList = () => {
 };
 
 export default MypageList;
-
-// const tokenValidResponse = await fetch('/api/user', {
-//   method: 'GET',
-// });
-
-// if (tokenValidResponse.status === 200) {
-//   try {
-//   } catch (e) {
-//     alert('게시물 작성 실패!');
-//   }
-// } else {
-//   alert('로그인 모달 나와주세요');
-// }

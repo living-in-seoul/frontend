@@ -11,12 +11,12 @@ const DetailMain = ({
   postId: string;
 }) => {
   return (
-    <section className="flex flex-col gap-6 py-6 border-b-2  px-4">
+    <article className="flex flex-col gap-6 py-6 border-b-2  px-4">
       <DetailMainProfile data={data} />
       <DetailMainContents data={data} />
       <DetailMainTags data={data} />
       <DetailButtons postId={postId} />
-    </section>
+    </article>
   );
 };
 

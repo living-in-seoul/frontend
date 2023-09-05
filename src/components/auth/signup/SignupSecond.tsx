@@ -111,15 +111,18 @@ const SignupSecond = () => {
               ))}
             </div>
           </div>
-          <AuthInput
-            id="hometown"
-            placeholder="ex) 경상북도 안동시"
-            label="출신지역"
-            mainProps={register('hometown', hometownForm)}
-            isSubmitted={isSubmitted}
-            isErrors={errors.hometown}
-            errorsMessage={errors.hometown?.message}
-          />
+          <div className="relative gap-2">
+            <AuthInput
+              id="hometown"
+              placeholder="ex) 경상북도 안동시"
+              label="출신지역"
+              mainProps={register('hometown', hometownForm)}
+              isSubmitted={isSubmitted}
+              isErrors={errors.hometown}
+              errorsMessage={errors.hometown?.message}
+            />
+            {/* <div className="absolute flex rounded-2xl h-20 w-full bg-slate-400"></div> */}
+          </div>
           <Table
             categories={['~6개월', '1~2년', '3~4년', '5년 이상']}
             onSelectHandler={setmovedDate}

@@ -64,3 +64,8 @@ export const selectDongPlaceState = atom<string>({
   key: 'selectDongPlaceState',
   default: '',
 });
+
+export const recentLocationState = atom<string[]>({
+  key: 'recentLocationState',
+  default: [],
+});
