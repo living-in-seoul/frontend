@@ -20,8 +20,8 @@ const LikeCommentCase = ({
       {hasLiked ? (
         <div onClick={isLoading ? () => {} : likeHandler}>
           <Icons
-            fill="red"
-            className={'cursor-pointer'}
+            fill="#2DDAB0"
+            className="cursor-pointer"
             path={Like}
             option={{
               fill: '#787878',
@@ -32,7 +32,7 @@ const LikeCommentCase = ({
         <div onClick={isLoading ? () => {} : likeHandler}>
           <Icons
             path={Like}
-            className={'cursor-pointer'}
+            className="cursor-pointer"
             option={{
               fill: '#787878',
             }}

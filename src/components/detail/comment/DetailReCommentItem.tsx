@@ -1,6 +1,6 @@
 'use client';
 import UserProfile from '../../item/UserProfile';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   commentKeyState,
@@ -10,9 +10,9 @@ import {
 import { commentModalArray, reportModalArray } from '@/utils/constants/modal';
 import { toast } from 'react-hot-toast';
 import { useSWRConfig } from 'swr';
-import Icons from '@/components/common/Icons';
-import { detailColThreeDotIcon } from '@/utils/Icon';
 import DetailModal from '../DetailModal';
+import { userClientVerify } from '@/service/oauth';
+import { clientCommentDelete } from '@/service/clientCommet';
 
 const DetailReCommentItem = ({
   reCommentData,
@@ -24,7 +24,6 @@ const DetailReCommentItem = ({
   const [username, setUsername] = useState<string>('');
   const setTotalComment = useSetRecoilState(totalCommentState);
   const textareaRef = useRecoilValue(textareaRefState);
-
   const { mutate } = useSWRConfig();
   const { createdAt, nickname, reComment, reCommentId, userImg } =
     reCommentData;
@@ -35,30 +34,23 @@ const DetailReCommentItem = ({
     username && setUsername(username);
   }, []);
 
-  const onClickDeleteHandler = async () => {
-    try {
-      const tokenValidResponse = await fetch('/api/user', {
-        method: 'GET',
-      });
-      if (tokenValidResponse.status === 200) {
-        await fetch(`/api/comment/re/${reCommentId}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-          .then((response) => response.json())
-          .then(() => {
-            toast.success('삭제하기 완료');
-            mutate(commentKey);
-          });
+  const onClickDeleteHandler = useCallback(async () => {
+    const response = await userClientVerify();
+    if (response && (response.status === 200 || response.status === 201)) {
+      try {
+        await clientCommentDelete(reCommentId, true).then(() => {
+          toast.success('삭제하기 완료');
+          mutate(commentKey);
+        });
+      } catch (error) {
+        toast.error('삭제하기 실패');
+      } finally {
+        setOpenModal(false);
       }
-    } catch (error) {
-      toast.error('삭제하기 실패');
-    } finally {
-      setOpenModal(false);
     }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reCommentId]);
+
   const onClickChagneHandler = () => {
     setTotalComment((prev) => ({
       ...prev,
@@ -79,12 +71,12 @@ const DetailReCommentItem = ({
           userImg={userImg}
           ondetail={false}
         />
-        <Icons
-          path={detailColThreeDotIcon}
-          fill="#404040"
-          onClick={() => {
-            setOpenModal(true);
-          }}
+        <DetailModal
+          openModal={openModal}
+          modalArray={modalArray}
+          onClickUpperHandler={onClickChagneHandler}
+          onClickLowerHandler={onClickDeleteHandler}
+          setOpenModal={setOpenModal}
         />
       </div>
       <div className="flex flex-col gap-2 w-5/6 ml-auto">
@@ -96,14 +88,6 @@ const DetailReCommentItem = ({
           <div className="flex flex-row gap-1 items-center"></div>
         </div>
       </div>
-      {openModal && (
-        <DetailModal
-          modalArray={modalArray}
-          onClickUpperHandler={onClickChagneHandler}
-          onClickLowerHandler={onClickDeleteHandler}
-          setOpenModal={setOpenModal}
-        />
-      )}
     </section>
   );
 };

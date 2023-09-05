@@ -4,9 +4,10 @@ import { closeX } from '@/utils/Icon';
 interface DisplayTags {
   tags: string[];
   onDeleteTag?: (data: string) => void;
+  location?: boolean;
 }
 
-const DisplayTags = ({ tags, onDeleteTag }: DisplayTags) => {
+const DisplayTags = ({ tags, onDeleteTag, location = false }: DisplayTags) => {
   return (
     <div className="flex gap-1 w-auto overflow-x-auto scrollbar-hide px-1">
       {tags.map((tag, _) => (
@@ -15,7 +16,8 @@ const DisplayTags = ({ tags, onDeleteTag }: DisplayTags) => {
           key={tag}
           onClick={() => onDeleteTag && onDeleteTag(tag)}
         >
-          #{tag}
+          {location ? tag : `#${tag}`}
+
           {onDeleteTag && (
             <Icons
               path={closeX}

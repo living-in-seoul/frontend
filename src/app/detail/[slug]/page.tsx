@@ -6,11 +6,25 @@ import DetailNavbar from '@/components/detail/DetailNavbar';
 import BeatLoader from '@/components/common/Spinner';
 import { cookies } from 'next/headers';
 import { getUserBoard } from '@/service/board';
+import { Metadata } from 'next';
 interface DetailPageProps {
   params: {
     slug: string;
   };
 }
+export const generateMetadata = async ({
+  params,
+}: DetailPageProps): Promise<Metadata> => {
+  const { slug: postId } = params;
+  const product = await getUserBoard(postId);
+  console.log(product);
+  const title = product?.result.post.category;
+  const description = product?.result.post.content;
+  return {
+    title,
+    description,
+  };
+};
 
 const DetailPage = async ({ params }: DetailPageProps) => {
   const { slug: postId } = params;

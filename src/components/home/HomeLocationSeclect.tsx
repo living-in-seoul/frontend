@@ -55,11 +55,10 @@ const HomeLocationSeclect = ({
       </div>
       {/* <BottomSheet state={locationBottomSheetState}>
       </BottomSheet> */}
-      {/* {openSearchModal && (
-        <div className="absolute top-0 left-0 bg-white flex flex-col gap-4 w-full h-screen">
-          <SearchModal />
-        </div>
-      )} */}
+
+      <div className="absolute top-0 left-0 bg-white flex flex-col gap-4 w-full h-screen">
+        <SearchModal />
+      </div>
     </>
   );
 };

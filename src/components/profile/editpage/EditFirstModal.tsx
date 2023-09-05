@@ -33,6 +33,7 @@ const EditFirstModal = ({
       method: 'DELETE',
     }).then((response) => {
       if (response.status === 200) {
+        localStorage.removeItem('nickname');
         route.push('/home');
       }
     });
@@ -42,6 +43,7 @@ const EditFirstModal = ({
       method: 'DELETE',
     }).then((response) => {
       if (response.status === 200) {
+        localStorage.removeItem('nickname');
         route.push('/home');
       }
     });

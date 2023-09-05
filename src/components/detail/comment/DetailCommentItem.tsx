@@ -1,23 +1,22 @@
 'use client';
-import { Comment, detailColThreeDotIcon } from '@/utils/Icon';
+import { Comment } from '@/utils/Icon';
 import Icons from '../../common/Icons';
 import UserProfile from '../../item/UserProfile';
 import { useCallback, useEffect, useState } from 'react';
 import LikeCommentCase from './LikeCommentCase';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   commentKeyState,
   totalCommentState,
   inoutTextFocusState,
-  buttonRefState,
   textareaRefState,
 } from '@/recoil/commentState';
 import { useSWRConfig } from 'swr';
-import ModalPortal from '@/components/modal/ModalPortal';
-import ModalOutside from '@/components/modal/ModalOutside';
 import { commentModalArray, reportModalArray } from '@/utils/constants/modal';
 import { Toaster, toast } from 'react-hot-toast';
 import DetailModal from '../DetailModal';
+import { clientCommentDelete, clientCommentLike } from '@/service/clientCommet';
+import { userClientVerify } from '@/service/oauth';
 interface DetailCommentItemProps {
   data: Comment;
   children: React.ReactNode;
@@ -35,7 +34,7 @@ const DetailCommentItem = ({ data, children }: DetailCommentItemProps) => {
   } = data;
   const commentKey = useRecoilValue(commentKeyState);
   const [username, setUsername] = useState<string>('');
-  const [totalComment, setTotalComment] = useRecoilState(totalCommentState);
+  const setTotalComment = useSetRecoilState(totalCommentState);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const textareaRef = useRecoilValue(textareaRefState);
@@ -47,11 +46,13 @@ const DetailCommentItem = ({ data, children }: DetailCommentItemProps) => {
   useEffect(() => {
     const username = localStorage.getItem('nickname');
     username && setUsername(username);
+    return () => {
+      setOpenModal(false);
+      setCommentInputFocus(null);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  useEffect(() => {
-    return () => setOpenModal(false);
-  }, []);
-  const onClickChagneHandler = () => {
+  const onClickChagneHandler = useCallback(() => {
     setTotalComment((prev) => ({
       ...prev,
       isCommentChange: true,
@@ -59,55 +60,43 @@ const DetailCommentItem = ({ data, children }: DetailCommentItemProps) => {
     }));
     textareaRef.current?.focus();
     setOpenModal(false);
-  };
-  const onClickDeleteHandler = async () => {
-    try {
-      const tokenValidResponse = await fetch('/api/user', {
-        method: 'GET',
-      });
-      if (tokenValidResponse.status === 200) {
-        const response = await fetch(`/api/comment/${commentId}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-          .then((response) => response.json())
-          .then(() => {
-            toast.success('삭제하기 완료');
-            mutate(commentKey);
-          });
-      }
-    } catch (error) {
-      toast.error('삭제하기 실패');
-    } finally {
-      setOpenModal(false);
-    }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [commentId, setTotalComment]);
 
-  const likeHandler = async () => {
+  const onClickDeleteHandler = useCallback(async () => {
+    const response = await userClientVerify();
+    if (response && (response.status === 200 || response.status === 201)) {
+      try {
+        await clientCommentDelete(commentId).then(() => {
+          toast.success('삭제하기 완료');
+          mutate(commentKey);
+        });
+      } catch (error) {
+        toast.error('삭제하기 실패');
+      } finally {
+        setOpenModal(false);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [commentId]);
+
+  const onClicklikeHandler = useCallback(async () => {
     setIsLoading(true);
-    try {
-      const tokenValidResponse = await fetch('/api/user', {
-        method: 'GET',
-      });
-      if (tokenValidResponse.status === 200) {
-        await fetch('/api/comment/like', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(commentId),
-        }).then((respnse) => respnse.json());
+    const response = await userClientVerify();
+    if (response && (response.status === 200 || response.status === 201)) {
+      try {
+        await clientCommentLike(commentId, 'comment');
+      } catch (error) {
+        toast.error('좋아요 실패인데요');
+      } finally {
+        setIsLoading(false);
         mutate(commentKey);
       }
-    } catch (error) {
-      console.log('사망 5초전');
-    } finally {
-      setIsLoading(false);
     }
-  };
-  const onReCommentHandler = () => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [commentId]);
+
+  const onReCommentHandler = useCallback(() => {
     if (commentInputFocus) {
       setCommentInputFocus(null);
       setTotalComment((prev) => ({
@@ -125,7 +114,7 @@ const DetailCommentItem = ({ data, children }: DetailCommentItemProps) => {
         isComment: false,
       }));
     }
-  };
+  }, [commentId, commentInputFocus, setCommentInputFocus, setTotalComment]);
   return (
     <section className="flex flex-col gap-2">
       <Toaster />
@@ -136,12 +125,12 @@ const DetailCommentItem = ({ data, children }: DetailCommentItemProps) => {
           ondetail={false}
         />
         <div className="cursor-pointer">
-          <Icons
-            path={detailColThreeDotIcon}
-            fill="#404040"
-            onClick={() => {
-              setOpenModal(true);
-            }}
+          <DetailModal
+            openModal={openModal}
+            modalArray={modalArray}
+            onClickUpperHandler={onClickChagneHandler}
+            onClickLowerHandler={onClickDeleteHandler}
+            setOpenModal={setOpenModal}
           />
         </div>
       </div>
@@ -152,7 +141,7 @@ const DetailCommentItem = ({ data, children }: DetailCommentItemProps) => {
             <LikeCommentCase
               hasLiked={commentHasLiked}
               likeSize={commentLikeSize}
-              likeHandler={likeHandler}
+              likeHandler={onClicklikeHandler}
               isLoading={isLoading}
             />
           </div>
@@ -175,14 +164,6 @@ const DetailCommentItem = ({ data, children }: DetailCommentItemProps) => {
         </div>
         <div>{children}</div>
       </div>
-      {openModal && (
-        <DetailModal
-          modalArray={modalArray}
-          onClickUpperHandler={onClickChagneHandler}
-          onClickLowerHandler={onClickDeleteHandler}
-          setOpenModal={setOpenModal}
-        />
-      )}
     </section>
   );
 };

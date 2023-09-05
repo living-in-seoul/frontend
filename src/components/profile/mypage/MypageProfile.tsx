@@ -21,7 +21,6 @@ const MypageProfile = () => {
               className="rounded-full"
             />
           </div>
-
           <div className="flex flex-col">
             <span className="font-semibold">{data?.nickname}</span>
             <p>Lv.1</p>

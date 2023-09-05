@@ -1,16 +1,24 @@
+'use client';
+import Select from '@/components/common/Select';
+import DisplayTags from '@/components/write/tags/DisplayTags';
+import { useHandleTags } from '@/hooks/useHandleTags';
+import { recentLocationState } from '@/recoil/mapStates';
+import { useCallback } from 'react';
+import { useRecoilState } from 'recoil';
+
 const DisplayRecents = () => {
+  const [placeData, setPlaceData] = useRecoilState(recentLocationState);
+
+  const onDeleteTag = useCallback(
+    (tag: string) => {
+      setPlaceData((prev) => prev.filter((t) => t !== tag));
+    },
+    [setPlaceData],
+  );
+
   return (
     <div>
-      {['영등포구', '서초구'].map((gu) => {
-        return (
-          <div
-            className="flex justify-center items-center border border-neutral-300 py-1 px-2 rounded-lg gap-1 cursor-pointer"
-            key={gu}
-          >
-            <div className="text-sm ">{gu}</div>
-          </div>
-        );
-      })}
+      <DisplayTags tags={placeData} onDeleteTag={onDeleteTag} location={true} />
     </div>
   );
 };
