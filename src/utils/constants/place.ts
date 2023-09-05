@@ -56,7 +56,6 @@ export const PlaceData: {
   '청담동 명품거리': { adress: '강남구 도산대로 407', simpleName: '청담동' },
   가로수길: { adress: '강남구 신사동 강남대로162길', simpleName: '가로수길' },
   이태원역: { adress: '용산구 이태원로 179', simpleName: '이태원' },
-  혜화역: { adress: '종로구 대학로 120', simpleName: '혜화역' },
 };
 
 const DATA_AREA = [
@@ -76,7 +75,6 @@ const DATA_AREA = [
   '청담동 명품거리',
   '가로수길',
   '이태원역',
-  '혜화역',
 ];
 /** 도시데이터 && 도시 이미지 함치는 함수 */
 export const getHomeDatas = async () => {

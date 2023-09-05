@@ -19,6 +19,7 @@ export const GET = async (_: NextRequest, context: Context) => {
           process.env.NEXT_PUBLIC_SERVER
         }/alarm/activity?page=${1}&size=${10}&alarmCategory=${category}`,
         {
+          next: { revalidate: 0 },
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

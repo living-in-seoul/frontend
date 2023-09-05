@@ -41,7 +41,6 @@ const EditProfileImage = ({ profileImageUrl }: { profileImageUrl: string }) => {
     setLoading(true);
     const newData = new FormData();
     upLodaedProfile && newData.append('image', upLodaedProfile);
-    console.log(newData.get('image'));
     const tokenValidResponse = await fetch('/api/user', {
       method: 'GET',
     });

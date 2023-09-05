@@ -1,12 +1,41 @@
 'use client';
 
+import { useState } from 'react';
+import { Toaster, toast } from 'react-hot-toast';
+import { useSWRConfig } from 'swr';
+
 interface SearchHashTagAlertProps {
   hashTag: string;
 }
 
 const SearchHashTagAlert = ({ hashTag }: SearchHashTagAlertProps) => {
+  const [loading, setIsLoading] = useState(false);
+  const { mutate } = useSWRConfig();
+
+  const onClickHandler = async () => {
+    setIsLoading(true);
+
+    const res = await fetch('/api/alert', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ hashtagName: hashTag }),
+    })
+      .then(() => {
+        mutate('/api/alert');
+        toast.success('등록완료');
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
   return (
-    <div className="fixed left-1/2 -translate-x-1/2 z-50 hover:scale-105 scale-100 active:scale-105 transition-all bottom-5 h-10 px-4 py-3 bg-primary rounded-3xl shadow justify-center items-center gap-2 inline-flex">
+    <div
+      className="fixed left-1/2 -translate-x-1/2 z-50 hover:scale-105 scale-100 active:scale-105 transition-all bottom-5 h-10 px-4 py-3 bg-primary rounded-3xl shadow justify-center items-center gap-2 inline-flex"
+      onClick={onClickHandler}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="20"
@@ -30,6 +59,7 @@ const SearchHashTagAlert = ({ hashTag }: SearchHashTagAlertProps) => {
           알림받기
         </span>
       </div>
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 };

@@ -1,16 +1,19 @@
 'use client';
 
 import Icons from '@/components/common/Icons';
-import { back, detailColThreeDotIcon, detailLinkIcon } from '@/utils/Icon';
+import { back, detailLinkIcon } from '@/utils/Icon';
 import { useRouter } from 'next/navigation';
 import DetailModal from './DetailModal';
 import { useEffect, useState } from 'react';
 import { detailModalArray, reportModalArray } from '@/utils/constants/modal';
+import { Toaster, toast } from 'react-hot-toast';
 
 const DetailHeader = ({ data }: { data: ResponseDetailData }) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('');
+
   const route = useRouter();
+
   useEffect(() => {
     const username = localStorage.getItem('nickname');
     username && setUsername(username);
@@ -22,6 +25,7 @@ const DetailHeader = ({ data }: { data: ResponseDetailData }) => {
       : reportModalArray;
   return (
     <section className="flex flex-row justify-between  px-4 py-4">
+      <Toaster />
       <div className="flex flex-row gap-4">
         <div>
           <Icons path={back} fill="#404040" onClick={() => route.back()} />
@@ -30,24 +34,20 @@ const DetailHeader = ({ data }: { data: ResponseDetailData }) => {
       </div>
       <div className="flex flex-row gap-4">
         <div>
-          <Icons path={detailLinkIcon} fill="#404040" />
-        </div>
-        <div>
           <Icons
-            path={detailColThreeDotIcon}
+            path={detailLinkIcon}
             fill="#404040"
-            onClick={() => setOpenModal(true)}
+            onClick={() => toast.error('서비스 준비중입니다')}
           />
         </div>
-      </div>
-      {openModal && (
         <DetailModal
+          openModal={openModal}
           modalArray={modalArray}
           onClickUpperHandler={() => {}}
           onClickLowerHandler={() => {}}
           setOpenModal={setOpenModal}
         />
-      )}
+      </div>
     </section>
   );
 };

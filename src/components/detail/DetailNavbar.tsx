@@ -30,6 +30,7 @@ const DetailNavbar = ({ postId }: { postId: string }) => {
     setButtonRef({ current: buttonRef.current });
     setTextareaRef({ current: textareaRef.current });
   }, [setButtonRef, setTextareaRef]);
+
   useEffect(() => {
     if (commentInputFocus) {
       textareaRef.current?.focus();
@@ -132,13 +133,13 @@ const DetailNavbar = ({ postId }: { postId: string }) => {
               strokeLinecap: 'round',
               strokeLinejoin: 'round',
             }}
-            onClick={() => toast.error('서비스준비중입니다')}
+            onClick={() => toast.error('서비스 준비중입니다')}
           />
           <Icons
             path={smallMarkerIcon}
             fill="none"
             option={{ stroke: '#00C092', strokeWidth: '1.3' }}
-            onClick={() => toast.error('서비스준비중입니다')}
+            onClick={() => toast.error('서비스 준비중입니다')}
           />
           <textarea
             ref={textareaRef}

@@ -25,7 +25,7 @@ export default function NavLink({
 
   return (
     <div
-      onClick={() => router.replace(link)}
+      onClick={() => router.push(link)}
       style={{
         fontWeight: isActive ? 'bold' : 'normal',
         color: isActive ? '#2DDAB0' : '#787878',

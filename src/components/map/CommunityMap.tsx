@@ -1,9 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import useMapInstance from '@/hooks/useMapInstance';
-import { GoogleMap } from '@react-google-maps/api';
+import { GoogleMap, MarkerF } from '@react-google-maps/api';
 import toast, { Toaster } from 'react-hot-toast';
 import {
   boardListState,
@@ -25,8 +26,6 @@ import Button from '../common/Button';
 
 const CommunityMap = () => {
   const { map, onLoad, onUnmount } = useMapInstance();
-  const setisBottomSheetState = useSetRecoilState(mapBottomSheetState);
-  const [center, setCenter] = useState<LatLng | null | undefined>(null);
   const { posts: boardList } = usePosts(communityKeyState);
   const [polygonValue, setPolygonState] = useRecoilState(polygonState);
   const filterOption = useRecoilValue(filterOptionState);
@@ -35,12 +34,12 @@ const CommunityMap = () => {
   const setBoardListState = useSetRecoilState(boardListState);
   const setCommunityKey = useSetRecoilState(communityKeyState);
   const setBottomSheetState = useSetRecoilState(bottomSheetState);
-  /** 모달오픈 */
+  const setisBottomSheetState = useSetRecoilState(mapBottomSheetState);
+  const [center, setCenter] = useState<LatLng | null | undefined>(null);
+
   const openMapBottomSheet = useCallback(() => {
     setBottomSheetState({ isActive: true, type: 'map', link: null });
   }, [setBottomSheetState]);
-  //로컬스토리지 여기서 잠깐 저장좀
-  localStorage.setItem('location', '강남구');
 
   useEffect(() => {
     const getCenter = () => {
@@ -91,8 +90,18 @@ const CommunityMap = () => {
         </div>
       ));
     }
-    console.log(boardList);
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [boardList]);
+
+  useEffect(() => {
+    const getCenter = () => {
+      const gu =
+        (localStorage.getItem('location_gu') as guchung) ?? polygonValue.gu;
+      if (gu && seoulCenterCoords.hasOwnProperty(gu)) {
+        setCenter(seoulCenterCoords[gu]);
+      }
+    };
+    getCenter();
   }, [polygonValue.gu]);
 
   useEffect(() => {
@@ -138,7 +147,15 @@ const CommunityMap = () => {
         }}
       >
         <>
-          {/* <MarkerF position={currentValue} /> */}
+          {currentValue && (
+            <MarkerF
+              icon={{
+                url: '/marker/marker.webp',
+                scaledSize: new window.google.maps.Size(40, 50),
+              }}
+              position={currentValue}
+            />
+          )}
           {boardList?.result.map((post: ResponsePost) => {
             const { postId, hashtag } = post.post;
             const latlng = {
@@ -159,6 +176,11 @@ const CommunityMap = () => {
           })}
         </>
       </GoogleMap>
+      <img
+        src="/marker/marker.webp"
+        className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 w-[34px] h-[43px]"
+        alt="Center Marker"
+      />
       <Toaster position="bottom-center" />
     </section>
   );

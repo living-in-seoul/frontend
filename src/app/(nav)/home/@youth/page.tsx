@@ -4,7 +4,6 @@ import { getYouth } from '@/service/youth';
 import dynamic from 'next/dynamic';
 
 const DynamicYouth = dynamic(() => import('@/components/youth/YouthList'), {
-  ssr: false,
   loading: () => (
     <div
       className={`w-full flex flex-col  justify-center items-center h-[178px] text-sm rounded-xl p-5 pb-3 gap-2`}

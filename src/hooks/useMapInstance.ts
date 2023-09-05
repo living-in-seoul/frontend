@@ -21,8 +21,3 @@ const useMapInstance = () => {
 };
 
 export default useMapInstance;
-
-/*
-1. 로컬스토리지에 저장된 구가 있으면 거기로 센터 줌 후 데이터 가져오기
-2. 없다면 서울시 강남구 가져오기
-*/

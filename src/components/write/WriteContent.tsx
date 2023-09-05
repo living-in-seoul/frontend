@@ -14,55 +14,34 @@ import {
   MapPortalState,
   formDataState,
 } from '@/recoil/BoardStates';
-import SelectCategory from './SelectCategory';
 import SelectedLocation from './location/SelectedLocation';
 import DisplayTags from './tags/DisplayTags';
-import BottomSheet from '../BottomSheet';
 import { bottomSheetState, writeBottomSheetState } from '@/recoil/bottomsheet';
 import { Toaster } from 'react-hot-toast';
 
 const WriteContent = () => {
   const [formData, setFormData] = useRecoilState(formDataState);
   const [tagText, setTagText] = useState<string>('');
-  // const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [openImagePortal, setOpenImagePortal] =
     useRecoilState(ImagePortalState);
   const [openMapPortal, setOpenMapPortal] = useRecoilState(MapPortalState);
+  const setImagePortalState = useSetRecoilState(MapPortalState);
+  const [bottomSheet, setBottomSheetState] = useRecoilState(bottomSheetState);
+  const { isActive, type, selectedOption } = bottomSheet;
   const { handleKeyPress, onDeleteTag } = useHandleTags({
     tagText,
     setFormData,
     setTagText,
   });
 
-  const [bottomSheet, setBottomSheetState] = useRecoilState(bottomSheetState);
-
-  const { isActive, type, selectedOption } = bottomSheet;
-
-  // const onSelectOptionHandler = (name: string) => {
-  //   setBottomSheetState((prevState) => ({
-  //     ...prevState,
-  //     isActive: false,
-  //     selectedOption: name === '전체' ? null : name,
-  //   }));
-
-  //   setFormData((prev) => ({ ...prev, category: name }));
-  // };
   const onBottomSheetOnHandler = () => {
-    setBottomSheetState((prevState) => ({
+    setBottomSheetState((prev) => ({
       type: 'write',
       link: null,
       isActive: true,
       selectedOption: null,
     }));
   };
-
-  const setImagePortalState = useSetRecoilState(MapPortalState);
-
-  // const onSelectOptionHandler = (name: string) => {
-  //   name === '전체' ? setSelectedOption('') : setSelectedOption(name);
-  //   setisBottomSheetState(false);
-  //   setFormData((prev) => ({ ...prev, category: name }));
-  // };
 
   const onChangeInputHandler = (
     e: ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement>,
@@ -120,13 +99,6 @@ const WriteContent = () => {
           <UploadImage />
         </div>
       </form>
-      {/* <BottomSheet /> */}
-      {/* <BottomSheet state={writeBottomSheetState}>
-        <SelectCategory
-          selectedOption={selectedOption}
-          onSelectOptionHandler={onSelectOptionHandler}
-        />
-      </BottomSheet> */}
       {openImagePortal && (
         <ModalPortal nodeName="imagePortal">
           <ModalOutside

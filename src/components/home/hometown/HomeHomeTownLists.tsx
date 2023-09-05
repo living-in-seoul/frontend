@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import useSWR from 'swr';
 import { useRecoilValue } from 'recoil';
-import { HomeHomeTownKeyState, HomeReviewKeyState } from '@/recoil/homeState';
+import { HomeHomeTownKeyState } from '@/recoil/homeState';
 import CarouselProvider from '@/context/CarouselProvider';
 import PostItem from '@/components/community/PostItem';
 interface ReviewListProps {
@@ -13,7 +13,10 @@ const HomeHomeTownLists = ({ hashtags }: ReviewListProps) => {
   const Hashtag = useRecoilValue(HomeHomeTownKeyState) ?? hashtags;
   const { data: PostList } = useSWR<ResponsePost[]>(
     `/api/home/hometown?hashtag=${Hashtag}`,
-    { suspense: true },
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    },
   );
   const groupedItems = PostList
     ? [...Array(Math.ceil(PostList.length / 2))].map((_, idx) =>

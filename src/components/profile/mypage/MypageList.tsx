@@ -2,7 +2,6 @@
 
 import BeatLoader from '@/components/common/Spinner';
 import PostItem from '@/components/community/PostItem';
-import PostItemSkeleton from '@/components/community/PostItemSkeleton';
 import useObserver from '@/hooks/useObserver';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -19,7 +18,6 @@ const MypageList = () => {
   const myPageData = category === 'myscrap' ? myScrapData : myPostData;
   useEffect(() => {
     setIsLoading(true);
-    console.log(category);
     const loadMoreList = async () => {
       const data = await fetch(`api/mypage/${category}?page=${page}`)
         .then((response) => response.json())
@@ -67,16 +65,3 @@ const MypageList = () => {
 };
 
 export default MypageList;
-
-// const tokenValidResponse = await fetch('/api/user', {
-//   method: 'GET',
-// });
-
-// if (tokenValidResponse.status === 200) {
-//   try {
-//   } catch (e) {
-//     alert('게시물 작성 실패!');
-//   }
-// } else {
-//   alert('로그인 모달 나와주세요');
-// }

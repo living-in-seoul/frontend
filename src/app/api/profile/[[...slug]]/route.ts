@@ -8,13 +8,11 @@ export const GET = async (_: NextRequest) => {
   const refreshToken = cookies().get('refreshToken')?.value;
   if (accessToken) {
     const data = await getProfile();
-    console.log(data);
     return NextResponse.json(data);
   } else {
     if (refreshToken) {
       try {
         const res = await getRefreshToken();
-        console.log(res);
         const newAT = res.accessToken;
         cookies().set({
           name: 'accessToken',
@@ -24,7 +22,6 @@ export const GET = async (_: NextRequest) => {
           maxAge: 60 * 60 * 2,
         });
         const data = await getProfile();
-        console.log(data);
         return NextResponse.json(data);
       } catch (error) {
         return new Response('rt 만료, 다시 로그인해주세요', {

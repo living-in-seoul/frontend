@@ -12,16 +12,18 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import Link from 'next/link';
 import Input from '@/components/common/Input';
 import { OpenSearchState } from '@/recoil/homeState';
-import { locationBottomSheetState } from '@/recoil/bottomsheet';
+import {
+  bottomSheetState,
+  locationBottomSheetState,
+} from '@/recoil/bottomsheet';
 
 const LocationSelect = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [polygon, setPolygon] = useRecoilState(polygonState);
   const [selected, setSelected] = useState<'lastVisited' | 'myhome'>('myhome');
-  const [openSearchModal, setOpenSearchModal] = useRecoilState(OpenSearchState);
-  const [isBottomSheetOpen, setisBottomSheetState] = useRecoilState(
-    locationBottomSheetState,
-  );
+  const setOpenSearchModal = useSetRecoilState(OpenSearchState);
+  const setisBottomSheetState = useSetRecoilState(locationBottomSheetState);
+  const setBottomSheetState = useSetRecoilState(bottomSheetState);
   const setCurrentState = useSetRecoilState(currentState);
   const setCenterState = useSetRecoilState(centerState);
   const lastVisited = localStorage.getItem('lastVisited');
@@ -49,10 +51,13 @@ const LocationSelect = () => {
   };
 
   const onClickToSearch = () => {
-    setisBottomSheetState(false);
+    setBottomSheetState({
+      isActive: false,
+      type: 'location',
+      link: null,
+    });
     setOpenSearchModal(true);
   };
-
   return (
     <section className="flex flex-col justify-center items-center gap-5">
       <h1 className="font-bold">주소 설정</h1>
@@ -73,14 +78,11 @@ const LocationSelect = () => {
           </div>
         </div>
       </div>
-
       <div className="w-full h-28 border-t-4 border-neutral-300">
         <div className="flex items-center h-1/2 px-2 gap-3 cursor-pointer">
           <Icons path={filledLocation} option={{ fill: '' }} />
           <div className="flex flex-col">
-            <div className="relative text-sm font-bold ">
-              나의 동네 <p className="absolute top-0 right-[-25%]">지정</p>
-            </div>
+            <p className="relative text-sm font-bold ">나의 동네 지정</p>
             {/* 현위치로 변경 */}
             <p className="text-xs text-neutral-500">서초구 서초동</p>
           </div>

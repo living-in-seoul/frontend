@@ -1,5 +1,4 @@
 import { cookies } from 'next/headers';
-import { comment } from 'postcss';
 
 /**CommentData 가져오기 */
 export const getComment = async (postId: string, page: string) => {

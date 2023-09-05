@@ -15,9 +15,9 @@ const CallbackPage = (req: Req) => {
   const { searchParams } = req;
   const { code, state } = searchParams;
   useEffect(() => {
-    const fetchs = async () => {
+    const fetchData = async () => {
       try {
-        await fetch('/api/callback', {
+        const response = fetch('/api/callback', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ const CallbackPage = (req: Req) => {
         throw new Error();
       }
     };
-    fetchs();
+    fetchData();
   }, [code, router, state]);
   return <div></div>;
 };

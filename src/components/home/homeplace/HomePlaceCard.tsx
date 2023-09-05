@@ -48,11 +48,9 @@ const HomePlaceCard = ({ list }: HomePlaceCardProps) => {
           <Image
             src={`/placeimg/${list.AREA_NM}.jpg`}
             alt={'imageNone'}
-            // width={100}
-            // height={96}
-            priority
             fill
             sizes={'33vw'}
+            quality={30}
             className="none"
           />
         </div>

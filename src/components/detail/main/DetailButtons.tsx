@@ -7,12 +7,13 @@ import useSWR, { useSWRConfig } from 'swr';
 import { useSetRecoilState } from 'recoil';
 import { bottomSheetState } from '@/recoil/bottomsheet';
 import { userClientVerify } from '@/service/oauth';
+import { clientCommentLike, clientPostScrap } from '@/service/clientCommet';
+import { useState } from 'react';
 
 const DetailButtons = ({ postId }: { postId: string }) => {
   const { data } = useSWR<RessponseLikeandScrap>(`/api/post/${postId}`);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { mutate } = useSWRConfig();
-
-  //////////////////////////////////
   const setBottomSheetState = useSetRecoilState(bottomSheetState);
   const openLoginBottomSheet = () => {
     setBottomSheetState({
@@ -22,11 +23,13 @@ const DetailButtons = ({ postId }: { postId: string }) => {
     });
   };
 
-  /////////////////////
-
   const onClickLikeHandler = async () => {
-    const response = await userClientVerify();
-    if (response && (response.status === 200 || response.status === 201)) {
+    setIsLoading(true);
+    const userVerify = await userClientVerify();
+    if (
+      userVerify &&
+      (userVerify.status === 200 || userVerify.status === 201)
+    ) {
       try {
         mutate(
           `/api/post/${postId}`,
@@ -39,34 +42,23 @@ const DetailButtons = ({ postId }: { postId: string }) => {
           },
           false,
         );
-
-        const response = await fetch(`/api/post/like`, {
-          method: 'POST',
-          body: JSON.stringify(postId),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }).then((response) => {
-          if (response.status === 200) {
-            return response.json();
-          } else if (response.status === 401) {
-            document.body.style.overflow = 'hidden';
-          } else {
-            throw new Error(response.statusText);
-          }
-        });
-
+        const response = await clientCommentLike(Number(postId), 'detail');
         mutate(`/api/post/${postId}`);
         toast.success(response.message);
       } catch (error) {
         toast.error('로그인을 먼저 해주세요');
+      } finally {
+        setIsLoading(false);
       }
     } else {
       toast.error('로그인이 필요합니다.', { position: 'top-center' });
       openLoginBottomSheet();
+      setIsLoading(false);
     }
   };
+
   const onClickScrapHandler = async () => {
+    setIsLoading(true);
     const response = await userClientVerify();
     if (response && (response.status === 200 || response.status === 201)) {
       try {
@@ -81,30 +73,18 @@ const DetailButtons = ({ postId }: { postId: string }) => {
           },
           false,
         );
-
-        const response = await fetch(`/api/post/scrap`, {
-          method: 'POST',
-          body: JSON.stringify(postId),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }).then((response) => {
-          if (response.status === 200) {
-            return response.json();
-          } else if (response.status === 401) {
-            document.body.style.overflow = 'hidden';
-          } else {
-            throw new Error(response.statusText);
-          }
-        });
+        const response = await clientPostScrap(Number(postId));
         mutate(`/api/post/${postId}`);
         toast.success(response.message);
       } catch (error) {
         toast.error('로그인을 먼저 해주세요');
+      } finally {
+        setIsLoading(false);
       }
     } else {
       toast.error('로그인이 필요합니다.', { position: 'top-center' });
       openLoginBottomSheet();
+      setIsLoading(false);
     }
   };
   const userActive =
@@ -120,7 +100,7 @@ const DetailButtons = ({ postId }: { postId: string }) => {
         <>
           <div className="flex flex-row gap-2 w-full">
             <div
-              onClick={onClickLikeHandler}
+              onClick={isLoading ? () => {} : onClickLikeHandler}
               className={`${basicDivStyle} ${
                 data.hasLiked ? liekdDiv : normalDiv
               } ${userActive}`}
@@ -129,7 +109,7 @@ const DetailButtons = ({ postId }: { postId: string }) => {
               <span>{data.likeSize}</span>
             </div>
             <div
-              onClick={onClickScrapHandler}
+              onClick={isLoading ? () => {} : onClickScrapHandler}
               className={`${basicDivStyle} ${
                 data.hasScrapped ? liekdDiv : normalDiv
               } ${userActive}`}
