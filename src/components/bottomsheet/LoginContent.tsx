@@ -4,6 +4,7 @@ import SigninButtons from '../auth/signin/SigninButtons';
 
 const LoginContent = () => {
   const pathname = usePathname() || '/home';
+  console.log(pathname);
   return (
     <div className="flex flex-col px-4">
       <div className="text-center text-black text-xl font-semibold leading-normal pb-1">

@@ -92,6 +92,7 @@ const CommunityMap = () => {
       ));
     }
     console.log(boardList);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [polygonValue.gu]);
 
   useEffect(() => {

@@ -49,7 +49,7 @@ const DefaultLogin = () => {
       })
       .then((response) => {
         localStorage.setItem('nickname', response.nickname);
-        router.push(url);
+        router.back();
       })
       .catch((error) => {
         toast.error('잘못된 요청입니다');
