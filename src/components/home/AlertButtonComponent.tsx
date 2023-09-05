@@ -3,9 +3,11 @@ import { Alert } from '@/utils/Icon';
 import Icons from '../common/Icons';
 import { userClientVerify } from '@/service/oauth';
 import { toast } from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
+import useSWR from 'swr';
 import { useSetRecoilState } from 'recoil';
 import { bottomSheetState } from '@/recoil/bottomsheet';
+import { useRouter } from 'next-nprogress-bar';
+import { TrueAlertIcon } from '../profile/editpage/EditImageIcon';
 
 interface AlertButtonComponentProps {
   link: string;
@@ -17,6 +19,11 @@ const AlertButtonComponent = ({
   type = 'home',
 }: AlertButtonComponentProps) => {
   const router = useRouter();
+  const { data: ActiveData } = useSWR<ResponseAlarm>(`/api/alert/activity`, {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  });
+  const hasUnreadAlarm = ActiveData?.alarmList.some((item) => !item.isRead);
   const setBottomSheetState = useSetRecoilState(bottomSheetState);
   const openLoginBottomSheet = () => {
     setBottomSheetState({
@@ -40,15 +47,21 @@ const AlertButtonComponent = ({
 
   return (
     <div onClick={handleWritePostClick} className="selection:bg-none">
-      <Icons
-        path={Alert}
-        fill="none"
-        option={{
-          stroke: type === 'community' ? 'black' : 'white',
-          strokeWidth: '1.5',
-          strokeLinecap: 'round',
-        }}
-      />
+      {hasUnreadAlarm ? (
+        <Icons path={Alert}>
+          <TrueAlertIcon />
+        </Icons>
+      ) : (
+        <Icons
+          path={Alert}
+          fill="none"
+          option={{
+            stroke: type === 'community' ? 'black' : 'white',
+            strokeWidth: '1.5',
+            strokeLinecap: 'round',
+          }}
+        />
+      )}
     </div>
   );
 };

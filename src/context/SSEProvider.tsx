@@ -1,80 +1,52 @@
 'use client';
-import React, {
-  createContext,
-  useEffect,
-  ReactNode,
-  useContext,
-  useState,
-} from 'react';
-import { toast } from 'react-hot-toast';
-import { UserContext } from './UserProvider';
-
-type SSEData = any;
-
-const SSEContext = createContext<SSEData | null>(null);
+import React, { useEffect, useState, ReactNode } from 'react';
+import { useSetRecoilState } from 'recoil';
+import { userClientVerify } from '@/service/oauth'; // 경로는 실제 서비스에 맞게 조정해주세요.
+import { notificationState } from '@/recoil/authStates';
 
 interface SSEProviderProps {
-  url: string;
-  eventTypes: string[];
   children: ReactNode;
 }
 
-const SSEProvider: React.FC<SSEProviderProps> = ({
-  url,
-  eventTypes,
-  children,
-}) => {
-  const user = useContext(UserContext);
-  useEffect(() => {
-    if (!user) {
-      return;
-    }
-    const eventSource = new EventSource(url);
+const SSEProvider = ({ children }: SSEProviderProps) => {
+  const [user, setUser] = useState<boolean | null>(null);
+  const setNotification = useSetRecoilState(notificationState);
 
-    eventSource.onopen = () => console.log('SSE 연결 완료');
-    eventSource.onerror = (error) => {
-      console.error('SSE 연결 실패', error);
+  const fetchUser = async () => {
+    try {
+      const res = await userClientVerify();
+      if (res?.status === 200) {
+        setUser(true);
+      }
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  useEffect(() => {
+    if (!user) return;
+
+    const eventSource = new EventSource('/api/sse');
+
+    eventSource.onerror = (error: Event) => {
       if (eventSource.readyState !== EventSource.CONNECTING) {
         eventSource.close();
       }
     };
 
-    eventTypes.forEach((type) => {
-      eventSource.addEventListener(type, (event) => {
-        console.log(type, event);
-        console.log(`${type} from server`, event.data);
-        toast(`새 이벤트: ${type}`, {
-          icon: '📍',
-        });
-      });
+    eventSource.addEventListener('addNotification', (event: MessageEvent) => {
+      const { timeStamp, data } = event;
+      setNotification({ timeStamp, data });
     });
 
     return () => {
       eventSource.close();
     };
-  }, [eventTypes, url, user]);
+  }, [setNotification, user]);
 
-  return (
-    <>
-      {user ? (
-        <SSEContext.Provider
-          value={null /* 이 부분에 실제 SSE 데이터를 전달 */}
-        >
-          {children}
-        </SSEContext.Provider>
-      ) : (
-        <>{children}</>
-      )}
-    </>
-  );
-};
-
-export const useSSE = () => {
-  const context = useContext(SSEContext);
-  if (!context) {
-    throw new Error('useSSE must be used within an SSEProvider');
-  }
-  return context;
+  return <>{children}</>;
 };
 
 export default SSEProvider;

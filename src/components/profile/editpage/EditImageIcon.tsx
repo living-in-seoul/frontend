@@ -251,7 +251,59 @@ const PinIcon = () => (
   </svg>
 );
 
+interface CloseProps {
+  onClick: () => void;
+}
+
+const Close = ({ onClick }: CloseProps) => {
+  return (
+    <div onClick={onClick} className="cursor-pointer">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="8"
+        height="8"
+        viewBox="0 0 8 8"
+        fill="none"
+      >
+        <g clipPath="url(#clip0_980_1515)">
+          <path
+            d="M8 0L0 8M0 0L8 8"
+            stroke="#787878"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </g>
+        <defs>
+          <clipPath id="clip0_980_1515">
+            <rect width="8" height="8" fill="white" />
+          </clipPath>
+        </defs>
+      </svg>
+    </div>
+  );
+};
+
+const TrueAlertIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+  >
+    <path
+      d="M8.10702 2.674C9.00664 2.22973 9.99666 1.99908 11 2C14.727 2 17.75 5.136 17.75 9.005V9.71C17.7487 10.5516 17.9889 11.3758 18.4419 12.085L19.5499 13.809C20.5609 15.384 19.7889 17.525 18.03 18.023C13.4339 19.326 8.56612 19.326 3.97005 18.023C2.21106 17.525 1.43907 15.384 2.45006 13.81L3.55805 12.085C4.01109 11.3758 4.25125 10.5516 4.25005 9.71V9.005C4.25005 7.931 4.48305 6.913 4.90004 6.003M6.50003 19C7.15503 20.748 8.92201 22 11 22C11.245 22 11.485 21.983 11.72 21.95M15.5 19C15.2292 19.7139 14.7811 20.3471 14.198 20.84"
+      stroke="white"
+      stroke-width="1.5"
+      stroke-linecap="round"
+    />
+    <circle cx="18.5" cy="4.5" r="3.5" fill="#DEFFF7" />
+  </svg>
+);
+
 export {
+  TrueAlertIcon,
+  Close,
   EditImageIcon,
   WriteIcon,
   SettingIcon,

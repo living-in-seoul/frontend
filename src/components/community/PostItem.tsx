@@ -37,14 +37,14 @@ const PostItem = ({ post, user, onMap, hasLiked, border }: PostItemProps) => {
         {HashTags.map((tag, index) => {
           if (index === 0) return;
           return (
-            <div key={tag + index} className="flex items-center">
+            <li key={tag + index} className="flex items-center">
               <span className="text-neutral-600 text-xs font-normal leading-3">
                 {'#'}
               </span>
               <span className="text-black text-xs font-medium leading-3">
                 {tag}
               </span>
-            </div>
+            </li>
           );
         })}
       </ul>
@@ -86,6 +86,7 @@ const PostItem = ({ post, user, onMap, hasLiked, border }: PostItemProps) => {
               alt={`postImg`}
               fill
               sizes={'33vh'}
+              priority
             />
           </div>
         )}

@@ -36,19 +36,16 @@ const HomeHasTagMapSection = async ({ hashtag }: HomeReviewSectionProps) => {
         <>
           <ul className="pl-4 gap-2.5 flex whitespace-nowrap scrollbar-hide overflow-x-auto">
             {HotTagReview?.map((item) => (
-              <Link
-                key={item}
-                href={`/home?locationTag=${item}`}
-                replace
-                scroll={false}
-              >
-                <Select
-                  title={`#${item}`}
-                  className="rounded-md"
-                  disable
-                  selectTag={item === hashtags}
-                />
-              </Link>
+              <li key={item}>
+                <Link href={`/home?locationTag=${item}`} replace scroll={false}>
+                  <Select
+                    title={`#${item}`}
+                    className="rounded-md"
+                    disable
+                    selectTag={item === hashtags}
+                  />
+                </Link>
+              </li>
             ))}
           </ul>
           <MapProvider type={'home'}>

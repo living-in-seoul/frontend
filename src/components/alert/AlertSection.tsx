@@ -47,7 +47,7 @@ const AlertSection = () => {
               알림 받는 해시태그{' '}
             </span>
             <span className="text-gray4 text-sm font-medium leading-none">
-              {HashtagData && HashtagData?.pageable.totalElements - 1}개
+              {HashtagData && HashtagData.alarmList.length}개
             </span>
           </div>
           <Button
