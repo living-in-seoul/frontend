@@ -1,9 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import useMapInstance from '@/hooks/useMapInstance';
-import { GoogleMap } from '@react-google-maps/api';
+import { GoogleMap, MarkerF } from '@react-google-maps/api';
 import toast, { Toaster } from 'react-hot-toast';
 import {
   boardListState,
@@ -22,13 +23,14 @@ import {
 } from '@/utils/constants/constants';
 import { bottomSheetState, mapBottomSheetState } from '@/recoil/bottomsheet';
 import Button from '../common/Button';
+import { useMapCenter } from '@/hooks/useMapCenter';
 
 const CommunityMap = () => {
   const { map, onLoad, onUnmount } = useMapInstance();
   const setisBottomSheetState = useSetRecoilState(mapBottomSheetState);
-  const [center, setCenter] = useState<LatLng | null | undefined>(null);
   const { posts: boardList } = usePosts(communityKeyState);
   const [polygonValue, setPolygonState] = useRecoilState(polygonState);
+  const [center, setCenter] = useMapCenter(polygonValue, seoulCenterCoords);
   const filterOption = useRecoilValue(filterOptionState);
   const currentValue = useRecoilValue(currentState);
   const setMarkerId = useSetRecoilState(markerIdState);
@@ -41,17 +43,6 @@ const CommunityMap = () => {
   }, [setBottomSheetState]);
   //로컬스토리지 여기서 잠깐 저장좀
   localStorage.setItem('location', '강남구');
-
-  useEffect(() => {
-    const getCenter = () => {
-      const gu =
-        (localStorage.getItem('location_gu') as guchung) ?? polygonValue.gu;
-      if (gu && seoulCenterCoords.hasOwnProperty(gu)) {
-        setCenter(seoulCenterCoords[gu]);
-      }
-    };
-    getCenter();
-  }, [polygonValue.gu]);
 
   useEffect(() => {
     const gu = polygonValue.gu;
@@ -128,7 +119,7 @@ const CommunityMap = () => {
     <section className="w-full h-full relative z-100">
       <GoogleMap
         mapContainerStyle={CommContainerStyle}
-        center={center ?? undefined}
+        center={center}
         onLoad={onLoad}
         onUnmount={onUnmount}
         options={mapOptions}
@@ -138,7 +129,15 @@ const CommunityMap = () => {
         }}
       >
         <>
-          {/* <MarkerF position={currentValue} /> */}
+          {currentValue && (
+            <MarkerF
+              icon={{
+                url: '/marker/marker.webp',
+                scaledSize: new window.google.maps.Size(40, 50),
+              }}
+              position={currentValue}
+            />
+          )}
           {boardList?.result.map((post: ResponsePost) => {
             const { postId, hashtag } = post.post;
             const latlng = {
@@ -159,6 +158,11 @@ const CommunityMap = () => {
           })}
         </>
       </GoogleMap>
+      <img
+        src="/marker/marker.webp"
+        className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 w-[34px] h-[43px]"
+        alt="Center Marker"
+      />
       <Toaster position="bottom-center" />
     </section>
   );
