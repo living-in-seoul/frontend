@@ -74,7 +74,7 @@ const DefaultLogin = () => {
           isSubmitted={isSubmitted}
           label="아이디(이메일)"
           mainProps={register('email', emailForm)}
-          placeholder="ex) seuol123@vival.com"
+          placeholder="ex) seoul123@vival.com"
         />
         <AuthInput
           errorsMessage={errors.password?.message}

@@ -5,7 +5,7 @@ import { getTimeAgo } from '@/utils/utilFunc';
 import { useRouter } from 'next/navigation';
 
 const AlertActiveItem = (item: AlarmItem) => {
-  const { id, isRead, registeredAt, text } = item;
+  const { id, isRead, registeredAt, text, postId } = item;
   const router = useRouter();
   const fetchRead = async () => {
     const res = await fetch(`/api/alert/${id}`, {
@@ -19,7 +19,7 @@ const AlertActiveItem = (item: AlarmItem) => {
         !isRead && 'bg-neutral-200'
       } border-b border-zinc-300 flex items-center cursor-pointer hover:bg-slate-100 active:bg-sky-200 transition-all`}
       onClick={() => {
-        router.push(`/detail/${id}`);
+        router.push(`/detail/${postId}`);
         fetchRead();
       }}
     >
@@ -35,9 +35,6 @@ const AlertActiveItem = (item: AlarmItem) => {
         </div>
         <div className="flex pl-2.5 flex-col">
           <div className="w-full leading-tight">
-            {/* <span className="text-black text-sm font-medium leading-tight">
-              서울바이벌짱
-            </span> */}
             <div
               className="text-black text-sm font-normal leading-[0.9]"
               dangerouslySetInnerHTML={{ __html: text }}

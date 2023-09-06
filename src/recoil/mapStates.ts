@@ -55,6 +55,12 @@ export const boardListState = atom<ResponseRegister | null>({
   default: null,
 });
 
+/** 현재 보고있는 구가 몇건의 포스트를 가지고 있는지 */
+export const postSizeState = atom<number>({
+  key: 'postSizeState',
+  default: 0,
+});
+
 export const placeIdState = atom<string>({
   key: 'placeIdState',
   default: '',

@@ -5,6 +5,7 @@ const turf = require('@turf/turf');
 
 /** 맵 센터 구/동 계산해서 가져오기*/
 export const GET = async (req: NextRequest) => {
+  let selectedPolygon;
   const { searchParams } = req.nextUrl;
   const lat = searchParams.get('lat') ?? '36';
   const lng = searchParams.get('lng') ?? '127';
@@ -17,6 +18,7 @@ export const GET = async (req: NextRequest) => {
 
     if (turf.booleanPointInPolygon(selectedPoint, polygon)) {
       gu = district.properties.SGG_NM;
+      selectedPolygon = district.geometry.coordinates[0];
       break;
     }
   }
@@ -27,5 +29,5 @@ export const GET = async (req: NextRequest) => {
     }
   }
 
-  return NextResponse.json({ gu, dong });
+  return NextResponse.json({ gu, dong, geometry: selectedPolygon });
 };

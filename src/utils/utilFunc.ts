@@ -278,3 +278,13 @@ export const parseMM = (value: string): string => {
 interface FromDataObject {
   [key: string]: any;
 }
+
+/** polygon 경계면 띄울 때 데이터 형식 변환하기 (배열 -> 객체로) */
+export const transformCoordinates = (
+  coords: number[][],
+): google.maps.LatLngLiteral[] => {
+  return coords?.map((coordPair) => ({
+    lat: coordPair[1],
+    lng: coordPair[0],
+  }));
+};

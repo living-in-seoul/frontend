@@ -328,9 +328,12 @@ interface ResponseAlarm {
 interface AlarmItem {
   id: number;
   alarmEventType: string;
+  hashTagName: string | null;
   text: string;
+  postId: number;
   isRead: boolean;
   registeredAt: string;
+  userImg: string | null;
 }
 
 interface YouthInfo {
