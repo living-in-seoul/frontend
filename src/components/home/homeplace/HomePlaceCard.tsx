@@ -1,7 +1,12 @@
-import { getImageSrc } from '@/utils/utilFunc';
+'use client';
 import Image from 'next/image';
-import { imageNone } from '../../../../public';
 import { PlaceData } from '@/utils/constants/place';
+import ModalPortal from '@/components/modal/ModalPortal';
+import ModalOutside from '@/components/modal/ModalOutside';
+import { useState } from 'react';
+import Modal from '@/components/layouts/Modal';
+import HomePlaceCardDetails from './HomePlaceCardDetails';
+import { CongestionLevelElemet } from '@/utils/utilFunc';
 // eslint-disable-next-line @next/next/no-img-element
 
 interface HomePlaceCardProps {
@@ -9,40 +14,13 @@ interface HomePlaceCardProps {
 }
 
 const HomePlaceCard = ({ list }: HomePlaceCardProps) => {
-  const CongestionLevelElemet = (
-    level: '붐빔' | '약간 붐빔' | '보통' | '여유',
-  ) => {
-    switch (level) {
-      case '보통':
-        return {
-          color: 'bg-sky-300',
-          text: '보통',
-        };
-      case '붐빔':
-        return {
-          color: 'bg-red-600',
-          text: '붐빔',
-        };
-      case '약간 붐빔':
-        return {
-          color: 'bg-amber-400',
-          text: '혼잡',
-        };
-      case '여유':
-        return {
-          color: 'bg-emerald-500',
-          text: '한산',
-        };
+  const [modalVisible, setModalVisible] = useState(false);
 
-      default:
-        return {
-          color: 'bg-emerald-500',
-          text: '한산',
-        };
-    }
-  };
   return (
-    <article className="flex flex-col w-52 min-w-[208px] h-40 relative ">
+    <article
+      className="flex flex-col w-52 min-w-[208px] h-40 relative scale-100 hover:scale-105 transition-all cursor-pointer "
+      onClick={() => setModalVisible(true)}
+    >
       <div className="w-full bg-white h-40 rounded-2xl shadow-lg">
         <div className="relative flex w-full h-24 overflow-hidden rounded-tl-2xl rounded-tr-2xl">
           <Image
@@ -75,6 +53,19 @@ const HomePlaceCard = ({ list }: HomePlaceCardProps) => {
           </div>
         </div>
       </div>
+      {modalVisible && (
+        <ModalPortal nodeName="placePortal">
+          <Modal onClose={() => setModalVisible(false)}>
+            <HomePlaceCardDetails
+              list={list}
+              onClose={() => {
+                console.log('asdf');
+                setModalVisible(false);
+              }}
+            />
+          </Modal>
+        </ModalPortal>
+      )}
     </article>
   );
 };

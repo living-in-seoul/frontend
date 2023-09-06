@@ -279,6 +279,67 @@ interface FromDataObject {
   [key: string]: any;
 }
 
+export const findMaxPopulation = (
+  fcstPpltnArray: Forecast[],
+): { forecast: Forecast; hoursLater: number } => {
+  let maxPopulationAvg = 0;
+  let maxPopulationForecast: Forecast = fcstPpltnArray[0]; // 초기값 설정
+  let maxHoursLater = 0;
+
+  const currentTime = new Date();
+
+  for (const fcst of fcstPpltnArray) {
+    const curPopulationMin = parseInt(fcst.FCST_PPLTN_MIN, 10);
+    const curPopulationMax = parseInt(fcst.FCST_PPLTN_MAX, 10);
+    const curPopulationAvg = (curPopulationMin + curPopulationMax) / 2;
+
+    const forecastTime = new Date(fcst.FCST_TIME);
+    const timeDifference = forecastTime.getTime() - currentTime.getTime();
+    const hoursLater = Math.ceil(timeDifference / (1000 * 60 * 60)); // ms to hours
+
+    if (curPopulationAvg > maxPopulationAvg) {
+      maxPopulationAvg = curPopulationAvg;
+      maxPopulationForecast = fcst;
+      maxHoursLater = hoursLater;
+    }
+  }
+
+  return { forecast: maxPopulationForecast, hoursLater: maxHoursLater };
+};
+
+export const CongestionLevelElemet = (
+  level: '붐빔' | '약간 붐빔' | '보통' | '여유',
+) => {
+  switch (level) {
+    case '보통':
+      return {
+        color: 'bg-sky-300',
+        text: '보통',
+      };
+    case '붐빔':
+      return {
+        color: 'bg-red-600',
+        text: '붐빔',
+      };
+    case '약간 붐빔':
+      return {
+        color: 'bg-amber-400',
+        text: '혼잡',
+      };
+    case '여유':
+      return {
+        color: 'bg-emerald-500',
+        text: '한산',
+      };
+
+    default:
+      return {
+        color: 'bg-emerald-500',
+        text: '한산',
+      };
+  }
+};
+
 /** polygon 경계면 띄울 때 데이터 형식 변환하기 (배열 -> 객체로) */
 export const transformCoordinates = (
   coords: number[][],

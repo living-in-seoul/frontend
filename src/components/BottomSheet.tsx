@@ -23,6 +23,7 @@ const BottomSheet = ({}: BottomSheetProps) => {
   const [bottomSheetInfo, setBottomSheetState] =
     useRecoilState(bottomSheetState);
   const isBottomSheetOpen = bottomSheetInfo.isActive;
+
   useOutsideClick(ref, () => {
     setBottomSheetState({ ...bottomSheetInfo, isActive: false });
   });

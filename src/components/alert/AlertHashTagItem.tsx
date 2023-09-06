@@ -9,7 +9,7 @@ const AlertHashTagItem = ({ item }: AleartHashTagItemProps) => {
     <div className="w-full h-32 last:border-none border-b flex-col flex px-4 pb-3 pt-2.5">
       <div className="py-[7px]">
         <Select
-          title="#맛집후기"
+          title={item.hashTagName}
           size="large"
           className="rounded-md bg-white"
           select
