@@ -53,11 +53,13 @@ const DetailModal = ({
 
   return (
     <>
-      <Icons
-        path={detailColThreeDotIcon}
-        fill="#404040"
-        onClick={openModalHandler}
-      />
+      <div className="hover:bg-[#DEFFF7] active:bg-[#ACECDC] rounded-full w-[24px] h-[24px]">
+        <Icons
+          path={detailColThreeDotIcon}
+          fill="#404040"
+          onClick={openModalHandler}
+        />
+      </div>
       {openModal && (
         <ModalPortal nodeName="detailPortal">
           <ModalOutside
@@ -71,7 +73,7 @@ const DetailModal = ({
               {modalArray.map((modal, index) => (
                 <div key={index}>
                   <div
-                    className={`border-t-2 py-3 flex justify-center border-collapse ${modal.color}`}
+                    className={`hover:text-[#2DDAB0] active:text-[#2DDAB0] border-t-2 py-3 flex justify-center border-collapse ${modal.color}`}
                     onClick={
                       modal.type === 'report'
                         ? modal.first

@@ -13,6 +13,7 @@ import { useSWRConfig } from 'swr';
 import DetailModal from '../DetailModal';
 import { userClientVerify } from '@/service/oauth';
 import { clientCommentDelete } from '@/service/clientCommet';
+import { profile } from '../../../../public';
 
 const DetailReCommentItem = ({
   reCommentData,
@@ -68,7 +69,7 @@ const DetailReCommentItem = ({
         <UserProfile
           createdAt={createdAt}
           nickname={nickname}
-          userImg={userImg}
+          userImg={userImg ? userImg : profile}
           ondetail={false}
         />
         <DetailModal

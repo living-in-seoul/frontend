@@ -17,7 +17,7 @@ const CallbackPage = (req: Req) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = fetch('/api/callback', {
+        fetch('/api/callback', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

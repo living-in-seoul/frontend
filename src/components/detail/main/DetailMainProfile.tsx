@@ -6,6 +6,7 @@ const DetailMainProfile = ({ data }: { data: ResponseDetailData }) => {
         createdAt={data.result.post.createdAt}
         nickname={data.result.user.nickname}
         postViewCount={data.result.post.postViewCount}
+        userImg={data.result.user.userImg}
       />
     </div>
   );

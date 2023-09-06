@@ -7,9 +7,11 @@ interface CommunityPostItemProps extends ResponsePost {
   tags?: string | never[] | null | string[];
   isPop?: SelectPopType;
   onMap?: boolean;
+  userImg?: string;
 }
 
 const CommunityPostItem = ({
+  userImg,
   post,
   user,
   onMap,
@@ -27,14 +29,14 @@ const CommunityPostItem = ({
     postId,
   } = post;
   // 이거 쓰시나요
-  const { nickname, profileImg } = user;
+  const { nickname } = user;
   const FullContent = content.length > 100;
   const shortContent = content.slice(0, 100);
   const userName = user.nickname.slice(0, 10);
-
   return (
     <article className="flex flex-col border-b-2 last:border-[0] px-4 pt-[25px]">
       <UserProfile
+        userImg={userImg}
         createdAt={createdAt}
         nickname={nickname}
         postViewCount={postViewCount}

@@ -11,7 +11,6 @@ import { Toaster, toast } from 'react-hot-toast';
 const DetailHeader = ({ data }: { data: ResponseDetailData }) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('');
-
   const route = useRouter();
 
   useEffect(() => {
@@ -27,9 +26,7 @@ const DetailHeader = ({ data }: { data: ResponseDetailData }) => {
     <section className="flex flex-row justify-between  px-4 py-4">
       <Toaster />
       <div className="flex flex-row gap-4">
-        <div>
-          <Icons path={back} fill="#404040" onClick={() => route.back()} />
-        </div>
+        <Icons path={back} fill="#404040" onClick={() => route.back()} />
         <span className="font-bold">{data.result.post.category}</span>
       </div>
       <div className="flex flex-row gap-4">

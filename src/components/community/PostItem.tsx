@@ -24,7 +24,7 @@ const PostItem = ({ post, user, onMap, hasLiked, border }: PostItemProps) => {
     commentSize,
     postId,
   } = post;
-  const { nickname, profileImg } = user;
+  const { nickname } = user;
   const FullContent = content.length > 100;
   const shortContent = content.slice(0, 100);
   const userName = user.nickname.slice(0, 10);
