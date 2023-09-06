@@ -21,7 +21,7 @@ const DetailComment = ({ postId }: { postId: string }) => {
       .then((response) => response.json())
       .finally(() => setIsLoading(false));
     setPage(next);
-    setList((prev) => [...(prev?.length ? prev : []), ...moreList]);
+    // setList((prev) => [...(prev?.length ? prev : []), ...moreList]);
   }, [page]);
   useEffect(() => {
     setCommentKey(`/api/comment/${postId}`);
