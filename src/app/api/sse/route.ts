@@ -32,7 +32,7 @@ export async function GET() {
         });
       });
   } catch (error) {
-    console.error('Error in SSE: ', error);
+    console.error('Error', error);
     writer.write(encoder.encode('에러발생\n'));
     writer.close(); // 에러발생시 스트림 바로 닫아주기
     return new Response(responseStream.readable, {

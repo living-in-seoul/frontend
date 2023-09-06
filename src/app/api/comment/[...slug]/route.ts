@@ -5,7 +5,6 @@ import {
   postComment,
   putComment,
 } from '@/service/comment';
-import { cookies } from 'next/headers';
 
 interface Context {
   params: { slug: string[] };

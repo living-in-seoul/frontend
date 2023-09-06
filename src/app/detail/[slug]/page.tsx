@@ -4,7 +4,6 @@ import DetailHotHashtag from '@/components/detail/DetailHotHashtag';
 import DetailMain from '@/components/detail/main/DetailMain';
 import DetailNavbar from '@/components/detail/DetailNavbar';
 import BeatLoader from '@/components/common/Spinner';
-import { cookies } from 'next/headers';
 import { getUserBoard } from '@/service/board';
 import { Metadata } from 'next';
 interface DetailPageProps {

@@ -10,7 +10,7 @@ import {
 import Icons from '../common/Icons';
 import useDebounce from '@/hooks/useDebounce';
 import { SearchBack, SearchIcon } from '@/utils/Icon';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { addRecentlySearched } from '@/utils/utilFunc';
 import { useRecoilState } from 'recoil';
 import { searchState } from '@/recoil/communityStates';
@@ -26,9 +26,10 @@ const SearchInput = () => {
   const [data, setData] = useState<responseInterface[]>([]);
   const [showlist, setShowList] = useState(false);
   const ref = useRef<HTMLInputElement>(null);
-  const debounceKeyword = useDebounce(search, 100);
+  const debounceKeyword = useDebounce(search, 300);
   const router = useRouter();
-
+  const searchParams = useSearchParams();
+  console.log(searchParams?.has('search'));
   const onChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       setSearch(event.target.value);

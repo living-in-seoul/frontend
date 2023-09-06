@@ -7,7 +7,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { OpenSearchState, SearchGuState } from '@/recoil/homeState';
 import SearchModal from './search/SearchModal';
 import ModalPortal from '../modal/ModalPortal';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 
 interface HomeLocationSeclectProps {
@@ -17,12 +17,21 @@ interface HomeLocationSeclectProps {
 const HomeLocationSeclect = ({
   onCommunity = false,
 }: HomeLocationSeclectProps) => {
+  const [locationGu, setLocationGu] = useState<string>('전체');
   const openSearchModal = useRecoilValue(OpenSearchState);
   const setBottomSheetState = useSetRecoilState(bottomSheetState);
   const serachGu = useRecoilValue(SearchGuState);
   const openLocationBottomSheet = () => {
     setBottomSheetState({ isActive: true, type: 'location', link: null });
   };
+
+  useEffect(() => {
+    const location = localStorage.getItem('location_gu');
+    if (location) {
+      setLocationGu(location);
+    }
+  }, [locationGu, setLocationGu]);
+
   const pathname = usePathname();
   return (
     <>
@@ -35,8 +44,7 @@ const HomeLocationSeclect = ({
             pathname === '/home' ? 'text-white' : 'text-black'
           } text-base font-semibold leading-relaxed`}
         >
-          {/* 변경해주세요 */}
-          서울시 전체
+          서울시 {serachGu ?? locationGu}
         </div>
         <div className="flex items-center justify-center">
           <Icons

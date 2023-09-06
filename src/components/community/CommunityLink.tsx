@@ -1,6 +1,7 @@
 'use client';
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next-nprogress-bar';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 export default function NavLink({
   category,
@@ -30,7 +31,7 @@ export default function NavLink({
         fontWeight: isActive ? 'bold' : 'normal',
         color: isActive ? '#2DDAB0' : '#787878',
       }}
-      className={`isrelative w-1/4 flex items-center justify-center py-4`}
+      className={`isrelative w-1/4 flex items-center justify-center py-4 cursor-pointer`}
     >
       {children}
     </div>

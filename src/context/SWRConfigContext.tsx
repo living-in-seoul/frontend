@@ -13,9 +13,7 @@ const SWRConfigContext = ({ children }: SWRConfigContextProps) => {
 
     if (!response.ok) {
       if (response.statusText === 'Forbidden') {
-        router.replace('/signin');
       }
-      // 오류 객체에 status와 statusText 포함
       throw {
         status: response.status,
         statusText: response.statusText,

@@ -181,7 +181,6 @@ const CommunityMap = () => {
         className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 w-[34px] h-[43px]"
         alt="Center Marker"
       />
-      <Toaster position="bottom-center" />
     </section>
   );
 };

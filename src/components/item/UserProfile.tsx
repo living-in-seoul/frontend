@@ -5,7 +5,7 @@ import { getTimeAgo } from '@/utils/utilFunc';
 interface DetailMainProps {
   nickname: string;
   createdAt: string;
-  userImg?: string | StaticImageData | null;
+  userImg?: string | StaticImageData;
   postViewCount?: number;
   onMap?: boolean;
   ondetail?: boolean;
@@ -14,7 +14,7 @@ interface DetailMainProps {
 const UserProfile = ({
   nickname,
   createdAt,
-  userImg = profile,
+  userImg,
   postViewCount,
   onMap = false,
   ondetail = true,
@@ -26,7 +26,7 @@ const UserProfile = ({
         {!onMap && (
           <div className="relative shrink-0 w-[36px] h-[36px] rounded-full overflow-hidden">
             <Image
-              src={profile}
+              src={userImg ?? profile}
               alt={`user`}
               fill
               className="absolute top-0"

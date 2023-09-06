@@ -29,6 +29,7 @@ const ProfileComponent = async () => {
       <div className="flex w-full h-28 bg-white rounded-2xl shadow py-3">
         <div className="flex w-full justify-center">
           <Image
+            className="rounded-full"
             src={userImage}
             alt={`${user.nickname}의 이미지`}
             width={88}
