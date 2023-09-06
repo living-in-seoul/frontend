@@ -17,3 +17,8 @@ export const SearchGuState = atom<string>({
   key: 'SearchGuState',
   default: '전체',
 });
+
+export const InputRefState = atom<RefObject<HTMLInputElement>>({
+  key: 'InputRefState',
+  default: { current: null },
+});

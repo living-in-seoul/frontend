@@ -8,10 +8,10 @@ import {
 import { centerState, currentState, polygonState } from '@/recoil/mapStates';
 import { filledLocation } from '@/utils/Icon';
 import { useState } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import Link from 'next/link';
 import Input from '@/components/common/Input';
-import { OpenSearchState } from '@/recoil/homeState';
+import { InputRefState, OpenSearchState } from '@/recoil/homeState';
 import {
   bottomSheetState,
   locationBottomSheetState,
@@ -26,6 +26,7 @@ const LocationSelect = () => {
   const setBottomSheetState = useSetRecoilState(bottomSheetState);
   const setCurrentState = useSetRecoilState(currentState);
   const setCenterState = useSetRecoilState(centerState);
+  const inputRef = useRecoilValue(InputRefState);
   const lastVisited = localStorage.getItem('lastVisited');
 
   const onClickForCurrent = () => {
@@ -56,6 +57,8 @@ const LocationSelect = () => {
       type: 'location',
       link: null,
     });
+    console.log(inputRef.current, inputRef);
+    inputRef.current?.focus();
     setOpenSearchModal(true);
   };
   return (
@@ -63,13 +66,15 @@ const LocationSelect = () => {
       <h1 className="font-bold">주소 설정</h1>
       <div className="w-full  rounded-3xl">
         <div className="mx-4 flex flex-col gap-4 ">
-          <Input
-            placeholder="구, 동으로 검색"
-            formColor="bg-gray7"
-            inputColor="bg-gray7"
-            rightElement={<SearchIcon />}
+          <div
             onClick={onClickToSearch}
-          />
+            className={`rounded-3xl w-full h-9 flex items-center justify-between shadow-sm px-4 bg-gray7`}
+          >
+            <span className="outline-none text-sm w-full pl-3 bg-gray text-[#B8B8B8]">
+              구, 동으로 검색
+            </span>
+            <SearchIcon />
+          </div>
           <div className="flex justify-center items-center w-full border border-neutral-300 py-1.5 rounded-lg gap-1.5 cursor-pointer ">
             {LocationSelectIcon()}
             <div className="text-sm" onClick={onClickForCurrent}>

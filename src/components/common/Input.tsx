@@ -1,5 +1,7 @@
 'use client';
-import { FormEvent } from 'react';
+import { InputRefState } from '@/recoil/homeState';
+import React, { FormEvent, useEffect, useRef } from 'react';
+import { useSetRecoilState } from 'recoil';
 
 interface SearchInputProps {
   placeholder: string;
@@ -27,6 +29,14 @@ const Input = ({
   inputColor,
   className,
 }: SearchInputProps) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const setInputRef = useSetRecoilState(InputRefState);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      setInputRef({ current: inputRef.current });
+    }
+  }, []);
   return (
     <section className="flex justify-center items-center ">
       <form
@@ -36,6 +46,7 @@ const Input = ({
         onSubmit={onSubmit}
       >
         <input
+          ref={inputRef}
           className={`outline-none text-sm w-full pl-3 ${inputColor} ${className}`}
           placeholder={placeholder}
           value={value}
