@@ -40,11 +40,11 @@ export const SEARCH_LINK_NAME = [
 
 export const MYPAGE_LINK_NAME = [
   {
-    params: 'myscrap',
+    link: 'myscrap',
     name: '찜한 글',
   },
   {
-    params: 'mypost',
+    link: 'mypost',
     name: '작성한 글',
   },
 ];

@@ -9,13 +9,7 @@ const MypagePage = () => {
     <section className="flex flex-col gap-7 px-4 pt-4">
       <MypageHeader />
       <MypageProfile />
-      <nav className="w-full flex">
-        {MYPAGE_LINK_NAME.map((category) => (
-          <MypageLink key={category.params} category={category}>
-            {category.name}
-          </MypageLink>
-        ))}
-      </nav>
+      <nav className="w-full flex">{/* <MypageLink /> */}</nav>
       <MypageList />
     </section>
   );

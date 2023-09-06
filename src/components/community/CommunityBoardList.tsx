@@ -58,7 +58,6 @@ const CommunityBoardList = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inview]);
-  console.log(list);
   return (
     <article className="flex flex-col">
       <div className="w-full justify-between flex px-4 py-6 ">

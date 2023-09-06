@@ -26,8 +26,12 @@ const DetailReCommentItem = ({
   const setTotalComment = useSetRecoilState(totalCommentState);
   const textareaRef = useRecoilValue(textareaRefState);
   const { mutate } = useSWRConfig();
-  const { createdAt, nickname, reComment, reCommentId, userImg } =
-    reCommentData;
+  const {
+    createdAt,
+    user: { nickname, userImg },
+    reComment,
+    reCommentId,
+  } = reCommentData;
   const modalArray =
     username === nickname ? commentModalArray : reportModalArray;
   useEffect(() => {

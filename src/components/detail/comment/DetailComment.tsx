@@ -11,18 +11,19 @@ const DetailComment = ({ postId }: { postId: string }) => {
   const setCommentKey = useSetRecoilState(commentKeyState);
   const [page, setPage] = useState<number>(1);
   const [lastPage, setLastPage] = useState<boolean>(false);
-  const { data } = useSWR<ResponseCommentData>(`/api/comment/${postId}?page=1`);
-  const [list, setList] = useState<Comment[] | undefined>([]);
+  const [list, setList] = useState<CommentData[] | []>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const setPostId = useSetRecoilState(postIdstate);
+  const { data } = useSWR<ResponseCommentData>(`/api/comment/${postId}?page=1`);
+  console.log(data);
   const loadMoreList = useCallback(async () => {
     const next = page + 1;
     if (data && next > data?.pageable?.totalPages) {
       return setLastPage(true);
     } else {
       const moreList = await fetch(`/api/comment/${postId}?page=${next}`)
-        .then((response) => response.json())
-        .then((data) => data.comments)
+        .then<ResponseCommentData>((response) => response.json())
+        .then((data) => data.result)
         .finally(() => setIsLoading(false));
       setPage(next);
       return setList((prev) => [...(prev?.length ? prev : []), ...moreList]);
@@ -31,7 +32,7 @@ const DetailComment = ({ postId }: { postId: string }) => {
 
   useEffect(() => {
     if (data && page === 1) {
-      setList(data.comments);
+      setList(data.result);
     }
     if (data && page < data?.pageable.totalPages) {
       setLastPage(false);
@@ -44,11 +45,11 @@ const DetailComment = ({ postId }: { postId: string }) => {
     <div className="py-6 px-4 flex flex-col gap-4 border-b-2">
       <span className="font-semibold">댓글 {data?.pageable.totalElements}</span>
       {data &&
-        list?.map((data, index) => (
-          <DetailCommentItem key={data.nickname + index} data={data}>
-            {data.reComments?.map((reComment, index) => (
+        list?.map((data) => (
+          <DetailCommentItem key={data.comment.commentId} data={data}>
+            {data.comment.reComments?.map((reComment) => (
               <DetailReCommentItem
-                key={reComment.nickname + index}
+                key={reComment.reCommentId}
                 reCommentData={reComment}
               />
             ))}
