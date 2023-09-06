@@ -48,8 +48,8 @@ interface CaroucelProp {
 const Dots = ({ totalItems, activeSlide }: any) => {
   return (
     <div className="flex w-full p-5 pt-[30px] justify-center">
-      <div className="relative flex bg-zinc-100 w-[100px] rounded-3xl overflow-hidden">
-        <div // 검은색 dot
+      <div className="relative flex bg-gray6 w-[100px] rounded-3xl overflow-hidden">
+        <div
           className={`w-[33.3px] h-[7px] rounded-3xl bg-emerald-200`}
           style={{
             left: `${activeSlide === 0 ? 0 : activeSlide * 33}px`,

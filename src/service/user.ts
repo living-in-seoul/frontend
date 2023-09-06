@@ -60,9 +60,6 @@ export const postSingin = async (data: RequestLogin) => {
   return response;
 };
 
-export async function oauthHandler(url: string) {
-  redirect(url);
-}
 /** 소셜로그인 시 */
 export const oauthSignin = async (data: RequestOauthLogin) => {
   const { code, state } = data;
