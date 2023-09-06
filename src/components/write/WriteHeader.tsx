@@ -89,7 +89,6 @@ const WriteHeader = () => {
           body: data,
         });
         const message = await res.json();
-        alert('게시글 저장 완료');
         setImageState(null);
         resetStates();
         router.back();

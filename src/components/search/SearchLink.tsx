@@ -12,7 +12,6 @@ export default function SearchLink({
   };
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams()?.get('search') || '';
   const getCategory = useSearchParams()?.get('category') || null;

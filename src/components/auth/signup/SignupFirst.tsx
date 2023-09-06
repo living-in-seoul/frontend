@@ -92,7 +92,7 @@ const SignupFirst = () => {
         <div className="flex flex-col gap-5">
           <AuthInput
             id="signupEmail"
-            placeholder="ex) seuol123@vival.com"
+            placeholder="ex) seoul123@vival.com"
             label="아이디(이메일)"
             mainProps={register('email', emailForm)}
             isSubmitted={isSubmitted}

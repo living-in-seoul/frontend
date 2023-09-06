@@ -7,7 +7,7 @@ export const getYouth = async () => {
   const parser = new xml2js.Parser();
 
   const promises = CODES_TYPE.map((code) => {
-    const url = `${process.env.NEXT_PUBLIC_YOUTH_URL}openApiVlak=${process.env.NEXT_PUBLIC_YOUTH_API_KEY}&display=3&pageIndex=1&srchPolyBizSecd=003002001&bizTycdSel=${code.code}`;
+    const url = `${process.env.NEXT_PUBLIC_YOUTH_URL}openApiVlak=${process.env.NEXT_PUBLIC_YOUTH_API_KEY}&display=1&pageIndex=1&srchPolyBizSecd=003002001&bizTycdSel=${code.code}`;
     return fetch(url)
       .then((res) => res.text())
       .then((text) => parser.parseStringPromise(text));

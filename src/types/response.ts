@@ -101,7 +101,7 @@ interface SearchResult {
 /**서울시 API 혼잡도 데이터 */
 interface Forecast {
   FCST_TIME: string;
-  FCST_CONGEST_LVL: string;
+  FCST_CONGEST_LVL: '붐빔' | '약간 붐빔' | '보통' | '여유';
   FCST_PPLTN_MIN: string;
   FCST_PPLTN_MAX: string;
 }
@@ -327,10 +327,13 @@ interface ResponseAlarm {
 
 interface AlarmItem {
   id: number;
+  postId: number;
   alarmEventType: string;
   text: string;
   isRead: boolean;
   registeredAt: string;
+  hashTagName: string;
+  userImg: string | null;
 }
 
 interface YouthInfo {
