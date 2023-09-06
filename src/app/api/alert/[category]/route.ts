@@ -27,7 +27,6 @@ export const GET = async (_: NextRequest, context: Context) => {
           },
         },
       ).then((res) => res.json());
-      // console.log(data);
       return NextResponse.json(data);
     } catch (error) {
       console.log('asdfsafasdf', error);
@@ -55,7 +54,6 @@ export const POST = async (_: NextRequest, context: Context) => {
           },
         },
       ).then((res) => res.json());
-      // console.log(data);
       return NextResponse.json(data);
     } catch (error) {
       console.log('에러발생', error);
