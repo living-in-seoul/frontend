@@ -20,6 +20,7 @@ const AlertSection = () => {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
     });
+    console.log(ActiveData);
     return (
       <article key={uuidv4()} className="flex flex-col w-full h-full">
         {ActiveData?.alarmList.map((item) => (

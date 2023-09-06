@@ -1,15 +1,12 @@
-import { RecoilState, useRecoilState } from 'recoil';
-
 const AlartElement = ({
   title,
-  alert,
-}: // key,
-{
-  title: string;
-  alert: RecoilState<boolean>;
-  // key: Key;
+  toggleState,
+  setToggleState,
+}: {
+  title: '푸시 알림 받기' | '댓글 알림' | '좋아요 알림' | '해시태그 알림';
+  toggleState: boolean;
+  setToggleState: (newValue: boolean) => void;
 }) => {
-  const [toggle, setToggle] = useRecoilState(alert);
   return (
     <div
       className={`flex justify-between py-5 px-4 ${
@@ -23,17 +20,17 @@ const AlartElement = ({
       </div>
       <button
         className="w-12 h-6 relative"
-        onClick={() => setToggle((prev) => !prev)}
+        onClick={() => setToggleState(!toggleState)}
       >
         <div
           className={`relative flex items-center w-12 transition-all h-6 left-0 ${
-            toggle ? 'bg-neutral-700' : 'bg-zinc-300'
+            toggleState ? 'bg-neutral-700' : 'bg-zinc-300'
           } rounded-3xl`}
         >
           <div
-            style={{ left: toggle ? '0.25rem' : '1.5rem' }}
+            style={{ left: toggleState ? '0.25rem' : '1.5rem' }}
             className={`absolute ${
-              toggle ? 'left-1' : 'left-6'
+              toggleState ? 'left-1' : 'left-6'
             } w-5 h-4 bg-white rounded-3xl transition-all`}
           />
         </div>

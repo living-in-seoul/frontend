@@ -51,7 +51,7 @@ export const AleatSectionState = atom<'active' | 'hastag'>({
 });
 export const pushAlertToggleState = atom<boolean>({
   key: 'pushAlertToggleState',
-  default: false,
+  default: true,
 });
 export const commentAlertToggleState = atom<boolean>({
   key: 'commentAlertToggleState',

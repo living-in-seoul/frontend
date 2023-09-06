@@ -301,6 +301,27 @@ const TrueAlertIcon = () => (
   </svg>
 );
 
+const ToastWarning = () => (
+  <svg
+    width="42"
+    height="42"
+    viewBox="0 0 42 42"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M34 21C34 28.1797 28.1797 34 21 34C13.8203 34 8 28.1797 8 21C8 13.8203 13.8203 8 21 8C28.1797 8 34 13.8203 34 21Z"
+      fill="white"
+    />
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M21 13C22.1046 13 23 13.6752 23 14.5082V22.096C23 22.929 22.1046 23.6042 21 23.6042C19.8954 23.6042 19 22.929 19 22.096V14.5082C19 13.6752 19.8954 13 21 13ZM21 25.9743C22.1046 25.9743 23 26.6496 23 27.4825V27.4918C23 28.3248 22.1046 29 21 29C19.8954 29 19 28.3248 19 27.4918V27.4825C19 26.6496 19.8954 25.9743 21 25.9743Z"
+      fill="#555555"
+    />
+  </svg>
+);
+
 export {
   TrueAlertIcon,
   Close,
@@ -313,4 +334,5 @@ export {
   ViewWeeklyIcon,
   LocationSelectIcon,
   PinIcon,
+  ToastWarning,
 };
