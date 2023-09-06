@@ -17,17 +17,17 @@ const DetailComment = ({ postId }: { postId: string }) => {
   const setPostId = useSetRecoilState(postIdstate);
   const loadMoreList = useCallback(async () => {
     const next = page + 1;
-    const moreList = await fetch(`/api/comment/${postId}?page=${next}`)
-      .then((response) => response.json())
-      .finally(() => setIsLoading(false));
-    setPage(next);
-    // setList((prev) => [...(prev?.length ? prev : []), ...moreList]);
-  }, [page]);
-  useEffect(() => {
-    setCommentKey(`/api/comment/${postId}`);
-    loadMoreList();
-    setPostId(postId);
-  }, []);
+    if (data && next > data?.pageable?.totalPages) {
+      return setLastPage(true);
+    } else {
+      const moreList = await fetch(`/api/comment/${postId}?page=${next}`)
+        .then((response) => response.json())
+        .then((data) => data.comments)
+        .finally(() => setIsLoading(false));
+      setPage(next);
+      return setList((prev) => [...(prev?.length ? prev : []), ...moreList]);
+    }
+  }, [data, page, postId]);
 
   useEffect(() => {
     if (data && page === 1) {
@@ -70,5 +70,4 @@ const DetailComment = ({ postId }: { postId: string }) => {
     </div>
   );
 };
-
 export default DetailComment;
