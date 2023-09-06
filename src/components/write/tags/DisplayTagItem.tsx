@@ -13,7 +13,7 @@ const DisplayTagItem = ({ tag, onDeleteTag }: DisplayTagItemProps) => {
       key={tag}
       onClick={() => onDeleteTag && onDeleteTag(tag)}
     >
-      {location ? tag : `#${tag}`}
+      #{tag}
       {onDeleteTag && (
         <Icons
           path={closeX}
