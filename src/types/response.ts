@@ -42,7 +42,7 @@ interface ResponseAutoComplete {
 interface UserProfile {
   nickname: string;
   email: string;
-  profileImg?: string;
+  userImg?: string;
 }
 
 /** 위치 정보 데이터  */
@@ -174,6 +174,7 @@ interface ResponseCityImageData extends CityData {
 interface User {
   nickname: string;
   email: string;
+  userImg: string;
 }
 
 /**포스트 이미지 정보 데이터 */

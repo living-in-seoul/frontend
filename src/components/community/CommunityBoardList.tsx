@@ -50,6 +50,7 @@ const CommunityBoardList = ({
       setPage(next);
       setList((prev) => [...(prev?.length ? prev : []), ...lists.result]);
     }
+    console.log(lists);
   };
   useEffect(() => {
     if (inview && !isLoading) {
@@ -57,7 +58,7 @@ const CommunityBoardList = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inview]);
-
+  console.log(list);
   return (
     <article className="flex flex-col">
       <div className="w-full justify-between flex px-4 py-6 ">
@@ -101,6 +102,7 @@ const CommunityBoardList = ({
           className="cursor-pointer hover:bg-slate-100 active:bg-sky-200 transition-all duration-300 rounded-md "
         >
           <CommunityPostItem
+            userImg={post.user.userImg}
             category={Category}
             tags={tags}
             // isPop={isPop}

@@ -1,15 +1,13 @@
 'use client';
 import useOutsideClick from '@/hooks/useOutsideClick';
-import React, { ReactNode, useEffect, useRef, useState } from 'react';
-import { RecoilState, useRecoilState, useRecoilValue } from 'recoil';
+import React, { useEffect, useRef } from 'react';
+import { useRecoilState } from 'recoil';
 import LoginContent from './bottomsheet/LoginContent';
 import MapContent from './bottomsheet/MapContent';
 import DefaultContent from './bottomsheet/DefaultContent';
 import { bottomSheetState } from '@/recoil/bottomsheet';
 import LocationSelect from './home/location/LocationSelect';
 import WriteSelect from './bottomsheet/WriteSelect';
-import { Toaster, toast } from 'react-hot-toast';
-import { notificationState } from '@/recoil/authStates';
 // const DynamicLocationSelect = dynamic(
 //   () => import('./location/LocationSelect'),
 //   {

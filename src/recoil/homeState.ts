@@ -1,3 +1,4 @@
+import { RefObject } from 'react';
 import { atom } from 'recoil';
 
 export const HomeReviewKeyState = atom<string>({

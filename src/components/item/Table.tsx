@@ -56,7 +56,7 @@ const Table = ({
           onClick={() => setOpenTable((prev) => !prev)}
           className="w-full h-12 text-base border border-zinc-400 rounded-xl px-4 outline-teal-400 flex items-center "
         >
-          <span>~6개월</span>
+          <span className="text-zinc-400">날짜를 골라주세요</span>
         </div>
       )}
     </div>
