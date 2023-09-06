@@ -119,7 +119,7 @@ const EditProfileImage = ({ profileImageUrl }: { profileImageUrl: string }) => {
               mainText="사진을 등록하시겠습니까?"
               onCancel={() => setOnModal(false)}
               onConfirm={fetchImage}
-              subText="한번 바꾼 이미지는 돌아오지 않습니다"
+              subText="이전 이미지는 삭제됩니다"
             />
           </ModalOutside>
         </ModalPortal>
