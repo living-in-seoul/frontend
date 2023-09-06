@@ -29,7 +29,7 @@ const CommunityPostItem = ({
     postId,
   } = post;
   // 이거 쓰시나요
-  const { nickname, profileImg } = user;
+  const { nickname } = user;
   const FullContent = content.length > 100;
   const shortContent = content.slice(0, 100);
   const userName = user.nickname.slice(0, 10);

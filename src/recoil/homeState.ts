@@ -15,5 +15,5 @@ export const OpenSearchState = atom<boolean>({
 });
 export const SearchGuState = atom<string>({
   key: 'SearchGuState',
-  default: 'false',
+  default: '전체',
 });

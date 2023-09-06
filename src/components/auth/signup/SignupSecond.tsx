@@ -24,9 +24,9 @@ interface SignupSecondFormPorps {
 const SignupSecond = () => {
   const [gender, setGeder] = useState<string>('');
   const [movedDate, setmovedDate] = useState<string>('');
-  const [openHomeTown, setOpenHomeTown] = useState<boolean>(false);
-  const [hometown, setHometown] = useState<string>('');
-  const hometownRef = useRef<HTMLInputElement | null>(null);
+  // const [openHomeTown, setOpenHomeTown] = useState<boolean>(false);
+  // const [hometown, setHometown] = useState<string>('');
+  // const hometownRef = useRef<HTMLInputElement | null>(null);
   const callbackUrl = useRecoilState(callbackUrlState);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -34,7 +34,7 @@ const SignupSecond = () => {
   const {
     register,
     handleSubmit,
-    reset,
+
     formState: { isSubmitted, errors },
   } = useForm<SignupSecondFormPorps>({
     mode: 'onSubmit',
@@ -59,7 +59,7 @@ const SignupSecond = () => {
     setIsLoading(true);
     try {
       const newData = { ...data, gender, movedDate };
-      const response = await fetch('/api/signup', {
+      await fetch('/api/signup', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -82,22 +82,22 @@ const SignupSecond = () => {
       setIsLoading(false);
     }
   };
-  const onChangeHometonwnHandler = (e: any) => {
-    if (e.target.value && hometownRef.current) {
-      setOpenHomeTown(true);
-    }
-    setHometown(e.target.value);
-  };
-  useEffect(() => {
-    const getPredictions = (keyword: string, dataArray: string[]): string[] => {
-      const filtered = dataArray.filter((item) => item.includes(keyword));
-      const sorted = filtered.sort(
-        (a, b) => a.indexOf(keyword) - b.indexOf(keyword),
-      );
-      return sorted;
-    };
-    const updatedPredictions = getPredictions(hometown, hometownData);
-  }, [hometown]);
+  // const onChangeHometonwnHandler = (e: any) => {
+  //   if (e.target.value && hometownRef.current) {
+  //     setOpenHomeTown(true);
+  //   }
+  //   setHometown(e.target.value);
+  // };
+  // useEffect(() => {
+  //   const getPredictions = (keyword: string, dataArray: string[]): string[] => {
+  //     const filtered = dataArray.filter((item) => item.includes(keyword));
+  //     const sorted = filtered.sort(
+  //       (a, b) => a.indexOf(keyword) - b.indexOf(keyword),
+  //     );
+  //     return sorted;
+  //   };
+  //   getPredictions(hometown, hometownData);
+  // }, [hometown]);
   return (
     <section className="h-full">
       <Toaster />

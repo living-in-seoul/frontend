@@ -1,5 +1,4 @@
 import { getHotBoard, getUserBoard } from '@/service/board';
-import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
 interface Context {
@@ -8,7 +7,6 @@ interface Context {
 
 export const GET = async (_: NextRequest, context: Context) => {
   const slugLength = context.params.slug.length;
-  const token = cookies().get('accessToken');
   if (slugLength === 1) {
     const postId = context.params.slug[0];
     const data = await getUserBoard(postId).then((data) => data?.result);

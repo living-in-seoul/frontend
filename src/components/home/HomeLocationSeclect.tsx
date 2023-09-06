@@ -24,7 +24,14 @@ const HomeLocationSeclect = ({
   const openLocationBottomSheet = () => {
     setBottomSheetState({ isActive: true, type: 'location', link: null });
   };
-  const location = localStorage.getItem('location_gu');
+
+  useEffect(() => {
+    const location = localStorage.getItem('location_gu');
+    if (location) {
+      setLocationGu(location);
+    }
+  }, [locationGu, setLocationGu]);
+
   const pathname = usePathname();
   return (
     <>
@@ -37,8 +44,7 @@ const HomeLocationSeclect = ({
             pathname === '/home' ? 'text-white' : 'text-black'
           } text-base font-semibold leading-relaxed`}
         >
-          {/* 변경해주세요 */}
-          서울시 {location}
+          서울시 {serachGu ?? locationGu}
         </div>
         <div className="flex items-center justify-center">
           <Icons

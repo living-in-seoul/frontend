@@ -19,7 +19,6 @@ const UserProfile = ({
   onMap = false,
   ondetail = true,
 }: DetailMainProps) => {
-  console.log(userImg);
   return (
     <>
       <div className="flex w-full">
