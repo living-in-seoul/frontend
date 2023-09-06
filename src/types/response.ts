@@ -183,18 +183,6 @@ interface PostImage {
   postImg: string;
 }
 
-/**포스트 댓글 데이터   */
-interface Comment {
-  nickname: string;
-  comment: string;
-  createdAt: string;
-  userImg: string | null;
-  commentHasLiked: boolean;
-  commentLikeSize: number;
-  reComments: ReComment[] | null;
-  hasReported: boolean;
-}
-
 interface ResultItem {
   user: User;
   post: Post;
@@ -213,12 +201,13 @@ interface ResponsePopularCategoryHashtag {
 }
 /** 대댓글 데이터 */
 interface ReComment {
+  reCommentLikeSize: number;
+  hasReported: boolean;
   reCommentId: number;
-  nickname: string;
   reComment: string;
   createdAt: string;
   reCommentHasLiked: boolean;
-  userImg: string | null;
+  user: User;
 }
 
 /**포스트 정보 데이터 */
@@ -265,29 +254,35 @@ interface ResponseMyPostData {
     totalElements: number;
     size: number;
   };
-
   result: PostResult[];
 }
 
-/**포스트 댓글 데이터   */
+/**포스트 댓글 상세 데이터    */
 interface Comment {
-  userImg: string | null;
-  createdAt: string;
-  nickname: string;
-  commentId: number;
   comment: string;
-  commentSize: number;
-  commentHasLiked: boolean;
-  reCommentList: ReComment[];
+  commentId: number;
+  createdAt: string;
+  commentLikeSize: number;
+  reComments: ReComment[] | null;
 }
+/**포스트 댓글 데이터   */
 interface ResponseCommentData {
+  msg: string;
   pageable: {
     totalPages: number;
     totalElements: number;
     size: number;
   };
-  comments: Comment[];
+  result: CommentData[];
 }
+
+interface CommentData {
+  user: User;
+  comment: Comment;
+  commentHasLiked: boolean;
+  hasReported: boolean;
+}
+
 interface ResultItem {
   user: User;
   post: Post;

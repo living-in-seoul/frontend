@@ -14,12 +14,14 @@ import {
 import Icons from '../common/Icons';
 import BeatLoader from 'react-spinners/BeatLoader';
 import { Toaster, toast } from 'react-hot-toast';
+import { bottomSheetState } from '@/recoil/bottomsheet';
 
 const DetailNavbar = ({ postId }: { postId: string }) => {
   const [comment, setComment] = useState<string>('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const commentInputFocus = useRecoilValue(inoutTextFocusState);
+  const setBottomSheetState = useSetRecoilState(bottomSheetState);
   const [totalComment, setTotalComment] = useRecoilState(totalCommentState);
   const commentUrlKey = useRecoilValue(commentKeyState);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -52,7 +54,7 @@ const DetailNavbar = ({ postId }: { postId: string }) => {
     setIsLoading(true);
     if (!comment) {
       setIsLoading(false);
-      return toast.error('뭐든 적긴해야지');
+      return toast.error('공백은 안됩니다');
     }
     const tokenValidResponse = await fetch('/api/user', {
       method: 'GET',
@@ -94,6 +96,11 @@ const DetailNavbar = ({ postId }: { postId: string }) => {
               }).then(() => mutate(commentUrlKey));
         }
       } else {
+        setBottomSheetState({
+          isActive: true,
+          type: 'login',
+          link: null,
+        });
       }
       setComment('');
       setIsLoading(false);
