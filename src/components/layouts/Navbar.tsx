@@ -28,7 +28,7 @@ const NavBarArray = [
   },
   {
     name: '마이페이지',
-    path: '/mypage',
+    path: '/mypage?category=myscrap',
     iconElement: <MypageIcon type="none" />,
     iconfilledElement: <MypageIcon type="fill" />,
   },
