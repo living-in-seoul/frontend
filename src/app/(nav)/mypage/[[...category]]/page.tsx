@@ -10,11 +10,7 @@ const MypagePage = () => {
       <MypageHeader />
       <MypageProfile />
       <nav className="w-full flex">
-        {MYPAGE_LINK_NAME.map((category) => (
-          <MypageLink key={category.params} category={category}>
-            {category.name}
-          </MypageLink>
-        ))}
+        <MypageLink />
       </nav>
       <MypageList />
     </section>

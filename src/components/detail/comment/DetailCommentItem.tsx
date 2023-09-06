@@ -18,19 +18,16 @@ import DetailModal from '../DetailModal';
 import { clientCommentDelete, clientCommentLike } from '@/service/clientCommet';
 import { userClientVerify } from '@/service/oauth';
 interface DetailCommentItemProps {
-  data: Comment;
+  data: CommentData;
   children: React.ReactNode;
 }
 
 const DetailCommentItem = ({ data, children }: DetailCommentItemProps) => {
   const {
-    commentLikeSize,
+    comment: { comment, commentLikeSize, commentId, reComments, createdAt },
     commentHasLiked,
-    createdAt,
-    nickname,
-    comment,
-    commentId,
-    reComments,
+    hasReported,
+    user: { nickname, userImg },
   } = data;
   const commentKey = useRecoilValue(commentKeyState);
   const [username, setUsername] = useState<string>('');
@@ -58,6 +55,7 @@ const DetailCommentItem = ({ data, children }: DetailCommentItemProps) => {
       isCommentChange: true,
       commentId,
     }));
+    console.log(textareaRef.current, textareaRef);
     textareaRef.current?.focus();
     setOpenModal(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -123,6 +121,7 @@ const DetailCommentItem = ({ data, children }: DetailCommentItemProps) => {
           createdAt={createdAt}
           nickname={nickname}
           ondetail={false}
+          userImg={userImg}
         />
         <div className="cursor-pointer">
           <DetailModal

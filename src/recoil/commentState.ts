@@ -46,7 +46,7 @@ export const commentIdState = atom<number | null>({
   key: 'commentIdState',
   default: null,
 });
-interface RefObject<T> {
+export interface RefObject<T> {
   current: T | null;
 }
 export const buttonRefState = atom<RefObject<HTMLButtonElement>>({

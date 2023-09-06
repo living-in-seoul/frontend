@@ -24,7 +24,7 @@ const PostItem = ({ post, user, onMap, hasLiked, border }: PostItemProps) => {
     commentSize,
     postId,
   } = post;
-  const { nickname } = user;
+  const { nickname, userImg } = user;
   const FullContent = content.length > 100;
   const shortContent = content.slice(0, 100);
   const userName = user.nickname.slice(0, 10);
@@ -71,6 +71,7 @@ const PostItem = ({ post, user, onMap, hasLiked, border }: PostItemProps) => {
         nickname={nickname}
         postViewCount={postViewCount}
         onMap={onMap}
+        userImg={userImg}
       />
       {/* 컨텐츠 */}
       <div className="w-full flex justify-between min-h-[64px]">
