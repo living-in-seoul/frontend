@@ -20,7 +20,7 @@ const HomeReviewLists = ({ hashtags }: ReviewListProps) => {
         PostList.slice(idx * 2, idx * 2 + 2),
       )
     : [];
-
+  console.log(groupedItems);
   return (
     <CarouselProvider>
       {groupedItems.map((group, groupIndex) => (

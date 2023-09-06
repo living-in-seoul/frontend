@@ -31,6 +31,7 @@ export default function NavLink({
     ? `${category.link}` === params?.get('category')
     : params?.get('category') === 'myscrap' || pathname === '/';
   const isActive = onMypage ? isMypageActive : isCommunityActive;
+
   return (
     <div
       onClick={() => router.push(link)}
@@ -38,7 +39,9 @@ export default function NavLink({
         fontWeight: isActive ? 'bold' : 'normal',
         color: isActive ? '#2DDAB0' : '#787878',
       }}
-      className={`isrelative w-1/4 flex items-center justify-center py-4 cursor-pointer`}
+      className={`isrelative ${
+        slug === 'mypage' ? 'w-1/2' : 'w-1/4'
+      } flex items-center justify-center py-4 cursor-pointer`}
     >
       {children}
     </div>

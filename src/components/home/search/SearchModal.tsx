@@ -5,27 +5,35 @@ import Input from '@/components/common/Input';
 import { LocationSelectIcon } from '@/components/profile/editpage/EditImageIcon';
 import { centerState, currentState } from '@/recoil/mapStates';
 import { SearchIcon, back } from '@/utils/Icon';
-import { useRecoilState } from 'recoil';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { OpenSearchState, SearchGuState } from '@/recoil/homeState';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  InputRefState,
+  OpenSearchState,
+  SearchGuState,
+} from '@/recoil/homeState';
 import BeatLoader from 'react-spinners/BeatLoader';
 import { useSetRecoilState } from 'recoil';
 import DisplayLi from './DisplayLi';
 import { GUARRAY } from '@/utils/constants/constants';
 import HomeTagSections from '../review/HomeTagSections';
-import useOutsideClick from '@/hooks/useOutsideClick';
 
 const SearchModal = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
   const setCenterState = useSetRecoilState(centerState);
   const setCurrentState = useSetRecoilState(currentState);
   const setSearchGuState = useSetRecoilState(SearchGuState);
+  const inputRef = useRecoilValue(InputRefState);
   const [openSearchModal, setOpenSearchModal] = useRecoilState(OpenSearchState);
   const [openUl, setOpenUl] = useState(false);
   const [predictions, setPredictions] = useState<string[]>([]);
   const [keyword, setKeyword] = useState<string>('');
   const scrollY = useRef(0);
+
+  useEffect(() => {
+    if (inputRef.current) inputRef.current.focus();
+    console.log(inputRef.current);
+  }, [inputRef.current]);
 
   const onClickToBack = () => {
     setOpenSearchModal(false);
@@ -83,20 +91,19 @@ const SearchModal = () => {
       document.body.style.position = 'fixed';
       document.body.style.width = '100%';
       document.body.style.height = '100%';
-      document.body.classList.add('modal-open');
       document.body.style.top = `-${scrollY.current}px`;
     }
     return () => {
-      document.body.classList.remove('modal-open');
       document.body.style.position = '';
       document.body.style.width = '';
       document.body.style.height = '';
       window.scrollTo(0, scrollY.current);
     };
   }, [openSearchModal, setOpenSearchModal]);
+
   return (
     <>
-      <div className="flex justify-center items-center w-full px-5 gap-5">
+      <div className="flex justify-center items-center w-full px-5 gap-5 pt-[54px]">
         <Icons
           path={back}
           onClick={onClickToBack}
