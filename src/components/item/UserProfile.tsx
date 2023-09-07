@@ -4,7 +4,7 @@ import { getTimeAgo } from '@/utils/utilFunc';
 
 interface DetailMainProps {
   nickname: string;
-  createdAt: string;
+  createdAt?: string;
   userImg?: string | StaticImageData;
   postViewCount?: number;
   onMap?: boolean;
@@ -59,8 +59,8 @@ const UserProfile = ({
               !onMap && 'leading-3'
             } `}
           >
-            {getTimeAgo(createdAt)}{' '}
-            {ondetail && `· 조회수 ${postViewCount ?? 0}`}
+            {createdAt && getTimeAgo(createdAt) + ` · `}
+            {ondetail && `조회수 ${postViewCount ?? 0}`}
           </div>
         </div>
       </div>
