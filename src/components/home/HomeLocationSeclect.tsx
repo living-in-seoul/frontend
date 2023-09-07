@@ -58,7 +58,7 @@ const HomeLocationSeclect = ({
       </div>
       {openSearchModal && (
         <ModalPortal nodeName="searchPortal">
-          <div className="absolute top-0 left-0 bg-white flex flex-col gap-4 w-full h-screen z-50">
+          <div className="absolute top-0 left-0 bg-white flex flex-col gap-4 w-full h-screen z-50 px-4">
             <SearchModal />
           </div>
         </ModalPortal>

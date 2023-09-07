@@ -103,13 +103,13 @@ const SearchModal = () => {
 
   return (
     <>
-      <div className="flex justify-center items-center w-full px-5 gap-5 pt-[54px]">
+      <div className="flex justify-between items-center w-full gap-5 pt-[54px]">
         <Icons
           path={back}
           onClick={onClickToBack}
           className="hover:cursor-pointer"
         />
-        <div className="w-4/5 ">
+        <div className="w-full ">
           <Input
             placeholder="구를 검색해주세요."
             formColor="bg-gray7"
