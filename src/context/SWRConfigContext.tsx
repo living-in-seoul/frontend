@@ -7,7 +7,6 @@ interface SWRConfigContextProps {
 }
 
 const SWRConfigContext = ({ children }: SWRConfigContextProps) => {
-  const router = useRouter();
   const fetcher = async (url: string) => {
     const response = await fetch(url);
 
