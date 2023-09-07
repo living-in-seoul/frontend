@@ -11,7 +11,7 @@ export const GET = async (req: NextRequest, context: Context) => {
   const { getCurrentDate: currentDate, getCurrentTime: currentTime } =
     getCurrentDateAndTime();
 
-  const { lat, lng } = seoulCenterCoords['영등포구']!;
+  const { lat, lng } = seoulCenterCoords[location]!;
   const { x: nx, y: ny } = convertToXY('toXY', lat, lng);
 
   const api = `${process.env.NEXT_PUBLIC_WHEADER_URL}?ServiceKey=${process.env.NEXT_PUBLIC_WHEADER_API_KEY}&pageNo=1&numOfRows=1000&dataType=JSON&base_date=${currentDate}&base_time=${currentTime}&nx=${nx}&ny=${ny}`;
@@ -33,8 +33,10 @@ export const GET = async (req: NextRequest, context: Context) => {
     headers: {
       'Content-Type': 'application/json',
     },
-    next: { revalidate: 60 * 60 * 3 },
+    next: { revalidate: 0 },
   }).then<ForecastResponse>((res) => res.json());
+
+  console.log(response);
   const forecastItems = response.response.body.items.item;
   const currentsTime = parseInt(
     `${new Date().getHours()}${new Date().getMinutes()}`,

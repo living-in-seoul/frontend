@@ -8,6 +8,7 @@ import { useSetRecoilState } from 'recoil';
 import { bottomSheetState } from '@/recoil/bottomsheet';
 import { useRouter } from 'next-nprogress-bar';
 import { TrueAlertIcon } from '../profile/editpage/EditImageIcon';
+import { usePathname } from 'next/navigation';
 
 interface AlertButtonComponentProps {
   link: string;
@@ -18,6 +19,7 @@ const AlertButtonComponent = ({
   link,
   type = 'home',
 }: AlertButtonComponentProps) => {
+  const pathname = usePathname();
   const router = useRouter();
   const { data: ActiveData } = useSWR<ResponseAlarm>(`/api/alert/activity`, {
     revalidateOnFocus: false,
@@ -49,7 +51,7 @@ const AlertButtonComponent = ({
     <div onClick={handleWritePostClick} className="selection:bg-none">
       {hasUnreadAlarm ? (
         <Icons path={Alert}>
-          <TrueAlertIcon />
+          <TrueAlertIcon type={type} />
         </Icons>
       ) : (
         <Icons
