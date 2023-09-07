@@ -117,7 +117,10 @@ const EditProfileImage = ({ profileImageUrl }: { profileImageUrl: string }) => {
           >
             <DynamicWarning
               mainText="사진을 등록하시겠습니까?"
-              onCancel={() => setOnModal(false)}
+              onCancel={() => {
+                setOnModal(false);
+                setUpLodaedProfile(null);
+              }}
               onConfirm={fetchImage}
               subText="이전 이미지는 삭제됩니다"
             />

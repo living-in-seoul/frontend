@@ -24,7 +24,6 @@ const DetailHeader = ({ data }: { data: ResponseDetailData }) => {
       : reportModalArray;
   return (
     <section className="flex flex-row justify-between  px-4 py-4">
-      <Toaster />
       <div className="flex flex-row gap-4">
         <Icons path={back} fill="#404040" onClick={() => route.back()} />
         <span className="font-bold">{data.result.post.category}</span>
