@@ -12,6 +12,7 @@ const DynamicYouth = dynamic(() => import('@/components/youth/YouthList'), {
     </div>
   ),
 });
+export const revalidate = 60 * 60 * 24;
 
 const YouthPage = async () => {
   const youthList = await getYouth();

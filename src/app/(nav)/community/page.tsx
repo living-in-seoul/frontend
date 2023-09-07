@@ -5,6 +5,7 @@ import { fetchCommunity } from '@/actions/fetchCommunity';
 import CommunityHotTag from '@/components/community/CommunityHotTag';
 import WriteButton from '@/components/map/actions/WriteButton';
 
+export const revalidate = 0;
 interface PageProps {
   searchParams: { [key: string]: string | undefined };
 }
