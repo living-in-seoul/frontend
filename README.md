@@ -1,10 +1,9 @@
 ![seoulvival](https://github.com/living-in-seoul/frontend/assets/83047601/7005ca70-f9ee-4619-b8af-113fb132b99d)
 
-## 실전 프로젝트 1조 [Seoulvival]
-
-<br />
+# Seoulvival
 
 #### FE: 최은석, 강신범, 김나영
+
 #### BE: 이채원, 김정빈
 
 <br />
@@ -22,7 +21,6 @@
 # 📅 프로젝트 기간
 
 - 2023년 7월 28일 ~ 9월 7일
-
 
 <br />
 <br />
@@ -45,9 +43,10 @@
 
 # 💻 주요 기능 및 멤버 역할
 
-### <a href="https://github.com/nonjk2">최은석</a> 
+### <a href="https://github.com/nonjk2">최은석</a>
 
 **역할:**
+
 - 공통부분
   - SWRconfigProvider, SSEProvider, RecoilProvider, ToastProvider 설계
   - BottomSheet 제작
@@ -65,11 +64,12 @@
 - 알림 기능
   - 알림 UI
   - SSE를 통한 알림기능 구현
-<br/>
+    <br/>
 
-### <a href="https://github.com/kangsinbeom">강신범</a> 
+### <a href="https://github.com/kangsinbeom">강신범</a>
 
 **역할:**
+
 - 공통부분
   - response Type 지정
 - 로그인
@@ -82,14 +82,15 @@
   - 댓글 CRUD 기능구현
   - MetaData 작성 (반응형)
 - 마이페이지
-  - 유저 정보 조회, 가입 추가사항 등록, 닉네임 변경 및 유저 이미지 변경, 회원 탈퇴 및 로그아웃 기능 
+  - 유저 정보 조회, 가입 추가사항 등록, 닉네임 변경 및 유저 이미지 변경, 회원 탈퇴 및 로그아웃 기능
 - middleware를 사용한 route관리
 - Vercel 배포 및 관리
-<br/>
+  <br/>
 
-###  <a href='https://github.com/nayoung3669'>김나영</a> 
+### <a href='https://github.com/nayoung3669'>김나영</a>
 
 **역할:**
+
 - 공통부분
   - hooks 관리
   - request Type 지정
@@ -98,25 +99,39 @@
   - 게시물 정보 기반 marker 생성
   - 유저의 현재위치 이동 기능
   - filter를 통한 게시물 조회
-  - 이동 시 지역 poligon 생
+  - 이동 시 지역 polygon 기반 현재 맵 위치 시각화
 - 게시글 작성 페이지
   - 위치 기반 및 이미지 첨부 게시글 작성 기능
   - 맵 기반 위치 조회 및 저장 기능
   - 게시글 작성 페이지 UI
 - 홈페이지
+
   - 서울시 정책정보 Open API 활용 기능 구현
   - 앱 Navigation Bar 제작
 
 - 검색 기능
+
   - 검색기능 UI
   - 위치 검색 기능 구현
-    
 
   <br />
-
 
 # 아키텍쳐
 
+<img src="./public/readme/architecture.png"/>
 
-  <br />
-1차 저장임 발제 들으러 가는김에 저장하는 거임 무튼 그럼
+<br/>
+<br/>
+
+# 주요 트러블 슈팅
+
+## Lazy Loading
+
+1. 문제 상황 : 서울시 전체의 데이터를 한번에 가져옴
+   -> 유저에게 최신의 데이터를 다양하게 보여주기 어려울뿐만 아니라 클라이언트 서버 과부하 우려
+2. 해결 : Lazy Loading 도입
+   1. 유저가 지도의 "구" 단위의 특정 부분(송파구, 강남구 ...)에 접근하면 맵 센터의 위도와 경도 정보를 저장합니다.
+   2. 서울시 경계 좌표 Polygon을 이용해 해당하는 정보를 매칭합니다.
+   3. 유저가 센터를 바꿀 때 마다 해당하는 구의 데이터의 정보만 가져와서 뿌려줍니다.
+   
+   <img src="./public/readme/mapheader.png"/>
