@@ -12,8 +12,8 @@
 
 - <a href='https://seoulvival.com/'>홈페이지 주소</a>
 - <a href='https://www.notion.so/SEOULVIVAL-392b247478d740ef82a1adca716b8a19'>프로젝트 브로셔</a>
-- <a href=''>발표 영상</a> 주소받아야함
-- <a href=''>시연 영상</a> 주소받아야함
+- <a href=''>발표 영상</a>
+- <a href='https://www.youtube.com/watch?v=UyvLrOI85wQ'>시연 영상</a> 주소받아야함
 
 <br />
 <br />
