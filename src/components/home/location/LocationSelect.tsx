@@ -57,7 +57,6 @@ const LocationSelect = () => {
       type: 'location',
       link: null,
     });
-    console.log(inputRef.current, inputRef);
     inputRef.current?.focus();
     setOpenSearchModal(true);
   };

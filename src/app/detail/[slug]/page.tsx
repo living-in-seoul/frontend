@@ -16,7 +16,6 @@ export const generateMetadata = async ({
 }: DetailPageProps): Promise<Metadata> => {
   const { slug: postId } = params;
   const product = await getUserBoard(postId);
-  console.log(product);
   const title = product?.result.post.category;
   const description = product?.result.post.content;
   return {

@@ -50,7 +50,6 @@ const CommunityBoardList = ({
       setPage(next);
       setList((prev) => [...(prev?.length ? prev : []), ...lists.result]);
     }
-    console.log(lists);
   };
   useEffect(() => {
     if (inview && !isLoading) {

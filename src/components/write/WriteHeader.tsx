@@ -80,7 +80,6 @@ const WriteHeader = () => {
     const tokenValidResponse = await fetch('/api/user', {
       method: 'GET',
     });
-    console.log(post);
 
     if (tokenValidResponse.status === 200) {
       try {
