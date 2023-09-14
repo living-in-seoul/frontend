@@ -15,10 +15,12 @@ export const GET = async (req: NextRequest, context: Context) => {
   const { lat, lng } = seoulCenterCoords[location]!;
   const { x: nx, y: ny } = convertToXY('toXY', lat, lng);
 
+
   const api = `${process.env.NEXT_PUBLIC_WHEADER_URL}?ServiceKey=${process.env.NEXT_PUBLIC_WHEADER_API_KEY}&pageNo=1&numOfRows=1000&dataType=JSON&base_date=${currentDate}&base_time=${currentTime}&nx=${nx}&ny=${ny}`;
   console.log(
     `${process.env.NEXT_PUBLIC_WHEADER_URL}?ServiceKey=${process.env.NEXT_PUBLIC_WHEADER_API_KEY}&pageNo=1&numOfRows=1000&dataType=JSON&base_date=${currentDate}&base_time=${currentTime}&nx=${nx}&ny=${ny}`,
   );
+
 
   const categories = [
     'LGT',
