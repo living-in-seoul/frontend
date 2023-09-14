@@ -38,13 +38,20 @@ const RecentlySearch = () => {
           <li key={item}>
             <Select
               title={`${item.substring(1)}`}
-              onClick={() => {
+              onClick={(e) => {
                 router.replace(`/search?search=${encodeURIComponent(item)}`);
                 setSearchState(item);
               }}
-              className="rounded-md cursor-pointer"
-              size="large"
-              Icon={<Close onClick={() => removeSearchTerm(item)} />}
+              className="rounded-md cursor-pointer relative"
+              size="medium"
+              Icon={
+                <Close
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    removeSearchTerm(item);
+                  }}
+                />
+              }
             />
           </li>
         ))}

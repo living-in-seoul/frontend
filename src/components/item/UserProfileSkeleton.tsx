@@ -13,7 +13,7 @@ const UserProfileSkeleton = ({ onMap = false }) => {
       >
         <div className="bg-gray-200 skeleton flex items-center gap-2 min-w-[200px]">
           {/* 닉네임 */}
-          <h3
+          <p
             className={`text-xs truncate  ${
               onMap
                 ? ' text-neutral-500 max-w-[180px]'
@@ -21,7 +21,7 @@ const UserProfileSkeleton = ({ onMap = false }) => {
             } leading-3 max-w-[80px] `}
           >
             {/* {onMap ? `${nickname}님이 등록 ·` : nickname} */}
-          </h3>
+          </p>
           {/* 레벨 */}
           {!onMap && (
             <p className="text-neutral-600 text-xs font-medium leading-3">

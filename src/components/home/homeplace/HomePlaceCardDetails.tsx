@@ -1,3 +1,4 @@
+'use client';
 import { CongestionLevelElemet, findMaxPopulation } from '@/utils/utilFunc';
 import Bar from './PlaceBar';
 import Icons from '@/components/common/Icons';
@@ -8,7 +9,8 @@ interface HomePlaceCardDetailsProps {
   onClose: () => void;
 }
 
-const HomePlaceCardDetails = ({ list, onClose }: HomePlaceCardDetailsProps) => {
+const HomePlaceCardDetails = (props: HomePlaceCardDetailsProps) => {
+  const { list, onClose } = props;
   const {
     PPLTN_RATE_10,
     PPLTN_RATE_20,
@@ -35,7 +37,7 @@ const HomePlaceCardDetails = ({ list, onClose }: HomePlaceCardDetailsProps) => {
   const timeString = forecast ? new Date(forecast.FCST_TIME).getHours() : '';
   const congestionLevel = forecast ? forecast.FCST_CONGEST_LVL : '';
   const message = forecast
-    ? `${timeString}시(${hoursLater}시간 후)에 인구가 제일 많고, 혼잡도는 ${congestionLevel}할 것으로 예상돼요.`
+    ? `${timeString}시(${hoursLater}시간 후)에 인구가 제일 많고, 혼잡도는 ${congestionLevel}일 것으로 예상돼요.`
     : '예상 불가';
   const betterContent = (type: 'gender' | 'age' | 'residence') => {
     const man = parseFloat(MALE_PPLTN_RATE);
@@ -81,11 +83,15 @@ const HomePlaceCardDetails = ({ list, onClose }: HomePlaceCardDetailsProps) => {
       <div className="w-full flex flex-col gap-7">
         {/* 혼잡도 추이 전망 */}
         <div className="flex w-full items-center">
-          <Icons path={back} className="cursor-pointer" onClick={onClose} />
-          <div
-            className="w-full text-center text-stone-900 text-xl font-bold leading-loose"
-            onClick={onClose}
-          >
+          <Icons
+            path={back}
+            className="cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation();
+              onClose();
+            }}
+          />
+          <div className="w-full text-center text-stone-900 text-xl font-bold leading-loose">
             혼잡도 추이 전망
           </div>
         </div>

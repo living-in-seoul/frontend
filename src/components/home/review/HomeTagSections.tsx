@@ -26,25 +26,26 @@ const HomeTagSections = ({
   return (
     <ul className="pl-4 gap-2.5 flex whitespace-nowrap scrollbar-hide overflow-x-auto">
       {HotTagReview?.map((item) => (
-        <Select
-          key={item}
-          title={type === 'locations' ? item : `#${item}`}
-          className="rounded-md cursor-pointer active:bg-slate-300"
-          onClick={() => onSelctChangeListHandler(item)}
-          selectTag={item === Hashtag}
-          Icon={
-            type === 'locations' ? (
-              <Icons
-                path={closeX}
-                option={{
-                  stroke: '#787878',
-                  strokeLinecap: 'round',
-                  strokeLinejoin: 'round',
-                }}
-              />
-            ) : null
-          }
-        />
+        <li key={item}>
+          <Select
+            title={type === 'locations' ? item : `#${item}`}
+            className="rounded-md cursor-pointer active:bg-slate-300"
+            onClick={() => onSelctChangeListHandler(item)}
+            selectTag={item === Hashtag}
+            Icon={
+              type === 'locations' ? (
+                <Icons
+                  path={closeX}
+                  option={{
+                    stroke: '#787878',
+                    strokeLinecap: 'round',
+                    strokeLinejoin: 'round',
+                  }}
+                />
+              ) : null
+            }
+          />
+        </li>
       ))}
     </ul>
   );

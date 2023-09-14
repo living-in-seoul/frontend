@@ -23,7 +23,7 @@ const HashtagInsert = () => {
         {InsertTag ? (
           InsertTag?.map((tag) => <InsertTagItem tag={tag} key={tag} />)
         ) : (
-          <>비어있어요</>
+          <li>비어있어요</li>
         )}
       </ul>
     </>

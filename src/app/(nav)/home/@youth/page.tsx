@@ -3,6 +3,7 @@ import HomeSectionTitle from '@/components/home/HomeSectionTitle';
 import { getYouth } from '@/service/youth';
 import dynamic from 'next/dynamic';
 
+export const revalidate = 60 * 60 * 24;
 const DynamicYouth = dynamic(() => import('@/components/youth/YouthList'), {
   loading: () => (
     <div
@@ -12,7 +13,6 @@ const DynamicYouth = dynamic(() => import('@/components/youth/YouthList'), {
     </div>
   ),
 });
-export const revalidate = 60 * 60 * 24;
 
 const YouthPage = async () => {
   const youthList = await getYouth();

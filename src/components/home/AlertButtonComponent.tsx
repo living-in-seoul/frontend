@@ -21,10 +21,13 @@ const AlertButtonComponent = ({
 }: AlertButtonComponentProps) => {
   const pathname = usePathname();
   const router = useRouter();
-  const { data: ActiveData } = useSWR<ResponseAlarm>(`/api/alert/activity`, {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-  });
+  const { data: ActiveData, error } = useSWR<ResponseAlarm>(
+    `/api/alert/activity`,
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    },
+  );
   const hasUnreadAlarm = ActiveData?.alarmList.some((item) => !item.isRead);
   const setBottomSheetState = useSetRecoilState(bottomSheetState);
   const openLoginBottomSheet = () => {

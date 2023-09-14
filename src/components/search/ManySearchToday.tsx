@@ -1,7 +1,8 @@
-import { fetchTodaySearch } from '@/actions/fetchCommunity';
+'use client';
+import useSWR from 'swr';
 
-const ManySearchToday = async () => {
-  const todaySearch = await fetchTodaySearch();
+const ManySearchToday = () => {
+  const { data: todaySearch } = useSWR<string[]>(`api/search`);
 
   return (
     <section className="pt-[20px]">
@@ -9,7 +10,7 @@ const ManySearchToday = async () => {
         많이 검색되고 있는 해시태그예요
       </div>
       <div className="w-full text-zinc-400 p-1.5 text-xs font-normal leading-none">
-        2023.08.24 10:00 기준
+        {/* 2023.08.24 10:00 기준 */}
       </div>
       <ul className="py-5 columns-2 gap-x-3">
         {todaySearch &&

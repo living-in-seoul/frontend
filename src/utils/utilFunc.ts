@@ -94,7 +94,7 @@ export const addRecentlySearched = (newSearch: string) => {
     localStorage.getItem('recentlySearched') || '[]',
   );
 
-  if (!storedSearch.includes(newSearch) && newSearch === '#') {
+  if (!storedSearch.includes(newSearch)) {
     const updatedSearch = [...storedSearch, newSearch];
     localStorage.setItem('recentlySearched', JSON.stringify(updatedSearch));
   }
@@ -192,15 +192,17 @@ export const convertToXY = (
 /** 년도월일 */
 export const getCurrentDateAndTime = () => {
   let now = new Date();
-  now.setHours(now.getHours() - 3); // 3시간을 뺍니다.
 
-  const year = now.getFullYear();
-  const month = (now.getMonth() + 1).toString().padStart(2, '0');
-  const day = now.getDate().toString().padStart(2, '0');
-  const hour = now.getHours().toString().padStart(2, '0');
+  const adjustedTimestamp = now.getTime() + 6 * 60 * 60 * 1000;
+  now = new Date(adjustedTimestamp);
+
+  const year = now.getUTCFullYear();
+  const month = (now.getUTCMonth() + 1).toString().padStart(2, '0');
+  const day = now.getUTCDate().toString().padStart(2, '0');
+  const hour = now.getUTCHours().toString().padStart(2, '0');
 
   return {
-    getCurrentTime: `${hour}00`, // 정시로 설정합니다.
+    getCurrentTime: `${hour}00`,
     getCurrentDate: `${year}${month}${day}`,
   };
 };
@@ -227,7 +229,6 @@ export const getCurrentWeather = (filteredItems: ForecastItem[]) => {
     filteredItems.find((item) => item.category === 'LGT')?.fcstValue || false; // 낙뢰 없음을 기본값으로 설정
 
   const baseTime = parseInt(filteredItems[0].baseTime);
-
   let icon = '';
 
   if (ptyValue === '3') {
@@ -240,11 +241,11 @@ export const getCurrentWeather = (filteredItems: ForecastItem[]) => {
     } else {
       icon = 'PartlyCloudyDay';
     }
+  } else if (ptyValue === '1' || ptyValue === '5' /* 비올때 */) {
+    icon = 'Raining';
   } else if (skyValue === '4') {
     icon = 'Cloudy';
-  } else if (ptyValue === '1' || ptyValue === '5' /* RainDrop */) {
-    icon = 'Raining';
-  } else if (ptyValue === '2' || ptyValue === '6' /* RainDropSnow */) {
+  } else if (ptyValue === '2' || ptyValue === '6' /* 눈올때 */) {
     icon = 'RainingSnow';
   } else if (ptyValue === '4') {
     icon = 'Shower';

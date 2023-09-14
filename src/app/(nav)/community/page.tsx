@@ -13,12 +13,14 @@ const CommunityPage = async ({ searchParams }: PageProps) => {
   const category = searchParams.category ? searchParams.category : 'All';
   const tags = searchParams.tag ? searchParams.tag || [] : null;
   const ordertype = (searchParams.ordertype || 'newer') as SelectPopType;
+
   const FetchUrl =
     category === 'All' ? 'category=' : `category=${categoryKO(category)}`;
   const FETCH_API = `${process.env.NEXT_PUBLIC_SERVER}/tags/rank?${FetchUrl}`;
   const TagCategory = await fetch(FETCH_API, {
     next: { revalidate: 2000 },
   }).then<string[]>((res) => res.json());
+
   const lists = await fetchCommunity({
     page: 1,
     limit: 10,
