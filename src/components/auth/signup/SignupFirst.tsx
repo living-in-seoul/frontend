@@ -11,7 +11,7 @@ import {
 import AuthInput from '../signin/AuthInput';
 import Button from '@/components/common/Button';
 import { useState } from 'react';
-import { Toaster, toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import BeatLoader from '@/components/common/Spinner';
 
 interface SignupFirstFormProps {
@@ -87,7 +87,6 @@ const SignupFirst = () => {
   };
   return (
     <section className="h-full relative">
-      <Toaster />
       <form onSubmit={handleSubmit(onSubmitHandler)}>
         <div className="flex flex-col gap-5">
           <AuthInput

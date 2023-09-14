@@ -15,6 +15,7 @@ import Icons from '../common/Icons';
 import BeatLoader from 'react-spinners/BeatLoader';
 import { Toaster, toast } from 'react-hot-toast';
 import { bottomSheetState } from '@/recoil/bottomsheet';
+import { validateInput } from '@/utils/utilFunc';
 
 const DetailNavbar = ({ postId }: { postId: string }) => {
   const [comment, setComment] = useState<string>('');
@@ -40,6 +41,11 @@ const DetailNavbar = ({ postId }: { postId: string }) => {
   }, [commentInputFocus]);
   const handleResizeHeight = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
+    const validate = validateInput(e.target.value);
+    if (validate === 'remove') {
+      alert('장난치지마시라요');
+      setComment('');
+    }
     const textarea = textareaRef.current;
     if (textarea) {
       textarea.style.height = 'auto';
@@ -157,6 +163,7 @@ const DetailNavbar = ({ postId }: { postId: string }) => {
             placeholder="댓글을 입력해주세요"
             rows={1}
             wrap="hard"
+            maxLength={100}
           />
 
           {isLoading ? (

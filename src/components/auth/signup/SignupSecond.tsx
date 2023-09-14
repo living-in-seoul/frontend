@@ -13,7 +13,7 @@ import { callbackUrlState } from '@/recoil/authStates';
 import Table from '@/components/item/Table';
 import { genderArray } from '@/utils/constants/auth';
 import BeatLoader from '@/components/common/Spinner';
-import { Toaster, toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { hometownData } from '@/utils/constants/residence';
 
 interface SignupSecondFormPorps {
@@ -24,9 +24,9 @@ interface SignupSecondFormPorps {
 const SignupSecond = () => {
   const [gender, setGeder] = useState<string>('');
   const [movedDate, setmovedDate] = useState<string>('');
-  // const [openHomeTown, setOpenHomeTown] = useState<boolean>(false);
-  // const [hometown, setHometown] = useState<string>('');
-  // const hometownRef = useRef<HTMLInputElement | null>(null);
+  const [openHomeTown, setOpenHomeTown] = useState<boolean>(false);
+  const [hometown, setHometown] = useState<string>('');
+  const hometownRef = useRef<HTMLInputElement | null>(null);
   const callbackUrl = useRecoilState(callbackUrlState);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -82,25 +82,24 @@ const SignupSecond = () => {
       setIsLoading(false);
     }
   };
-  // const onChangeHometonwnHandler = (e: any) => {
-  //   if (e.target.value && hometownRef.current) {
-  //     setOpenHomeTown(true);
-  //   }
-  //   setHometown(e.target.value);
-  // };
-  // useEffect(() => {
-  //   const getPredictions = (keyword: string, dataArray: string[]): string[] => {
-  //     const filtered = dataArray.filter((item) => item.includes(keyword));
-  //     const sorted = filtered.sort(
-  //       (a, b) => a.indexOf(keyword) - b.indexOf(keyword),
-  //     );
-  //     return sorted;
-  //   };
-  //   getPredictions(hometown, hometownData);
-  // }, [hometown]);
+  const onChangeHometonwnHandler = (e: any) => {
+    if (e.target.value && hometownRef.current) {
+      setOpenHomeTown(true);
+    }
+    setHometown(e.target.value);
+  };
+  useEffect(() => {
+    const getPredictions = (keyword: string, dataArray: string[]): string[] => {
+      const filtered = dataArray.filter((item) => item.includes(keyword));
+      const sorted = filtered.sort(
+        (a, b) => a.indexOf(keyword) - b.indexOf(keyword),
+      );
+      return sorted;
+    };
+    getPredictions(hometown, hometownData);
+  }, [hometown]);
   return (
     <section className="h-full">
-      <Toaster />
       <form
         onSubmit={handleSubmit(onSubmitHandler)}
         className="flex flex-col gap-5 h-full justify-between"
@@ -132,7 +131,7 @@ const SignupSecond = () => {
             </div>
           </div>
           <div className="relative">
-            <AuthInput
+            {/* <AuthInput
               id="hometown"
               placeholder="ex) 경상북도 안동시"
               label="출신지역"
@@ -140,8 +139,8 @@ const SignupSecond = () => {
               isSubmitted={isSubmitted}
               isErrors={errors.hometown}
               errorsMessage={errors.hometown?.message}
-            />
-            {/* <div className="flex flex-col gap-3">
+            /> */}
+            <div className="flex flex-col gap-3">
               <label className="text-neutral-500 text-sm ">출신지역</label>
               <div>
                 <input
@@ -166,7 +165,7 @@ const SignupSecond = () => {
                   </li>
                 ))}
               </ul>
-            )} */}
+            )}
           </div>
           <Table
             categories={['~6개월', '1~2년', '3~4년', '5년 이상']}
