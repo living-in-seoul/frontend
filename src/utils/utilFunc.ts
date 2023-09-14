@@ -1,3 +1,4 @@
+import { constSelector } from 'recoil';
 import { seoulCenterCoords } from './constants/constants';
 
 /**요청 재시도 */
@@ -349,4 +350,24 @@ export const transformCoordinates = (
     lat: coordPair[1],
     lng: coordPair[0],
   }));
+};
+
+export const validateInput = (value: string) => {
+  const isAlpha = /^[A-Za-z]$/;
+  const vauleArray = value.split('');
+  const reversedArray = vauleArray.slice().reverse();
+  const arrayIndex = reversedArray.indexOf(' ');
+  if (vauleArray.length >= 20) {
+    const newArray = vauleArray.filter((word) => !isAlpha.test(word));
+    if (!newArray.length) {
+      return 'remove';
+    }
+  }
+  if (arrayIndex >= 20) {
+    const newArray = reversedArray.slice(0, arrayIndex);
+    newArray.filter((word) => !isAlpha.test(word));
+    if (newArray.length) {
+      return 'remove';
+    }
+  }
 };

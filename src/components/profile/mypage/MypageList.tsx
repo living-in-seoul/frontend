@@ -22,7 +22,7 @@ const MypageList = () => {
       const data = await fetch(`api/mypage/${category}?page=${page}`)
         .then((response) => response.json())
         .finally(() => setIsLoading(false));
-      if (data?.result) {
+      if (data.result.length) {
         setPage((prev) => prev + 1);
         category === 'myscrap'
           ? setMyScrapData((prev) => [...prev, ...data.result])
@@ -30,7 +30,9 @@ const MypageList = () => {
       }
     };
     loadMoreList();
-  }, [category, page]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [category]);
+
   useEffect(() => {
     if (inview && !isLoading) {
       // loadMoreList();
