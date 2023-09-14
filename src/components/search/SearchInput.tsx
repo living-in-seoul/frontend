@@ -29,7 +29,6 @@ const SearchInput = () => {
   const debounceKeyword = useDebounce(search, 300);
   const router = useRouter();
   const searchParams = useSearchParams();
-  console.log(searchParams?.has('search'));
   const onChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       setSearch(event.target.value);
@@ -37,8 +36,13 @@ const SearchInput = () => {
     [setSearch],
   );
   useEffect(() => {
-    ref.current?.focus();
+    if (ref.current) {
+      ref.current.focus();
+    }
     return () => {
+      if (ref.current) {
+        ref.current.blur();
+      }
       setSearch('');
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -60,7 +64,7 @@ const SearchInput = () => {
   const onClickHandler = async (search: string) => {
     addRecentlySearched(search);
     setSearch(search);
-    await fetch(`/api/community/search`, {
+    const res = await fetch(`/api/community/search`, {
       method: 'POST',
       body: JSON.stringify({
         query: search,
@@ -71,13 +75,14 @@ const SearchInput = () => {
   };
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    await fetch(`/api/community/search`, {
+    event.preventDefault();
+
+    const res = await fetch(`/api/community/search`, {
       method: 'POST',
       body: JSON.stringify({
         query: search,
       }),
     });
-    event.preventDefault();
     addRecentlySearched(search);
     setData([]);
     ref.current?.blur();
@@ -96,15 +101,19 @@ const SearchInput = () => {
 
       <form onSubmit={onSubmit} className="grow">
         <input
-          className="w-full h-9 bg-zinc-100 rounded-3xl px-[18px] py-2.5 placeholder:text-zinc-400 text-base font-normal leading-none"
+          className="w-full h-9 bg-zinc-100 rounded-3xl px-[18px] py-2.5 placeholder:text-zinc-400 text-base font-normal leading-none focus:outline-none"
           placeholder="#해시태그 혹은 내용을 입력해 주세요"
           ref={ref}
           value={search}
           onChange={onChange}
+          onFocus={() => setShowList(true)}
+          onBlur={() => setShowList(false)}
         />
         <ul
           className="absolute top-28 left-0 right-0 overflow-y-scroll z-50 bg-white"
-          hidden={debounceKeyword.length === 0 || data.length === 0}
+          hidden={
+            (debounceKeyword.length === 0 || data.length === 0) && !showlist
+          }
           role="listbox"
         >
           {data.length ? (

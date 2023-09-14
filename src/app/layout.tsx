@@ -19,6 +19,7 @@ export const metadata: Metadata = {
   keywords: '서울, 살아남자, 살아남기, 커뮤니티',
   viewport: { width: 'device-width', initialScale: 1.0 },
   appleWebApp: { statusBarStyle: 'black-translucent', capable: true },
+
   themeColor: { color: '#2DDAB0' },
 };
 const myFont = localFont({

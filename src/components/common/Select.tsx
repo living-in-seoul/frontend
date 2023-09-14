@@ -1,7 +1,7 @@
 interface Props {
   title: string;
   select?: boolean;
-  onClick?: () => void;
+  onClick?: (event?: any) => void;
   className?: string;
   disable?: boolean;
   size?: 'large' | 'medium' | 'small' | 'full' | 'default' | 'alert';
@@ -69,7 +69,12 @@ const Select = ({
       >
         {title}
       </span>
-      {Icon && Icon}
+
+      {Icon && (
+        <div className="flex items-center justify-center z-30 w-5 h-5 rounded-full hover:bg-red-200">
+          {Icon}
+        </div>
+      )}
     </div>
   );
 };

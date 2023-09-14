@@ -86,7 +86,6 @@ const CommunityBoardList = ({
           />
         </div>
       </div>
-      {/* {isLoading && <Loading></Loading>} */}
 
       {list?.map((post) => (
         <div
@@ -110,7 +109,6 @@ const CommunityBoardList = ({
           />
         </div>
       ))}
-      {/* <PostItemSkeleton /> */}
 
       {lastItem ? (
         <div></div>
@@ -121,10 +119,6 @@ const CommunityBoardList = ({
           <PostItemSkeleton />
         </div>
       )}
-      {/* <CategoryPostList /> */}
-      {/* <BottomSheet state={loginBottomSheetState}>
-        <AuthModal />
-      </BottomSheet> */}
     </article>
   );
 };
