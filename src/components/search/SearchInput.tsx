@@ -10,10 +10,11 @@ import {
 import Icons from '../common/Icons';
 import useDebounce from '@/hooks/useDebounce';
 import { SearchBack, SearchIcon } from '@/utils/Icon';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { addRecentlySearched } from '@/utils/utilFunc';
 import { useRecoilState } from 'recoil';
 import { searchState } from '@/recoil/communityStates';
+import { useRouter } from 'next-nprogress-bar';
 
 interface responseInterface {
   PostId: number;
@@ -35,18 +36,6 @@ const SearchInput = () => {
     },
     [setSearch],
   );
-  useEffect(() => {
-    if (ref.current) {
-      ref.current.focus();
-    }
-    return () => {
-      if (ref.current) {
-        ref.current.blur();
-      }
-      setSearch('');
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     const searchFetch = async () => {
@@ -58,7 +47,7 @@ const SearchInput = () => {
     };
 
     searchFetch();
-    setShowList(false);
+    // setShowList(false);
   }, [debounceKeyword]);
 
   const onClickHandler = async (search: string) => {
@@ -70,7 +59,8 @@ const SearchInput = () => {
         query: search,
       }),
     });
-    router.replace(`/search?search=${encodeURIComponent(search)}`);
+    router.push(`/search?search=${encodeURIComponent(search)}`);
+    ref.current?.blur();
     setData([]);
   };
 
@@ -86,7 +76,7 @@ const SearchInput = () => {
     addRecentlySearched(search);
     setData([]);
     ref.current?.blur();
-    router.replace(`/search?search=${encodeURIComponent(search)}`);
+    router.push(`/search?search=${encodeURIComponent(search)}`);
   };
   return (
     <div className="flex w-full justify-between items-center px-2.5 h-12 gap-1.5">
@@ -107,13 +97,15 @@ const SearchInput = () => {
           value={search}
           onChange={onChange}
           onFocus={() => setShowList(true)}
-          onBlur={() => setShowList(false)}
+          onBlur={() => {
+            setTimeout(() => {
+              setShowList(false);
+            }, 150);
+          }}
         />
         <ul
           className="absolute top-28 left-0 right-0 overflow-y-scroll z-50 bg-white"
-          hidden={
-            (debounceKeyword.length === 0 || data.length === 0) && !showlist
-          }
+          hidden={!showlist}
           role="listbox"
         >
           {data.length ? (

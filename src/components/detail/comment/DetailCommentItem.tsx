@@ -55,7 +55,6 @@ const DetailCommentItem = ({ data, children }: DetailCommentItemProps) => {
       isCommentChange: true,
       commentId,
     }));
-    console.log(textareaRef.current, textareaRef);
     textareaRef.current?.focus();
     setOpenModal(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps

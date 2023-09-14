@@ -16,9 +16,6 @@ export const GET = async (req: NextRequest, context: Context) => {
   const { x: nx, y: ny } = convertToXY('toXY', lat, lng);
 
   const api = `${process.env.NEXT_PUBLIC_WHEADER_URL}?ServiceKey=${process.env.NEXT_PUBLIC_WHEADER_API_KEY}&pageNo=1&numOfRows=1000&dataType=JSON&base_date=${currentDate}&base_time=${currentTime}&nx=${nx}&ny=${ny}`;
-  console.log(
-    `${process.env.NEXT_PUBLIC_WHEADER_URL}?ServiceKey=${process.env.NEXT_PUBLIC_WHEADER_API_KEY}&pageNo=1&numOfRows=1000&dataType=JSON&base_date=${currentDate}&base_time=${currentTime}&nx=${nx}&ny=${ny}`,
-  );
 
   const categories = [
     'LGT',
@@ -40,7 +37,6 @@ export const GET = async (req: NextRequest, context: Context) => {
     next: { revalidate: 0 },
   }).then<ForecastResponse>((res) => res.json());
 
-  console.log(response);
   const forecastItems = response.response.body.items.item;
   const currentsTime = parseInt(
     `${new Date().getHours()}${new Date().getMinutes()}`,

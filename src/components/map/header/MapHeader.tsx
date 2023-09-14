@@ -13,10 +13,9 @@ const MapHeader = () => {
   const [headerText, setHeaderText] = useState<string | null>('');
   const [postSize, setPostSize] = useRecoilState(postSizeState);
   const polygonValue = useRecoilValue(polygonState);
-
   useEffect(() => {
     const localGu = localStorage.getItem('location_gu');
-    if (localGu) {
+    if (!polygonValue.gu) {
       setHeaderText(localGu);
     } else {
       setHeaderText(polygonValue.gu);

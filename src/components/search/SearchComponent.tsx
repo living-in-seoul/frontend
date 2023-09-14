@@ -7,9 +7,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { categoryKO } from '@/utils/utilFunc';
 import SearchSorted from './SearchSorted';
 import SearchHashTagAlert from './SearchHashTagAlert';
+import BeatLoader from '../common/Spinner';
 
 const DynamicSearchBoardList = dynamic(() => import('./SearchBoardList'), {
-  loading: () => <div>Loading...</div>,
+  loading: () => <BeatLoader />,
 });
 
 const SearchComponent = async ({
