@@ -12,13 +12,6 @@ export const socialUrls = [
   },
 
   {
-    url: naverUrl,
-    text: '네이버',
-    bgColor: 'bg-green-500',
-    active: 'active:bg-green-600',
-    color: 'text-white',
-  },
-  {
     url: googleUrl,
     text: '구글',
     bgColor: 'bg-white',
