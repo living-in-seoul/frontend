@@ -10,7 +10,7 @@ export interface IconProps {
   path: PathProp | PathProp[];
   fill?: string;
   stroke?: string;
-  onClick?: () => void;
+  onClick?: (event?: any) => void;
   option?: Partial<SVGProps<SVGPathElement>>;
   className?: string;
   children?: JSX.Element;

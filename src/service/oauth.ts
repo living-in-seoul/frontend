@@ -38,14 +38,12 @@ export const userClientVerify = async () => {
   try {
     const response = await fetch('/api/user');
     if (response.status === 200) {
-      console.log('유저검증완료');
       // 로그인이 확인되었을 때의 로직
     } else if (response.status === 401) {
-      console.log('유저 검증 실패');
       // 로그인이 확인되지 않았을 때의 로직
     }
     return response;
   } catch (error) {
-    console.error('An error occurred during the verification process', error);
+    console.error('', error);
   }
 };

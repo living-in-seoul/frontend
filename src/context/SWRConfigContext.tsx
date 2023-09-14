@@ -1,5 +1,4 @@
 'use client';
-import { useRouter } from 'next/navigation';
 import { SWRConfig } from 'swr';
 
 interface SWRConfigContextProps {
@@ -11,13 +10,6 @@ const SWRConfigContext = ({ children }: SWRConfigContextProps) => {
     const response = await fetch(url);
 
     if (!response.ok) {
-      if (response.statusText === 'Forbidden') {
-      }
-      throw {
-        status: response.status,
-        statusText: response.statusText,
-        message: `Error ${response.status}: ${response.statusText}`,
-      };
     }
 
     return response.json();

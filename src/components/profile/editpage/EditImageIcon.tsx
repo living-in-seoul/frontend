@@ -252,7 +252,7 @@ const PinIcon = () => (
 );
 
 interface CloseProps {
-  onClick: () => void;
+  onClick: (event?: any) => void;
 }
 
 const Close = ({ onClick }: CloseProps) => {

@@ -70,4 +70,3 @@ const WeatherInfo = ({ filterinfo, icon }: weatherInfoProps) => {
   );
 };
 export default WeatherInfo;
-/** 도시 이미지 가져오기 검색어로 */

@@ -12,7 +12,7 @@ const WeatherComponent = () => {
     `/api/home/weather/${serachGu}`,
     { suspense: true, revalidateOnFocus: false, revalidateOnReconnect: false },
   );
-  console.log(weather);
+
   const icon = weather
     ? getCurrentWeather(weather?.items.filteredItems)
     : '맑음';

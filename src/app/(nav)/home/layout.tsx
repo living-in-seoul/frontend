@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     statusBarStyle: 'black',
   },
 };
-export default function NavbarLayout({
+export default function HomeLayout({
   children,
   place,
   hometown,

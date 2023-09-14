@@ -31,8 +31,6 @@ const Modal = ({ children, onClose }: Props) => {
   }, []);
   return (
     <section className="fixed top-0 flex flex-col justify-center items-center max-w-md w-screen h-full z-50 bg-neutral-900/70 transition-transform">
-      {/* <div className="">모달적용</div> */}
-
       <div className="overflow-y-auto max-w-7xl" ref={ref}>
         {children}
       </div>

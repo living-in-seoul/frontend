@@ -11,7 +11,7 @@ export const GET = async (_: NextRequest, context: Context) => {
   const Token = cookies().get('accessToken');
   const verify = await verifyAndRefreshToken();
   if (verify.status === 403 || !Token) {
-    return new Response('토큰 없음', { status: 403 });
+    return new Response('토큰 없음');
   } else if (verify.status === 200) {
     try {
       const data = await fetch(
@@ -29,7 +29,7 @@ export const GET = async (_: NextRequest, context: Context) => {
       ).then((res) => res.json());
       return NextResponse.json(data);
     } catch (error) {
-      console.log('asdfsafasdf', error);
+      return NextResponse.json('');
     }
   }
 };
@@ -41,7 +41,7 @@ export const POST = async (_: NextRequest, context: Context) => {
   const verify = await verifyAndRefreshToken();
 
   if (verify.status === 403 || !Token) {
-    return new Response('토큰 없음', { status: 403 });
+    return new Response('토큰 없음');
   } else if (verify.status === 200) {
     try {
       const data = await fetch(
@@ -56,7 +56,7 @@ export const POST = async (_: NextRequest, context: Context) => {
       ).then((res) => res.json());
       return NextResponse.json(data);
     } catch (error) {
-      console.log('에러발생', error);
+      return NextResponse.json('');
     }
   }
 };

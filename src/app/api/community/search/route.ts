@@ -26,7 +26,7 @@ export const GET = async (req: NextRequest) => {
         search[0] === '#' ? item.post.hashtag : item.post.content;
       let highlightedContent = PostContent;
       if (search) {
-        const regex = new RegExp(`(${search})`, 'gi'); // 대소문자를 구분하지 않는 글로벌 검색
+        const regex = new RegExp(`(${search})`, 'gi');
         highlightedContent = highlightedContent.replace(regex, '<b>$1</b>');
       }
       return {

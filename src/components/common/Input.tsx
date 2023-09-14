@@ -56,7 +56,6 @@ const Input = ({
         ></input>
         {rightElement}
       </form>
-      <ul></ul>
     </section>
   );
 };

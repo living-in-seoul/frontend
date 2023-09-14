@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from 'next/server';
 interface Context {
   params: { location: string };
 }
+export const dynamic = 'force-dynamic';
 
 export const GET = async (req: NextRequest, context: Context) => {
   const location = context.params.location as keyof typeof seoulCenterCoords;
@@ -14,7 +15,12 @@ export const GET = async (req: NextRequest, context: Context) => {
   const { lat, lng } = seoulCenterCoords[location]!;
   const { x: nx, y: ny } = convertToXY('toXY', lat, lng);
 
-  const api = `${process.env.NEXT_PUBLIC_WHEADER_URL}?ServiceKey=${process.env.NEXT_PUBLIC_WHEADER_API_KEY}&pageNo=1&numOfRows=1000&dataType=JSON&base_date=${currentDate}&base_time=1200&nx=${nx}&ny=${ny}`;
+
+  const api = `${process.env.NEXT_PUBLIC_WHEADER_URL}?ServiceKey=${process.env.NEXT_PUBLIC_WHEADER_API_KEY}&pageNo=1&numOfRows=1000&dataType=JSON&base_date=${currentDate}&base_time=${currentTime}&nx=${nx}&ny=${ny}`;
+  console.log(
+    `${process.env.NEXT_PUBLIC_WHEADER_URL}?ServiceKey=${process.env.NEXT_PUBLIC_WHEADER_API_KEY}&pageNo=1&numOfRows=1000&dataType=JSON&base_date=${currentDate}&base_time=${currentTime}&nx=${nx}&ny=${ny}`,
+  );
+
 
   const categories = [
     'LGT',

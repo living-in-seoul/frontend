@@ -60,7 +60,25 @@ export const fetchTodaySearch = async () => {
   try {
     const respoense = await fetch(TodaySearchApi, { next: { revalidate: 0 } });
     const data = await respoense.json();
-    return data as string[];
+    return data;
+  } catch (error) {
+    console.error('Error fetching');
+    console.log(error);
+  }
+};
+export const fetchTodaySearchPost = async (userSerch: string) => {
+  const TodaySearchApiPost = `${process.env.NEXT_PUBLIC_SERVER}/search/save`;
+  const search = {
+    query: userSerch,
+  };
+  try {
+    const respoense = await fetch(TodaySearchApiPost, {
+      method: 'POST',
+      body: JSON.stringify(search),
+      next: { revalidate: 0 },
+    });
+    const data = await respoense.json();
+    return data;
   } catch (error) {
     console.error('Error fetching');
     console.log(error);

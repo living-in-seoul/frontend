@@ -2,12 +2,10 @@
 import Image from 'next/image';
 import { PlaceData } from '@/utils/constants/place';
 import ModalPortal from '@/components/modal/ModalPortal';
-import ModalOutside from '@/components/modal/ModalOutside';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Modal from '@/components/layouts/Modal';
 import HomePlaceCardDetails from './HomePlaceCardDetails';
 import { CongestionLevelElemet } from '@/utils/utilFunc';
-// eslint-disable-next-line @next/next/no-img-element
 
 interface HomePlaceCardProps {
   list: CityData;
@@ -15,7 +13,9 @@ interface HomePlaceCardProps {
 
 const HomePlaceCard = ({ list }: HomePlaceCardProps) => {
   const [modalVisible, setModalVisible] = useState(false);
-
+  const ModalHandelClose = useCallback(() => {
+    setModalVisible(!modalVisible);
+  }, [modalVisible]);
   return (
     <article
       className="flex flex-col w-52 min-w-[208px] h-40 relative scale-100 hover:scale-105 transition-all cursor-pointer "
@@ -55,13 +55,10 @@ const HomePlaceCard = ({ list }: HomePlaceCardProps) => {
       </div>
       {modalVisible && (
         <ModalPortal nodeName="placePortal">
-          <Modal onClose={() => setModalVisible(false)}>
+          <Modal onClose={() => ModalHandelClose()}>
             <HomePlaceCardDetails
               list={list}
-              onClose={() => {
-                console.log('asdf');
-                setModalVisible(false);
-              }}
+              onClose={() => ModalHandelClose()}
             />
           </Modal>
         </ModalPortal>

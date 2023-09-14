@@ -25,7 +25,7 @@ interface BottomSheetStateProps {
   isActive: boolean;
   type: 'map' | 'write' | 'login' | 'location' | 'default';
   link: null | string;
-  selectedOption?: string | null; // Add this line
+  selectedOption?: string | null;
 }
 
 export const bottomSheetState = atom<BottomSheetStateProps>({
@@ -34,6 +34,6 @@ export const bottomSheetState = atom<BottomSheetStateProps>({
     isActive: false,
     type: 'default',
     link: null,
-    selectedOption: null, // Add this line
+    selectedOption: null,
   },
 });

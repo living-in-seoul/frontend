@@ -42,13 +42,13 @@ const UserProfile = ({
         >
           <div className="flex items-center gap-2 mb-0.5 ">
             {/* 닉네임 */}
-            <h3
+            <p
               className={`text-sm truncate ${
                 onMap ? 'text-neutral-500 max-w-full' : 'text-gray1 leading-3 '
               } max-w-[80px] `}
             >
               {onMap ? `${nickname}님이 등록 ·` : nickname}
-            </h3>
+            </p>
             {/* 레벨 */}
             {!onMap && (
               <p className="text-gray4 text-sm font-medium leading-3 ">Lv.1</p>
