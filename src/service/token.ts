@@ -38,7 +38,6 @@ export async function verifyAndRefreshToken() {
         const res = await getRefreshToken();
 
         const newAT = res.accessToken;
-        console.log('newAT', newAT);
         // console.log(cookies().get('accessToken')?.value);
         // console.log(cookies().get('refreshToken')?.value);
 

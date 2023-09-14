@@ -13,7 +13,6 @@ const InsertTagItem = ({ tag }: InsertTagItemProps) => {
     const body = {
       hashtagName: tag,
     };
-    console.log(body);
     const res = await fetch(`/api/alert`, {
       method: 'DELETE',
       body: JSON.stringify(body),

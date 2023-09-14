@@ -32,7 +32,6 @@ const SearchModal = () => {
 
   useEffect(() => {
     if (inputRef.current) inputRef.current.focus();
-    console.log(inputRef.current);
   }, [inputRef.current]);
 
   const onClickToBack = () => {

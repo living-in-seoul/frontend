@@ -15,7 +15,6 @@ const DetailComment = ({ postId }: { postId: string }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const setPostId = useSetRecoilState(postIdstate);
   const { data } = useSWR<ResponseCommentData>(`/api/comment/${postId}?page=1`);
-  console.log(data);
   const loadMoreList = useCallback(async () => {
     const next = page + 1;
     if (data && next > data?.pageable?.totalPages) {
