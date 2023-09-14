@@ -18,6 +18,7 @@ import SelectedLocation from './location/SelectedLocation';
 import DisplayTags from './tags/DisplayTags';
 import { bottomSheetState, writeBottomSheetState } from '@/recoil/bottomsheet';
 import { Toaster } from 'react-hot-toast';
+import { validateInput } from '@/utils/utilFunc';
 
 const WriteContent = () => {
   const [formData, setFormData] = useRecoilState(formDataState);
@@ -47,6 +48,10 @@ const WriteContent = () => {
     e: ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
+    const validate = validateInput(value);
+    if (validate === 'remove') {
+      alert('장난치지마시라요');
+    }
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 

@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { emailForm, passwordForm } from '@/utils/formregister';
 import { useRecoilState } from 'recoil';
 import { callbackUrlState } from '@/recoil/authStates';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { useState } from 'react';
 import BeatLoader from '@/components/common/Spinner';
 
@@ -65,7 +65,6 @@ const DefaultLogin = () => {
       onSubmit={handleSubmit(onSubmitHandler)}
       className="flex flex-col flex-grow justify-between"
     >
-      <Toaster />
       <div className="flex flex-col justify-between gap-6">
         <AuthInput
           errorsMessage={errors.email?.message}
