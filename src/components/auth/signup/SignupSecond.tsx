@@ -131,7 +131,7 @@ const SignupSecond = () => {
             </div>
           </div>
           <div className="relative">
-            {/* <AuthInput
+            <AuthInput
               id="hometown"
               placeholder="ex) 경상북도 안동시"
               label="출신지역"
@@ -139,8 +139,8 @@ const SignupSecond = () => {
               isSubmitted={isSubmitted}
               isErrors={errors.hometown}
               errorsMessage={errors.hometown?.message}
-            /> */}
-            <div className="flex flex-col gap-3">
+            />
+            {/* <div className="flex flex-col gap-3">
               <label className="text-neutral-500 text-sm ">출신지역</label>
               <div>
                 <input
@@ -165,7 +165,7 @@ const SignupSecond = () => {
                   </li>
                 ))}
               </ul>
-            )}
+            )} */}
           </div>
           <Table
             categories={['~6개월', '1~2년', '3~4년', '5년 이상']}
