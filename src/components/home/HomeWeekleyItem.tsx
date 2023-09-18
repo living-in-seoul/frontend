@@ -19,7 +19,9 @@ const HomeWeekleyItem = ({ post, user }: ResponsePost) => {
               alt={`${userName} 의 이미지`}
               fill
               sizes={'33vw'}
-              className={`relative ${!hasImage && 'px-8 py-9'} select-auto`}
+              className={`relative ${
+                !hasImage && 'px-8 py-9'
+              } select-auto object-cover`}
             />
             <div className="absolute bottom-2.5 right-2.5 w-14 h-5 bg-white rounded-3xl">
               <div className="w-full h-full gap-1 flex justify-center items-center">

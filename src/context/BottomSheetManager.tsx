@@ -1,6 +1,10 @@
-import BottomSheet from '@/components/common/BottomSheet';
+import dynamic from 'next/dynamic';
+
+const DynamicBottomSheet = dynamic(
+  () => import('@/components/common/BottomSheet'),
+);
 
 const BottomSheetManager = () => {
-  return <BottomSheet />;
+  return <DynamicBottomSheet />;
 };
 export default BottomSheetManager;

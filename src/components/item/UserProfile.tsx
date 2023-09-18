@@ -28,10 +28,12 @@ const UserProfile = ({
             <Image
               src={userImg ?? profile}
               alt={`user`}
-              fill
-              className="absolute top-0"
-              sizes={'36px'}
+              width={36}
+              height={36}
+              quality={10}
+              className="absolute top-0 object-cover center"
               priority={false}
+              // onError={}
             />
           </div>
         )}

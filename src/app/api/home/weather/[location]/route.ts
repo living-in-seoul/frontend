@@ -6,7 +6,7 @@ interface Context {
   params: { location: string };
 }
 export const dynamic = 'force-dynamic';
-
+export const runtime = 'edge';
 export const GET = async (req: NextRequest, context: Context) => {
   const location = context.params.location as keyof typeof seoulCenterCoords;
   const { getCurrentDate: currentDate, getCurrentTime: currentTime } =

@@ -16,7 +16,6 @@ export default function CommunityLayout({
         </div>
         <CommunityNavbar />
       </div>
-
       <div>{children}</div>
     </section>
   );

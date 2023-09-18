@@ -8,8 +8,11 @@ export const GET = async (_: NextRequest) => {
 
   if (verify.status === 200 || verify.status === 201) {
     return new Response('OK', { status: 200 });
+  } else if (verify.status === 403) {
+    return new Response('no token', { status: 201 });
   }
-  return new Response('Unauthorized no token', { status: 401 });
+
+  return new Response('no token', { status: 401 });
 };
 
 export const DELETE = (_: NextRequest) => {

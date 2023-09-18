@@ -10,7 +10,7 @@ export default function Loading() {
   useEffect(() => {
     setTimeout(() => {
       router.push('/home', {}, { showProgressBar: true });
-    }, 3000);
+    }, 500);
   }, [router]);
   return (
     <section className="relative w-full h-screen flex items-center justify-center gap-10 flex-col bg-teal-400">

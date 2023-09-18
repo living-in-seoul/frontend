@@ -19,6 +19,7 @@ const DynamicReviewLists = dynamic(() => import('./HomeHomeTownLists'), {
 const HomeHomeTownSection = async () => {
   const HotTagHomeTown = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER}/tags/rank?category=동향소통`,
+    { next: { revalidate: 1000 } },
   ).then<string[]>((res) => res.json());
   const hashtags = HotTagHomeTown[0];
 

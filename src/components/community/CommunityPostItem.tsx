@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import Image from 'next/image';
 import UserProfile from '../item/UserProfile';
 import PostItemBottom from './PostItemBottom';
 
@@ -28,11 +29,7 @@ const CommunityPostItem = ({
     commentSize,
     postId,
   } = post;
-  // 이거 쓰시나요
   const { nickname } = user;
-  const FullContent = content.length > 100;
-  const shortContent = content.slice(0, 100);
-  const userName = user.nickname.slice(0, 10);
   return (
     <article className="flex flex-col border-b-2 last:border-[0] px-4 pt-[25px]">
       <UserProfile
@@ -50,9 +47,13 @@ const CommunityPostItem = ({
       </div>
       {postImg[0] && /\.(jpg|jpeg|png)$/i.test(postImg[0].postImg) && (
         <div className="relative w-full h-36 bg-white rounded-xl shadow overflow-hidden mb-2">
-          <img
+          <Image
             src={postImg[0]?.postImg}
             alt={`postImg`}
+            fill
+            priority
+            sizes={'33vw'}
+            quality={30}
             className="w-full h-full object-cover absolute top-0 object-center"
           />
         </div>

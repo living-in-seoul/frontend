@@ -1,7 +1,5 @@
 import Image from 'next/image';
-
 import Select from '../common/Select';
-
 import UserProfile from '../item/UserProfile';
 
 interface PostItemProps extends ResponsePost {
@@ -87,7 +85,7 @@ const PostItem = ({ post, user, onMap, hasLiked, border }: PostItemProps) => {
               alt={`postImg`}
               fill
               sizes={'33vh'}
-              priority
+              className="object-cover"
             />
           </div>
         )}
@@ -103,32 +101,15 @@ const PostItem = ({ post, user, onMap, hasLiked, border }: PostItemProps) => {
           />
           <div className="flex justify-center items-center">
             {HastagsContent(hashtag)}
-            {/* {hashtag} */}
           </div>
         </div>
         <div className="flex gap-2">
-          {/* <Icons
-            path={Comment}
-            option={{
-              fill: 'none',
-              stroke: '#404040',
-              strokeLinecap: 'round',
-              strokeLinejoin: 'round',
-            }}
-          /> */}
-          {/* 댓글 숫자 */}
           <div className="text-neutral-500 text-xs font-normal leading-3">
             좋아요 {likeSize}
           </div>
           <div className="text-neutral-500 text-xs font-normal leading-3">
             댓글 {commentSize}
           </div>
-
-          {/* <CommunityLikeBtn
-            likeSize={likeSize}
-            postId={postId}
-            hasLiked={hasLiked}
-          /> */}
         </div>
       </div>
     </article>

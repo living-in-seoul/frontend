@@ -12,7 +12,7 @@ export const GET = async (_: NextRequest, context: Context) => {
   const verify = await verifyAndRefreshToken();
   if (verify.status === 403 || !Token) {
     return new Response('토큰 없음');
-  } else if (verify.status === 200) {
+  } else if (verify.status === 200 || verify.status === 201) {
     try {
       const data = await fetch(
         `${

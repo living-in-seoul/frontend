@@ -1,6 +1,5 @@
 'use client';
 const WeatherIcon = ({ icon }: { icon: string }) => {
-  // 아이콘 이미지 반환
   const iconConfig: IconConfigType = {
     ClearDay: { x: 0, y: 0 },
     ClearNight: { x: 55, y: 0 },
