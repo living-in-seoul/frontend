@@ -41,7 +41,7 @@ const DetailReCommentItem = ({
 
   const onClickDeleteHandler = useCallback(async () => {
     const response = await userClientVerify();
-    if (response && (response.status === 200 || response.status === 201)) {
+    if (response && response.status === 200) {
       try {
         await clientCommentDelete(reCommentId, true).then(() => {
           toast.success('삭제하기 완료');

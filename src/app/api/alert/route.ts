@@ -6,8 +6,8 @@ import { NextRequest, NextResponse } from 'next/server';
 export const GET = async (req: NextRequest) => {
   const Token = cookies().get('accessToken');
   const verify = await verifyAndRefreshToken();
-
-  if (verify.status === 403 || !Token) {
+  console.log('asdfasfasfsafd', verify.json());
+  if (verify.status === 403) {
     return new Response('토큰 없음', { status: 403 });
   } else if (verify.status === 200 || verify.status === 201) {
     try {
@@ -29,11 +29,10 @@ export const GET = async (req: NextRequest) => {
   }
 };
 export const POST = async (req: NextRequest) => {
-  const Token = cookies().get('accessToken');
   const verify = await verifyAndRefreshToken();
   const body = await req.json();
 
-  if (verify.status === 403 || !Token) {
+  if (verify.status === 403) {
     return new Response('토큰 없음', { status: 403 });
   } else if (verify.status === 200 || verify.status === 201) {
     try {
@@ -43,7 +42,7 @@ export const POST = async (req: NextRequest) => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${Token.value}`,
+            Authorization: `Bearer ${verify.json()}`,
           },
           body: JSON.stringify(body),
         },

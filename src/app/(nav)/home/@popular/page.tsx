@@ -4,7 +4,6 @@ interface PageProps {
   params: { slug: string };
   searchParams: { [key: string]: string | string[] | undefined };
 }
-
 export const revalidate = 60 * 60 * 5;
 const PopPage = ({ searchParams }: PageProps) => {
   const { locationTag } = searchParams;

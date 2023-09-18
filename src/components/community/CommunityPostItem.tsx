@@ -28,11 +28,7 @@ const CommunityPostItem = ({
     commentSize,
     postId,
   } = post;
-  // 이거 쓰시나요
   const { nickname } = user;
-  const FullContent = content.length > 100;
-  const shortContent = content.slice(0, 100);
-  const userName = user.nickname.slice(0, 10);
   return (
     <article className="flex flex-col border-b-2 last:border-[0] px-4 pt-[25px]">
       <UserProfile

@@ -1,43 +1,65 @@
 import { v4 as uuidv4 } from 'uuid';
 import { categoryKO } from '@/utils/utilFunc';
-import CommunityBoardList from '@/components/community/CommunityBoardList';
 import { fetchCommunity } from '@/actions/fetchCommunity';
 import CommunityHotTag from '@/components/community/CommunityHotTag';
 import WriteButton from '@/components/map/actions/WriteButton';
+import dynamic from 'next/dynamic';
+import BeatLoader from '@/components/common/Spinner';
 
 export const revalidate = 0;
+const DynamicCommunityBoardList = dynamic(
+  () => import('@/components/community/CommunityBoardList'),
+  {
+    loading: () => <BeatLoader size={30}></BeatLoader>,
+  },
+);
+export interface SearchParams {
+  category?: string;
+  tag?: string;
+  ordertype?: SelectPopType;
+  [key: string]: string | undefined;
+}
+
+///1. 코드 리팩토링 -> promise.all 속도개선
 interface PageProps {
-  searchParams: { [key: string]: string | undefined };
+  searchParams: SearchParams;
 }
 const CommunityPage = async ({ searchParams }: PageProps) => {
-  const category = searchParams.category ? searchParams.category : 'All';
-  const tags = searchParams.tag ? searchParams.tag || [] : null;
-  const ordertype = (searchParams.ordertype || 'newer') as SelectPopType;
+  const { category = 'All', tag, ordertype = 'newer' } = searchParams;
 
   const FetchUrl =
     category === 'All' ? 'category=' : `category=${categoryKO(category)}`;
   const FETCH_API = `${process.env.NEXT_PUBLIC_SERVER}/tags/rank?${FetchUrl}`;
-  const TagCategory = await fetch(FETCH_API, {
-    next: { revalidate: 2000 },
-  }).then<string[]>((res) => res.json());
 
-  const lists = await fetchCommunity({
+  const tagCategoryPromise = fetch(FETCH_API, {
+    next: { revalidate: 2000 },
+  }).then<string[]>((res) => {
+    if (!res.ok) throw new Error('태그 카테고리가 없음');
+    return res.json();
+  });
+
+  const listsPromise = fetchCommunity({
     page: 1,
     limit: 10,
     category,
-    ordertype,
-    tags,
-  }).then((res) => res);
+    ordertype: ordertype,
+    tags: tag,
+  });
+
+  const [TagCategory, lists] = await Promise.all([
+    tagCategoryPromise,
+    listsPromise,
+  ]);
 
   return (
     <section className="w-full max-w-md flex flex-col relative" key={uuidv4()}>
       {TagCategory && (
         <CommunityHotTag Hottag={TagCategory} category={category} />
       )}
-      <CommunityBoardList
+      <DynamicCommunityBoardList
         firstList={lists?.result ?? []}
         Category={category}
-        tags={tags}
+        tags={tag}
         totalpage={lists?.pageable.totalPages ?? 1}
         ordertype={ordertype}
       />

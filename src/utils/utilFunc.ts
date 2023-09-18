@@ -1,6 +1,4 @@
 import { constSelector } from 'recoil';
-import { seoulCenterCoords } from './constants/constants';
-
 /**요청 재시도 */
 export async function retryFetch(
   url: string,

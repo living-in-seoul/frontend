@@ -26,6 +26,7 @@ const AlertButtonComponent = ({
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
+      keepPreviousData: true,
     },
   );
   const hasUnreadAlarm = ActiveData?.alarmList.some((item) => !item.isRead);
@@ -40,7 +41,7 @@ const AlertButtonComponent = ({
 
   const handleWritePostClick = async () => {
     const response = await userClientVerify();
-    if (response && (response.status === 200 || response.status === 201)) {
+    if (response && response.status === 200) {
       router.refresh();
       router.push(link);
     } else {

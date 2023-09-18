@@ -26,7 +26,7 @@ const myFont = localFont({
   src: './fonts/Pretendard-Medium.woff2',
   display: 'swap',
 });
-
+export const runtime = 'nodejs';
 export default async function RootLayout({
   children,
 }: {

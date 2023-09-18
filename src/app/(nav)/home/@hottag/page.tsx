@@ -6,7 +6,7 @@ export const revalidate = 60 * 60 * 5;
 const HotTagPage = async () => {
   const weekleyTopFivelist = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER}/tags/posts?category=&page=1&size=5&hashtagName=&type=popular`,
-    { next: { revalidate: 1000 } },
+    { next: { revalidate: 60 * 60 * 5 } },
   ).then<ResponseRegister>((res) => res.json());
 
   return (

@@ -41,10 +41,7 @@ const DetailModal = ({
 
   const openModalHandler = useCallback(async () => {
     const userVerify = await userClientVerify();
-    if (
-      userVerify &&
-      (userVerify.status === 200 || userVerify.status === 201)
-    ) {
+    if (userVerify && userVerify.status === 200) {
       return setOpenModal(true);
     }
     openLoginBottomSheet();

@@ -26,7 +26,7 @@ const WriteButton = ({ section = 'map', state }: WriteButtonProp) => {
 
   const handleWritePostClick = async (link: string) => {
     const response = await userClientVerify();
-    if (response && (response.status === 200 || response.status === 201)) {
+    if (response && response.status === 200) {
       router.refresh();
       router.push(link);
     } else {

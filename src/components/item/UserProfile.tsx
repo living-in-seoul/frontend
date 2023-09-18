@@ -32,6 +32,7 @@ const UserProfile = ({
               className="absolute top-0"
               sizes={'36px'}
               priority={false}
+              // onError={}
             />
           </div>
         )}
