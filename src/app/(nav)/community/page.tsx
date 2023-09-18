@@ -3,16 +3,8 @@ import { categoryKO } from '@/utils/utilFunc';
 import { fetchCommunity } from '@/actions/fetchCommunity';
 import CommunityHotTag from '@/components/community/CommunityHotTag';
 import WriteButton from '@/components/map/actions/WriteButton';
-import dynamic from 'next/dynamic';
-import BeatLoader from '@/components/common/Spinner';
+import CommunityBoardList from '@/components/community/CommunityBoardList';
 
-export const revalidate = 0;
-const DynamicCommunityBoardList = dynamic(
-  () => import('@/components/community/CommunityBoardList'),
-  {
-    loading: () => <BeatLoader size={30}></BeatLoader>,
-  },
-);
 export interface SearchParams {
   category?: string;
   tag?: string;
@@ -56,7 +48,7 @@ const CommunityPage = async ({ searchParams }: PageProps) => {
       {TagCategory && (
         <CommunityHotTag Hottag={TagCategory} category={category} />
       )}
-      <DynamicCommunityBoardList
+      <CommunityBoardList
         firstList={lists?.result ?? []}
         Category={category}
         tags={tag}

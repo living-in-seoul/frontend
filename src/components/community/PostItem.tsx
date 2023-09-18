@@ -85,7 +85,7 @@ const PostItem = ({ post, user, onMap, hasLiked, border }: PostItemProps) => {
               alt={`postImg`}
               fill
               sizes={'33vh'}
-              priority
+              className="object-cover"
             />
           </div>
         )}
