@@ -1,6 +1,10 @@
-import HomeHomeTownSection from '@/components/home/hometown/HomeHomeTown';
+import dynamic from 'next/dynamic';
+
+const DynamicHomeHomeTownSection = dynamic(
+  () => import('@/components/home/hometown/HomeHomeTown'),
+);
 
 const HomeTownPage = () => {
-  return <HomeHomeTownSection />;
+  return <DynamicHomeHomeTownSection />;
 };
 export default HomeTownPage;

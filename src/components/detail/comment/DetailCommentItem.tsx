@@ -62,7 +62,7 @@ const DetailCommentItem = ({ data, children }: DetailCommentItemProps) => {
 
   const onClickDeleteHandler = useCallback(async () => {
     const response = await userClientVerify();
-    if (response && (response.status === 200 || response.status === 201)) {
+    if (response && response.status === 200) {
       try {
         await clientCommentDelete(commentId).then(() => {
           toast.success('삭제하기 완료');
@@ -80,7 +80,7 @@ const DetailCommentItem = ({ data, children }: DetailCommentItemProps) => {
   const onClicklikeHandler = useCallback(async () => {
     setIsLoading(true);
     const response = await userClientVerify();
-    if (response && (response.status === 200 || response.status === 201)) {
+    if (response && response.status === 200) {
       try {
         await clientCommentLike(commentId, 'comment');
       } catch (error) {

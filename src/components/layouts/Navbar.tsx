@@ -49,7 +49,7 @@ const Navbar = () => {
 
   const handleMyPageClick = async (link: string) => {
     const response = await userClientVerify();
-    if (response && (response.status === 200 || response.status === 201)) {
+    if (response && response.status === 200) {
       router.refresh();
       router.push(link);
     } else {
@@ -67,7 +67,7 @@ const Navbar = () => {
                 key={item.name}
                 // href={item.path}
                 onClick={() => handleMyPageClick(item.path)}
-                className="group scale-100 transition-all active:scale-110 basis-1/5 justify-center items-center flex flex-col gap-[5px]"
+                className="group scale-100 transition-all active:scale-110 basis-1/5 justify-center items-center flex flex-col gap-[5px] cursor-pointer"
               >
                 <Icons
                   path={map}
@@ -91,6 +91,7 @@ const Navbar = () => {
 
           return (
             <Link
+              prefetch
               key={item.name}
               href={item.path}
               className="group scale-100 transition-all active:scale-110 basis-1/5 justify-center items-center flex flex-col gap-[5px]"

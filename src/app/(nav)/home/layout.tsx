@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   appleWebApp: {
     statusBarStyle: 'black',
   },
+  viewport: {
+    // width
+  },
 };
 export default function HomeLayout({
   children,

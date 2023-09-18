@@ -1,6 +1,7 @@
 import HomeSectionTitle from '@/components/home/HomeSectionTitle';
 import HomePlaceComponent from '@/components/home/homeplace/HomePlaceComponent';
 import { getHomeDatas } from '@/utils/constants/place';
+import dynamic from 'next/dynamic';
 
 const PlacePage = async () => {
   const data = await getHomeDatas();

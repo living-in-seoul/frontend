@@ -1,7 +1,4 @@
-import {
-  fetchTodaySearch,
-  fetchTodaySearchPost,
-} from '@/actions/fetchCommunity';
+import { fetchTodaySearch } from '@/actions/fetchCommunity';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const GET = async (req: NextRequest) => {

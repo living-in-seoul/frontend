@@ -1,20 +1,3 @@
-const fetchCityImage = async (
-  region: string,
-): Promise<ResponseImageGoogle | null> => {
-  try {
-    const refinedRegion = region.replace(' 관광특구', '');
-
-    const res = await fetch(
-      `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${refinedRegion}&radius=300&key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY}&language=ko`,
-      { method: 'GET' },
-    );
-    return await res.json();
-  } catch (error) {
-    console.error(`Failed to fetch image for region: ${region}`, error);
-    return null;
-  }
-};
-
 /** 도시 데이터 가져오기 검색어로 */
 const fetchCityData = async (
   region: string,

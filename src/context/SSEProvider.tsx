@@ -13,12 +13,10 @@ const SSEProvider = ({ children }: SSEProviderProps) => {
   const setNotification = useSetRecoilState(notificationState);
 
   const fetchUser = async () => {
-    try {
-      const res = await userClientVerify();
-      if (res?.status === 200) {
-        setUser(true);
-      }
-    } catch (error) {}
+    const res = await userClientVerify();
+    if (res?.status === 200) {
+      setUser(true);
+    }
   };
 
   useEffect(() => {

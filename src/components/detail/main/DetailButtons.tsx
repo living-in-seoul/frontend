@@ -26,10 +26,7 @@ const DetailButtons = ({ postId }: { postId: string }) => {
   const onClickLikeHandler = async () => {
     setIsLoading(true);
     const userVerify = await userClientVerify();
-    if (
-      userVerify &&
-      (userVerify.status === 200 || userVerify.status === 201)
-    ) {
+    if (userVerify && userVerify.status === 200) {
       try {
         mutate(
           `/api/post/${postId}`,
@@ -60,7 +57,7 @@ const DetailButtons = ({ postId }: { postId: string }) => {
   const onClickScrapHandler = async () => {
     setIsLoading(true);
     const response = await userClientVerify();
-    if (response && (response.status === 200 || response.status === 201)) {
+    if (response && response.status === 200) {
       try {
         mutate(
           `/api/post/${postId}`,

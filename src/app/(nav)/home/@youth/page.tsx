@@ -4,6 +4,8 @@ import { getYouth } from '@/service/youth';
 import dynamic from 'next/dynamic';
 
 export const revalidate = 60 * 60 * 24;
+export const runtime = 'nodejs';
+
 const DynamicYouth = dynamic(() => import('@/components/youth/YouthList'), {
   loading: () => (
     <div

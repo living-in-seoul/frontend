@@ -8,7 +8,7 @@ interface NoneItemProps {
 
 const NoneItem = ({ title, description }: NoneItemProps) => {
   return (
-    <div className="w-full h-[50vh] flex items-center justify-center flex-col grow">
+    <div className="w-full flex items-center justify-center flex-col">
       <Image
         src={imageNone}
         width={150}

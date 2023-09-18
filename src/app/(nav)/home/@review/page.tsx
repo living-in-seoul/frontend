@@ -1,6 +1,12 @@
-import HomeReviewSection from '@/components/home/review/HomeReview';
+import dynamic from 'next/dynamic';
+
 export const revalidate = 60 * 60 * 5;
+
+const DynamicReviewSection = dynamic(
+  () => import('@/components/home/review/HomeReview'),
+);
+
 const ReviewPage = () => {
-  return <HomeReviewSection />;
+  return <DynamicReviewSection />;
 };
 export default ReviewPage;

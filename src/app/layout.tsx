@@ -19,14 +19,13 @@ export const metadata: Metadata = {
   keywords: '서울, 살아남자, 살아남기, 커뮤니티',
   viewport: { width: 'device-width', initialScale: 1.0 },
   appleWebApp: { statusBarStyle: 'black-translucent', capable: true },
-
   themeColor: { color: '#2DDAB0' },
 };
 const myFont = localFont({
   src: './fonts/Pretendard-Medium.woff2',
   display: 'swap',
 });
-
+export const runtime = 'nodejs';
 export default async function RootLayout({
   children,
 }: {
@@ -38,7 +37,7 @@ export default async function RootLayout({
       <head>
         <meta
           name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+          content="width=device-width, initial-scale=1.0, user-scalable=yes"
         />
         <meta name="msapplication-tap-highlight" content="no" />
       </head>

@@ -29,7 +29,8 @@ const HomePlaceCard = ({ list }: HomePlaceCardProps) => {
             fill
             sizes={'33vw'}
             quality={30}
-            className="none"
+            priority
+            className="object-cover"
           />
         </div>
         <div className="flex justify-between items-center px-4 pb-3 pt-1.5">

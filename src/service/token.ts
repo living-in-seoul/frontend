@@ -28,7 +28,7 @@ export async function verifyAndRefreshToken() {
   const refreshToken = cookies().get('refreshToken')?.value;
 
   if (accessToken) {
-    return new Response('토큰 있음!', {
+    return new Response(accessToken, {
       status: 200,
       statusText: 'OK',
     });
@@ -36,11 +36,7 @@ export async function verifyAndRefreshToken() {
     if (refreshToken) {
       try {
         const res = await getRefreshToken();
-
         const newAT = res.accessToken;
-        // console.log(cookies().get('accessToken')?.value);
-        // console.log(cookies().get('refreshToken')?.value);
-
         cookies().set({
           name: 'accessToken',
           value: newAT,
@@ -49,7 +45,7 @@ export async function verifyAndRefreshToken() {
           maxAge: 60 * 60 * 2,
         });
 
-        return new Response('갱신 완료!', {
+        return new Response(newAT, {
           status: 201,
           statusText: 'OK',
         });

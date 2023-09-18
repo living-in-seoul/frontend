@@ -28,65 +28,65 @@ const CommunityBoardList = ({
   const [lastItem, setLastItem] = useState(false);
   const router = useRouter();
 
+  const handleSelectClick = (orderType: SelectPopType) => {
+    router.replace(
+      `/community?category=${Category ?? 'All'}&tag=${
+        tags ?? ''
+      }&ordertype=${orderType}`,
+    );
+  };
+
   const loadMoreList = async () => {
-    const EncodeTag =
-      (tags && typeof tags === 'string' && encodeURIComponent(tags)) || '';
-    setIsLoading(true);
     if (listTotalPage === page) {
       setIsLoading(false);
       setLastItem(true);
       return;
     }
 
+    setIsLoading(true);
     const next = page + 1;
+    const EncodeTag =
+      (tags && typeof tags === 'string' && encodeURIComponent(tags)) || '';
 
-    const lists = await fetch(
-      `/api/community?page=${next}&category=${Category}&tags=${EncodeTag}&ordertype=${ordertype}`,
-    )
-      .then<ResponseRegister>((res) => res.json())
-      .finally(() => setIsLoading(false));
+    try {
+      const response = await fetch(
+        `/api/community?page=${next}&category=${Category}&tags=${EncodeTag}&ordertype=${ordertype}`,
+      );
+      const lists: ResponseRegister = await response.json();
 
-    if (lists?.result.length) {
-      setPage(next);
-      setList((prev) => [...(prev?.length ? prev : []), ...lists.result]);
+      if (lists?.result.length) {
+        setPage(next);
+        setList((prev) => [...prev, ...lists.result]);
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
+
   useEffect(() => {
     if (inview && !isLoading) {
       loadMoreList();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inview]);
+
   return (
     <article className="flex flex-col">
       <div className="w-full justify-between flex px-4 py-6 ">
         <div className="flex gap-2.5">
           <Select
             title="최신순"
-            onClick={() =>
-              router.replace(
-                `/community?category=${Category ?? 'All'}&tag=${
-                  tags ?? ''
-                }&ordertype=${'newer'}`,
-              )
-            }
+            onClick={() => handleSelectClick('newer')}
             selectTag={ordertype === 'newer'}
           />
           <Select
             title="인기순"
-            onClick={() =>
-              router.replace(
-                `/community?category=${Category ?? 'All'}&tag=${
-                  tags ?? ''
-                }&ordertype=${'popular'}`,
-              )
-            }
+            onClick={() => handleSelectClick('popular')}
             selectTag={ordertype === 'popular'}
           />
         </div>
       </div>
 
-      {list?.map((post) => (
+      {list.map((post) => (
         <div
           key={post.post.postId}
           onClick={() =>
@@ -102,16 +102,12 @@ const CommunityBoardList = ({
             userImg={post.user.userImg}
             category={Category}
             tags={tags}
-            // isPop={isPop}
             {...post}
-            key={post.post.postId}
           />
         </div>
       ))}
 
-      {lastItem ? (
-        <div></div>
-      ) : (
+      {!lastItem && (
         <div ref={ref} className="flex flex-col sm:col-span-2 ">
           <PostItemSkeleton />
           <PostItemSkeleton />

@@ -12,12 +12,13 @@ const ToastManager = () => {
     if (notification === null) return;
     toast.success('새로운 알림이 있습니다.');
   }, [notification]);
+
   return (
     <>
       {pathname === '/map' ? (
         <Toaster position={'bottom-center'} />
       ) : (
-        <Toaster position={'top-center'} />
+        <Toaster position={'top-center'} toastOptions={{ duration: 1000 }} />
       )}
     </>
   );
