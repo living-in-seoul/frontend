@@ -24,7 +24,7 @@ export const GET = async (_: NextRequest): Promise<Response | NextResponse> => {
       console.log('에러발생', error);
     }
   }
-  return NextResponse.json({ error: 'Unexpected status' });
+  return NextResponse.json('error');
 };
 export const POST = async (
   req: NextRequest,
@@ -52,7 +52,7 @@ export const POST = async (
       console.log('에러발생', error);
     }
   }
-  return NextResponse.json({ error: 'Unexpected status' });
+  return NextResponse.json('error');
 };
 export const DELETE = async (
   req: NextRequest,
@@ -80,5 +80,5 @@ export const DELETE = async (
       console.log('에러발생', error);
     }
   }
-  return NextResponse.json({ error: 'Unexpected status' });
+  return NextResponse.json('error');
 };

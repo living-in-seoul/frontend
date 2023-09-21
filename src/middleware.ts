@@ -23,8 +23,6 @@ export const middleware = async (request: NextRequest) => {
       );
       return NextResponse.redirect(signInUrl);
     }
-
-    // 모든 조건을 처리한 후에도 반환 값이 없으면 기본 응답을 반환
     return NextResponse.next();
   } catch (error) {
     return NextResponse.json('Internal Server Error');

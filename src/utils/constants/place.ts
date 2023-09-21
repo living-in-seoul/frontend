@@ -1,19 +1,3 @@
-/** 도시 데이터 가져오기 검색어로 */
-const fetchCityData = async (
-  region: string,
-): Promise<ResponseCityData | null> => {
-  try {
-    const res = await fetch(
-      `http://openapi.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_SEOUL_KEY}/json/citydata_ppltn/1/5/${region}`,
-      { next: { revalidate: 3000 } },
-    );
-    return await res.json();
-  } catch (error) {
-    console.error(`Failed to fetch data for region: ${region}`, error);
-    return null;
-  }
-};
-
 export const PlaceData: {
   [key: string]: { adress: string; simpleName: string };
 } = {
@@ -41,7 +25,7 @@ export const PlaceData: {
   이태원역: { adress: '용산구 이태원로 179', simpleName: '이태원' },
 };
 
-const DATA_AREA = [
+export const DATA_AREA = [
   '강남 MICE 관광특구',
   '동대문 관광특구',
   '명동 관광특구',
@@ -59,24 +43,5 @@ const DATA_AREA = [
   '가로수길',
   '이태원역',
 ];
-/** 도시데이터 && 도시 이미지 함치는 함수 */
-export const getHomeDatas = async () => {
-  const cityDataPromises = DATA_AREA.map((region) => fetchCityData(region));
 
-  const cityDataResults = await Promise.allSettled(cityDataPromises);
 
-  function isFulfilled<T>(
-    result: PromiseSettledResult<T>,
-  ): result is PromiseFulfilledResult<T> {
-    return result.status === 'fulfilled';
-  }
-
-  return DATA_AREA.map((region, index) => {
-    const cityDataResult = cityDataResults[index];
-    const cityData = isFulfilled(cityDataResult) ? cityDataResult.value : null;
-
-    return {
-      ...cityData?.['SeoulRtd.citydata_ppltn']?.[0],
-    };
-  });
-};
