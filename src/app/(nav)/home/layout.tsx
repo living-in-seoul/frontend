@@ -12,32 +12,20 @@ export const metadata: Metadata = {
 };
 export default function HomeLayout({
   children,
-  place,
-  hometown,
-  youth,
-  popular,
-  hottag,
-  review,
 }: {
   children: React.ReactNode;
-  place: React.ReactNode;
-  hometown: React.ReactNode;
-  youth: React.ReactNode;
-  hottag: React.ReactNode;
-  popular: React.ReactNode;
-  review: React.ReactNode;
 }) {
   return (
     <section
       className={`relative flex-col flex w-full justify-center h-full bg-white touch-pan-y`}
     >
       {children}
-      {youth}
+      {/* {youth}
       {place}
       {hottag}
       {review}
       {popular}
-      {hometown}
+      {hometown} */}
     </section>
   );
 }
