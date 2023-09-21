@@ -5,7 +5,10 @@ interface Context {
   params: { category: 'activity' | 'hashtag' };
 }
 
-export const GET = async (_: NextRequest, context: Context) => {
+export const GET = async (
+  _: NextRequest,
+  context: Context,
+): Promise<Response | NextResponse> => {
   const { category } = context.params;
 
   const Token = cookies().get('accessToken');
@@ -31,10 +34,15 @@ export const GET = async (_: NextRequest, context: Context) => {
     } catch (error) {
       return NextResponse.json('');
     }
+  } else {
+    return NextResponse.json({ error: 'Unexpected status' });
   }
 };
 
-export const POST = async (_: NextRequest, context: Context) => {
+export const POST = async (
+  _: NextRequest,
+  context: Context,
+): Promise<Response | NextResponse> => {
   const { category } = context.params;
 
   const Token = cookies().get('accessToken');
@@ -58,5 +66,7 @@ export const POST = async (_: NextRequest, context: Context) => {
     } catch (error) {
       return NextResponse.json('');
     }
+  } else {
+    return NextResponse.json({ error: 'Unexpected status' });
   }
 };

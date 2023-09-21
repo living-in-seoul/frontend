@@ -1,12 +1,9 @@
 import { verifyAndRefreshToken } from '@/service/token';
 import { revalidateTag } from 'next/cache';
-import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
-export const GET = async (req: NextRequest) => {
-  const Token = cookies().get('accessToken');
+export const GET = async (_: NextRequest): Promise<Response | NextResponse> => {
   const verify = await verifyAndRefreshToken();
-  console.log('asdfasfasfsafd', verify.json());
   if (verify.status === 403) {
     return new Response('토큰 없음', { status: 403 });
   } else if (verify.status === 200 || verify.status === 201) {
@@ -17,7 +14,7 @@ export const GET = async (req: NextRequest) => {
           next: { revalidate: 0 },
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${cookies().get('accessToken')?.value}`,
+            Authorization: `Bearer ${verify.json()}`,
           },
         },
       ).then((res) => res.json());
@@ -27,8 +24,11 @@ export const GET = async (req: NextRequest) => {
       console.log('에러발생', error);
     }
   }
+  return NextResponse.json({ error: 'Unexpected status' });
 };
-export const POST = async (req: NextRequest) => {
+export const POST = async (
+  req: NextRequest,
+): Promise<Response | NextResponse> => {
   const verify = await verifyAndRefreshToken();
   const body = await req.json();
 
@@ -52,12 +52,14 @@ export const POST = async (req: NextRequest) => {
       console.log('에러발생', error);
     }
   }
+  return NextResponse.json({ error: 'Unexpected status' });
 };
-export const DELETE = async (req: NextRequest) => {
-  const Token = cookies().get('accessToken');
+export const DELETE = async (
+  req: NextRequest,
+): Promise<Response | NextResponse> => {
   const verify = await verifyAndRefreshToken();
   const body = await req.json();
-  if (verify.status === 403 || !Token) {
+  if (verify.status === 403 || !verify.json()) {
     return new Response('토큰 없음', { status: 403 });
   } else if (verify.status === 200 || verify.status === 201) {
     try {
@@ -67,7 +69,7 @@ export const DELETE = async (req: NextRequest) => {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${Token.value}`,
+            Authorization: `Bearer ${verify.json()}`,
           },
           body: JSON.stringify(body),
         },
@@ -78,4 +80,5 @@ export const DELETE = async (req: NextRequest) => {
       console.log('에러발생', error);
     }
   }
+  return NextResponse.json({ error: 'Unexpected status' });
 };

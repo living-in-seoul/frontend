@@ -4,7 +4,9 @@ import dongData from '@/../public/dong.json';
 const turf = require('@turf/turf');
 
 /** 맵 센터 구/동 계산해서 가져오기*/
-export const GET = async (req: NextRequest) => {
+export const GET = async (
+  req: NextRequest,
+): Promise<Response | NextResponse> => {
   let selectedPolygon;
   const { searchParams } = req.nextUrl;
   const lat = searchParams.get('lat') ?? '36';

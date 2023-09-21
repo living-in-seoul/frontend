@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-export const GET = async (req: NextRequest) => {
+export const GET = async (
+  req: NextRequest,
+): Promise<Response | NextResponse> => {
   const { searchParams } = req.nextUrl;
   const search = searchParams.get('search') ?? '';
   const Keyword = encodeURIComponent(search);
@@ -39,9 +41,12 @@ export const GET = async (req: NextRequest) => {
     return NextResponse.json(result);
   } catch (error) {
     console.log('error', error);
+    return NextResponse.json('error');
   }
 };
-export const POST = async (req: NextRequest) => {
+export const POST = async (
+  req: NextRequest,
+): Promise<Response | NextResponse> => {
   const search = await req.json();
 
   try {
@@ -53,5 +58,6 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json(res);
   } catch (error) {
     console.log('error', error);
+    return NextResponse.json('fetch error');
   }
 };

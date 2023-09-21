@@ -5,7 +5,10 @@ interface Context {
   params: { slug: string[] };
 }
 
-export const GET = async (_: NextRequest, context: Context) => {
+export const GET = async (
+  _: NextRequest,
+  context: Context,
+): Promise<Response | NextResponse> => {
   const slugLength = context.params.slug.length;
   if (slugLength === 1) {
     const postId = context.params.slug[0];
@@ -25,4 +28,5 @@ export const GET = async (_: NextRequest, context: Context) => {
     const data = await getHotBoard(category, hashtag);
     return NextResponse.json(data);
   }
+  return NextResponse.json('error');
 };
