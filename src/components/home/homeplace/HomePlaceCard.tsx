@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 import Image from 'next/image';
 import { PlaceData } from '@/utils/constants/place';
@@ -23,14 +24,14 @@ const HomePlaceCard = ({ list }: HomePlaceCardProps) => {
     >
       <div className="w-full bg-white h-40 rounded-2xl shadow-lg">
         <div className="relative flex w-full h-24 overflow-hidden rounded-tl-2xl rounded-tr-2xl">
-          <Image
-            src={`/placeimg/${list.AREA_NM}.jpg`}
+          <img
+            src={`/placeimg/${list.AREA_NM}.webp`}
             alt={'imageNone'}
-            fill
-            sizes={'33vw'}
-            quality={30}
-            priority
-            className="object-cover"
+            // fill
+            // sizes={'33vw'}
+            // quality={30}
+            // priority
+            className="absolute top-0 right-0 left-0 bottom-0 object-cover"
           />
         </div>
         <div className="flex justify-between items-center px-4 pb-3 pt-1.5">

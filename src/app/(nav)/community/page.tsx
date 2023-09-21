@@ -13,7 +13,6 @@ export interface SearchParams {
   [key: string]: string | undefined;
 }
 
-///1. 코드 리팩토링 -> promise.all 속도개선
 interface PageProps {
   searchParams: SearchParams;
 }
