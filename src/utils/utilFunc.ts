@@ -369,3 +369,58 @@ export const validateInput = (value: string) => {
     }
   }
 };
+
+export const getClosestTime = (
+  forecastItems: ForecastItem[],
+  currentsTime: number,
+) => {
+  return forecastItems.reduce((prev, curr) => {
+    const prevDiff = Math.abs(currentsTime - parseInt(prev.fcstTime));
+    const currDiff = Math.abs(currentsTime - parseInt(curr.fcstTime));
+    return prevDiff < currDiff ? prev : curr;
+  }).fcstTime;
+};
+export const filterItemsByTimeAndCategory = (
+  forecastItems: ForecastItem[],
+  closestTime: string,
+) => {
+  const CATEGORIES = [
+    'LGT',
+    'PTY',
+    'RN1',
+    'SKY',
+    'T1H',
+    'REH',
+    'UUU',
+    'VVV',
+    'VEC',
+    'WSD',
+  ];
+
+  return forecastItems.filter(
+    (item) =>
+      CATEGORIES.includes(item.category) && item.fcstTime === closestTime,
+  );
+};
+
+export const getTemperatureDetails = (forecastItems: ForecastItem[]) => {
+  const temperatures = forecastItems
+    .filter((item) => item.category === 'T1H')
+    .map((item) => item.fcstValue);
+  return {
+    maxTemperature: Math.max(...temperatures),
+    minTemperature: Math.min(...temperatures),
+    currentTemperature: temperatures[0] || null,
+  };
+};
+
+export const getSpecificItemValue = (
+  forecastItems: ForecastItem[],
+  category: string,
+  closestTime: string,
+) => {
+  const item = forecastItems.find(
+    (item) => item.category === category && item.fcstTime === closestTime,
+  );
+  return item ? item.fcstValue : null;
+};

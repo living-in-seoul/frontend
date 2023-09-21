@@ -133,7 +133,9 @@ const DetailCommentItem = ({ data, children }: DetailCommentItemProps) => {
         </div>
       </div>
       <div className="flex flex-col gap-2 w-5/6 ml-auto ">
-        <span className="bg-neutral-100 p-2 rounded-lg text-xs">{comment}</span>
+        <span className="bg-neutral-100 p-2 rounded-lg text-xs break-words whitespace-pre-wrap">
+          {comment}
+        </span>
         <div className="flex flex-row gap-3">
           <div className="flex flex-row gap-1 items-center">
             <LikeCommentCase
