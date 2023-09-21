@@ -15,6 +15,7 @@ const fetchFromAPI = async (url: string) => {
   try {
     const response = await fetch(url, {
       headers: { 'Content-Type': 'application/json' },
+      next: { revalidate: 0 },
     });
     return await response.json();
   } catch (error) {

@@ -4,9 +4,8 @@ const DetailMainContents = ({ data }: { data: ResponseDetailData }) => {
   return (
     <div>
       <div className=" flex flex-col gap-4  ">
-        <div className="overflow-auto">
+        <div className="overflow-auto break-words whitespace-pre-wrap">
           {data.result.post.content}
-          {/* 영어 길게 썼을 때 한문자 취급 되는데 그거 고쳐야지 */}
         </div>
         {data.result.post.postImg &&
           data.result.post.postImg.map((img, index) => (
