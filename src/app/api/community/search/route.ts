@@ -44,7 +44,9 @@ export const GET = async (
     return NextResponse.json('error');
   }
 };
-export const POST = async (req: NextRequest) => {
+export const POST = async (
+  req: NextRequest,
+): Promise<Response | NextResponse> => {
   const search = await req.json();
 
   try {
@@ -56,5 +58,6 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json(res);
   } catch (error) {
     console.log('error', error);
+    return NextResponse.json('fetch error');
   }
 };
