@@ -6,7 +6,6 @@ import { NextRequest, NextResponse } from 'next/server';
 export const GET = async (req: NextRequest) => {
   const Token = cookies().get('accessToken');
   const verify = await verifyAndRefreshToken();
-  console.log('asdfasfasfsafd', verify.json());
   if (verify.status === 403) {
     return new Response('토큰 없음', { status: 403 });
   } else if (verify.status === 200 || verify.status === 201) {
@@ -26,6 +25,8 @@ export const GET = async (req: NextRequest) => {
     } catch (error) {
       console.log('에러발생', error);
     }
+  } else {
+    return NextResponse.json({ error: 'Unexpected status' });
   }
 };
 export const POST = async (req: NextRequest) => {
@@ -51,6 +52,8 @@ export const POST = async (req: NextRequest) => {
     } catch (error) {
       console.log('에러발생', error);
     }
+  } else {
+    return NextResponse.json({ error: 'Unexpected status' });
   }
 };
 export const DELETE = async (req: NextRequest) => {
@@ -77,5 +80,7 @@ export const DELETE = async (req: NextRequest) => {
     } catch (error) {
       console.log('에러발생', error);
     }
+  } else {
+    return NextResponse.json({ error: 'Unexpected status' });
   }
 };
