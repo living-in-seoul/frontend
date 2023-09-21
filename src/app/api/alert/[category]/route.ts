@@ -31,6 +31,8 @@ export const GET = async (_: NextRequest, context: Context) => {
     } catch (error) {
       return NextResponse.json('');
     }
+  } else {
+    return NextResponse.json({ error: 'Unexpected status' });
   }
 };
 
