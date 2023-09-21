@@ -5,7 +5,10 @@ interface Context {
   params: { slug: string };
 }
 
-export const GET = async (req: NextRequest, context: Context) => {
+export const GET = async (
+  req: NextRequest,
+  context: Context,
+): Promise<Response | NextResponse> => {
   const category = context.params.slug;
   const { searchParams } = req.nextUrl;
   const page = searchParams.get('page');

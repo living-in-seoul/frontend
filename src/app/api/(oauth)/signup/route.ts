@@ -3,7 +3,9 @@ import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
 /** 회원가입 POST */
-export const POST = async (request: NextRequest) => {
+export const POST = async (
+  request: NextRequest,
+): Promise<Response | NextResponse> => {
   const body: RequestEssentialRegister = await request.json();
   const data = await postSignup(body);
   cookies().set({
@@ -32,7 +34,7 @@ export const PUT = async (request: NextRequest) => {
 // method를 보고 post인지 put인지 구별이 가능함
 
 /** 회원탈퇴 */
-export const DELETE = async () => {
+export const DELETE = async (): Promise<Response | NextResponse> => {
   const data = await deleteUser();
   return NextResponse.json(data);
 };

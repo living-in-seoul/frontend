@@ -3,7 +3,7 @@ import { getProfile, putProfileImage, putSignup } from '@/service/user';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
-export const GET = async (_: NextRequest) => {
+export const GET = async (_: NextRequest): Promise<Response | NextResponse> => {
   const accessToken = cookies().get('accessToken')?.value;
   const refreshToken = cookies().get('refreshToken')?.value;
   if (accessToken) {
@@ -40,7 +40,10 @@ interface Context {
   params: { slug: string };
 }
 
-export const PUT = async (request: NextRequest, context: Context) => {
+export const PUT = async (
+  request: NextRequest,
+  context: Context,
+): Promise<Response | NextResponse> => {
   const slug = context.params.slug;
   try {
     if (slug[0] === 'image') {
@@ -52,6 +55,7 @@ export const PUT = async (request: NextRequest, context: Context) => {
       const userData = await putSignup(body);
       return NextResponse.json(userData);
     }
+    return NextResponse.json('empty');
   } catch (err) {
     return new Response('전송 실패입니다', {
       status: 403,

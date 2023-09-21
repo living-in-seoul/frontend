@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { writeBoard } from '@/service/board';
 
 /**글쓰기 페이지 post api */
-export const POST = async (request: NextRequest) => {
+export const POST = async (
+  request: NextRequest,
+): Promise<Response | NextResponse> => {
   const form = await request.formData();
   const data = await writeBoard(form).then((data) => data.message);
   return NextResponse.json(data);

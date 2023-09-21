@@ -3,7 +3,10 @@ import { NextRequest, NextResponse } from 'next/server';
 interface Context {
   params: { page: number };
 }
-export const GET = async (req: NextRequest, context: Context) => {
+export const GET = async (
+  req: NextRequest,
+  context: Context,
+): Promise<Response | NextResponse> => {
   const { searchParams } = req.nextUrl;
   const { page } = context.params;
 
@@ -32,4 +35,5 @@ export const GET = async (req: NextRequest, context: Context) => {
   } catch (error) {
     console.log('error', error);
   }
+  return NextResponse.json('error');
 };

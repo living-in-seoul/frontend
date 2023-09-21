@@ -1,4 +1,5 @@
 import { categoryKO } from '@/utils/utilFunc';
+import { NextResponse } from 'next/server';
 
 interface FetchCommunityProps {
   page: number | string;
@@ -44,7 +45,9 @@ export const fetchTodaySearch = async () => {
   return fetchFromAPI(`${BASE_URL}/search/today`);
 };
 
-export const fetchTodaySearchPost = async (userSearch: string) => {
+export const fetchTodaySearchPost = async (
+  userSearch: string,
+): Promise<Response | NextResponse> => {
   const endpoint = `${BASE_URL}/search/save`;
   try {
     const response = await fetch(endpoint, {
@@ -54,6 +57,6 @@ export const fetchTodaySearchPost = async (userSearch: string) => {
     return await response.json();
   } catch (error) {
     console.error('Error fetching', error);
-    return null;
+    return NextResponse.json('error fetch');
   }
 };

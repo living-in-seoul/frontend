@@ -1,7 +1,9 @@
 import { oauthSignin } from '@/service/user';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
-export const POST = async (req: NextRequest) => {
+export const POST = async (
+  req: NextRequest,
+): Promise<Response | NextResponse> => {
   try {
     const body: RequestOauthLogin = await req.json();
     const data = await oauthSignin(body);

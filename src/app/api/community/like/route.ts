@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-export const POST = async (req: NextRequest) => {
+export const POST = async (
+  req: NextRequest,
+): Promise<Response | NextResponse> => {
   const { postId } = await req.json();
   const Token = req.cookies.get('accessToken')?.value;
   if (!Token) {

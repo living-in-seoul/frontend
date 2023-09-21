@@ -16,7 +16,6 @@ const CommunityPostItem = ({
   post,
   user,
   onMap,
-  hasLiked,
 }: CommunityPostItemProps) => {
   const {
     content,
@@ -27,7 +26,6 @@ const CommunityPostItem = ({
     postViewCount,
     likeSize,
     commentSize,
-    postId,
   } = post;
   const { nickname } = user;
   return (

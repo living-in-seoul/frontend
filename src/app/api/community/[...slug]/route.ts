@@ -8,7 +8,10 @@ interface Context {
   params: { slug: [string, string] };
 }
 
-export const GET = async (req: NextRequest, context: Context) => {
+export const GET = async (
+  req: NextRequest,
+  context: Context,
+): Promise<Response | NextResponse> => {
   const {
     slug: [category, hashtag],
   } = context.params;

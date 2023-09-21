@@ -1,10 +1,5 @@
 import { cookies } from 'next/headers';
 
-interface ResponsenewDataDataType {
-  message: string;
-  code: number;
-}
-
 /**글쓰기 post */
 export const writeBoard = async (form: any) => {
   const token = cookies().get('accessToken');

@@ -10,7 +10,10 @@ interface Context {
   params: { category: string };
 }
 
-export const GET = async (req: NextRequest, context: Context) => {
+export const GET = async (
+  req: NextRequest,
+  context: Context,
+): Promise<Response | NextResponse> => {
   const { category } = context.params;
   const { searchParams } = req.nextUrl;
   const hashtagName = searchParams.get('hashtag') ?? '';
