@@ -24,7 +24,7 @@ const CommunityBoardList = ({
   const [list, setList] = useState<ResponsePost[]>(firstList);
   const [page, setPage] = useState(1);
   const [ref, inview] = useObserver();
-  const [listTotalPage, setlistTotalPage] = useState(totalpage);
+  const [listTotalPage] = useState(totalpage);
   const [lastItem, setLastItem] = useState(false);
   const router = useRouter();
 

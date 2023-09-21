@@ -1,10 +1,8 @@
 import { verifyAndRefreshToken } from '@/service/token';
 import { revalidateTag } from 'next/cache';
-import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
-export const GET = async (req: NextRequest) => {
-  const Token = cookies().get('accessToken');
+export const GET = async (_: NextRequest) => {
   const verify = await verifyAndRefreshToken();
   if (verify.status === 403) {
     return new Response('토큰 없음', { status: 403 });
@@ -16,7 +14,7 @@ export const GET = async (req: NextRequest) => {
           next: { revalidate: 0 },
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${cookies().get('accessToken')?.value}`,
+            Authorization: `Bearer ${verify.json()}`,
           },
         },
       ).then((res) => res.json());
@@ -25,9 +23,8 @@ export const GET = async (req: NextRequest) => {
     } catch (error) {
       console.log('에러발생', error);
     }
-  } else {
-    return NextResponse.json({ error: 'Unexpected status' });
   }
+  return NextResponse.json({ error: 'Unexpected status' });
 };
 export const POST = async (req: NextRequest) => {
   const verify = await verifyAndRefreshToken();
@@ -52,15 +49,13 @@ export const POST = async (req: NextRequest) => {
     } catch (error) {
       console.log('에러발생', error);
     }
-  } else {
-    return NextResponse.json({ error: 'Unexpected status' });
   }
+  return NextResponse.json({ error: 'Unexpected status' });
 };
 export const DELETE = async (req: NextRequest) => {
-  const Token = cookies().get('accessToken');
   const verify = await verifyAndRefreshToken();
   const body = await req.json();
-  if (verify.status === 403 || !Token) {
+  if (verify.status === 403 || !verify.json()) {
     return new Response('토큰 없음', { status: 403 });
   } else if (verify.status === 200 || verify.status === 201) {
     try {
@@ -70,7 +65,7 @@ export const DELETE = async (req: NextRequest) => {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${Token.value}`,
+            Authorization: `Bearer ${verify.json()}`,
           },
           body: JSON.stringify(body),
         },
@@ -80,7 +75,6 @@ export const DELETE = async (req: NextRequest) => {
     } catch (error) {
       console.log('에러발생', error);
     }
-  } else {
-    return NextResponse.json({ error: 'Unexpected status' });
   }
+  return NextResponse.json({ error: 'Unexpected status' });
 };

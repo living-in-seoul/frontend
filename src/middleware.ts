@@ -1,41 +1,36 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { verifyAndRefreshToken } from './service/token';
 
 export const middleware = async (request: NextRequest) => {
-  const accessToken = request.cookies.get('accessToken');
-  const refreshToken = request.cookies.get('refreshToken');
-  const { pathname, search, origin, basePath } = request.nextUrl;
-  const signinPage = request.nextUrl.pathname.startsWith('/signin');
-  const signupPage = request.nextUrl.pathname.startsWith('/signup');
+  try {
+    const refreshToken = request.cookies.get('refreshToken');
+    const { pathname, search, origin, basePath } = request.nextUrl;
+    const signinPage = request.nextUrl.pathname.startsWith('/signin');
+    const signupPage = request.nextUrl.pathname.startsWith('/signup');
 
-  if (signupPage || signinPage) {
-    if (refreshToken) {
-      const signInUrl = new URL(`${basePath}/home`, origin);
+    if (signupPage || signinPage) {
+      if (refreshToken) {
+        const signInUrl = new URL(`${basePath}/home`, origin);
+        return NextResponse.redirect(signInUrl);
+      }
+      return NextResponse.next();
+    }
 
+    if (!refreshToken) {
+      const signInUrl = new URL(`${basePath}/signin`, origin);
+      signInUrl.searchParams.append(
+        'callbackUrl',
+        `${basePath}${pathname}${search}`,
+      );
       return NextResponse.redirect(signInUrl);
     }
+
+    // 모든 조건을 처리한 후에도 반환 값이 없으면 기본 응답을 반환
     return NextResponse.next();
-  }
-  if (!refreshToken) {
-    const signInUrl = new URL(`${basePath}/signin`, origin);
-    signInUrl.searchParams.append(
-      'callbackUrl',
-      `${basePath}${pathname}${search}`,
-    );
-    return NextResponse.redirect(signInUrl);
+  } catch (error) {
+    return NextResponse.json('Internal Server Error');
   }
 };
 
 export const config = {
-  matcher: [
-    // '/api/write',
-    // '/api/liked',
-    // '/signin/:path*',
-    '/mypage',
-    // '/alert',
-    '/write',
-    '/editprofile/:path*',
-    // '/signup/first',
-    // '/signin',
-  ],
+  matcher: ['/mypage', '/write', '/editprofile/:path*'],
 };
