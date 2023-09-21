@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
 /** 유저 토큰 검증 */
-export const GET = async (_: NextRequest) => {
+export const GET = async (_: NextRequest): Promise<Response | NextResponse> => {
   const verify = await verifyAndRefreshToken();
 
   if (verify.status === 200 || verify.status === 201) {

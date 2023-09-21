@@ -2,7 +2,7 @@ import { verifyAndRefreshToken } from '@/service/token';
 import { revalidateTag } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 
-export const GET = async (_: NextRequest) => {
+export const GET = async (_: NextRequest): Promise<Response | NextResponse> => {
   const verify = await verifyAndRefreshToken();
   if (verify.status === 403) {
     return new Response('토큰 없음', { status: 403 });
@@ -26,7 +26,9 @@ export const GET = async (_: NextRequest) => {
   }
   return NextResponse.json({ error: 'Unexpected status' });
 };
-export const POST = async (req: NextRequest) => {
+export const POST = async (
+  req: NextRequest,
+): Promise<Response | NextResponse> => {
   const verify = await verifyAndRefreshToken();
   const body = await req.json();
 
@@ -52,7 +54,9 @@ export const POST = async (req: NextRequest) => {
   }
   return NextResponse.json({ error: 'Unexpected status' });
 };
-export const DELETE = async (req: NextRequest) => {
+export const DELETE = async (
+  req: NextRequest,
+): Promise<Response | NextResponse> => {
   const verify = await verifyAndRefreshToken();
   const body = await req.json();
   if (verify.status === 403 || !verify.json()) {
