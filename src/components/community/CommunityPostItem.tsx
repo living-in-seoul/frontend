@@ -41,7 +41,7 @@ const CommunityPostItem = ({
       />
       {/* 컨텐츠 */}
       <div className="w-full flex justify-between min-h-[36px] my-4">
-        <span className="w-full text-black text-sm font-normal whitespace-pre-wrap leading-[21px]">
+        <span className="w-full text-black text-sm font-normal break-words whitespace-pre-wrap leading-[21px]">
           {content}
         </span>
       </div>
