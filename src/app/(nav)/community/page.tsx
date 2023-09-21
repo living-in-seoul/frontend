@@ -5,6 +5,7 @@ import CommunityHotTag from '@/components/community/CommunityHotTag';
 import WriteButton from '@/components/map/actions/WriteButton';
 import CommunityBoardList from '@/components/community/CommunityBoardList';
 
+export const dynamic = 'force-dynamic';
 export interface SearchParams {
   category?: string;
   tag?: string;
@@ -16,6 +17,7 @@ export interface SearchParams {
 interface PageProps {
   searchParams: SearchParams;
 }
+
 const CommunityPage = async ({ searchParams }: PageProps) => {
   const { category = 'All', tag, ordertype = 'newer' } = searchParams;
 
