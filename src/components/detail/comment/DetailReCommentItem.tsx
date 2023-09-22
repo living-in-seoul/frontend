@@ -11,9 +11,8 @@ import { commentModalArray, reportModalArray } from '@/utils/constants/modal';
 import { toast } from 'react-hot-toast';
 import { useSWRConfig } from 'swr';
 import DetailModal from '../DetailModal';
-import { clientCommentDelete } from '@/service/clientCommet';
+import { clientCommentDelete, userClientVerify } from '@/service/clientCommet';
 import { profile } from '../../../../public';
-import { userClientVerify } from '@/service/user';
 
 const DetailReCommentItem = ({
   reCommentData,

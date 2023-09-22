@@ -7,7 +7,7 @@ import { comunity, home, map } from '@/utils/Icon';
 import { useSetRecoilState } from 'recoil';
 import { bottomSheetState } from '@/recoil/bottomsheet';
 import { toast } from 'react-hot-toast';
-import { userClientVerify } from '@/service/user';
+import { userClientVerify } from '@/service/clientCommet';
 
 const NavBarArray = [
   {

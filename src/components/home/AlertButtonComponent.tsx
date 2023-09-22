@@ -8,7 +8,7 @@ import { bottomSheetState } from '@/recoil/bottomsheet';
 import { useRouter } from 'next-nprogress-bar';
 import { TrueAlertIcon } from '../profile/editpage/EditImageIcon';
 import { usePathname } from 'next/navigation';
-import { userClientVerify } from '@/service/user';
+import { userClientVerify } from '@/service/clientCommet';
 
 interface AlertButtonComponentProps {
   link: string;

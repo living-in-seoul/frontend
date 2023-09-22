@@ -2,7 +2,7 @@
 import React, { useEffect, useState, ReactNode } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { notificationState } from '@/recoil/authStates';
-import { userClientVerify } from '@/service/user';
+import { userClientVerify } from '@/service/clientCommet';
 
 interface SSEProviderProps {
   children: ReactNode;

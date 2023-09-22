@@ -55,3 +55,13 @@ export const clientPostScrap = async (postId: number) => {
   });
   return response;
 };
+
+export const userClientVerify = async () => {
+  const response = await fetch('/api/user');
+  if (response.status === 200) {
+    // 로그인이 확인되었을 때의 로직
+  } else if (response.status === 401) {
+    // 로그인이 확인되지 않았을 때의 로직
+  }
+  return response;
+};

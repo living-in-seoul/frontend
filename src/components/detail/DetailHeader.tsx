@@ -49,5 +49,3 @@ const DetailHeader = ({ data }: { data: ResponseDetailData }) => {
 };
 
 export default DetailHeader;
-
-// stroke="#B8B8B8"

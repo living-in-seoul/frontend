@@ -6,7 +6,7 @@ import ModalPortal from '../modal/ModalPortal';
 import { useCallback } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { bottomSheetState } from '@/recoil/bottomsheet';
-import { userClientVerify } from '@/service/user';
+import { userClientVerify } from '@/service/clientCommet';
 
 interface ModalArray {
   text: string;
