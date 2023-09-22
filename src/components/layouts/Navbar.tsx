@@ -6,8 +6,8 @@ import { MypageIcon, ProfileIcon } from '../profile/editpage/EditImageIcon';
 import { comunity, home, map } from '@/utils/Icon';
 import { useSetRecoilState } from 'recoil';
 import { bottomSheetState } from '@/recoil/bottomsheet';
-import { userClientVerify } from '@/service/oauth';
 import { toast } from 'react-hot-toast';
+import { userClientVerify } from '@/service/user';
 
 const NavBarArray = [
   {

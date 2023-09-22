@@ -8,6 +8,8 @@ import { categoryKO } from '@/utils/utilFunc';
 import SearchSorted from './SearchSorted';
 import SearchHashTagAlert from './SearchHashTagAlert';
 import BeatLoader from '../common/Spinner';
+import Header from '../layouts/Header';
+import Back from '../common/Back';
 
 const DynamicSearchBoardList = dynamic(() => import('./SearchBoardList'), {
   loading: () => <BeatLoader />,
@@ -29,10 +31,12 @@ const SearchComponent = async ({
       categoryKO(fetchcategory),
     )}&keyword=${encodeURIComponent(fetchsearch)}`,
   ).then<ResponseRegister>((res) => res.json());
+
   return (
     <section className="relative max-w-md top-0 -translate-x-1/2 left-1/2 flex flex-col justify-center items-center w-full h-screen z-50">
       <div className="relative bg-white w-full h-full max-w-md pt-14 ">
-        <SearchInput />
+        <Header left={<Back />} center={<SearchInput />} />
+
         <div className="overflow-y-auto bg-white">
           {!search ? (
             <div className="px-[17px]">

@@ -6,9 +6,9 @@ import toast, { Toaster } from 'react-hot-toast';
 import useSWR, { useSWRConfig } from 'swr';
 import { useSetRecoilState } from 'recoil';
 import { bottomSheetState } from '@/recoil/bottomsheet';
-import { userClientVerify } from '@/service/oauth';
 import { clientCommentLike, clientPostScrap } from '@/service/clientCommet';
 import { useState } from 'react';
+import { userClientVerify } from '@/service/user';
 
 const DetailButtons = ({ postId }: { postId: string }) => {
   const { data } = useSWR<RessponseLikeandScrap>(`/api/post/${postId}`);

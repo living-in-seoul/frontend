@@ -14,7 +14,7 @@ import { initialForm } from '@/utils/constants/constants';
 import { detailState } from '@/recoil/mapStates';
 import toast from 'react-hot-toast';
 
-const WriteHeader = () => {
+const WriteHeaderButton = () => {
   const [openConfirm, setOpenConfirm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useRecoilState(formDataState);
@@ -110,25 +110,20 @@ const WriteHeader = () => {
 
   return (
     <>
-      <div className="w-full h-full flex justify-between items-center px-6 py-4  ">
-        <div className="flex items-center gap-5 cursor-pointer">
-          {<Icons path={back} onClick={onClickToBack} />}
-          <span className="text-[1.1rem] font-semibold">글 작성하기</span>
-        </div>
-        <div className="w-20 h-8 text-white">
-          <Button
-            title={
-              isLoading ? <BeatLoader size={10} color="#2DDAB0" /> : '등록하기'
-            }
-            size="full"
-            bgColor={checkAllFilled(formData) ? 'bg-primary' : 'bg-gray-200'}
-            textColor="text-white"
-            className="text-sm font-semibold"
-            onClick={(e) => onSubmit(e)}
-            disable={isLoading}
-          />
-        </div>
+      <div className="w-20 h-8 text-white">
+        <Button
+          title={
+            isLoading ? <BeatLoader size={10} color="#2DDAB0" /> : '등록하기'
+          }
+          size="full"
+          bgColor={checkAllFilled(formData) ? 'bg-primary' : 'bg-gray-200'}
+          textColor="text-white"
+          className="text-sm font-semibold"
+          onClick={(e) => onSubmit(e)}
+          disable={isLoading}
+        />
       </div>
+
       {openConfirm && (
         <ModalPortal nodeName="confirmPortal">
           <ModalOutside
@@ -149,4 +144,4 @@ const WriteHeader = () => {
   );
 };
 
-export default WriteHeader;
+export default WriteHeaderButton;

@@ -1,8 +1,8 @@
 'use client';
 import React, { useEffect, useState, ReactNode } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { userClientVerify } from '@/service/oauth'; // 경로는 실제 서비스에 맞게 조정해주세요.
 import { notificationState } from '@/recoil/authStates';
+import { userClientVerify } from '@/service/user';
 
 interface SSEProviderProps {
   children: ReactNode;

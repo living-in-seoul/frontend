@@ -15,6 +15,7 @@ const DetailComment = ({ postId }: { postId: string }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const setPostId = useSetRecoilState(postIdstate);
   const { data } = useSWR<ResponseCommentData>(`/api/comment/${postId}?page=1`);
+
   const loadMoreList = useCallback(async () => {
     const next = page + 1;
     if (data && next > data?.pageable?.totalPages) {
@@ -40,6 +41,7 @@ const DetailComment = ({ postId }: { postId: string }) => {
     setPostId(postId);
     return setLastPage(false);
   }, [data, page, postId, setCommentKey, setPostId]);
+
   return (
     <div className="py-6 px-4 flex flex-col gap-4 border-b-2">
       <span className="font-semibold">댓글 {data?.pageable.totalElements}</span>

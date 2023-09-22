@@ -1,8 +1,6 @@
 import { fetchCommunity } from '@/actions/fetchCommunity';
 import { NextRequest, NextResponse } from 'next/server';
 
-export const runtime = 'edge';
-
 export const GET = async (req: NextRequest) => {
   const { searchParams } = req.nextUrl;
   const category = searchParams.get('category') || 'All';

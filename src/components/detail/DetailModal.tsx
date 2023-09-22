@@ -4,9 +4,9 @@ import Icons from '../common/Icons';
 import ModalOutside from '../modal/ModalOutside';
 import ModalPortal from '../modal/ModalPortal';
 import { useCallback } from 'react';
-import { userClientVerify } from '@/service/oauth';
 import { useSetRecoilState } from 'recoil';
 import { bottomSheetState } from '@/recoil/bottomsheet';
+import { userClientVerify } from '@/service/user';
 
 interface ModalArray {
   text: string;

@@ -16,7 +16,7 @@ import { commentModalArray, reportModalArray } from '@/utils/constants/modal';
 import { Toaster, toast } from 'react-hot-toast';
 import DetailModal from '../DetailModal';
 import { clientCommentDelete, clientCommentLike } from '@/service/clientCommet';
-import { userClientVerify } from '@/service/oauth';
+import { userClientVerify } from '@/service/user';
 interface DetailCommentItemProps {
   data: CommentData;
   children: React.ReactNode;

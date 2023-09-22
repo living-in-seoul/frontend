@@ -40,7 +40,7 @@ export const outerCoords = [
 
 export const CommContainerStyle = {
   width: '100%',
-  height: '100vh',
+  height: '100dvh',
 };
 
 export const mapOptions: google.maps.MapOptions = {

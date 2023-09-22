@@ -125,6 +125,7 @@ const CommunityMap = () => {
   const onMouseUpHandler = useCallback(async () => {
     const lat = map?.getCenter()?.lat();
     const lng = map?.getCenter()?.lng();
+
     try {
       const res = await fetch(`/api/map/geo?lat=${lat}&lng=${lng}`, {
         method: 'GET',
@@ -133,9 +134,7 @@ const CommunityMap = () => {
           return data.json();
         })
         .finally(() => setIsLoading(false));
-
       setPolygonState({ gu: res.gu, dong: res.dong });
-
       const formattedCoordinates = transformCoordinates(res.geometry);
       setGeometry(formattedCoordinates);
     } catch (err) {
@@ -144,7 +143,7 @@ const CommunityMap = () => {
   }, [map, setPolygonState, setGeometry]);
 
   return (
-    <section className="w-full h-full relative z-100">
+    <section className="w-full h-full relative z-0">
       <GoogleMap
         mapContainerStyle={CommContainerStyle}
         center={center ?? undefined}
