@@ -2,13 +2,10 @@
 import { useEffect, useState } from 'react';
 import useObserver from '@/hooks/useObserver';
 import { useSearchParams } from 'next/navigation';
-import Image from 'next/image';
-import { imageNone, seole } from '../../../public';
 import PostItem from '../community/PostItem';
 import PostItemSkeleton from '../community/PostItemSkeleton';
 import { v4 as uuidv4 } from 'uuid';
 import NoneItem from '../NoneItem';
-import SearchHashTagAlert from './SearchHashTagAlert';
 
 interface CommunityBoardProps {
   title?: string;

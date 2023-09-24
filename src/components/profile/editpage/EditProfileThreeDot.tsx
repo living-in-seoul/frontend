@@ -11,7 +11,7 @@ import { profileModalArray } from '@/utils/constants/modal';
 const EditProfileThreeDot = () => {
   const [OpenModal, setOpenModal] = useState<boolean>(false);
   return (
-    <div className="flex flex-row gap-4">
+    <div className="flex flex-row gap-4 cursor-pointer">
       <div>
         <Icons
           path={detailColThreeDotIcon}
@@ -24,7 +24,7 @@ const EditProfileThreeDot = () => {
       {OpenModal && (
         <ModalPortal nodeName="editPortal">
           <ModalOutside
-            className=" bg-white shadow-sm bottom-0 w-full"
+            className="shadow-sm bottom-0 w-full"
             onClose={() => {
               setOpenModal(false);
               document.body.style.overflow = 'auto';

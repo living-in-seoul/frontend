@@ -2,17 +2,16 @@
 
 import { polygonState, postSizeState } from '@/recoil/mapStates';
 import FilterOptions from '../filter/FilterOptions';
-import Icons from '@/components/common/Icons';
-import { back } from '@/utils/Icon';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
+import Header from '@/components/layouts/Header';
+import Back from '@/components/common/Back';
 
 const MapHeader = () => {
-  const router = useRouter();
   const [headerText, setHeaderText] = useState<string | null>('');
   const [postSize, setPostSize] = useRecoilState(postSizeState);
   const polygonValue = useRecoilValue(polygonState);
+
   useEffect(() => {
     const localGu = localStorage.getItem('location_gu');
     if (!polygonValue.gu) {
@@ -22,27 +21,27 @@ const MapHeader = () => {
     }
   }, [polygonValue.gu]);
 
-  const onClickToBack = () => {
-    router.back();
-  };
-
+  const CurrentPlace = useCallback(
+    (): JSX.Element => (
+      <span className="font-semibold grow text-[1.1rem]">
+        {`서울시 ${headerText} ${polygonValue.gu && polygonValue.dong}`}
+      </span>
+    ),
+    [headerText, polygonValue.dong, polygonValue.gu],
+  );
+  const CurrentBoardSize = (): JSX.Element => (
+    <div className="flex justify-center items-center bg-gray7 px-5 py-[5px] rounded-2xl text-[0.8rem]">
+      <span className="text-gray-600">게시물</span>
+      <span className="ml-1 text-darkMint">{postSize}건</span>
+    </div>
+  );
   return (
-    <section className="flex flex-col justify-center items-center pt-5 gap-3 absolute bg-white w-full top-0 h-28 z-10">
-      <div className="flex w-full justify-between items-center gap-3 px-5 ">
-        <div className="relative flex justify-center items-center gap-3">
-          <Icons
-            path={back}
-            onClick={onClickToBack}
-            className="hover:cursor-pointer"
-          />
-          <span className="font-semibold text-[1.1rem]">{`서울시 
-          ${headerText} ${polygonValue.gu && polygonValue.dong}`}</span>
-        </div>
-        <div className="flex justify-center items-center bg-gray7 px-5 py-[5px] rounded-2xl text-[0.8rem]">
-          <span className="text-gray-600">게시물</span>
-          <span className="ml-1 text-darkMint">{postSize}건</span>
-        </div>
-      </div>
+    <section className="absolute bg-white top-0 flex flex-col justify-center w-full pt-10 z-50">
+      <Header
+        left={<Back />}
+        center={<CurrentPlace />}
+        right={<CurrentBoardSize />}
+      />
       <FilterOptions />
     </section>
   );

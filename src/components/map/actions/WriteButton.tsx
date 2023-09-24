@@ -1,7 +1,7 @@
 'use client';
 import Icons from '@/components/common/Icons';
 import { bottomSheetState } from '@/recoil/bottomsheet';
-import { userClientVerify } from '@/service/oauth';
+import { userClientVerify } from '@/service/clientCommet';
 import { HomeWriteIcon, write } from '@/utils/Icon';
 import { useRouter } from 'next-nprogress-bar';
 import { toast } from 'react-hot-toast';
