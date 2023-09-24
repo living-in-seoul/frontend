@@ -1,9 +1,7 @@
 'use client';
-import { back } from '@/utils/Icon';
-import Icons from '../common/Icons';
 import { useRouter } from 'next/navigation';
 import Button from '../common/Button';
-import { MouseEvent, useCallback, useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { ImageState, formDataState } from '@/recoil/BoardStates';
 import ModalOutside from '../modal/ModalOutside';
@@ -21,10 +19,6 @@ const WriteHeaderButton = () => {
   const [imageState, setImageState] = useRecoilState(ImageState);
   const [detailValue, setdetailState] = useRecoilState(detailState);
   const router = useRouter();
-
-  const onClickToBack = useCallback(() => {
-    setOpenConfirm(true);
-  }, []);
 
   const resetStates = () => {
     setFormData(initialForm);

@@ -117,26 +117,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-{
-  /* <IsAuthBottomSheet link={item.path} key={item.name}>
-                <div className="group scale-100 transition-all active:scale-110 basis-1/5 justify-center items-center flex flex-col gap-[5px]">
-                  <Icons
-                    path={map}
-                    fill={MainPathName === item.path ? '#2DDAB0' : '#B8B8B8'}
-                    className=""
-                  >
-                    {MainPathName === item.path
-                      ? item.iconfilledElement
-                      : item.iconElement}
-                  </Icons>
-                  <div
-                    className={`text-center ${
-                      MainPathName === item.path ? 'text-primary' : 'text-gray5'
-                    } text-xs font-normal leading-3`}
-                  >
-                    {item.name}
-                  </div>
-                </div>
-              </IsAuthBottomSheet> */
-}
