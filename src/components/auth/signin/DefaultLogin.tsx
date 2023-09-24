@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import AuthInput from './AuthInput';
 import Button from '@/components/common/Button';

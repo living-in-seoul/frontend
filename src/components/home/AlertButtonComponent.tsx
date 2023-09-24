@@ -1,7 +1,6 @@
 'use client';
 import { Alert } from '@/utils/Icon';
 import Icons from '../common/Icons';
-import { userClientVerify } from '@/service/oauth';
 import { toast } from 'react-hot-toast';
 import useSWR from 'swr';
 import { useSetRecoilState } from 'recoil';
@@ -9,6 +8,7 @@ import { bottomSheetState } from '@/recoil/bottomsheet';
 import { useRouter } from 'next-nprogress-bar';
 import { TrueAlertIcon } from '../profile/editpage/EditImageIcon';
 import { usePathname } from 'next/navigation';
+import { userClientVerify } from '@/service/clientCommet';
 
 interface AlertButtonComponentProps {
   link: string;
@@ -52,7 +52,10 @@ const AlertButtonComponent = ({
   };
 
   return (
-    <div onClick={handleWritePostClick} className="selection:bg-none">
+    <div
+      onClick={handleWritePostClick}
+      className="selection:bg-none cursor-pointer"
+    >
       {hasUnreadAlarm ? (
         <Icons path={Alert}>
           <TrueAlertIcon type={type} />

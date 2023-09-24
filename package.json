@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "jest",
+    "test:watch": "jest --watchAll"
   },
   "dependencies": {
     "@react-google-maps/api": "^2.19.2",
@@ -40,9 +42,18 @@
     "xml2js": "^0.6.2"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "5.16.5",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.5.1",
     "@types/google.maps": "^3.53.6",
+    "@types/jest": "^29.5.5",
     "@types/uuid": "^9.0.2",
     "@types/xml2js": "^0.4.11",
-    "eslint-config-prettier": "^9.0.0"
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-jest-dom": "^5.1.0",
+    "eslint-plugin-testing-library": "^6.0.1",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "ts-jest": "^29.1.1"
   }
 }

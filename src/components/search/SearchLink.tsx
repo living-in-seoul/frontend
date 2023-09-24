@@ -1,6 +1,5 @@
 'use client';
-import Link from 'next/link';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function SearchLink({
   category,
