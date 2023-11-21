@@ -1,4 +1,3 @@
-import { NavigationEvents } from '@/components/map/bottomsheet/BottomSheetRouterEvent';
 import {
   RecoilProvider,
   SWRConfigContext,

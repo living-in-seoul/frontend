@@ -37,7 +37,7 @@ export default async function RootLayout({
         <meta name="msapplication-tap-highlight" content="no" />
       </head>
 
-      <body className="flex flex-col min-h-screen items-center">
+      <body className="flex flex-col min-h-screen items-center scrollbar-hide">
         <Providers>
           <main className="w-full max-w-md bg-[#fdfdfd]">{children}</main>
           <BottomSheetManager />

@@ -1,16 +1,11 @@
 'use client';
 import Link from 'next/link';
-import HomeSectionTitle from './HomeSectionTitle';
 import Select from '@/components/common/Select';
 import PostItem from '@/components/community/PostItem';
 import MapProvider from '@/context/MapProvider';
-import dynamic from 'next/dynamic';
 import SelectedLocation from '../write/location/SelectedLocation';
 import { Suspense, useEffect, useState } from 'react';
-
-const DynamicMap = dynamic(() => import('./HomeHashtagMap'), {
-  ssr: false,
-});
+import HomeHashtagMap from './HomeHashtagMap';
 
 interface HomeReviewSectionProps {
   HotTagReview: string[];
@@ -36,7 +31,6 @@ const HomeHasTagMapSection = ({ HotTagReview }: HomeReviewSectionProps) => {
   const location = postList ? postList[0].location : null;
   return (
     <article className="relative w-full border-t-[5px] pt-2.5 border-zinc-300">
-      <HomeSectionTitle title="해시태그 언급이 잦은 장소에요" link="/map" />
       {HotTagReview[0] ? (
         <>
           <ul className="pl-4 gap-2.5 flex whitespace-nowrap scrollbar-hide overflow-x-auto">
@@ -56,7 +50,7 @@ const HomeHasTagMapSection = ({ HotTagReview }: HomeReviewSectionProps) => {
               <>
                 <MapProvider type={'home'}>
                   <div className="w-full p-4">
-                    <DynamicMap location={location} />
+                    <HomeHashtagMap location={location} />
                   </div>
                 </MapProvider>
 
