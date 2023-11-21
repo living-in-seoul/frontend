@@ -2,6 +2,18 @@ import { getProfile } from '@/service/user';
 import Image from 'next/image';
 import { profile } from '../../../public';
 
+export const MockProfileComponent = () => (
+  <div className="flex w-full h-28 bg-white rounded-2xl shadow py-3">
+    <div className="flex w-full justify-center">
+      <div className="skeleton w-[88px] h-[88px] rounded-full"></div>
+      <div className="flex flex-col w-56 justify-center pl-4">
+        <div className="skeleton w-[120px] h-[20px] rounded-lg mb-2.5"></div>
+        <div className="skeleton w-[220px] h-[20px] rounded-lg"></div>
+      </div>
+    </div>
+  </div>
+);
+
 const ProfileComponent = async () => {
   const user: ResponseUserProfileData = await getProfile();
   const userImage =
@@ -24,7 +36,7 @@ const ProfileComponent = async () => {
     }
   };
 
-  if (user) {
+  if (user.nickname) {
     return (
       <div className="flex w-full h-28 bg-white rounded-2xl shadow py-3">
         <div className="flex w-full justify-center">

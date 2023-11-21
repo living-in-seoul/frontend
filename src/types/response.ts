@@ -85,6 +85,16 @@ interface ResponseRegister {
   result: ResponsePost[];
 }
 
+interface ResponseNoData<T> {
+  data: T;
+}
+
+interface ResponseWithData<T> {
+  data: T;
+}
+
+type ResponseResult<T> = ResponseNoData<T> | ResponseWithData<T>;
+
 interface ResponsePost {
   location: PostLocation;
   user: UserProfile;

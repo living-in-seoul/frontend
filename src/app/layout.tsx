@@ -4,14 +4,9 @@ import localFont from 'next/font/local';
 import { NavigationEvents } from '@/components/map/bottomsheet/BottomSheetRouterEvent';
 import { Suspense } from 'react';
 
-import {
-  RecoilProvider,
-  SWRConfigContext,
-  SSEProvider,
-  ProgressBarProviders,
-  BottomSheetManager,
-} from '@/context';
+import { BottomSheetManager } from '@/context';
 import ToastManager from '@/context/ToastManager';
+import Providers from './providers';
 
 export const metadata: Metadata = {
   title: '서울에서 살아남기',
@@ -42,21 +37,15 @@ export default async function RootLayout({
         <meta name="msapplication-tap-highlight" content="no" />
       </head>
 
-      <body className="flex flex-col min-h-screen items-center">
-        <RecoilProvider>
-          <SWRConfigContext>
-            <SSEProvider>
-              <ProgressBarProviders>
-                <main className="w-full max-w-md bg-[#fdfdfd]">{children}</main>
-                <BottomSheetManager />
-                <ToastManager />
-                <Suspense fallback={null}>
-                  <NavigationEvents />
-                </Suspense>
-              </ProgressBarProviders>
-            </SSEProvider>
-          </SWRConfigContext>
-        </RecoilProvider>
+      <body className="flex flex-col min-h-screen items-center scrollbar-hide">
+        <Providers>
+          <main className="w-full max-w-md bg-[#fdfdfd]">{children}</main>
+          <BottomSheetManager />
+          <ToastManager />
+          <Suspense fallback={null}>
+            <NavigationEvents />
+          </Suspense>
+        </Providers>
         <div id="portalSignin" />
       </body>
     </html>

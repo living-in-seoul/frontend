@@ -10,7 +10,11 @@ const WeatherComponent = () => {
   const serachGu = useRecoilValue(SearchGuState);
   const { data: weather } = useSWR<ResponseWeather>(
     `/api/home/weather/${serachGu}`,
-    { suspense: true, revalidateOnFocus: false, revalidateOnReconnect: false },
+    {
+      suspense: true,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    },
   );
 
   const icon = weather
@@ -18,16 +22,16 @@ const WeatherComponent = () => {
     : '맑음';
   //loading
   return (
-    <div>
-      {weather && (
+    <>
+      {
         <>
           <div className="flex w-full justify-center h-16 bg-white rounded-[30px] py-3 px-[34px]">
             <WeatherIcon icon={icon} />
-            <WeatherInfo filterinfo={weather.info} icon={icon} />
+            <WeatherInfo filterinfo={weather!.info} icon={icon} />
           </div>
         </>
-      )}
-    </div>
+      }
+    </>
   );
 };
 export default WeatherComponent;

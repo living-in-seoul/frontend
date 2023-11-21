@@ -82,6 +82,12 @@ export const oauthSignin = async (data: RequestOauthLogin) => {
 /** 프로필 정보 가져오기 */
 export const getProfile = async () => {
   const token = cookies().get('accessToken')?.value;
+  if (!token) {
+    return new Response('no token', {
+      status: 401,
+      statusText: 'Invalid token',
+    });
+  }
   const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/profile/me`, {
     headers: { authorization: 'Bearer ' + token },
     next: { revalidate: 0 },

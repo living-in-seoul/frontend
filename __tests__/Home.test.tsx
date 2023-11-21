@@ -5,7 +5,7 @@ describe('homepage', () => {
   it('should render', () => {
     render(<HomePage />);
 
-    // const myElement = screen.getByRole('article');
-    // expect(myElement).toBeInTheDocument();
+    const myElement = screen.getByRole('article');
+    expect(myElement).toBeInTheDocument();
   });
 });
