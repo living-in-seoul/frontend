@@ -3,6 +3,7 @@ const nextConfig = {
   experimental: {
     serverActions: true,
     serverComponentsExternalPackages: ['@turf/*'],
+    scrollRestoration: true,
   },
 
   images: {
@@ -32,7 +33,7 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'living-in-seoul.s3.ap-northeast-2.amazonaws.com',
-        port: '', 
+        port: '',
       },
     ],
   },

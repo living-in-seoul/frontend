@@ -1,6 +1,7 @@
 import { categoryKO } from '@/utils/utilFunc';
 import { CODES_TYPE } from '@/utils/constants/constants';
 import { DATA_AREA } from '@/utils/constants/place';
+import exampleData from '@/utils/constants/mock.test';
 
 export const getHomeList = async (
   category: string,
@@ -143,13 +144,21 @@ export const getHomeDatas = async () => {
 };
 
 /** Top5 weekely */
-export const getHotTagTopFive = async (): Promise<ResponseRegister> => {
-  const weekleyTopFivelist = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/tags/posts?category=&page=1&size=5&hashtagName=&type=popular`,
-    { next: { revalidate: 60 * 60 * 5 } },
-  ).then<ResponseRegister>((res) => res.json());
+export const getHotTagTopFive = async (): Promise<ResponseRegister | Error> => {
+  try {
+    const weekleyTopFivelist = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER}/tags/posts?category=&page=1&size=5&hashtagName=&type=popular`,
+      { next: { revalidate: 60 * 60 * 5 } },
+    );
 
-  return weekleyTopFivelist;
+    const response: ResponseRegister = await weekleyTopFivelist.json();
+
+    // await new Promise((resolve) => setTimeout(resolve, 3000));
+    // return exampleData;
+
+    return response;
+  } catch (error) {}
+  throw new Error('network error');
 };
 
 /** Hottags 리뷰 */

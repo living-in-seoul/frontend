@@ -1,4 +1,4 @@
-'use client'; // Error components must be Client Components
+'use client';
 
 import { useEffect } from 'react';
 import Loading from './loading';
@@ -12,14 +12,14 @@ export default function Error({
 }) {
   useEffect(() => {
     // Log the error to an error reporting service
-    console.log(error);
+    console.log(error.name);
   }, [error]);
 
   return (
     <div className="relative w-full items-center h-full justify-center">
       <Loading />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2">
-        <h2>Something went wrong!</h2>
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2">
+        <h2>{error.name}</h2>
         <button
           onClick={
             // Attempt to recover by trying to re-render the segment
