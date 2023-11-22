@@ -1,7 +1,6 @@
 import { categoryKO } from '@/utils/utilFunc';
 import { CODES_TYPE } from '@/utils/constants/constants';
 import { DATA_AREA } from '@/utils/constants/place';
-import exampleData from '@/utils/constants/mock.test';
 
 export const getHomeList = async (
   category: string,
@@ -132,7 +131,7 @@ export const getHomeDatas = async () => {
   ): result is PromiseFulfilledResult<T> {
     return result.status === 'fulfilled';
   }
-
+  await new Promise((resolve) => setTimeout(resolve, 10000));
   return DATA_AREA.map((region, index) => {
     const cityDataResult = cityDataResults[index];
     const cityData = isFulfilled(cityDataResult) ? cityDataResult.value : null;

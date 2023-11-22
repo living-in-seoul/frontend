@@ -11,9 +11,7 @@ const HomePage = () => {
   return (
     <section className="relative flex-col flex w-full justify-center h-full bg-white touch-pan-y">
       <HomeTopSection />
-
       <HomeSectionTitle title="최신 서울시 정책 NEWS" />
-
       <Suspense fallback={<ArticleSkeleton />}>
         <YouthSection />
       </Suspense>

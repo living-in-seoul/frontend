@@ -29,9 +29,7 @@ export default function HomeLayout({
     <section
       className={`relative flex-col flex w-full justify-center h-full bg-white touch-pan-y`}
     >
-      {/* {children} */}
-      {/* {youth} */}
-      {/* {place} */}
+      {children}
       <HomeSectionTitle title="주간 TOP 5 커뮤니티 게시글" />
       {hottag}
       <HomeSectionTitle
@@ -40,7 +38,7 @@ export default function HomeLayout({
       />
       {review}
       <HomeSectionTitle title="해시태그 언급이 잦은 장소에요" link="/map" />
-      {/* {popular} */}
+      {popular}
       <HomeSectionTitle
         title="동향 사람들과 소통해 보세요"
         link="/community?category=communication"
