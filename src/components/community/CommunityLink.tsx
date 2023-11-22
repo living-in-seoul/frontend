@@ -20,6 +20,7 @@ export default function NavLink({
   const pathname = usePathname();
 
   const slug = onMypage ? 'mypage' : 'community';
+
   const link = category.link
     ? `/${slug}?category=${category.link}`
     : `/${slug}`;
@@ -32,9 +33,16 @@ export default function NavLink({
     : params?.get('category') === 'myscrap' || pathname === '/';
   const isActive = onMypage ? isMypageActive : isCommunityActive;
 
+  const paramsRouteHandle = (item: { link: string | null; name: string }) => {
+    const searchParams = new URLSearchParams(params);
+    console.log(`${searchParams.toString()}`);
+    // searchParams.set('category',);
+    router.replace(`${pathname}?category=${item.link || ''}`);
+  };
+
   return (
     <div
-      onClick={() => router.push(link)}
+      onClick={() => paramsRouteHandle(category)}
       style={{
         fontWeight: isActive ? 'bold' : 'normal',
         color: isActive ? '#2DDAB0' : '#787878',

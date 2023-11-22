@@ -1,7 +1,6 @@
 'use client'; // Error components must be Client Components
 
 import { useEffect } from 'react';
-import Loading from './loading';
 
 export default function Error({
   error,
@@ -17,7 +16,6 @@ export default function Error({
 
   return (
     <div className="relative w-full items-center h-full justify-center">
-      <Loading />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2">
         <h2>Something went wrong!</h2>
         <button

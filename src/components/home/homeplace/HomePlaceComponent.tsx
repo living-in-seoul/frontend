@@ -26,10 +26,9 @@ const HomePlaceComponent = ({ data }: HomePlaceComponentProps) => {
       onMouseMove={onMouseMove}
     >
       <div className="flex w-full h-52 px-3.5 py-2 gap-3.5">
-        {data &&
-          data.map((list, index) => (
-            <HomePlaceCard list={list} key={list.AREA_NM} />
-          ))}
+        {data.map((list, index) => (
+          <HomePlaceCard list={list} key={list.AREA_NM} />
+        ))}
       </div>
     </section>
   );

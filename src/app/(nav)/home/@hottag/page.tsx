@@ -1,12 +1,9 @@
+import HomeWeekleyTopFiveSection from '@/components/home/HomeWeekleyTopFive';
 import { getHotTagTopFive } from '@/service/home';
-import HomeWeekleyTopFiveSection from '../HomeWeekleyTopFive';
 
-const TopFiveSection = async () => {
+const TopFiveSectionPage = async () => {
   const weekleyTopFivePromise = await getHotTagTopFive();
-  console.log(weekleyTopFivePromise);
-  //   if (weekleyTopFivePromise.data instanceof Error) {
-  //     <>error</>;
-  //   }
+
   return (
     <>
       <HomeWeekleyTopFiveSection
@@ -15,4 +12,4 @@ const TopFiveSection = async () => {
     </>
   );
 };
-export default TopFiveSection;
+export default TopFiveSectionPage;

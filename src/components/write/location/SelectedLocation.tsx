@@ -10,6 +10,22 @@ interface SelectedLocationProps {
   onWrite?: boolean;
 }
 
+export const MockSelectedLocation = () => (
+  <div className="py-[32px] px-3">
+    <div className="flex justify-start w-full h-full bg-white items-center pl-3 ">
+      <div className="flex justify-center items-center">
+        <div className="h-full">
+          <div className="skeleton w-8 h-8 rounded-full"></div>
+        </div>
+        <div className="w-full ml-2">
+          <div className="skeleton h-4 w-20 mb-1"></div>
+          <div className="skeleton h-3 w-24"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
 const SelectedLocation = ({
   lname,
   address,

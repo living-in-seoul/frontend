@@ -4,6 +4,7 @@ import { fetchCommunity } from '@/actions/fetchCommunity';
 import CommunityHotTag from '@/components/community/CommunityHotTag';
 import WriteButton from '@/components/map/actions/WriteButton';
 import CommunityBoardList from '@/components/community/CommunityBoardList';
+import { exampleData } from '@/utils/constants/mock.test';
 
 export const dynamic = 'force-dynamic';
 export interface SearchParams {
@@ -39,11 +40,12 @@ const CommunityPage = async ({ searchParams }: PageProps) => {
     tags: tag,
   });
 
-  const [TagCategory, lists] = await Promise.all([
-    tagCategoryPromise,
-    listsPromise,
-  ]);
-
+  // const [TagCategory, lists] = await Promise.all([
+  //   tagCategoryPromise,
+  //   listsPromise,
+  // ]);
+  const TagCategory = ['seoul'];
+  const lists = exampleData;
   return (
     <section className="w-full max-w-md flex flex-col relative" key={uuidv4()}>
       {TagCategory && (
@@ -58,6 +60,7 @@ const CommunityPage = async ({ searchParams }: PageProps) => {
       />
 
       <WriteButton section="home" />
+      {category}
     </section>
   );
 };

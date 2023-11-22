@@ -2,6 +2,7 @@ import HomeLocationSeclect from '@/components/home/HomeLocationSeclect';
 import CommunitySearch from '@/components/community/CommunitySearch';
 import CommunityNavbar from '@/components/community/CommunityNavbar';
 import Header from '@/components/layouts/Header';
+import { Suspense } from 'react';
 
 export default function CommunityLayout({
   children,
@@ -17,7 +18,8 @@ export default function CommunityLayout({
         />
         <CommunityNavbar />
       </div>
-      <>{children}</>
+
+      <Suspense fallback={<>loading...</>}>{children}</Suspense>
     </section>
   );
 }

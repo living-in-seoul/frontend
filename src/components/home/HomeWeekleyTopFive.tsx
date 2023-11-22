@@ -1,5 +1,5 @@
 'use client';
-import HomeWeekleyItem from './HomeWeekleyItem';
+import HomeWeekleyItem, { PostSkeleton } from './HomeWeekleyItem';
 import useDrag from '@/hooks/useDrag';
 
 interface HomeWeekleyTopFiveSectionProps {
@@ -34,6 +34,7 @@ const HomeWeekleyTopFiveSection = ({
         ) : (
           <>게시물이 없습니다</>
         )}
+        <PostSkeleton />
       </ul>
     </article>
   );

@@ -7,7 +7,6 @@ import SearchLink from '../search/SearchLink';
 const CommunityNavbar = ({ search = false }: { search?: boolean }) => {
   const params = useSearchParams();
   const pathname = params?.get('category');
-
   const navBarBottomBar = () => {
     if (search) {
       switch (pathname) {
@@ -37,6 +36,7 @@ const CommunityNavbar = ({ search = false }: { search?: boolean }) => {
         return 'left-0/4';
     }
   };
+
   const leftPosition = navBarBottomBar() ?? 'left-0';
   return (
     <nav className={`relative w-full flex ${!search && 'px-4'} box-border`}>

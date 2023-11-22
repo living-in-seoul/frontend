@@ -131,7 +131,7 @@ export const getHomeDatas = async () => {
   ): result is PromiseFulfilledResult<T> {
     return result.status === 'fulfilled';
   }
-
+  await new Promise((resolve) => setTimeout(resolve, 10000));
   return DATA_AREA.map((region, index) => {
     const cityDataResult = cityDataResults[index];
     const cityData = isFulfilled(cityDataResult) ? cityDataResult.value : null;
@@ -143,13 +143,21 @@ export const getHomeDatas = async () => {
 };
 
 /** Top5 weekely */
-export const getHotTagTopFive = async (): Promise<ResponseRegister> => {
-  const weekleyTopFivelist = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/tags/posts?category=&page=1&size=5&hashtagName=&type=popular`,
-    { next: { revalidate: 60 * 60 * 5 } },
-  ).then<ResponseRegister>((res) => res.json());
+export const getHotTagTopFive = async (): Promise<ResponseRegister | Error> => {
+  try {
+    const weekleyTopFivelist = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER}/tags/posts?category=&page=1&size=5&hashtagName=&type=popular`,
+      { next: { revalidate: 60 * 60 * 5 } },
+    );
 
-  return weekleyTopFivelist;
+    const response: ResponseRegister = await weekleyTopFivelist.json();
+
+    // await new Promise((resolve) => setTimeout(resolve, 3000));
+    // return exampleData;
+
+    return response;
+  } catch (error) {}
+  throw new Error('network error');
 };
 
 /** Hottags 리뷰 */
