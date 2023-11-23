@@ -147,17 +147,19 @@ export const getHotTagTopFive = async (): Promise<ResponseRegister | Error> => {
   try {
     const weekleyTopFivelist = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER}/tags/posts?category=&page=1&size=5&hashtagName=&type=popular`,
-      { next: { revalidate: 60 * 60 * 5 } },
+      // { next: { revalidate: 60 * 60 * 5 } },
     );
+    if (!weekleyTopFivelist.ok) {
+      throw new Error(`${weekleyTopFivelist.status} 에러`);
+    }
 
     const response: ResponseRegister = await weekleyTopFivelist.json();
-
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
-    // return exampleData;
-
+    console.log(response);
     return response;
-  } catch (error) {}
-  throw new Error('network error');
+  } catch (error) {
+    console.log('error', error);
+    throw new Error('error');
+  }
 };
 
 /** Hottags 리뷰 */

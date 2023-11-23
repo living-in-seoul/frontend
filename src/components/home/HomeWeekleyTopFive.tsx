@@ -34,7 +34,6 @@ const HomeWeekleyTopFiveSection = ({
         ) : (
           <>게시물이 없습니다</>
         )}
-        <PostSkeleton />
       </ul>
     </article>
   );
