@@ -54,7 +54,7 @@ const CommunityMap = () => {
       }
     };
     getCenter();
-  }, [polygonValue.gu]);
+  }, []);
 
   useEffect(() => {
     const gu = polygonValue.gu;
@@ -123,24 +123,22 @@ const CommunityMap = () => {
   );
 
   const onMouseUpHandler = useCallback(async () => {
-    const lat = map?.getCenter()?.lat();
-    const lng = map?.getCenter()?.lng();
-
+    const lat = map.getCenter().lat();
+    const lng = map.getCenter().lng();
     try {
       const res = await fetch(`/api/map/geo?lat=${lat}&lng=${lng}`, {
         method: 'GET',
-      })
-        .then((data) => {
-          return data.json();
-        })
-        .finally(() => setIsLoading(false));
-      setPolygonState({ gu: res.gu, dong: res.dong });
-      const formattedCoordinates = transformCoordinates(res.geometry);
+      });
+      const location = await res.json();
+      setPolygonState({ gu: location.gu, dong: location.dong });
+      const formattedCoordinates = transformCoordinates(location.geometry);
       setGeometry(formattedCoordinates);
     } catch (err) {
       console.log(err);
+    } finally {
+      setIsLoading(false);
     }
-  }, [map, setPolygonState, setGeometry]);
+  }, [map, setPolygonState]);
 
   return (
     <section className="w-full h-full relative z-0">
@@ -150,7 +148,8 @@ const CommunityMap = () => {
         onLoad={onLoad}
         onUnmount={onUnmount}
         options={mapOptions}
-        onMouseUp={onMouseUpHandler}
+        onDragEnd={onMouseUpHandler}
+        // onMouseUp={onMouseUpHandler}
         onClick={(e) => {
           e.stop();
         }}

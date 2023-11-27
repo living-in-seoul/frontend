@@ -1,6 +1,5 @@
 'use client';
 import Select from '@/components/common/Select';
-import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 interface CommunityHotTag {
@@ -16,7 +15,6 @@ const CommunityHotTag = ({ Hottag }: CommunityHotTag) => {
 
   const paramsRouteHandle = (item: string) => {
     const searchParams = new URLSearchParams(params);
-    console.log(`${pathname}?${searchParams.toString()}`);
     searchParams.set('tag', item);
     replace(`${pathname}?${searchParams.toString()}`);
   };

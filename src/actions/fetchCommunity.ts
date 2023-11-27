@@ -15,7 +15,6 @@ const fetchFromAPI = async (url: string) => {
   try {
     const response = await fetch(url, {
       headers: { 'Content-Type': 'application/json' },
-      cache: 'no-store',
     });
     return await response.json();
   } catch (error) {
@@ -30,7 +29,6 @@ export const fetchCommunity = async (
   const { page, limit, category, tags, ordertype = 'newer' } = props;
   const tag = tags ?? '';
   const UrlEncodigTag = typeof tag === 'string' && encodeURIComponent(tag);
-
   const endpoint =
     category === 'All'
       ? `/tags/posts?category=&hashtagName=${UrlEncodigTag}&size=${limit}&page=${page}&type=${ordertype}`

@@ -5,17 +5,19 @@ import { useRecoilValue } from 'recoil';
 import { HomeHomeTownKeyState } from '@/recoil/homeState';
 import CarouselProvider from '@/context/CarouselProvider';
 import PostItem from '@/components/community/PostItem';
+import { exampleMapPost } from '@/utils/constants/mock.test';
+import Loading from '@/app/(nav)/home/@hometown/loading';
 interface ReviewListProps {
   hashtags: string;
 }
 
 const HomeHomeTownLists = ({ hashtags }: ReviewListProps) => {
   const Hashtag = useRecoilValue(HomeHomeTownKeyState) ?? hashtags;
-  const { data: PostList } = useSWR<ResponsePost[]>(
-    `/api/home/hometown?hashtag=${Hashtag}`,
+
+  const { data: PostList, isLoading } = useSWR<ResponsePost[]>(
+    Hashtag ? `/api/home/hometown?hashtag=${Hashtag}` : null,
     {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
+      keepPreviousData: false,
     },
   );
   const groupedItems = PostList
@@ -23,7 +25,9 @@ const HomeHomeTownLists = ({ hashtags }: ReviewListProps) => {
         PostList.slice(idx * 2, idx * 2 + 2),
       )
     : [];
-
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <CarouselProvider>
       {groupedItems.map((group, groupIndex) => (

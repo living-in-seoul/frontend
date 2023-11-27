@@ -3,7 +3,7 @@ const nextConfig = {
   experimental: {
     serverActions: true,
     serverComponentsExternalPackages: ['@turf/*'],
-    scrollRestoration: false,
+    scrollRestoration: true,
   },
 
   images: {

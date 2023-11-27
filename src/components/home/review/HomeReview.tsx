@@ -10,7 +10,7 @@ const HomeReviewSection = ({ hotTagReview }: HomeReviewSectionProps) => {
   const hashtags = hotTagReview[0];
 
   return (
-    <article className="relative w-full border-t-[5px] pt-2.5 border-zinc-300 pb-5">
+    <article className="relative w-full pt-2.5 pb-5">
       {hotTagReview ? (
         <>
           <HomeTagSections HotTagReview={hotTagReview} hashtags={hashtags} />

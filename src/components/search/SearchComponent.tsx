@@ -6,7 +6,6 @@ import dynamic from 'next/dynamic';
 import { v4 as uuidv4 } from 'uuid';
 import { categoryKO } from '@/utils/utilFunc';
 import SearchSorted from './SearchSorted';
-import SearchHashTagAlert from './SearchHashTagAlert';
 import BeatLoader from '../common/Spinner';
 import Header from '../layouts/Header';
 import Back from '../common/Back';
@@ -24,13 +23,15 @@ const SearchComponent = async ({
 }) => {
   const fetchsearch = search ?? '';
   const fetchcategory = category ?? '';
+
   const response = await fetch(
     `${
       process.env.NEXT_PUBLIC_SERVER
     }/search?page=1&size=10&category=${encodeURIComponent(
       categoryKO(fetchcategory),
     )}&keyword=${encodeURIComponent(fetchsearch)}`,
-  ).then<ResponseRegister>((res) => res.json());
+  );
+  const pageData: ResponseRegister = await response.json();
 
   return (
     <section className="relative max-w-md top-0 -translate-x-1/2 left-1/2 flex flex-col justify-center items-center w-full h-screen z-50">
@@ -47,13 +48,13 @@ const SearchComponent = async ({
             <div className="relative">
               <CommunityNavbar search />
               <SearchSorted
-                totalElements={response.pageable.totalElements}
+                totalElements={pageData.pageable.totalElements}
                 order={'newer'}
               />
               <div key={uuidv4()}>
                 <DynamicSearchBoardList
-                  firstList={response.result}
-                  totalpage={response.pageable.totalPages}
+                  firstList={pageData.result}
+                  totalpage={pageData.pageable.totalPages}
                   Category={category}
                 />
               </div>

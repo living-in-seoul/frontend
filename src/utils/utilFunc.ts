@@ -13,7 +13,7 @@ export async function retryFetch(
         return response;
       }
     } catch (err) {}
-    await new Promise((resolve) => setTimeout(resolve, delay));
+    await new Promise((resolve) => setTimeout(resolve, 3000));
   }
   throw new Error('너무 많은 요청');
 }

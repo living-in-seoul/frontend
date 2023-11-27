@@ -131,7 +131,7 @@ export const getHomeDatas = async () => {
   ): result is PromiseFulfilledResult<T> {
     return result.status === 'fulfilled';
   }
-  await new Promise((resolve) => setTimeout(resolve, 10000));
+
   return DATA_AREA.map((region, index) => {
     const cityDataResult = cityDataResults[index];
     const cityData = isFulfilled(cityDataResult) ? cityDataResult.value : null;
@@ -164,12 +164,22 @@ export const getHotTagTopFive = async (): Promise<ResponseRegister | Error> => {
 
 /** Hottags 리뷰 */
 export const getHotTagReview = async (): Promise<string[]> => {
-  const HotTagReview = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/tags/rank?category=후기`,
-    { next: { revalidate: 60 * 60 } },
-  ).then<string[]>((res) => res.json());
+  try {
+    const HotTagReview = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER}/tags/rank?category=후기`,
+      { next: { revalidate: 60 * 60 } },
+    );
 
-  return HotTagReview;
+    if (!HotTagReview.ok) {
+      throw new Error('서버 네트워크 에러', {
+        cause: `${HotTagReview.statusText}`,
+      });
+    }
+    const response: string[] = await HotTagReview.json();
+    return response;
+  } catch (error) {
+    throw new Error('error');
+  }
 };
 /** Hottags 맵 */
 export const getHotTagMap = async (): Promise<string[]> => {
@@ -182,10 +192,126 @@ export const getHotTagMap = async (): Promise<string[]> => {
 };
 /** Hottags 동향소통 */
 export const getHotTagHomeTown = async (): Promise<string[]> => {
-  const HotTagHomeTown = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/tags/rank?category=동향소통`,
-    { next: { revalidate: 60 * 60 * 5 } },
-  ).then<string[]>((res) => res.json());
+  try {
+    const HotTagHomeTown = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER}/tags/rank?category=동향소통`,
+      { next: { revalidate: 60 * 60 * 5 } },
+    );
 
-  return HotTagHomeTown;
+    await handleHttpError(HotTagHomeTown);
+
+    const response: string[] = await HotTagHomeTown.json();
+    return response;
+  } catch (error: any & { cause: string }) {
+    console.log('asdasldkasldkasldaks  ', error.toString());
+    throw handleError(error as Error);
+  }
+};
+interface HttpErrorInterface {
+  status: number;
+  defaultMessage?: string;
+}
+
+const createHttpError = ({ status, defaultMessage }: HttpErrorInterface) => ({
+  status,
+  message: defaultMessage || `HTTP 오류! 상태 코드: ${status}`,
+});
+
+// HTTP 에러 처리 함수
+export const handleHttpError = async (response: Response) => {
+  if (!response.ok) {
+    const { status } = response;
+
+    switch (status) {
+      case 400:
+        throw createHttpError({ status, defaultMessage: '잘못된 요청입니다.' });
+      case 401:
+        throw createHttpError({
+          status,
+          defaultMessage: '인증에 실패했습니다.',
+        });
+      case 403:
+        throw createHttpError({
+          status,
+          defaultMessage: '접근이 금지되었습니다.',
+        });
+      case 404:
+        throw createHttpError({
+          status,
+          defaultMessage: '요청한 리소스를 찾을 수 없습니다.',
+        });
+      case 500:
+        throw createHttpError({
+          status,
+          defaultMessage: '서버 내부 오류가 발생했습니다.',
+        });
+      default:
+        throw createHttpError({ status });
+    }
+  }
+};
+
+class NetworkError extends Error {
+  constructor(message = '네트워크 오류') {
+    super(message);
+    this.name = 'NetworkError';
+  }
+}
+
+class HttpError extends Error {
+  status: number;
+
+  constructor(status: number, message = 'HTTP 에러') {
+    super(message);
+    this.name = 'HttpError';
+    this.status = status;
+  }
+}
+
+class JsonParsingError extends Error {
+  constructor(message = 'JSON 파싱 오류') {
+    super(message);
+    this.name = 'JsonParsingError';
+  }
+}
+
+class UnknownError extends Error {
+  constructor(message = '알 수 없는 에러') {
+    super(message);
+    this.name = 'UnknownError';
+  }
+}
+
+type ErrorHandler<T extends Error> = (error: T) => void;
+
+const handleNetworkError: ErrorHandler<NetworkError> = (error) => {
+  // console.error('네트워크 오류:', error.message);
+  throw new Error(`네트워크 오류: ${error.message}`);
+};
+
+const handleHttpErrors: ErrorHandler<HttpError> = (error) => {
+  // console.error(`HTTP 에러 (${error.status}):`, {cause : error.message});
+  throw new Error(`HTTP 에러: ${error.message}`);
+};
+
+const handleJsonParsingError: ErrorHandler<JsonParsingError> = (error) => {
+  // console.error('JSON 파싱 오류:', {cause : error.message});
+  throw new Error(`JSON 파싱 오류: ${error.message}`);
+};
+
+const handleUnknownError: ErrorHandler<UnknownError> = (error) => {
+  // console.error('알 수 없는 에러:', error.message);
+  throw new Error(`알 수 없는 에러: ${error.message}`);
+};
+
+const handleError = <T extends Error>(error: T): void => {
+  if (error instanceof NetworkError) {
+    handleNetworkError(error);
+  } else if (error instanceof HttpError) {
+    handleHttpErrors(error);
+  } else if (error instanceof JsonParsingError) {
+    handleJsonParsingError(error);
+  } else {
+    handleUnknownError(error as UnknownError);
+  }
 };

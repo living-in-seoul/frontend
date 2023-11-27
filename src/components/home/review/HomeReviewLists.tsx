@@ -5,21 +5,25 @@ import { useRecoilValue } from 'recoil';
 import { HomeReviewKeyState } from '@/recoil/homeState';
 import CarouselProvider from '@/context/CarouselProvider';
 import PostItem from '@/components/community/PostItem';
+import Loading from '@/app/(nav)/home/@review/loading';
 interface ReviewListProps {
   hashtags: string;
 }
 
 const HomeReviewLists = ({ hashtags }: ReviewListProps) => {
   const Hashtag = useRecoilValue(HomeReviewKeyState) ?? hashtags;
-  const { data: PostList } = useSWR<ResponsePost[]>(
+  const { data: PostList, isLoading } = useSWR<ResponsePost[]>(
     `/api/home/reviews?hashtag=${Hashtag}`,
-    { suspense: true },
+    { keepPreviousData: false },
   );
   const groupedItems = PostList
     ? [...Array(Math.ceil(PostList.length / 2))].map((_, idx) =>
         PostList.slice(idx * 2, idx * 2 + 2),
       )
     : [];
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <CarouselProvider>
       {groupedItems.map((group, groupIndex) => (

@@ -43,6 +43,7 @@ export default function HomeLayout({
         title="동향 사람들과 소통해 보세요"
         link="/community?category=communication"
       />
+
       {hometown}
     </section>
   );

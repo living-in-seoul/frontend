@@ -5,6 +5,9 @@ import CommunityHotTag from '@/components/community/CommunityHotTag';
 import WriteButton from '@/components/map/actions/WriteButton';
 import CommunityBoardList from '@/components/community/CommunityBoardList';
 import { exampleData } from '@/utils/constants/mock.test';
+import { Suspense } from 'react';
+import CommunityBoard from '@/components/community/CommunityBoard';
+import Loading from './loading';
 
 export const dynamic = 'force-dynamic';
 export interface SearchParams {
@@ -21,46 +24,13 @@ interface PageProps {
 const CommunityPage = async ({ searchParams }: PageProps) => {
   const { category = 'All', tag, ordertype = 'newer' } = searchParams;
 
-  const FetchUrl =
-    category === 'All' ? 'category=' : `category=${categoryKO(category)}`;
-  const FETCH_API = `${process.env.NEXT_PUBLIC_SERVER}/tags/rank?${FetchUrl}`;
-
-  const tagCategoryPromise = fetch(FETCH_API, {
-    next: { revalidate: 2000 },
-  }).then<string[]>((res) => {
-    if (!res.ok) throw new Error('태그 카테고리가 없음');
-    return res.json();
-  });
-
-  const listsPromise = fetchCommunity({
-    page: 1,
-    limit: 10,
-    category,
-    ordertype: ordertype,
-    tags: tag,
-  });
-
-  // const [TagCategory, lists] = await Promise.all([
-  //   tagCategoryPromise,
-  //   listsPromise,
-  // ]);
-  const TagCategory = ['seoul'];
-  const lists = exampleData;
   return (
-    <section className="w-full max-w-md flex flex-col relative" key={uuidv4()}>
-      {TagCategory && (
-        <CommunityHotTag Hottag={TagCategory} category={category} />
-      )}
-      <CommunityBoardList
-        firstList={lists?.result ?? []}
-        Category={category}
-        tags={tag}
-        totalpage={lists?.pageable.totalPages ?? 1}
-        ordertype={ordertype}
-      />
+    <section className="w-full max-w-md flex flex-col relative">
+      <Suspense fallback={<Loading />} key={category}>
+        <CommunityBoard category={category} tag={tag} ordertype={ordertype} />
+      </Suspense>
 
       <WriteButton section="home" />
-      {category}
     </section>
   );
 };
