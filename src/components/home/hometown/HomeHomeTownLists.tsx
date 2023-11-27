@@ -17,7 +17,6 @@ const HomeHomeTownLists = ({ hashtags }: ReviewListProps) => {
   const { data: PostList, isLoading } = useSWR<ResponsePost[]>(
     Hashtag ? `/api/home/hometown?hashtag=${Hashtag}` : null,
     {
-      suspense: true,
       keepPreviousData: false,
     },
   );

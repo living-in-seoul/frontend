@@ -1,7 +1,5 @@
 import HomeTownTagSections from './HomeHomeTownTagSections';
-import { Suspense } from 'react';
 import HomeHomeTownLists from './HomeHomeTownLists';
-import Loading from '@/app/(nav)/home/@hometown/loading';
 
 interface HomeHomeTownSectionProps {
   HotTagHomeTown: string[];
