@@ -13,7 +13,7 @@ const SearchPage = ({ searchParams }: PageProps) => {
       <Suspense fallback={<>loading...</>}>
         <SearchComponent search={search} category={category} />
       </Suspense>
-      {/* {search && <SearchHashTagAlert hashTag={search} />} */}
+      {search && <SearchHashTagAlert hashTag={search} />}
     </section>
   );
 };

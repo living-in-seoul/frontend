@@ -1,7 +1,5 @@
 'use client';
-
-import { useRouter } from 'next-nprogress-bar';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export default function NavLink({
   category,
@@ -35,7 +33,6 @@ export default function NavLink({
 
   const paramsRouteHandle = (item: { link: string | null; name: string }) => {
     const searchParams = new URLSearchParams(params);
-    console.log(`${searchParams.toString()}`);
     // searchParams.set('category',);
     router.replace(`${pathname}?category=${item.link || ''}`);
   };

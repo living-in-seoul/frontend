@@ -18,8 +18,7 @@ export default function CommunityLayout({
         />
         <CommunityNavbar />
       </div>
-
-      <Suspense fallback={<>loading...</>}>{children}</Suspense>
+      {children}
     </section>
   );
 }

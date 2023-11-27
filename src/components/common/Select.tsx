@@ -9,6 +9,14 @@ interface Props {
   Icon?: JSX.Element | null;
 }
 
+export const SelectSkeletons = () => (
+  <li className="skeleton w-20 py-0.5 px-5 bg-gray-300 rounded-md font-normal justify-center items-center gap-2.5 inline-flex border-[1.125px] border-gray5">
+    <span className="text-xs font-normal leading-7 text-gray-300">
+      로딩중...
+    </span>
+  </li>
+);
+
 const getButtonSizeStyles = (size: string) => {
   switch (size) {
     case 'small':
