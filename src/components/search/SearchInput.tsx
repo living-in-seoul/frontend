@@ -15,8 +15,6 @@ import { addRecentlySearched } from '@/utils/utilFunc';
 import { useRecoilState } from 'recoil';
 import { searchState } from '@/recoil/communityStates';
 import { useRouter } from 'next-nprogress-bar';
-import Header from '../layouts/Header';
-import Back from '../common/Back';
 
 interface responseInterface {
   PostId: number;
@@ -32,6 +30,7 @@ const SearchInput = () => {
   const debounceKeyword = useDebounce(search, 300);
   const router = useRouter();
   const searchParams = useSearchParams();
+
   const onChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       setSearch(event.target.value);
@@ -61,7 +60,7 @@ const SearchInput = () => {
         query: search,
       }),
     });
-    router.push(`/search?search=${encodeURIComponent(search)}`);
+    router.replace(`/search?search=${encodeURIComponent(search)}`);
     ref.current?.blur();
     setData([]);
   };

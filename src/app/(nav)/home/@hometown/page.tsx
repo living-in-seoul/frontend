@@ -4,10 +4,6 @@ import { getHotTagHomeTown } from '@/service/home';
 const HomeTownPage = async () => {
   const homeTownTagPromise = await getHotTagHomeTown();
 
-  return (
-    <>
-      <HomeHomeTownSection HotTagHomeTown={homeTownTagPromise} />
-    </>
-  );
+  return <HomeHomeTownSection HotTagHomeTown={homeTownTagPromise} />;
 };
 export default HomeTownPage;
