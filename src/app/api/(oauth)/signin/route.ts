@@ -25,6 +25,6 @@ export const POST = async (
     });
     return NextResponse.json(data);
   } catch (err) {
-    return new Response('잘못된 정보입니다', { status: 401 });
+    throw new Error('잘못된 정보입니다');
   }
 };
